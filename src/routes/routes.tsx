@@ -4,16 +4,16 @@ import Home from 'src/pages/Home';
 
 // cách 1
 interface IRoute {(isLogin: boolean): RouteObject[]};
-const routes : IRoute = (isLogin) => [
+const routes: IRoute = (isLogin) => [
   {
     path: '/',
     element: <MainLayout />,
     children: [
       {
-        index: true,
-        element: <Home />
+        path: '/',
+        element: <Home />,
       }
-    ]
+    ],
   }
 ];
 

@@ -1,6 +1,15 @@
 $bg-color: rgba(255, 255, 255);
-
+@font-face {
+  font-family: roboto-regular;
+  src: url('src/assets/fonts/Roboto-Regular.ttf') format('truetype');
+}
+html {
+  font-family: 'roboto-regular', sans-serif;
+  font-size: 62.5%;
+  color: var(--text);
+}
 body {
   background: $bg-color;
-  font-size: 20px;
+  font-size: 1.6rem;
+  text-rendering: optimizeSpeed;
 }
