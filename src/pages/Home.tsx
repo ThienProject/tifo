@@ -1,7 +1,8 @@
+import { Box } from '@mui/material';
 import React from 'react';
 
 const Home = () => {
-  return <div>Home</div>;
+  return <Box color={'common.black'}> kkk </Box>;
 };
 
 export default Home;

@@ -32,6 +32,8 @@ module.exports = {
     node: true
   },
   rules: {
+    "import/no-named-as-default": "off",
+    "import/named": "off",
     // Tắt rule yêu cầu import React trong file jsx
     'react/react-in-jsx-scope': 'off',
     // Cảnh báo khi thẻ <a target='_blank'> mà không có rel="noreferrer"

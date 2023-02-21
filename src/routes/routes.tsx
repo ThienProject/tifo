@@ -3,7 +3,9 @@ import MainLayout from 'src/layouts/Main';
 import Home from 'src/pages/Home';
 
 // cách 1
-interface IRoute {(isLogin: boolean): RouteObject[]};
+interface IRoute {
+  (isLogin: boolean): RouteObject[];
+}
 const routes: IRoute = (isLogin) => [
   {
     path: '/',
@@ -11,12 +13,11 @@ const routes: IRoute = (isLogin) => [
     children: [
       {
         path: '/',
-        element: <Home />,
+        element: <Home />
       }
-    ],
+    ]
   }
 ];
-
 
 // cách 2
 // interface IRoute { fc : (isLogin: boolean) => RouteObject[]};
@@ -32,7 +33,6 @@ const routes: IRoute = (isLogin) => [
 //     ]
 //   }
 // ];
-
 
 /// cách 3
 // const routes: (isLogin: boolean) => RouteObject[] = (isLogin: boolean) => [
