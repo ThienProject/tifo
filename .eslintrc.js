@@ -32,6 +32,7 @@ module.exports = {
     node: true
   },
   rules: {
+    '@typescript-eslint/no-var-requires': 0,
     "import/no-named-as-default": "off",
     "import/named": "off",
     // Tắt rule yêu cầu import React trong file jsx

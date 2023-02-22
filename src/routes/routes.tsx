@@ -1,6 +1,8 @@
 import { RouteObject } from 'react-router';
 import MainLayout from 'src/layouts/Main';
 import Home from 'src/pages/Home';
+import Messages from 'src/pages/Messages';
+import Profile from 'src/pages/Profile';
 
 // cách 1
 interface IRoute {
@@ -14,6 +16,14 @@ const routes: IRoute = (isLogin) => [
       {
         path: '/',
         element: <Home />
+      },
+      {
+        path: '/messages',
+        element: <Messages />
+      },
+      {
+        path: '/profile',
+        element: <Profile />
       }
     ]
   }

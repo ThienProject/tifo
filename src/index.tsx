@@ -4,11 +4,14 @@ import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import App from './App';
 import 'react-toastify/dist/ReactToastify.css';
-import { ThemeProvider } from '@mui/material';
+// import { ThemeProvider } from '@mui/material';
 import theme from 'src/theme';
+import CssBaseline from '@mui/material/CssBaseline';
+import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
+    <CssVarsProvider theme={theme}>
+      <CssBaseline />
       <BrowserRouter>
         <ToastContainer
           position='top-right'
@@ -21,9 +24,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           draggable
           pauseOnHover
         />
-        <ToastContainer />
         <App />
       </BrowserRouter>
-    </ThemeProvider>
+    </CssVarsProvider>
   </React.StrictMode>
 );
