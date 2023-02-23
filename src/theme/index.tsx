@@ -16,7 +16,7 @@ const paletteDark: PaletteOptions = {
     white: '#262626'
   },
   text: {
-    primary: '#fffff'
+    primary: '#7c7d7c'
   }
 };
 const paletteLight: PaletteOptions = {
@@ -37,7 +37,7 @@ const paletteLight: PaletteOptions = {
     white: '#ffffff'
   },
   text: {
-    primary: '#ffffff'
+    primary: 'rgb(38,38,38)'
   }
 };
 

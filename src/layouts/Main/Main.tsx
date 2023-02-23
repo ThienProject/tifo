@@ -5,10 +5,10 @@ import SideBar from '../components/SideBar';
 const MainLayout = () => {
   return (
     <Grid container>
-      <Grid item xs={2}>
+      <Grid item xs={2.3}>
         <SideBar />
       </Grid>
-      <Grid item xs={10}>
+      <Grid item xs={9.7}>
         <Outlet></Outlet>
       </Grid>
     </Grid>

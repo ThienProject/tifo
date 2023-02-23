@@ -3,6 +3,7 @@ import MainLayout from 'src/layouts/Main';
 import Home from 'src/pages/Home';
 import Messages from 'src/pages/Messages';
 import Profile from 'src/pages/Profile';
+import Reels from 'src/pages/Reels';
 
 // cách 1
 interface IRoute {
@@ -24,6 +25,10 @@ const routes: IRoute = (isLogin) => [
       {
         path: '/profile',
         element: <Profile />
+      },
+      {
+        path: '/reels',
+        element: <Reels />
       }
     ]
   }

@@ -1,59 +1,86 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import HomeIcon from '@mui/icons-material/Home';
-import DraftsIcon from '@mui/icons-material/Drafts';
-import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import { ListItemIcon, MenuItem, MenuList, Typography, Drawer } from '@mui/material';
-import ModeSwitcher from 'src/theme/ModeSwitcher';
-import images from 'src/assets/images';
-import styles from './SideBar.module.scss';
-import classNames from 'classnames/bind';
-const cx = classNames.bind(styles);
+// import NotificationsActiveRoundedIcon from '@mui/icons-material/NotificationsActiveRounded';
+// import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import { styled, CSSObject, Theme } from '@mui/material/styles';
+import { Box } from '@mui/material';
+import { MenuPhone } from './Menu';
+import MuiDrawer from '@mui/material/Drawer';
+// import { useTheme } from '@emotion/react';
+// import styles from './SideBar.module.scss';
+// import classNames from 'classnames/bind';
+// const cx = classNames.bind(styles);
 
 const SideBar = () => {
+  // const theme = useTheme();
+  const drawerWidth = 240;
+  const [open, setOpen] = React.useState(true);
+
+  const openedMixin = (theme: Theme): CSSObject => ({
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen
+    }),
+    overflowX: 'hidden'
+  });
+
+  const closedMixin = (theme: Theme): CSSObject => ({
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    overflowX: 'hidden',
+    width: `calc(${theme.spacing(7)} + 1px)`,
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(${theme.spacing(8)} + 1px)`
+    }
+  });
+  const Drawer = styled(MuiDrawer, {
+    shouldForwardProp: (prop) => prop !== 'open'
+  })(({ theme, open }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    ...(open && {
+      ...openedMixin(theme),
+      '& .MuiDrawer-paper': openedMixin(theme)
+    }),
+    ...(!open && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme)
+    }),
+    [theme.breakpoints.down('md')]: {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme)
+    }
+  }));
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Box className={cx('container')}>
-      <Drawer variant='permanent' open={false}>
-        <img className={cx('logo')} alt='home-icon' src={images.black_only_word} />
-        <MenuList component='nav'>
-          <NavLink className={(nav) => cx('navLink', { active: nav.isActive })} to={'/'}>
-            <MenuItem sx={{ p: 2, color: 'common.black' }}>
-              <ListItemIcon sx={{ color: 'common.black' }}>
-                <HomeIcon className={cx('iconActive')} fontSize='large' />
-                <HomeOutlinedIcon className={cx('icon')} fontSize='large' />
-              </ListItemIcon>
-              <Typography className={cx('item-name')} pl={1} variant='inherit'>
-                Home
-              </Typography>
-            </MenuItem>
-          </NavLink>
-
-          <NavLink className={cx('navLink')} to={'/messages'}>
-            <MenuItem sx={{ p: 2, color: 'common.black' }}>
-              <ListItemIcon sx={{ color: 'common.black' }}>
-                <PriorityHighIcon fontSize='large' />
-              </ListItemIcon>
-              <Typography className={cx('item-name')} pl={1} variant='inherit'>
-                Messages
-              </Typography>
-            </MenuItem>
-          </NavLink>
-
-          <NavLink className={cx('navLink')} to={'/profile'}>
-            <MenuItem sx={{ p: 2, color: 'common.black' }}>
-              <ListItemIcon sx={{ color: 'common.black' }}>
-                <DraftsIcon fontSize='large' />
-              </ListItemIcon>
-              <Typography className={cx('item-name')} pl={1} variant='inherit'>
-                Profile
-              </Typography>
-            </MenuItem>
-          </NavLink>
-        </MenuList>
-        <ModeSwitcher />
+    <Box component='nav'>
+      <Drawer variant='permanent' open={open}>
+        <MenuPhone />
       </Drawer>
+      {/* <Drawer
+        variant='permanent'
+        sx={{
+          display: { xs: 'none', sm: 'block' },
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
+            width: drawerWidth
+          }
+        }}
+        open
+      >
+        <MenuDesktop />
+      </Drawer> */}
     </Box>
   );
 };
