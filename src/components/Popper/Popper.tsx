@@ -10,9 +10,10 @@ import { Box } from '@mui/material';
 interface Props {
   activeIcon: React.ReactNode;
   content: (handleClose: (event: Event | React.SyntheticEvent) => void) => React.ReactNode;
+  sx: object;
 }
 const MenuPopper = (props: Props) => {
-  const { activeIcon, content } = props;
+  const { activeIcon, content, sx } = props;
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement | undefined>(undefined);
 
@@ -50,7 +51,7 @@ const MenuPopper = (props: Props) => {
   }, [open]);
 
   return (
-    <Stack direction='row' spacing={2}>
+    <Stack sx={sx} direction='row' spacing={2}>
       <Box
         ref={anchorRef}
         id='composition-button'
@@ -62,24 +63,18 @@ const MenuPopper = (props: Props) => {
       >
         {activeIcon}
       </Box>
-      <Popper
-        open={open}
-        anchorEl={anchorRef.current}
-        role={undefined}
-        placement='bottom-start'
-        transition
-        disablePortal
-      >
+      <Popper open={open} anchorEl={anchorRef.current} role={undefined} placement='bottom-end' transition disablePortal>
         {({ TransitionProps, placement }) => (
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin: placement === 'bottom-start' ? 'left top' : 'left bottom'
+              transformOrigin: placement === 'bottom-start' ? 'right bottom' : 'right bottom'
             }}
           >
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList
+                  sx={{ p: 0, m: 0 }}
                   autoFocusItem={open}
                   id='composition-menu'
                   aria-labelledby='composition-button'

@@ -19,17 +19,17 @@
   .item-name{
     color: var(--mui-palette-text-primary);
   }
-  .iconActive {
-    display: none
-  }
+  // .iconActive {
+  //   display: none
+  // }
 
-  &.active {
-    font-weight: 500;
-    .icon {
-    display: none
-    }
-    .iconActive{
-      display: block
-    }
-  }
+  // &.active {
+  //   font-weight: 500;
+  //   .icon {
+  //   display: none
+  //   }
+  //   .iconActive{
+  //     display: block
+  //   }
+  // }
 }

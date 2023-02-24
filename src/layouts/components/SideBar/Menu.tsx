@@ -1,123 +1,74 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
-// import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
-// import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
-import NotificationsNoneRoundedIcon from '@mui/icons-material/NotificationsNoneRounded';
-import NotificationsActiveRoundedIcon from '@mui/icons-material/NotificationsActiveRounded';
-import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-import MovieRoundedIcon from '@mui/icons-material/MovieRounded';
-import MovieOutlinedIcon from '@mui/icons-material/MovieOutlined';
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import AddCircleOutlineRounded from '@mui/icons-material/AddCircleOutlineRounded';
-import MenuIcon from '@mui/icons-material/Menu';
+import React from 'react';
 import { ListItemIcon, MenuItem, MenuList, Typography, Box } from '@mui/material';
 // import images from 'src/assets/images';
 import styles from './SideBar.module.scss';
 import classNames from 'classnames/bind';
 import images from 'src/assets/images';
 import MenuPopper from 'src/components/Popper';
+import ModeSwitcher from 'src/theme/ModeSwitcher';
+import SettingsSuggestOutlinedIcon from '@mui/icons-material/SettingsSuggestOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import { ImenuItem } from 'src/types/common';
 const cx = classNames.bind(styles);
 
-const MenuPhone = () => {
+const Menu = ({
+  menus,
+  setMenus
+}: {
+  menus: ImenuItem[];
+  setMenus: React.Dispatch<React.SetStateAction<ImenuItem[]>>;
+}) => {
   const subMenus = [
     {
-      name: 'settings',
-      icon: <HomeOutlinedIcon />,
-      iconActive: <HomeRoundedIcon />,
+      name: 'Settings',
+      icon: <SettingsSuggestOutlinedIcon />,
+      iconActive: <SettingsSuggestOutlinedIcon />,
       type: 'link'
     },
     {
       name: 'Switch appearance',
-      icon: <HomeOutlinedIcon />,
-      iconActive: <HomeRoundedIcon />,
+      icon: <ModeSwitcher />,
+      iconActive: <ModeSwitcher />,
       type: null
     },
     {
       name: 'Logout',
-      icon: <HomeOutlinedIcon />,
-      iconActive: <HomeRoundedIcon />,
+      icon: <LogoutOutlinedIcon />,
+      iconActive: <LogoutOutlinedIcon />,
       type: null
     }
   ];
-  const menuLists = [
-    {
-      name: 'Home',
-      icon: <HomeOutlinedIcon />,
-      iconActive: <HomeRoundedIcon />,
-      type: 'link'
-    },
-    {
-      name: 'Search',
-      icon: <SearchRoundedIcon />,
-      iconActive: <SearchRoundedIcon />,
-      type: null
-    },
-    {
-      name: 'Reels',
-      icon: <MovieOutlinedIcon />,
-      iconActive: <MovieRoundedIcon />,
-      type: 'link'
-    },
-    {
-      name: 'Notifications',
-      icon: <NotificationsNoneRoundedIcon />,
-      iconActive: <NotificationsActiveRoundedIcon />,
-      type: null
-    },
-    {
-      name: 'Create',
-      icon: <AddCircleOutlineRounded />,
-      iconActive: <AddCircleRoundedIcon />,
-      type: null
-    },
-    {
-      name: 'Profile',
-      icon: <AccountCircleOutlinedIcon />,
-      iconActive: <AccountCircleRoundedIcon />,
-      type: 'link'
-    },
-    {
-      name: 'Profile',
-      icon: <AccountCircleOutlinedIcon />,
-      iconActive: <AccountCircleRoundedIcon />,
-      type: 'link'
-    },
-    {
-      name: 'More',
-      icon: <MenuIcon />,
-      iconActive: <MenuIcon />,
-      type: null,
-      isChild: true
-    }
-  ];
-  interface ImenuItem {
-    name: string;
-    icon: React.ReactNode;
-    iconActive: React.ReactNode;
-    type?: string | null;
-    isChild?: boolean | null;
-  }
 
   const MenuItemElement = ({ item }: { item: ImenuItem }) => {
     return (
-      <MenuItem sx={{ color: 'text.primary', py: 2, width: '100%' }}>
+      <MenuItem
+        sx={{ color: 'text.primary', p: { xs: 1, sm: 2 }, py: 2, width: '100%' }}
+        onClick={() => {
+          setMenus((prev) => {
+            const newMenus = prev.map((newItem) => {
+              console.log(newItem.name, item.name);
+              if (newItem.name === item.name) {
+                console.log('có');
+                return { ...newItem, active: true };
+              } else return { ...newItem, active: false };
+            });
+            console.log(newMenus);
+            return newMenus;
+          });
+        }}
+      >
         <ListItemIcon
           sx={{
             color: 'text.primary',
             minWidth: 0,
             justifyContent: 'center',
-            mr: 1
+            mr: { xs: 0, sm: 2 }
           }}
         >
-          {item.icon}
-          {/* <item.icon className={cx('iconActive')} fontSize='large' />
-          <item.iconActive className={cx('icon')} fontSize='large' /> */}
+          {item.active ? item.iconActive : item.icon}
         </ListItemIcon>
-        <Typography className={cx('item-name')} pl={1} variant='inherit'>
+        <Typography display={{ xs: 'none', sm: 'block' }} className={cx('item-name')} variant='inherit'>
           {item.name}
         </Typography>
       </MenuItem>
@@ -133,15 +84,19 @@ const MenuPhone = () => {
     return (
       <Box>
         {subMenus.map((menuItem) => (
-          <MenuItem key={menuItem.name} onClick={handleClose}>
+          <MenuItem
+            divider
+            sx={{ py: 2, px: 3, display: 'flex', justifyContent: 'space-between' }}
+            key={menuItem.name}
+            onClick={handleClose}
+          >
             <Typography>{menuItem?.name}</Typography>
             {menuItem?.icon && (
               <ListItemIcon
                 sx={{
                   color: 'text.primary',
                   minWidth: 0,
-                  justifyContent: 'center',
-                  mr: 1
+                  justifyContent: 'center'
                 }}
               >
                 {/* <menuItem.icon fontSize='large' /> */}
@@ -154,30 +109,41 @@ const MenuPhone = () => {
     );
   };
   return (
-    <MenuList component='nav'>
-      <MenuItem sx={{ color: 'text.primary' }}>
+    <MenuList
+      component='nav'
+      sx={{
+        justifyContent: 'space-between',
+        display: { xs: 'flex', sm: 'block' }
+      }}
+    >
+      <MenuItem sx={{ color: 'text.primary', pl: 1, display: { xs: 'none', sm: 'block' } }}>
         <ListItemIcon
           sx={{
             color: 'text.primary',
             minWidth: 0,
             justifyContent: 'center',
-            mr: 3
+            ml: 3
           }}
         >
           <img className={cx('logo-only', 'iconActive')} alt='home-icon' src={images.only_logo_white_background} />
           <img className={cx('logo', 'iconActive')} alt='home-icon' src={images.black_only_word} />
-          {/* <menuItem.icon className={cx('iconActive')} fontSize='large' />
-          <menuItem.iconActive className={cx('icon')} fontSize='large' /> */}
+          {/* <menuItem.icon  fontSize='large' />
+          <menuItem.iconActive  fontSize='large' /> */}
         </ListItemIcon>
       </MenuItem>
-      {menuLists.map((menuItem, index) =>
+      {menus.map((menuItem) =>
         !menuItem.isChild ? (
-          <NavLink key={index} className={(nav) => cx('navLink', { active: nav.isActive })} to={'/profile'}>
-            <MenuItemElement item={menuItem} />
-          </NavLink>
+          menuItem.to ? (
+            <NavLink key={menuItem.name} className={(nav) => cx('navLink', { active: nav.isActive })} to={menuItem.to}>
+              <MenuItemElement item={menuItem} />
+            </NavLink>
+          ) : (
+            <MenuItemElement key={menuItem.name} item={menuItem} />
+          )
         ) : (
           <MenuPopper
-            key={index}
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+            key={menuItem.name}
             activeIcon={<MenuItemElement item={menuItem} />}
             content={(handleClose: (event: Event | React.SyntheticEvent) => void) => (
               <SubMenuCpn subMenus={subMenus} handleClose={handleClose} />
@@ -185,9 +151,7 @@ const MenuPhone = () => {
           ></MenuPopper>
         )
       )}
-
-      {/* <ModeSwitcher /> */}
     </MenuList>
   );
 };
-export { MenuPhone };
+export { Menu };
