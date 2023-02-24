@@ -13,8 +13,8 @@ import MuiDrawer from '@mui/material/Drawer';
 const SideBar = () => {
   // const theme = useTheme();
   const drawerWidth = 240;
-  const [open, setOpen] = React.useState(true);
-
+  // const [open, setOpen] = React.useState(true);
+  const [open] = React.useState(true);
   const openedMixin = (theme: Theme): CSSObject => ({
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -55,13 +55,13 @@ const SideBar = () => {
       '& .MuiDrawer-paper': closedMixin(theme)
     }
   }));
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+  // const handleDrawerOpen = () => {
+  //   setOpen(true);
+  // };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  // const handleDrawerClose = () => {
+  //   setOpen(false);
+  // };
 
   return (
     <Box component='nav'>

@@ -18,9 +18,8 @@ import { ListItemIcon, MenuItem, MenuList, Typography, Box } from '@mui/material
 // import images from 'src/assets/images';
 import styles from './SideBar.module.scss';
 import classNames from 'classnames/bind';
-import { useTheme } from '@mui/styles';
 import images from 'src/assets/images';
-import MenuPopper from 'src/components/MenuPopper';
+import MenuPopper from 'src/components/Popper';
 const cx = classNames.bind(styles);
 
 const MenuPhone = () => {
@@ -103,7 +102,6 @@ const MenuPhone = () => {
     isChild?: boolean | null;
   }
 
-  const theme = useTheme();
   const MenuItemElement = ({ item }: { item: ImenuItem }) => {
     return (
       <MenuItem sx={{ color: 'text.primary', py: 2, width: '100%' }}>
@@ -130,7 +128,7 @@ const MenuPhone = () => {
     handleClose
   }: {
     subMenus: ImenuItem[];
-    handleClose: React.MouseEventHandler<HTMLLIElement> | undefined;
+    handleClose: (event: Event | React.SyntheticEvent) => void;
   }) => {
     return (
       <Box>
@@ -175,13 +173,15 @@ const MenuPhone = () => {
       {menuLists.map((menuItem, index) =>
         !menuItem.isChild ? (
           <NavLink key={index} className={(nav) => cx('navLink', { active: nav.isActive })} to={'/profile'}>
-            <MenuItemElement  item={menuItem} />
+            <MenuItemElement item={menuItem} />
           </NavLink>
         ) : (
           <MenuPopper
             key={index}
             activeIcon={<MenuItemElement item={menuItem} />}
-            content={(handleClose: any) => <SubMenuCpn subMenus={subMenus} handleClose={handleClose} />}
+            content={(handleClose: (event: Event | React.SyntheticEvent) => void) => (
+              <SubMenuCpn subMenus={subMenus} handleClose={handleClose} />
+            )}
           ></MenuPopper>
         )
       )}
