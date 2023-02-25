@@ -18,6 +18,7 @@ const MenuPopper = (props: Props) => {
   const anchorRef = React.useRef<HTMLButtonElement | undefined>(undefined);
 
   const handleToggle = () => {
+    console.log('có zô');
     setOpen((prevOpen) => !prevOpen);
   };
 
@@ -52,41 +53,49 @@ const MenuPopper = (props: Props) => {
 
   return (
     <Stack sx={sx} direction='row' spacing={2}>
-      <Box
-        ref={anchorRef}
-        id='composition-button'
-        aria-controls={open ? 'composition-menu' : undefined}
-        aria-expanded={open ? 'true' : undefined}
-        aria-haspopup='true'
-        width={'100%'}
-        onClick={handleToggle}
-      >
-        {activeIcon}
-      </Box>
-      <Popper open={open} anchorEl={anchorRef.current} role={undefined} placement='bottom-end' transition disablePortal>
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin: placement === 'bottom-start' ? 'right bottom' : 'right bottom'
-            }}
-          >
-            <Paper>
-              <ClickAwayListener onClickAway={handleClose}>
-                <MenuList
-                  sx={{ p: 0, m: 0 }}
-                  autoFocusItem={open}
-                  id='composition-menu'
-                  aria-labelledby='composition-button'
-                  onKeyDown={handleListKeyDown}
-                >
-                  {content(handleClose)}
-                </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
+      <div>
+        <Box
+          ref={anchorRef}
+          id='composition-button'
+          aria-controls={open ? 'composition-menu' : undefined}
+          aria-expanded={open ? 'true' : undefined}
+          aria-haspopup='true'
+          onClick={handleToggle}
+        >
+          {activeIcon}
+        </Box>
+        <Popper
+          open={open}
+          anchorEl={anchorRef.current}
+          role={undefined}
+          placement='bottom-start'
+          transition
+          disablePortal
+        >
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{
+                transformOrigin: placement === 'bottom-start' ? 'left top' : 'left bottom'
+              }}
+            >
+              <Paper>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MenuList
+                    sx={{ p: 0, m: 0 }}
+                    autoFocusItem={open}
+                    id='composition-menu'
+                    aria-labelledby='composition-button'
+                    onKeyDown={handleListKeyDown}
+                  >
+                    {content(handleClose)}
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
+      </div>
     </Stack>
   );
 };

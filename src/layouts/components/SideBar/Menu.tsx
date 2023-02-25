@@ -45,17 +45,17 @@ const Menu = ({
       <MenuItem
         sx={{ color: 'text.primary', p: { xs: 1, sm: 2 }, py: 2, width: '100%' }}
         onClick={() => {
-          setMenus((prev) => {
-            const newMenus = prev.map((newItem) => {
-              console.log(newItem.name, item.name);
-              if (newItem.name === item.name) {
-                console.log('có');
-                return { ...newItem, active: true };
-              } else return { ...newItem, active: false };
+          if (!item.isMore) {
+            setMenus((prev) => {
+              const newMenus = prev.map((newItem) => {
+                if (newItem.name === item.name) {
+                  console.log('có');
+                  return { ...newItem, active: true };
+                } else return { ...newItem, active: false };
+              });
+              return newMenus;
             });
-            console.log(newMenus);
-            return newMenus;
-          });
+          }
         }}
       >
         <ListItemIcon

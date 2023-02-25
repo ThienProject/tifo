@@ -20,6 +20,7 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import MovieOutlinedIcon from '@mui/icons-material/MovieOutlined';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import AddCircleOutlineRounded from '@mui/icons-material/AddCircleOutlineRounded';
+import MovieRoundedIcon from '@mui/icons-material/MovieRounded';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ImenuItem } from 'src/types/common';
 const SideBar = () => {
@@ -42,7 +43,7 @@ const SideBar = () => {
     {
       name: 'Reels',
       icon: <MovieOutlinedIcon />,
-      iconActive: <HomeRoundedIcon />,
+      iconActive: <MovieRoundedIcon />,
       type: 'link',
       to: 'reels',
       active: false
@@ -75,7 +76,8 @@ const SideBar = () => {
       iconActive: <MenuIcon />,
       type: null,
       isChild: true,
-      active: false
+      active: false,
+      isMore: true
     }
   ];
   const [menus, setMenus] = useState<ImenuItem[]>(menuLists);
