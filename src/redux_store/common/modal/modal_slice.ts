@@ -16,7 +16,7 @@ const modalSlice = createSlice({
       const { modalId, dialogComponent } = action.payload;
       state[modalId] = {
         open: true,
-        dialogComponent,
+        dialogComponent
       };
     },
 
@@ -25,8 +25,8 @@ const modalSlice = createSlice({
       delete state[modalId as keyof IModalState];
     },
 
-    resetModal: () => initialState,
-  },
+    resetModal: () => initialState
+  }
 });
 
 export const { openModal, closeModal, resetModal } = modalSlice.actions;

@@ -32,6 +32,7 @@ module.exports = {
     node: true
   },
   rules: {
+     "@typescript-eslint/no-explicit-any": "off",
     '@typescript-eslint/no-var-requires': 0,
     "import/no-named-as-default": "off",
     "import/named": "off",

@@ -5,5 +5,5 @@ import userSlice from './user/user_slice';
 export const reducer = {
   modalSlice,
   apiSlice,
-  userSlice,
+  userSlice
 };

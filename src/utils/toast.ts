@@ -8,8 +8,7 @@ export const toastMessage = {
   error: (message: string) => toast.error(message || 'Lỗi hệ thống'),
   custom: (content: JSX.Element) => toast.custom(content),
   setErrors: (error: IErrors, setError?: UseFormSetError<any>) => {
-    if (!error || isEmpty(error.errors))
-      return toast.error(error.message || 'Lỗi hệ thống');
+    if (!error || isEmpty(error.errors)) return toast.error(error.message || 'Lỗi hệ thống');
 
     for (const key in error.errors) {
       for (const err of error.errors[key]) {
@@ -17,5 +16,5 @@ export const toastMessage = {
         setError(key, { message: err.message });
       }
     }
-  },
+  }
 };

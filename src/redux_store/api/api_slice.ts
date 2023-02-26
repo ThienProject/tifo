@@ -26,8 +26,8 @@ const apiSlice = createSlice({
           ...state[action.type.split('/')?.[0]],
           [action.type.split('/')?.[1]]: {
             status: 'pending',
-            error: null,
-          },
+            error: null
+          }
         };
       }
     );
@@ -38,8 +38,8 @@ const apiSlice = createSlice({
           ...state[action.type.split('/')?.[0]],
           [action.type.split('/')?.[1]]: {
             status: 'fulfilled',
-            error: null,
-          },
+            error: null
+          }
         };
       }
     );
@@ -50,12 +50,12 @@ const apiSlice = createSlice({
           ...state[action.type.split('/')?.[0]],
           [action.type.split('/')?.[1]]: {
             status: 'rejected',
-            error: action.payload,
-          },
+            error: action.payload
+          }
         };
       }
     );
-  },
+  }
 });
 
 export default apiSlice.reducer;

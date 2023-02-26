@@ -3,12 +3,10 @@ import React from 'react';
 import { FormInput } from 'src/components/hooks_form/form_input';
 import { useForm } from 'react-hook-form';
 import { IPayloadLogin } from 'src/types/auth';
-// import classNames from 'classnames/bind';
-// import styles from './Login.module.scss';
 import { useNavigate } from 'react-router';
 import images from 'src/assets/images';
-// const cx = classNames.bind(styles);
-const Login = () => {
+
+const Register = () => {
   const navigation = useNavigate();
   const initLoginForm: IPayloadLogin = {
     email: '',
@@ -18,9 +16,9 @@ const Login = () => {
     defaultValues: initLoginForm
   });
   return (
-    <Box sx={{ width: 350, mt: 1 }}>
+    <Box sx={{ width: 350 }}>
       <Paper>
-        <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', pt: 2, pb: 4 }}>
           <Box>
             <Box
               sx={{
@@ -37,20 +35,47 @@ const Login = () => {
             >
               <img style={{ width: '240px' }} alt='tifo logo' src={images.full_Logo_white} />
               <FormInput
+                label='Email'
                 sx={{
                   fontSize: 2,
                   color: 'red',
                   '& label': {
                     fontSize: 14
-                  },
-                  '& svg': {
-                    fontSize: 18
                   }
                 }}
-                label='Email'
                 placeholder='Email'
                 name='email'
                 type='text'
+                required
+                control={control}
+              />
+              <FormInput
+                label='Username'
+                placeholder='Username'
+                sx={{
+                  fontSize: 2,
+                  color: 'red',
+                  '& label': {
+                    fontSize: 14
+                  }
+                }}
+                type='text'
+                name='username'
+                required
+                control={control}
+              />
+              <FormInput
+                sx={{
+                  fontSize: 2,
+                  color: 'red',
+                  '& label': {
+                    fontSize: 14
+                  }
+                }}
+                label='Fullname'
+                placeholder='Fullname'
+                type='text'
+                name='fullname'
                 required
                 control={control}
               />
@@ -72,6 +97,24 @@ const Login = () => {
                 required
                 control={control}
               />
+              <FormInput
+                sx={{
+                  fontSize: 2,
+                  color: 'red',
+                  '& label': {
+                    fontSize: 14
+                  },
+                  '& svg': {
+                    fontSize: 18
+                  }
+                }}
+                label='Confirm Password'
+                placeholder='Confirm Password'
+                type='password'
+                name='confirm_password'
+                required
+                control={control}
+              />
               <Button
                 onClick={() => {
                   handleSubmit;
@@ -80,18 +123,7 @@ const Login = () => {
                 sx={{ color: 'common.white' }}
                 variant='contained'
               >
-                Login
-              </Button>
-              <Typography sx={{ opacity: 0.6 }} fontWeight={100}>
-                Or
-              </Typography>
-              <Button
-                onClick={() => {
-                  navigation('/auth/forget-password');
-                }}
-                sx={{ fontSize: 10 }}
-              >
-                Forget password
+                Sign up
               </Button>
             </Box>
           </Box>
@@ -100,13 +132,13 @@ const Login = () => {
       <Paper sx={{ mt: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 1 }}>
           <Typography fontWeight={100} fontSize={13}>
-            {"Don't have an account?"}
+            {'Do you have an account?'}{' '}
             <Button
               onClick={() => {
-                navigation('/auth/register');
+                navigation('/auth/login');
               }}
             >
-              Sign up
+              Login
             </Button>
           </Typography>
         </Box>
@@ -115,4 +147,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

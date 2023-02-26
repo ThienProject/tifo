@@ -20,16 +20,37 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import MovieOutlinedIcon from '@mui/icons-material/MovieOutlined';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import AddCircleOutlineRounded from '@mui/icons-material/AddCircleOutlineRounded';
+import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded';
+import ModeSwitcher from 'src/theme/ModeSwitcher';
+import SettingsSuggestOutlinedIcon from '@mui/icons-material/SettingsSuggestOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import MovieRoundedIcon from '@mui/icons-material/MovieRounded';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ImenuItem } from 'src/types/common';
+import Search from 'src/pages/Search';
+import Notification from 'src/pages/Notification';
 const SideBar = () => {
+  // const theme = useTheme();
+  const drawerWidth = 240;
+  // const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(true);
+  const handleToggleDrawer = () => {
+    let isOpenDrawer = false;
+    console.log('Toggle drawer', !open);
+    setOpen((prev) => {
+      isOpenDrawer = !prev;
+      return isOpenDrawer;
+    });
+    return isOpenDrawer;
+  };
+  const handleSetOpenDrawer = (isOpen: boolean) => {
+    setOpen(isOpen);
+  };
   const menuLists = [
     {
       name: 'Home',
       icon: <HomeOutlinedIcon />,
       iconActive: <HomeRoundedIcon />,
-      type: 'link',
       to: '/',
       active: true
     },
@@ -37,14 +58,13 @@ const SideBar = () => {
       name: 'Search',
       icon: <SearchRoundedIcon />,
       iconActive: <SearchRoundedIcon />,
-      type: null,
+      element: <Search />,
       active: false
     },
     {
       name: 'Reels',
       icon: <MovieOutlinedIcon />,
       iconActive: <MovieRoundedIcon />,
-      type: 'link',
       to: 'reels',
       active: false
     },
@@ -52,40 +72,60 @@ const SideBar = () => {
       name: 'Notifications',
       icon: <NotificationsNoneRoundedIcon />,
       iconActive: <NotificationsActiveRoundedIcon />,
-      type: null,
+      element: <Notification />,
       active: false
     },
     {
       name: 'Create',
       icon: <AddCircleOutlineRounded />,
       iconActive: <AddCircleRoundedIcon />,
-      type: null,
-      active: false
+      to: 'create',
+      active: false,
+      isLogin: true
     },
     {
       name: 'Profile',
       icon: <AccountCircleOutlinedIcon />,
       iconActive: <AccountCircleRoundedIcon />,
-      type: 'link',
       to: 'profile',
-      active: false
+      active: false,
+      isLogin: false
+    },
+    {
+      name: 'Login',
+      icon: <ExitToAppRoundedIcon />,
+      iconActive: <ExitToAppRoundedIcon />,
+      to: 'auth/login',
+      active: false,
+      isLogin: false
     },
     {
       name: 'More',
       icon: <MenuIcon />,
       iconActive: <MenuIcon />,
-      type: null,
-      isChild: true,
+      child: [
+        {
+          name: 'Settings',
+          icon: <SettingsSuggestOutlinedIcon />,
+          iconActive: <SettingsSuggestOutlinedIcon />,
+          type: 'link'
+        },
+        {
+          name: 'Switch appearance',
+          icon: <ModeSwitcher />,
+          iconActive: <ModeSwitcher />
+        },
+        {
+          name: 'Logout',
+          icon: <LogoutOutlinedIcon />,
+          iconActive: <LogoutOutlinedIcon />
+        }
+      ],
       active: false,
       isMore: true
     }
   ];
   const [menus, setMenus] = useState<ImenuItem[]>(menuLists);
-
-  // const theme = useTheme();
-  const drawerWidth = 240;
-  // const [open, setOpen] = React.useState(true);
-  const [open] = React.useState(true);
   const openedMixin = (theme: Theme): CSSObject => ({
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -154,7 +194,12 @@ const SideBar = () => {
   return (
     <Box component='nav'>
       <Drawer variant='permanent' open={open}>
-        <Menu menus={menus} setMenus={setMenus} />
+        <Menu
+          handleSetOpenDrawer={handleSetOpenDrawer}
+          handleToggleDrawer={handleToggleDrawer}
+          menus={menus}
+          setMenus={setMenus}
+        />
       </Drawer>
     </Box>
   );

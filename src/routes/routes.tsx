@@ -1,5 +1,10 @@
 import { RouteObject } from 'react-router';
+import Auth from 'src/layouts/Auth';
 import MainLayout from 'src/layouts/Main';
+import ForgetPassword from 'src/pages/Auth/ForgetPassword';
+import Login from 'src/pages/Auth/Login/Login';
+import Register from 'src/pages/Auth/Register/Register';
+import Create from 'src/pages/Create';
 import Home from 'src/pages/Home';
 import Messages from 'src/pages/Messages';
 import Profile from 'src/pages/Profile';
@@ -15,7 +20,7 @@ const routes: IRoute = (isLogin) => [
     element: <MainLayout />,
     children: [
       {
-        path: '/',
+        index: true,
         element: <Home />
       },
       {
@@ -29,6 +34,29 @@ const routes: IRoute = (isLogin) => [
       {
         path: '/reels',
         element: <Reels />
+      },
+      {
+        path: '/create',
+        element: <Create/>
+      }
+    ]
+  },
+  {
+    path: '/auth',
+    element: <Auth />,
+    children: [
+      {
+        index: true,
+        path: 'login',
+        element: <Login />
+      },
+      {
+        path: 'register',
+        element: <Register />
+      },
+      {
+        path: 'forget-password',
+        element: <ForgetPassword />
       }
     ]
   }
