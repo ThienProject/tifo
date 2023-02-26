@@ -33,6 +33,9 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.2",
     "react-hot-toast": "^2.4.0",
+    "react-image-video-lightbox": "^3.0.0",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-material-ui-carousel": "^3.4.2",
     "react-redux": "^8.0.5",
     "react-router": "^6.8.1",
     "react-router-dom": "^6.8.1"
