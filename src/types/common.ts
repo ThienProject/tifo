@@ -1,11 +1,12 @@
 export interface ImenuItem {
   name: string;
   icon: React.ReactNode;
-  iconActive: React.ReactNode;
+  iconActive?: React.ReactNode;
   to?: string;
-  element?: React.ReactNode;
+  childNode?: React.ReactNode;
   child?: ImenuItem[];
   active?: boolean;
+  action?: {any:()=> void};
 }
 export interface IErrorsDetail {
   [x: string]: { id: string; message: string }[];

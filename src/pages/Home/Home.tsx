@@ -90,7 +90,7 @@ const Home = () => {
 
   return (
     <Grid>
-      <Grid lg={6}>
+      <Grid item lg={6}>
         <Box mt={3} height={100} color={'common.black'}>
           <ListFriends />
           <Box mt={3}>
@@ -109,7 +109,7 @@ const Home = () => {
           </Box>
         </Box>
       </Grid>
-      <Grid lg={6}></Grid>
+      <Grid item lg={6}></Grid>
     </Grid>
   );
 };

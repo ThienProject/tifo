@@ -13,13 +13,14 @@ const cx = classNames.bind(styles);
 const Menu = ({
   menus,
   setMenus,
-  handleToggleDrawer,
-  handleSetOpenDrawer
+  action
 }: {
   menus: ImenuItem[];
   setMenus: React.Dispatch<React.SetStateAction<ImenuItem[]>>;
-  handleToggleDrawer: () => boolean;
-  handleSetOpenDrawer: (isOpen: boolean) => void;
+  action: {
+    handleDrawerOpen: () => void;
+    handleDrawerClose: () => void;
+  };
 }) => {
   return (
     <MenuList
@@ -44,35 +45,10 @@ const Menu = ({
           <menuItem.iconActive  fontSize='large' /> */}
         </ListItemIcon>
       </MenuItem>
-
-      {menus.map((menuItem) =>
-        !menuItem.child && !menuItem.element ? (
-          <SideBarItem
-            handleSetOpenDrawer={handleSetOpenDrawer}
-            setMenus={setMenus}
-            key={menuItem.name}
-            item={menuItem}
-          />
-        ) : (
-          <Box key={menuItem.name}>
-            <Popper
-              placement={'right'}
-              sx={{ display: { xs: 'none', sm: 'block' } }}
-              isOpen={menuItem.active || false}
-              name={menuItem.name}
-              setMenus={setMenus}
-              activeIcon={<SideBarItem handleToggleDrawer={handleToggleDrawer} item={menuItem} />}
-              content={(handleClose: (event: Event | React.SyntheticEvent) => void) => (
-                <Box>
-                  {menuItem.element && menuItem.element}
-                  <SubMenu subMenus={menuItem.child} handleClose={handleClose} />
-                </Box>
-              )}
-            ></Popper>
-          </Box>
-        )
-      )}
+      {menus.map((menuItem) => (
+        <SideBarItem action={action} setMenus={setMenus} key={menuItem.name} item={menuItem} />
+      ))}
     </MenuList>
   );
 };
-export { Menu };
+export default Menu;
