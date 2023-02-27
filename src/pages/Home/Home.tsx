@@ -1,10 +1,11 @@
 import { Box, Grid } from '@mui/material';
 import React, { useState } from 'react';
-import ListFriends from './components/ListFriends';
+import ListFriends from './components/ListFriends/ListFriends';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import PostItem from './components/PostItem';
 import { IPost } from 'src/types/post';
 import images from 'src/assets/images';
+import Suggestions from './components/Suggestions';
 
 const Home = () => {
   const items: IPost[] = [
@@ -89,7 +90,7 @@ const Home = () => {
   };
 
   return (
-    <Grid>
+    <Grid container>
       <Grid item lg={6}>
         <Box mt={3} height={100} color={'common.black'}>
           <ListFriends />
@@ -109,7 +110,11 @@ const Home = () => {
           </Box>
         </Box>
       </Grid>
-      <Grid item lg={6}></Grid>
+      <Grid item lg={6}>
+        <Box mt={4} mx={10}>
+          <Suggestions />
+        </Box>
+      </Grid>
     </Grid>
   );
 };

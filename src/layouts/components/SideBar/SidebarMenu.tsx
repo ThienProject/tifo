@@ -1,13 +1,10 @@
 import React from 'react';
-import { ListItemIcon, MenuItem, MenuList, Box } from '@mui/material';
-// import images from 'src/assets/images';
+import { ListItemIcon, MenuItem, MenuList } from '@mui/material';
 import styles from './SideBar.module.scss';
 import classNames from 'classnames/bind';
 import images from 'src/assets/images';
-import Popper from 'src/components/Popper';
 import { ImenuItem } from 'src/types/common';
 import SideBarItem from './components/SideBarItem';
-import SubMenu from './components/SubMenu';
 const cx = classNames.bind(styles);
 
 const Menu = ({

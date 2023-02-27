@@ -28,7 +28,8 @@ const SideBarItem = ({
     if (item.child || item.childNode) {
       setAnchorEl(anchorRef.current);
     }
-  }, [item.active]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleClosePopper = () => {
     setMenus &&
@@ -40,6 +41,7 @@ const SideBarItem = ({
         // } else newMenus[index].action.handleDrawerOpen();
         return newMenus;
       });
+    action.handleDrawerOpen();
   };
   return (
     <MenuItem sx={{ m: 0, p: 0 }}>
