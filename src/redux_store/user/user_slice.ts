@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { loginUser } from './user_action';
 
 const getLocal: any = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || '') : null;
-
 const initialState = {
   auth: getLocal
 };
