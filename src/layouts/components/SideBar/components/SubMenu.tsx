@@ -16,7 +16,11 @@ const SubMenu = ({
           divider
           sx={{ py: 2, px: 3, display: 'flex', justifyContent: 'space-between' }}
           key={menuItem.name}
-          onClick={handleClose}
+          onClick={(e) => {
+            console.log('có');
+            menuItem.action && menuItem.action();
+            handleClose(e);
+          }}
         >
           <Typography>{menuItem?.name}</Typography>
           {menuItem?.icon && (

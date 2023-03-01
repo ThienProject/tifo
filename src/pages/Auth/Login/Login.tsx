@@ -7,18 +7,45 @@ import { IPayloadLogin } from 'src/types/auth';
 // import styles from './Login.module.scss';
 import { useNavigate } from 'react-router';
 import images from 'src/assets/images';
+import * as yup from 'yup';
+import { useAppDispatch } from 'src/redux_store';
+import { loginThunk } from 'src/redux_store/user/user_action';
+import { toastMessage } from 'src/utils/toast';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 // const cx = classNames.bind(styles);
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const navigation = useNavigate();
   const initLoginForm: IPayloadLogin = {
     email: '',
     password: ''
   };
-  const { control, handleSubmit } = useForm({
-    defaultValues: initLoginForm
+  const schemaLogin = yup.object().shape({
+    email: yup.string().email('Email is not invalid').required("Email can't not empty."),
+    password: yup.string().required('Please enter password.').min(8)
   });
+  const { control, handleSubmit } = useForm({
+    defaultValues: initLoginForm,
+    resolver: yupResolver(schemaLogin)
+  });
+  const handleOnSubmit = (data: IPayloadLogin) => {
+    const { email, password } = data;
+    dispatch(
+      loginThunk({
+        email,
+        password
+      })
+    )
+      .unwrap()
+      .then((data) => {
+        toastMessage.success(data.message ? data.message : 'Login success!');
+        navigate('/');
+      });
+  };
   return (
-    <Box sx={{ width: 350, mt: 1 }}>
+    <Box component={'form'} sx={{ width: 350, mt: 1 }}>
       <Paper>
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
           <Box>
@@ -73,9 +100,7 @@ const Login = () => {
                 control={control}
               />
               <Button
-                onClick={() => {
-                  handleSubmit;
-                }}
+                onClick={handleSubmit(handleOnSubmit)}
                 fullWidth
                 sx={{ color: 'common.white' }}
                 variant='contained'

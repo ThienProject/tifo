@@ -3,7 +3,7 @@ import { userApi } from 'src/clients/http/user_api';
 import { IPayloadLogin, IPayloadRegister } from 'src/types/auth';
 import { toastMessage } from 'src/utils/toast';
 
-export const loginUser = createAsyncThunk<string, IPayloadLogin>(
+export const loginThunk = createAsyncThunk<any, IPayloadLogin>(
   'user/loginUser',
   async (payload, { rejectWithValue }) => {
     try {
@@ -16,7 +16,7 @@ export const loginUser = createAsyncThunk<string, IPayloadLogin>(
   }
 );
 
-export const registerUser = createAsyncThunk<any, IPayloadRegister>(
+export const registerThunk = createAsyncThunk<any, IPayloadRegister>(
   'user/registerUser',
   async (payload, { rejectWithValue }) => {
     try {

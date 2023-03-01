@@ -5,6 +5,7 @@ import classNames from 'classnames/bind';
 import images from 'src/assets/images';
 import { ImenuItem } from 'src/types/common';
 import SideBarItem from './components/SideBarItem';
+import { useAppSelector } from 'src/redux_store';
 const cx = classNames.bind(styles);
 
 const Menu = ({
@@ -19,6 +20,10 @@ const Menu = ({
     handleDrawerClose: () => void;
   };
 }) => {
+  const { me } = useAppSelector((state) => {
+    return state.userSlice;
+  });
+  const isLogin: boolean = me?.id_user;
   return (
     <MenuList
       component='nav'
@@ -42,9 +47,18 @@ const Menu = ({
           <menuItem.iconActive  fontSize='large' /> */}
         </ListItemIcon>
       </MenuItem>
-      {menus.map((menuItem) => (
-        <SideBarItem action={action} setMenus={setMenus} key={menuItem.name} item={menuItem} />
-      ))}
+      {menus.map((menuItem) => {
+        if (menuItem.isAuth) {
+          if (isLogin) {
+            return <SideBarItem action={action} setMenus={setMenus} key={menuItem.name} item={menuItem} />;
+          }
+        } else {
+          if (isLogin) {
+            if (menuItem.name === 'Login') return;
+          }
+          return <SideBarItem action={action} setMenus={setMenus} key={menuItem.name} item={menuItem} />;
+        }
+      })}
     </MenuList>
   );
 };

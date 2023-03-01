@@ -4,5 +4,6 @@ export interface IPayloadLogin {
 }
 
 export interface IPayloadRegister extends IPayloadLogin {
-  fullName: string;
+  fullname: string;
+  username: string;
 }

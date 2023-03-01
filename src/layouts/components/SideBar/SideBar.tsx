@@ -29,7 +29,13 @@ import ModeSwitcher from 'src/theme/ModeSwitcher';
 import { ImenuItem } from 'src/types/common';
 import Search from 'src/pages/Search';
 import Notification from 'src/pages/Notification';
+import { useAppDispatch } from 'src/redux_store';
+import { logout } from 'src/redux_store/user/user_slice';
 const SideBar = () => {
+  // const { me } = useAppSelector((state) => {
+  //   return state.userSlice;
+  // });
+  const dispatch = useAppDispatch();
   // const theme = useTheme();
   const drawerWidth = 240;
   // const [open, setOpen] = React.useState(true);
@@ -98,7 +104,7 @@ const SideBar = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const menuLists = [
+  const menuLists: ImenuItem[] = [
     {
       name: 'Home',
       icon: <HomeOutlined />,
@@ -125,7 +131,8 @@ const SideBar = () => {
       icon: <NotificationsNoneRounded />,
       iconActive: <NotificationsActiveRounded />,
       childNode: <Notification />,
-      active: false
+      active: false,
+      isAuth: true
     },
     {
       name: 'Create',
@@ -133,7 +140,7 @@ const SideBar = () => {
       iconActive: <AddCircleRounded />,
       to: 'create',
       active: false,
-      isLogin: true
+      isAuth: true
     },
     {
       name: 'Profile',
@@ -141,15 +148,14 @@ const SideBar = () => {
       iconActive: <AccountCircleRounded />,
       to: 'profile',
       active: false,
-      isLogin: false
+      isAuth: true
     },
     {
       name: 'Login',
       icon: <ExitToAppRounded />,
       iconActive: <ExitToAppRounded />,
       to: 'auth/login',
-      active: false,
-      isLogin: false
+      active: false
     },
     {
       name: 'More',
@@ -166,7 +172,11 @@ const SideBar = () => {
         },
         {
           name: 'Logout',
-          icon: <LogoutOutlined />
+          icon: <LogoutOutlined />,
+          isAuth: true,
+          action: () => {
+            dispatch(logout());
+          }
         }
       ],
       active: false,

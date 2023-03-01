@@ -88,7 +88,7 @@ export const FormInput = (props: IProps) => {
                 handleChange(name, value);
               }
             }}
-            value={isString(value) ? value : '' || isNumber(value) ? value : null}
+            value={isString(value) ? value : '' || isNumber(value) ? value : 0}
             InputProps={
               InputProps
                 ? InputProps

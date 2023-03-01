@@ -2,21 +2,65 @@ import { Paper, Box, Typography, Button } from '@mui/material';
 import React from 'react';
 import { FormInput } from 'src/components/hooks_form/form_input';
 import { useForm } from 'react-hook-form';
-import { IPayloadLogin } from 'src/types/auth';
+import { IPayloadRegister } from 'src/types/auth';
 import { useNavigate } from 'react-router';
 import images from 'src/assets/images';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useAppDispatch } from 'src/redux_store';
+import { registerThunk } from 'src/redux_store/user/user_action';
+import { toastMessage } from 'src/utils/toast';
 
-const Register = () => {
-  const navigation = useNavigate();
-  const initLoginForm: IPayloadLogin = {
-    email: '',
-    password: ''
-  };
+const initRegisterForm: IPayloadRegister = {
+  email: '',
+  password: '',
+  fullname: '',
+  username: ''
+};
+
+const schemaRegister = yup.object().shape({
+  email: yup.string().email('Email is not invalid').required("Email can't not empty."),
+  password: yup.string().required('Please enter password.').min(8),
+  fullname: yup.string().required('Please enter fullname'),
+  username: yup.string().required('Please enter fullname'),
+  confirmPassword: yup
+    .string()
+    .required('Password can not empty.')
+    .min(8, 'Password must be at least 8 characters')
+    .when('password', (password, field: any) => {
+      return password
+        ? field.required('Password incorrect.').oneOf([yup.ref('password')], 'Password incorrect.')
+        : field;
+    })
+});
+
+const RegisterForm = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { control, handleSubmit } = useForm({
-    defaultValues: initLoginForm
+    defaultValues: initRegisterForm,
+    resolver: yupResolver(schemaRegister)
   });
+  const handleOnSubmit = (data: IPayloadRegister) => {
+    const { email, password, fullname, username } = data;
+    console.log('có');
+    dispatch(
+      registerThunk({
+        email,
+        password,
+        fullname,
+        username
+      })
+    )
+      .unwrap()
+      .then((data) => {
+        // console.log(data.mess);
+        toastMessage.success(data.message ? data.message : 'Register success!');
+        navigate('/auth/login');
+      });
+  };
   return (
-    <Box sx={{ width: 350 }}>
+    <Box component='form' sx={{ width: 350 }}>
       <Paper>
         <Box sx={{ display: 'flex', justifyContent: 'center', pt: 2, pb: 4 }}>
           <Box>
@@ -45,11 +89,12 @@ const Register = () => {
                 }}
                 placeholder='Email'
                 name='email'
+                control={control}
                 type='text'
                 required
-                control={control}
               />
               <FormInput
+                control={control}
                 label='Username'
                 placeholder='Username'
                 sx={{
@@ -62,7 +107,6 @@ const Register = () => {
                 type='text'
                 name='username'
                 required
-                control={control}
               />
               <FormInput
                 sx={{
@@ -111,14 +155,12 @@ const Register = () => {
                 label='Confirm Password'
                 placeholder='Confirm Password'
                 type='password'
-                name='confirm_password'
+                name='confirmPassword'
                 required
                 control={control}
               />
               <Button
-                onClick={() => {
-                  handleSubmit;
-                }}
+                onClick={handleSubmit(handleOnSubmit)}
                 fullWidth
                 sx={{ color: 'common.white' }}
                 variant='contained'
@@ -135,7 +177,7 @@ const Register = () => {
             {'Do you have an account?'}{' '}
             <Button
               onClick={() => {
-                navigation('/auth/login');
+                navigate('/auth/login');
               }}
             >
               Login
@@ -147,4 +189,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterForm;

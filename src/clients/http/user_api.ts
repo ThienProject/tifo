@@ -8,7 +8,7 @@ export const userApi = {
     return client.post('/auth/login', payload);
   },
   register: (payload: IPayloadRegister) => {
-    console.log({ payload });
+    // console.log({ payload });
     //any = dữ liệu backend trả về
     return client.post<any>('/auth/register', payload);
   }

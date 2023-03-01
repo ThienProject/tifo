@@ -13,7 +13,7 @@ export const setClientToken = (token: string) => {
 };
 
 export const createClient = () => {
-  const baseURL = 'http://localhost:5000/api/v1';
+  const baseURL = 'http://localhost:8000/api/v1';
 
   const instance = axios.create({
     baseURL,

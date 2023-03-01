@@ -6,7 +6,9 @@ export interface ImenuItem {
   childNode?: React.ReactNode;
   child?: ImenuItem[];
   active?: boolean;
-  action?: {any:()=> void};
+  isAuth?: boolean,
+  isMore?: boolean,
+  action?: () => void;
 }
 export interface IErrorsDetail {
   [x: string]: { id: string; message: string }[];
