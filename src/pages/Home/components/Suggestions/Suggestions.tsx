@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from 'src/redux_store';
 const Suggestions = () => {
   const { me } = useAppSelector((state) => state.userSlice);
+  const isLogin = me?.id_user;
   const users = [
     {
       id_user: '1',
@@ -34,7 +35,7 @@ const Suggestions = () => {
   ];
   return (
     <Box>
-      <Link to={'/profile'} style={{ textDecoration: 'none' }}>
+      <Link to={isLogin ? '/profile' : '/auth/login'} style={{ textDecoration: 'none' }}>
         <Stack direction={'row'} alignItems='center'>
           <Avatar
             sizes='large'
