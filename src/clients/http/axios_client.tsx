@@ -4,9 +4,10 @@ export const getClientToken = () => {
   return axios.defaults.headers.common['Authorization'];
 };
 
-export const setClientToken = (token: string) => {
-  if (token) {
-    axios.defaults.headers.common.Authorization = token;
+export const setClientToken = (accessToken: string, refreshToken: string) => {
+  if (accessToken) {
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+    axios.defaults.headers.common['refreshToken'] = `Bearer ${refreshToken}`;
   } else {
     delete axios.defaults.headers.common.Authorization;
   }

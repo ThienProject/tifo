@@ -110,7 +110,7 @@ const SideBar = () => {
       icon: <HomeOutlined />,
       iconActive: <HomeRounded />,
       to: '/',
-      active: true
+      active: window.location.pathname === '/home' ? true : false
     },
     {
       name: 'Search',
@@ -124,7 +124,7 @@ const SideBar = () => {
       icon: <MovieOutlined />,
       iconActive: <MovieRounded />,
       to: 'reels',
-      active: false
+      active: window.location.pathname === '/reels' ? true : false
     },
     {
       name: 'Notifications',
@@ -139,7 +139,7 @@ const SideBar = () => {
       icon: <AddCircleOutlineRounded />,
       iconActive: <AddCircleRounded />,
       to: 'create',
-      active: false,
+      active: window.location.pathname === '/create' ? true : false,
       isAuth: true
     },
     {
@@ -147,7 +147,7 @@ const SideBar = () => {
       icon: <AccountCircleOutlined />,
       iconActive: <AccountCircleRounded />,
       to: 'profile',
-      active: false,
+      active: window.location.pathname === '/profile' ? true : false,
       isAuth: true
     },
     {

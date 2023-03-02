@@ -12,3 +12,10 @@ export interface IPost {
   description: string;
   time: string;
 }
+export interface IPayloadCreatePost {
+  id_user?: string;
+  type?: string;
+  target?: string;
+  medias?: FileList;
+  description?: string;
+}

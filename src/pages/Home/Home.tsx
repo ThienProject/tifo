@@ -90,8 +90,8 @@ const Home = () => {
   };
 
   return (
-    <Grid container>
-      <Grid item lg={6}>
+    <Grid container justifyContent={'center'}>
+      <Grid item lg={5} justifyContent={'flex-end'}>
         <Box mt={3} height={100} color={'common.black'}>
           <ListFriends />
           <Box mt={3}>
@@ -110,7 +110,7 @@ const Home = () => {
           </Box>
         </Box>
       </Grid>
-      <Grid item lg={6}>
+      <Grid item lg={5}>
         <Box mt={4} mx={10}>
           <Suggestions />
         </Box>
