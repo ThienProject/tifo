@@ -169,7 +169,7 @@ const Media = (prop: IProp) => {
             );
           })}
 
-          {invalid && <FormHelperText>{error?.message}</FormHelperText>}
+          {<FormHelperText>{invalid && error?.message}</FormHelperText>}
         </FormControl>
       )}
     />
