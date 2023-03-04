@@ -40,7 +40,7 @@ const Login = () => {
     )
       .unwrap()
       .then((data) => {
-        toastMessage.success(data.message ? data.message : 'Login success!');
+        if (data) toastMessage.success(data?.message ? data.message : 'Login success!');
         navigate('/');
       });
   };

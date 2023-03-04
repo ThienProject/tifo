@@ -5,9 +5,6 @@ import {
   CardContent,
   CardMedia,
   FormControl,
-  IconButton,
-  Menu,
-  MenuItem,
   SxProps,
   Typography,
   Button,
@@ -24,7 +21,6 @@ import {
   SettingsSuggestRounded
 } from '@mui/icons-material';
 import MenuOption from 'src/components/MenuOption';
-import { display } from '@mui/system';
 interface IProp {
   control: any;
   sx?: SxProps;
@@ -33,9 +29,11 @@ interface IProp {
   disabled?: boolean;
   label?: string;
   name: string;
+  accept: string;
+  multiple: boolean;
 }
 const Media = (prop: IProp) => {
-  const { handleChange, control, required = false, disabled, label, name, sx } = prop;
+  const { accept, multiple, handleChange, control, required = false, name, sx } = prop;
 
   return (
     <Controller
@@ -52,11 +50,11 @@ const Media = (prop: IProp) => {
           <Box>
             <input
               style={{ display: 'none' }}
+              multiple={multiple}
               id={'upload' + name}
               type={'file'}
-              accept={'video/*, image/*'}
+              accept={accept}
               value={[]}
-              multiple
               onChange={(e) => {
                 const files = e.target.files;
                 if (files && files.length > 0) {
@@ -64,10 +62,11 @@ const Media = (prop: IProp) => {
                   newFileList = newFileList.map((file: File) => {
                     const date = new Date();
                     const timestamp = date.getTime();
-                    const newName = `file_${file.name + timestamp}.jpg`;
+                    const newName = `file_${timestamp + file.name}`;
                     return new File([file], newName, { type: file.type });
                   });
-                  onChange([...value, ...newFileList]);
+                  const allFiles = multiple ? [...value, ...newFileList] : newFileList;
+                  onChange(allFiles);
                 }
 
                 if (handleChange) {
@@ -100,9 +99,8 @@ const Media = (prop: IProp) => {
             )}
           </Box>
           <Divider sx={{ mt: 1 }} />
-          {Array.from(value)?.map((itemValue: any, index: number) => {
+          {Array.from(value)?.map((itemValue: any) => {
             const url = URL.createObjectURL(itemValue);
-            console.log(value);
             return (
               <Card key={itemValue.name} sx={{ my: 2 }}>
                 <CardActionArea>
@@ -118,10 +116,9 @@ const Media = (prop: IProp) => {
                 <CardContent>
                   <input
                     id={'file-change' + itemValue.name}
-                    accept={'video/*, image/*'}
+                    accept={accept}
                     style={{ display: 'none' }}
                     type={'file'}
-                    multiple
                     onChange={(e) => {
                       const indexDlt = value.indexOf(itemValue);
                       const fileNew: any = e.target.files ? e.target.files[0] : {};

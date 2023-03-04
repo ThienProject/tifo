@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { setClientToken } from 'src/clients/http/axios_client';
 import { toastMessage } from 'src/utils/toast';
 import { loginThunk } from './user_action';
 
@@ -36,7 +35,6 @@ const userSlice = createSlice({
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
       localStorage.setItem('auth', JSON.stringify({ me: user, accessToken, refreshToken }));
-      setClientToken(accessToken, refreshToken);
     });
   }
 });

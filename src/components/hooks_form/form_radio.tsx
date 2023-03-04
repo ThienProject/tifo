@@ -24,24 +24,7 @@ interface IProps {
   };
 }
 export default function FormRadio(props: IProps) {
-  const {
-    control,
-    name,
-    label,
-    size = 'small',
-    disabled = false,
-    variant = 'outlined',
-    margin = 'dense',
-    options,
-    keyOption,
-    labelOption,
-    optionsDisabled = [],
-    loading = false,
-    deleteOption,
-    handleChange,
-    sx,
-    placeholder
-  } = props;
+  const { control, name, size = 'small', margin = 'dense', options, keyOption, labelOption, sx } = props;
 
   return (
     <Controller

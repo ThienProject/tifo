@@ -1,6 +1,7 @@
 import React from 'react';
 import { ListItemIcon, MenuItem, Typography, Box } from '@mui/material';
 import { ImenuItem } from 'src/types/common';
+import { useNavigate } from 'react-router';
 
 const SubMenu = ({
   subMenus,
@@ -9,17 +10,18 @@ const SubMenu = ({
   subMenus?: ImenuItem[];
   handleClose: (event: Event | React.SyntheticEvent) => void;
 }) => {
+  const navigate = useNavigate();
   return (
     <Box>
       {subMenus?.map((menuItem) => (
         <MenuItem
           divider
-          sx={{ py: 2, px: 3, display: 'flex', justifyContent: 'space-between' }}
+          sx={{ minWidth: 200, py: 2, px: 3, display: 'flex', justifyContent: 'space-between' }}
           key={menuItem.name}
           onClick={(e) => {
-            console.log('có');
             menuItem.action && menuItem.action();
             handleClose(e);
+            menuItem.to && navigate(menuItem.to);
           }}
         >
           <Typography>{menuItem?.name}</Typography>

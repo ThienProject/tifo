@@ -37,7 +37,17 @@ const routes: IRoute = (isLogin) => [
       },
       {
         path: '/create',
-        element: <Create/>
+        children: [
+          {
+            index: true,
+            path: 'post',
+            element: <Create type={'post'} />
+          },
+          {
+            path: 'reels',
+            element: <Create type={'reels'} />
+          }
+        ]
       }
     ]
   },

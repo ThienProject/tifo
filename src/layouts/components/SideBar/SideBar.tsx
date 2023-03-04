@@ -138,9 +138,21 @@ const SideBar = () => {
       name: 'Create',
       icon: <AddCircleOutlineRounded />,
       iconActive: <AddCircleRounded />,
-      to: 'create',
       active: window.location.pathname === '/create' ? true : false,
-      isAuth: true
+      isAuth: true,
+      child: [
+        {
+          name: 'Reels',
+          icon: <SettingsSuggestOutlined />,
+          to: '/create/reels'
+        },
+        {
+          name: 'Post',
+          icon: <SettingsSuggestOutlined />,
+          to: '/create/post'
+        }
+      ],
+      isMore: true
     },
     {
       name: 'Profile',

@@ -5,20 +5,15 @@ import {
   FormHelperText,
   FormLabel,
   IconButton,
-  InputLabel,
   ListItemText,
   MenuItem,
   Select,
   SxProps
 } from '@mui/material';
 import { ClearOutlined } from '@mui/icons-material';
-// import { FormControl, FormHelperText, InputLabel, MenuItem, Select, SxProps } from '@mui/material';
-// import React from 'react';
-
 import _ from 'lodash';
-import { Control, Controller } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import Loading from '../loading';
-import theme from 'src/theme';
 
 interface IProps {
   control: any;
@@ -127,6 +122,7 @@ export const FormSelect = (props: IProps) => {
 
           <Select
             // label={label}
+            variant={variant}
             value={options.length ? value || '' : ''}
             onChange={(e) => {
               if (_.isEqual(value, e.target.value) || loading) return;

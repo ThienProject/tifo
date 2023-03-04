@@ -105,7 +105,7 @@ const SideBarItem = ({
           open={item.active ? item.active : false}
           anchorEl={anchorEl}
           role={undefined}
-          placement={item.child ? 'top-start' : 'right'}
+          placement={item.child ? 'top-end' : 'right'}
           transition
           disablePortal={false}
         >
