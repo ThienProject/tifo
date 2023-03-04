@@ -3,11 +3,12 @@ import { Delete } from '@mui/icons-material';
 import { Button, DialogTitle, Box } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
-import { useAppDispatch, useIsRequestPending } from 'src/hooks';
+import { useIsRequestPending } from 'src/hooks/use_status';
 import { closeModal } from 'src/redux_store/common/modal/modal_slice';
 
-import DialogWrapper from '../dialog_wrapper';
 import { useStyles } from './styles';
+import { useAppDispatch } from 'src/redux_store';
+import ModalWrapper from '../ModelWrapper';
 
 interface IConfirmationDialog {
   modalId: string;
@@ -29,8 +30,8 @@ function ConfirmationDialog(props: IConfirmationDialog) {
     icon,
     sliceName,
     functionName,
-    cancelLabel = 'Đóng',
-    okLabel = 'Đồng ý',
+    cancelLabel = 'Cancel',
+    okLabel = 'Confirm',
     children,
     callback,
     prevClose
@@ -48,7 +49,7 @@ function ConfirmationDialog(props: IConfirmationDialog) {
   };
 
   return (
-    <DialogWrapper modalId={modalId} prevClose={prevClose}>
+    <ModalWrapper modalId={modalId} prevClose={prevClose}>
       <Box className={classes.dialog}>
         <Box className={classes.icon}>{icon ? icon : <Delete fontSize='large' color='error' />}</Box>
         <DialogTitle className={classes.dialogTitle}>{describe}</DialogTitle>
@@ -62,7 +63,7 @@ function ConfirmationDialog(props: IConfirmationDialog) {
           </LoadingButton>
         </Box>
       </Box>
-    </DialogWrapper>
+    </ModalWrapper>
   );
 }
 

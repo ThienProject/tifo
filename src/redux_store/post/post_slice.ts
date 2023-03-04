@@ -10,8 +10,8 @@ import { createSlice } from '@reduxjs/toolkit';
 //   refreshToken
 // };
 
-const userSlice = createSlice({
-  name: 'user',
+const postSlice = createSlice({
+  name: 'post',
   initialState: {},
   reducers: {
     // setName: (state, action) => {
@@ -30,6 +30,6 @@ const userSlice = createSlice({
   }
 });
 
-const { reducer } = userSlice;
+const { reducer } = postSlice;
 // export const { logout } = actions;
 export default reducer;

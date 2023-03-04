@@ -3,7 +3,8 @@ import { Dialog, Box, SxProps, Theme, Breakpoint } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { IModalState } from 'src/types/modal';
 import { useStyles } from './styles';
-import { closeModal } from 'src/redux_store/common/modal/modal_slice';
+import { closeModal, openModal } from 'src/redux_store/common/modal/modal_slice';
+
 interface IDialogWrapperProps {
   modalId: string;
   minWidth?: number;
@@ -18,8 +19,10 @@ interface IDialogWrapperProps {
   maxWidthDialog?: false | Breakpoint | undefined;
   isFullWidth?: boolean;
   prevClose?: any;
+  isBgContent?: boolean;
+  ConfirmForm: React.ReactNode;
 }
-const ModelWrapper = (props: IDialogWrapperProps) => {
+const ModalWrapper = (props: IDialogWrapperProps) => {
   const {
     children,
     minWidth = 380,
@@ -33,7 +36,9 @@ const ModelWrapper = (props: IDialogWrapperProps) => {
     isNotAutoClose = false,
     maxWidthDialog = 'lg',
     isFullWidth = false,
-    prevClose
+    isBgContent = true,
+    prevClose,
+    ConfirmForm
   } = props;
   const classes = useStyles();
   const modalState = useAppSelector(({ modalSlice }: { modalSlice: IModalState }) => modalSlice);
@@ -57,6 +62,12 @@ const ModelWrapper = (props: IDialogWrapperProps) => {
       classes={{ paper: isFullHeight ? classes.fullHeight : classes.paper }}
       maxWidth={maxWidthDialog}
       fullWidth={isFullWidth}
+      sx={{
+        '& .MuiDialog-paper': {
+          bgcolor: !isBgContent ? 'transparent' : '',
+          boxShadow: !isBgContent ? 'none' : ''
+        }
+      }}
     >
       <Box
         sx={sx}
@@ -69,8 +80,9 @@ const ModelWrapper = (props: IDialogWrapperProps) => {
       >
         {children}
       </Box>
+      {ConfirmForm && ConfirmForm}
     </Dialog>
   );
 };
 
-export default ModelWrapper;
+export default ModalWrapper;

@@ -1,4 +1,6 @@
-export const MODAL_IDS = {
+const MODAL_IDS = {
   //accountManagement
-  createPost: 'createPost'
+  loading: 'loading',
+  confirmCancelPost: 'confirmCancelPost',
 };
+export default MODAL_IDS;

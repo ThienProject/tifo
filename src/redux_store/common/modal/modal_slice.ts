@@ -13,6 +13,7 @@ const modalSlice = createSlice({
   initialState,
   reducers: {
     openModal: (state, action: IModalPayload) => {
+      console.log("open modal")
       const { modalId, dialogComponent } = action.payload;
       state[modalId] = {
         open: true,

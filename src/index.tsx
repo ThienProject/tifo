@@ -9,6 +9,7 @@ import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/s
 import { Toaster } from 'react-hot-toast';
 import { Provider } from 'react-redux';
 import store from './redux_store';
+import ModalController from './components/model/modal_controller';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <BrowserRouter>
         <Toaster position='top-center' />
         <App />
+        <ModalController />
       </BrowserRouter>
     </CssVarsProvider>
   </Provider>

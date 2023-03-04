@@ -11,7 +11,11 @@ import { FormSelect } from 'src/components/hooks_form/form_select';
 import { createPostThunk } from 'src/redux_store/post/post_action';
 import { toastMessage } from 'src/utils/toast';
 import { objectToFormData } from 'src/functions';
-
+import { useIsRequestError, useIsRequestPending } from 'src/hooks/use_status';
+import ModalLoading from 'src/components/model/ModalLoading';
+import { closeModal, openModal } from 'src/redux_store/common/modal/modal_slice';
+import MODAL_IDS from 'src/constants/modal';
+import ModalLoadingCreate from './components/ModalLoadingCreate/ModalLoadingCreate';
 const initCreatePost: IPayloadCreatePost = {
   target: '',
   type: '',
@@ -42,7 +46,6 @@ const schemaCreate = yup.object().shape({
   description: yup.string().required("Can't empty description! "),
   medias: yup
     .array()
-    .of(fileSchema)
     .min(1, 'At least one file is required')
     .test('has-image-or-video', 'At least one image or video is required', (files: any) => {
       return files.some((file: any) => file.type.startsWith('image/') || file.type.startsWith('video/'));
@@ -50,6 +53,8 @@ const schemaCreate = yup.object().shape({
 });
 
 const Create = (props: { type: string }) => {
+  const isLoading = useIsRequestPending('post', 'createPostThunk');
+  const isError = useIsRequestError('post', 'createPostThunk');
   const { type } = props;
 
   const { me } = useAppSelector((state: any) => state.userSlice);
@@ -72,18 +77,27 @@ const Create = (props: { type: string }) => {
       id_type: type === 'post' ? '1' : '2'
     };
     const formData = objectToFormData(payload);
-    console.log(typeof formData);
-    console.log(formData);
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
-    await dispatch(createPostThunk(formData))
+    const action = createPostThunk(formData);
+    await dispatch(action)
       .unwrap()
       .then(() => {
         reset();
         toastMessage.success('Create post success !');
       });
   };
+
+  useEffect(() => {
+    if (isLoading) dispatch(openModal({ modalId: MODAL_IDS.loading, dialogComponent: <ModalLoadingCreate /> }));
+    else {
+      dispatch(closeModal({ modalId: MODAL_IDS.loading, dialogComponent: <ModalLoadingCreate /> }));
+    }
+  }, [isLoading]);
+  useEffect(() => {
+    if (isError) {
+      toastMessage.error('Network is slow, Please try again later !');
+    }
+  }, [isError]);
+
   return (
     <Box component='form' m={2} onSubmit={handleSubmit(handleOnSubmit)}>
       <Typography fontWeight={600} fontSize={20} variant='h2'>
