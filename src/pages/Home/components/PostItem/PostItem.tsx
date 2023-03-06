@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography, Stack, Divider, Button } from '@mui/material';
+import { Box, IconButton, Typography, Stack, Divider, Button, CardMedia } from '@mui/material';
 import React, { useState } from 'react';
 import {
   MoreHoriz,
@@ -11,18 +11,27 @@ import {
 import UserItem from 'src/components/items/UserItem';
 import { IPost } from 'src/types/post';
 import SliderImg from './SliderImg';
+import { IUser } from 'src/types/user';
+import moment from 'moment';
+import { CPath } from 'src/constants';
+import { useAppDispatch } from 'src/redux_store';
+import { openModal } from 'src/redux_store/common/modal/modal_slice';
+import MODAL_IDS from 'src/constants/modal';
+import PostDetail from 'src/pages/PostDetail';
 const PostItem = ({ post }: { post: IPost }) => {
   const [isLove, setIsLove] = useState(false);
   const [isMark, setIsMark] = useState(false);
-
+  const dispatch = useAppDispatch();
+  const { id_user, username, fullname, avatar } = post;
+  const user: IUser = { id_user, username, fullname, avatar };
   return (
     <Box>
       {/* top */}
       <Stack mb={1.2} direction='row' justifyContent='space-between'>
         <Box display='flex' alignItems='center'>
-          <UserItem size='small' user={post.user} />
+          <UserItem size='small' user={user} />
           <Typography sx={{ opacity: '0.6' }} fontSize={12}>
-            {post.time}
+            {moment(post.date_time).format('DD-MM-YYYY')}
           </Typography>
         </Box>
         <IconButton size='small'>
@@ -30,7 +39,7 @@ const PostItem = ({ post }: { post: IPost }) => {
         </IconButton>
       </Stack>
       {/* media */}
-      <SliderImg medias={post.medias} />
+      <SliderImg sx={{ height: 300 }} medias={post.medias} />{' '}
       <Stack mt={0.7} justifyContent={'space-between'} direction={'row'}>
         <Stack direction={'row'}>
           <IconButton
@@ -59,11 +68,18 @@ const PostItem = ({ post }: { post: IPost }) => {
         1,001 likes
       </Typography>
       <Typography fontSize={14} fontWeight={550}>
-        Rồi sao đi ăn cơm?
+        {post.description}
       </Typography>
       <Button sx={{ p: 0, fontWeight: '600', fontSize: 10, color: 'text.secondary' }}>see translation</Button>
-      <Button fullWidth sx={{ justifyContent: 'start', p: 0, fontSize: 10, color: 'text.secondary' }}>
-        view all 5 comments
+      <Button
+        fullWidth
+        sx={{ justifyContent: 'start', p: 0, fontSize: 10, color: 'text.secondary' }}
+        onClick={() => {
+          const action = openModal({ modalId: MODAL_IDS.postDetail, dialogComponent: <PostDetail post={post} /> });
+          dispatch(action);
+        }}
+      >
+        view all {post && post.comments?.length} comments
       </Button>
       <Divider sx={{ my: 3 }} />
     </Box>

@@ -12,7 +12,6 @@ import { createPostThunk } from 'src/redux_store/post/post_action';
 import { toastMessage } from 'src/utils/toast';
 import { objectToFormData } from 'src/functions';
 import { useIsRequestError, useIsRequestPending } from 'src/hooks/use_status';
-import ModalLoading from 'src/components/model/ModalLoading';
 import { closeModal, openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
 import ModalLoadingCreate from './components/ModalLoadingCreate/ModalLoadingCreate';
@@ -29,16 +28,13 @@ const fileSchema = yup.object().shape({
 });
 const target = [
   {
-    id_target: '1',
-    target: 'Public'
+    target: 'public'
   },
   {
-    id_target: '2',
-    target: 'Private'
+    target: 'private'
   },
   {
-    id_target: '3',
-    target: 'Follower'
+    target: 'follower'
   }
 ];
 const schemaCreate = yup.object().shape({
@@ -70,11 +66,11 @@ const Create = (props: { type: string }) => {
     const id_user = me?.id_user;
     const { target, description, medias } = data;
     const payload = {
-      id_target: target,
+      target: target,
       description,
       medias,
       id_user,
-      id_type: type === 'post' ? '1' : '2'
+      type: 'post' || 'reel'
     };
     const formData = objectToFormData(payload);
     const action = createPostThunk(formData);
@@ -142,13 +138,13 @@ const Create = (props: { type: string }) => {
               // label='public'
               placeholder='-- select --'
               options={target}
-              keyOption='id_target'
+              keyOption='target'
               labelOption='target'
             />
           </Box>
           {/* <Box sx={{ mb: 3 }}>
             <Typography>Allow users to comment </Typography>
-            <FormRadio keyOption='id_type' options={types} control={control} name='type' labelOption={'type'} />
+            <FormRadio keyOption='type' options={types} control={control} name='type' labelOption={'type'} />
           </Box> */}
           <Button sx={{ color: 'common.white', mt: 2 }} variant='contained' type='submit'>
             Upload

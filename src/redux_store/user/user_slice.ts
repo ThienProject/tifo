@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { toastMessage } from 'src/utils/toast';
 import { loginThunk } from './user_action';
 
 const authLocalStorage: any = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || '') : null;
@@ -19,7 +18,6 @@ const userSlice = createSlice({
     logout: (state) => {
       console.log('có');
       localStorage.clear();
-      toastMessage.success('Bye bye, See you again !');
       state.me = null;
       state.refreshToken = null;
       state.accessToken = null;

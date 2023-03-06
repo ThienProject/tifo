@@ -2,73 +2,81 @@ import React, { useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { Box } from '@mui/material';
 import { IMedia } from 'src/types/post';
-import LightBox from './LightBox';
-function ItemImg(props: { item: IMedia }) {
-  const { item } = props;
-  const [isLightBox, setIsLightBox] = useState(false);
+// import LightBox from './LightBox';
+import { CPath } from 'src/constants';
+import CardActionArea from '@mui/material/CardActionArea/CardActionArea';
+import CardMedia from '@mui/material/CardMedia/CardMedia';
+import { SxProps } from '@mui/material/styles';
+function ItemImg(props: { item: IMedia; sx: SxProps }) {
+  const { item, sx } = props;
+  // const [isLightBox, setIsLightBox] = useState(false);
   return (
     <Box
-      onClick={() => {
+      /*  onClick={() => {
         setIsLightBox(!isLightBox);
-      }}
-      height={300}
+      }} */
+      sx={{ ...sx, p: 0 }}
       overflow={'hidden'}
       borderRadius={2}
-      sx={{ p: 0 }}
     >
-      {!isLightBox && (
-        <img
-          style={{
-            objectFit: 'cover',
-            height: '100%',
-            width: '100%'
-          }}
-          alt={item.id_media + item.type}
-          src={'https://res.cloudinary.com/vuongute/image/upload/v1653878124/DO_AN/ytp8xvawdebeetm9cvll.webp'}
-        />
-      )}
-      {isLightBox && <LightBox />}
+      {
+        /* !isLightBox  && */ <CardActionArea>
+          <CardMedia
+            sx={sx}
+            component={item.type_media === 'video' ? 'video' : 'img'}
+            alt='media'
+            src={CPath.host + '/medias/' + item.media_link}
+            title={item.type_media}
+            controls
+          />
+        </CardActionArea>
+      }
+      {/* {isLightBox && <LightBox />} */}
     </Box>
   );
 }
-const SliderImg = ({ medias }: { medias: IMedia[] }) => {
+const SliderImg = ({ medias, sx }: { medias: IMedia[]; sx: SxProps }) => {
   return (
     <Box>
-      <Carousel
-        autoPlay={false}
-        indicatorIconButtonProps={{
-          style: {
-            // 1
-            color: 'var(--mui-palette-grey-800)' // 3
-          }
-        }}
-        activeIndicatorIconButtonProps={{
-          style: {
-            fontSize: '13px',
-            color: 'var(--mui-palette-common-white)'
-            // backgroundColor: 'var(--mui-palette-common-white)' // 2
-          }
-        }}
-        indicatorContainerProps={{
-          style: {
-            position: 'absolute',
-            zIndex: 2,
-            marginTop: '-30px', // 5
-            textAlign: 'center' // 4
-          }
-        }}
-        navButtonsProps={{
-          // Move the buttons to the bottom. Unsetting top here to override default style.
-          style: {
-            padding: 0,
-            opacity: '0.6'
-          }
-        }}
-      >
-        {medias.map((item, i) => (
-          <ItemImg key={i} item={item} />
-        ))}
-      </Carousel>
+      {medias.length >= 2 ? (
+        <Carousel
+          autoPlay={false}
+          indicatorIconButtonProps={{
+            style: {
+              // 1
+              color: 'var(--mui-palette-grey-800)' // 3
+            }
+          }}
+          activeIndicatorIconButtonProps={{
+            style: {
+              fontSize: '13px',
+              color: 'var(--mui-palette-common-white)'
+              // backgroundColor: 'var(--mui-palette-common-white)' // 2
+            }
+          }}
+          indicatorContainerProps={{
+            style: {
+              position: 'absolute',
+              zIndex: 2,
+              marginTop: '-30px', // 5
+              textAlign: 'center' // 4
+            }
+          }}
+          navButtonsProps={{
+            // Move the buttons to the bottom. Unsetting top here to override default style.
+            style: {
+              padding: 0,
+              opacity: '0.6'
+            }
+          }}
+        >
+          {medias.map((item, i) => (
+            <ItemImg sx={sx} key={i} item={item} />
+          ))}
+        </Carousel>
+      ) : (
+        <ItemImg sx={sx} item={medias[0]} />
+      )}
     </Box>
   );
 };

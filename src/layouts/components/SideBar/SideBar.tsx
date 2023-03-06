@@ -22,7 +22,8 @@ import {
   SettingsSuggestOutlined,
   LogoutOutlined,
   MovieRounded,
-  Menu
+  Menu,
+  MenuOpenRounded
 } from '@mui/icons-material';
 
 import ModeSwitcher from 'src/theme/ModeSwitcher';
@@ -31,6 +32,7 @@ import Search from 'src/pages/Search';
 import Notification from 'src/pages/Notification';
 import { useAppDispatch } from 'src/redux_store';
 import { logout } from 'src/redux_store/user/user_slice';
+import { toastMessage } from 'src/utils/toast';
 const SideBar = () => {
   // const { me } = useAppSelector((state) => {
   //   return state.userSlice;
@@ -172,6 +174,7 @@ const SideBar = () => {
     {
       name: 'More',
       icon: <Menu />,
+      iconActive: <MenuOpenRounded />,
       child: [
         {
           name: 'Settings',
@@ -188,6 +191,7 @@ const SideBar = () => {
           isAuth: true,
           action: () => {
             dispatch(logout());
+            toastMessage.success('bye bye !');
           }
         }
       ],

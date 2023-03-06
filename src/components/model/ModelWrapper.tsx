@@ -20,7 +20,7 @@ interface IDialogWrapperProps {
   isFullWidth?: boolean;
   prevClose?: any;
   isBgContent?: boolean;
-  ConfirmForm: React.ReactNode;
+  ConfirmForm?: React.ReactNode;
 }
 const ModalWrapper = (props: IDialogWrapperProps) => {
   const {

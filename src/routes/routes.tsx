@@ -9,12 +9,14 @@ import Home from 'src/pages/Home';
 import Messages from 'src/pages/Messages';
 import Profile from 'src/pages/Profile';
 import Reels from 'src/pages/Reels';
+import { ILogin } from 'src/types/auth';
+import { ProtectedRoute } from './ProtectedRoute';
 
 // cách 1
 interface IRoute {
-  (isLogin: boolean): RouteObject[];
+  (login: ILogin): RouteObject[];
 }
-const routes: IRoute = (isLogin) => [
+const routes: IRoute = (login) => [
   {
     path: '/',
     element: <MainLayout />,
@@ -25,11 +27,11 @@ const routes: IRoute = (isLogin) => [
       },
       {
         path: '/messages',
-        element: <Messages />
+        element: <ProtectedRoute login={login} children={<Messages />} />
       },
       {
         path: '/profile',
-        element: <Profile />
+        element: <ProtectedRoute login={login} children={<Profile />} />
       },
       {
         path: '/reels',
@@ -41,11 +43,11 @@ const routes: IRoute = (isLogin) => [
           {
             index: true,
             path: 'post',
-            element: <Create type={'post'} />
+            element: <ProtectedRoute login={login} children={<Create type={'post'} />} />
           },
           {
             path: 'reels',
-            element: <Create type={'reels'} />
+            element: <ProtectedRoute login={login} children={<Create type={'reels'} />} />
           }
         ]
       }

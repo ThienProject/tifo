@@ -1,93 +1,38 @@
 import { Box, Grid } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ListFriends from './components/ListFriends/ListFriends';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import PostItem from './components/PostItem';
-import { IPost } from 'src/types/post';
-import images from 'src/assets/images';
+import { IPayloadGetPost, IPost } from 'src/types/post';
 import Suggestions from './components/Suggestions';
+import { useAppDispatch, useAppSelector } from 'src/redux_store';
+import { getPostsThunk } from 'src/redux_store/post/post_action';
 
 const Home = () => {
-  const items: IPost[] = [
-    {
-      id_post: '1',
-      description: 'Phamj vanw thien chao don ngay moi !',
-      user: {
-        id_user: '1',
-        username: 'sybuivan',
-        fullname: 'Phamj vawn Thien',
-        avatar: images.full_Logo_black
-      },
-      medias: [
-        {
-          id_media: '1',
-          type: '1',
-          link: images.full_Logo_white
-        },
-        {
-          id_media: '1',
-          type: '1',
-          link: images.full_Logo_white
-        }
-      ],
-      time: '12:12:2022'
-    },
-    {
-      id_post: '2',
-      description: 'Phamj vanw thien chao don ngay moi !',
-      user: {
-        id_user: '1',
-        username: 'sybuivan',
-        fullname: 'Phamj vawn Thien',
-        avatar: images.full_Logo_black
-      },
-      medias: [
-        {
-          id_media: '1',
-          type: '1',
-          link: images.full_Logo_white
-        },
-        {
-          id_media: '1',
-          type: '1',
-          link: images.full_Logo_white
-        }
-      ],
-      time: '12:12:2022'
-    },
-    {
-      id_post: '3',
-      description: 'Phamj vanw thien chao don ngay moi !',
-      user: {
-        id_user: '1',
-        username: 'sybuivan',
-        fullname: 'Phamj vawn Thien',
-        avatar: images.full_Logo_black
-      },
-      medias: [
-        {
-          id_media: '1',
-          type: '1',
-          link: images.full_Logo_white
-        },
-        {
-          id_media: '1',
-          type: '1',
-          link: images.full_Logo_white
-        }
-      ],
-      time: '12:12:2022'
+  const dispatch = useAppDispatch();
+  const { me } = useAppSelector((state) => state.userSlice);
+  const [postList, setPosts] = useState<IPost[]>([]);
+  const [isLoadMore, setIsLoadMore] = useState(true);
+  const fetchApi = () => {
+    if (isLoadMore) {
+      const id_user = me.id_user;
+      const offset = postList.length;
+      const params: IPayloadGetPost = { id_user: id_user || '', limit: 10, offset: offset };
+      const action = getPostsThunk(params);
+      dispatch(action)
+        .unwrap()
+        .then((data: { message: string; posts: IPost[] }) => {
+          const { posts } = data;
+          if (!posts || posts.length === 0) {
+            setIsLoadMore(false);
+          }
+          setPosts((prev) => [...prev, ...posts]);
+        });
     }
-  ];
-  const [posts, setPosts] = useState(items);
-
-  const fetchMoreData = () => {
-    // a fake async api call like which sends
-    // 20 more records in 1.5 secs
-    setTimeout(() => {
-      setPosts(posts.concat(items));
-    }, 1500);
   };
+  useEffect(() => {
+    fetchApi();
+  }, []);
 
   return (
     <Grid container justifyContent={'center'}>
@@ -97,13 +42,13 @@ const Home = () => {
           <Box mt={3}>
             <Box>
               <InfiniteScroll
-                dataLength={items.length}
-                next={fetchMoreData}
+                dataLength={postList.length}
+                next={fetchApi}
                 hasMore={true}
-                loader={<h4>Loading...</h4>}
+                loader={<h4>{isLoadMore ? 'Loading...' : 'No more posts, come back later !'}</h4>}
               >
-                {posts.map((post, index) => {
-                  return <PostItem key={`post.id_post + ${index} ${Math.random()}`} post={post} />;
+                {postList.map((post) => {
+                  return <PostItem key={post.id_post} post={post} />;
                 })}
               </InfiniteScroll>
             </Box>

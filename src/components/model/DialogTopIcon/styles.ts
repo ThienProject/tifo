@@ -16,6 +16,6 @@ export const useStyles = makeStyles<Theme>((theme) => ({
     top: -30,
     boxShadow: `-1px -8px 4px ${theme.palette.secondary.dark}`,
     zIndex: 9,
-    background: theme.palette.primary.contrastText,
-  },
+    background: theme.palette.primary.contrastText
+  }
 }));

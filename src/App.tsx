@@ -4,9 +4,9 @@ import { useRoutes } from 'react-router';
 import routes from 'src/routes/routes';
 import { useAppSelector } from './redux_store';
 const App = () => {
-  const { auth } = useAppSelector((state) => state.userSlice);
-  const isLogin = auth?.accessToken;
-  return useRoutes(routes(isLogin));
+  const { me } = useAppSelector((state) => state.userSlice);
+  const login = me;
+  return useRoutes(routes(login));
 };
 
 export default App;

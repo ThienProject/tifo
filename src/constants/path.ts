@@ -2,5 +2,6 @@ export const CPath = {
   home: '/',
   login: '/login',
   register: '/register',
-  notFound: '*'
+  notFound: '*',
+  host: process.env.HOST
 };

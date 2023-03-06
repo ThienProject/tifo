@@ -31,5 +31,4 @@ const postSlice = createSlice({
 });
 
 const { reducer } = postSlice;
-// export const { logout } = actions;
 export default reducer;
