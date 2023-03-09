@@ -23,18 +23,10 @@ const PopperCustom = (props: Props) => {
     setAnchorEl(anchorRef.current);
   }, [isOpen]);
   const handleToggle = () => {
-    // setOpen((prevOpen) => {
-    //   console.log(prevOpen);
-    //   return !prevOpen;
-    // });
-
     if (setMenus) {
       setMenus((prev) => {
         const newMenus = prev.map((newItem) => {
           if (newItem.name === name) {
-            console.log(newItem.active);
-            console.log('cos');
-            console.log(!newItem.active);
             return { ...newItem, active: !newItem.active };
           } else return { ...newItem, active: false };
         });

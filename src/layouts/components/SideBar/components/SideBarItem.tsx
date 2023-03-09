@@ -56,10 +56,8 @@ const SideBarItem = ({
           } else {
             if (item.childNode) {
               if (item.active === false) {
-                console.log('close draw');
                 action?.handleDrawerClose();
               } else {
-                console.log('open draw');
                 action?.handleDrawerOpen();
               }
             }
@@ -81,7 +79,6 @@ const SideBarItem = ({
               });
               return newMenus;
             });
-            console.log('đang set  menu', item.active);
           }
         }}
       >

@@ -25,13 +25,15 @@ const Home = () => {
           const { posts } = data;
           if (!posts || posts.length === 0) {
             setIsLoadMore(false);
+          } else {
+            setPosts((prev) => [...prev, ...posts]);
           }
-          setPosts((prev) => [...prev, ...posts]);
         });
     }
   };
   useEffect(() => {
     fetchApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -40,18 +42,20 @@ const Home = () => {
         <Box mt={3} height={100} color={'common.black'}>
           <ListFriends />
           <Box mt={3}>
-            <Box>
-              <InfiniteScroll
-                dataLength={postList.length}
-                next={fetchApi}
-                hasMore={true}
-                loader={<h4>{isLoadMore ? 'Loading...' : 'No more posts, come back later !'}</h4>}
-              >
-                {postList.map((post) => {
-                  return <PostItem key={post.id_post} post={post} />;
-                })}
-              </InfiniteScroll>
-            </Box>
+            {postList.length > 0 && (
+              <Box>
+                <InfiniteScroll
+                  dataLength={postList.length}
+                  next={fetchApi}
+                  hasMore={true}
+                  loader={<p>{isLoadMore ? 'Loading...' : 'No more posts, come back later !'}</p>}
+                >
+                  {postList.map((post, index) => {
+                    return <PostItem index={index} key={post.id_post} post={post} />;
+                  })}
+                </InfiniteScroll>
+              </Box>
+            )}
           </Box>
         </Box>
       </Grid>

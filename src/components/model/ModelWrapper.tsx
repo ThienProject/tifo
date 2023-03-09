@@ -3,7 +3,7 @@ import { Dialog, Box, SxProps, Theme, Breakpoint } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { IModalState } from 'src/types/modal';
 import { useStyles } from './styles';
-import { closeModal, openModal } from 'src/redux_store/common/modal/modal_slice';
+import { closeModal } from 'src/redux_store/common/modal/modal_slice';
 
 interface IDialogWrapperProps {
   modalId: string;

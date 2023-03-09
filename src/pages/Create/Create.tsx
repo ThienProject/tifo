@@ -21,11 +21,11 @@ const initCreatePost: IPayloadCreatePost = {
   description: '',
   medias: []
 };
-const fileSchema = yup.object().shape({
-  name: yup.string(),
-  type: yup.string(),
-  size: yup.number().max(1000000, 'File size must not exceed 1MB')
-});
+// const fileSchema = yup.object().shape({
+//   name: yup.string(),
+//   type: yup.string(),
+//   size: yup.number().max(1000000, 'File size must not exceed 1MB')
+// });
 const target = [
   {
     target: 'public'
@@ -87,6 +87,7 @@ const Create = (props: { type: string }) => {
     else {
       dispatch(closeModal({ modalId: MODAL_IDS.loading, dialogComponent: <ModalLoadingCreate /> }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
   useEffect(() => {
     if (isError) {
@@ -142,10 +143,6 @@ const Create = (props: { type: string }) => {
               labelOption='target'
             />
           </Box>
-          {/* <Box sx={{ mb: 3 }}>
-            <Typography>Allow users to comment </Typography>
-            <FormRadio keyOption='type' options={types} control={control} name='type' labelOption={'type'} />
-          </Box> */}
           <Button sx={{ color: 'common.white', mt: 2 }} variant='contained' type='submit'>
             Upload
           </Button>

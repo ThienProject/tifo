@@ -1,11 +1,10 @@
-import moment from "moment";
+import moment from 'moment';
 
 export function objectToFormData(obj: any) {
   const formData = new FormData();
   for (const key in obj) {
     if (Array.isArray(obj[key])) {
       for (const file of obj[key]) {
-        console.log(file);
         formData.append(`${key}[]`, file);
       }
     } else {
@@ -32,5 +31,4 @@ export const getTimeFromDay = (date: Date) => {
   } else {
     return diffInHours + 'h';
   }
-
-}
+};

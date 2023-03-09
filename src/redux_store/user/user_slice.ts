@@ -16,15 +16,11 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      console.log('có');
       localStorage.clear();
       state.me = null;
       state.refreshToken = null;
       state.accessToken = null;
     }
-    // setName: (state, action) => {
-    //   console.log('test');
-    // }
   },
   extraReducers: (builder) => {
     builder.addCase(loginThunk.fulfilled, (state, action) => {

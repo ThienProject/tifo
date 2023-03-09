@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { Box } from '@mui/material';
 import { IMedia } from 'src/types/post';
@@ -35,49 +35,53 @@ function ItemImg(props: { item: IMedia; sx: SxProps }) {
     </Box>
   );
 }
-const SliderImg = ({ medias, sx }: { medias: IMedia[]; sx: SxProps }) => {
+const SliderImg = ({ medias, sx }: { medias?: IMedia[]; sx: SxProps }) => {
   return (
-    <Box>
-      {medias.length >= 2 ? (
-        <Carousel
-          autoPlay={false}
-          indicatorIconButtonProps={{
-            style: {
-              // 1
-              color: 'var(--mui-palette-grey-800)' // 3
-            }
-          }}
-          activeIndicatorIconButtonProps={{
-            style: {
-              fontSize: '13px',
-              color: 'var(--mui-palette-common-white)'
-              // backgroundColor: 'var(--mui-palette-common-white)' // 2
-            }
-          }}
-          indicatorContainerProps={{
-            style: {
-              position: 'absolute',
-              zIndex: 2,
-              marginTop: '-30px', // 5
-              textAlign: 'center' // 4
-            }
-          }}
-          navButtonsProps={{
-            // Move the buttons to the bottom. Unsetting top here to override default style.
-            style: {
-              padding: 0,
-              opacity: '0.6'
-            }
-          }}
-        >
-          {medias.map((item, i) => (
-            <ItemImg sx={sx} key={i} item={item} />
-          ))}
-        </Carousel>
-      ) : (
-        <ItemImg sx={sx} item={medias[0]} />
+    <>
+      {medias && (
+        <Box>
+          {medias.length >= 2 ? (
+            <Carousel
+              autoPlay={false}
+              indicatorIconButtonProps={{
+                style: {
+                  // 1
+                  color: 'var(--mui-palette-grey-800)' // 3
+                }
+              }}
+              activeIndicatorIconButtonProps={{
+                style: {
+                  fontSize: '13px',
+                  color: 'var(--mui-palette-common-white)'
+                  // backgroundColor: 'var(--mui-palette-common-white)' // 2
+                }
+              }}
+              indicatorContainerProps={{
+                style: {
+                  position: 'absolute',
+                  zIndex: 2,
+                  marginTop: '-30px', // 5
+                  textAlign: 'center' // 4
+                }
+              }}
+              navButtonsProps={{
+                // Move the buttons to the bottom. Unsetting top here to override default style.
+                style: {
+                  padding: 0,
+                  opacity: '0.6'
+                }
+              }}
+            >
+              {medias.map((item, i) => (
+                <ItemImg sx={sx} key={i} item={item} />
+              ))}
+            </Carousel>
+          ) : (
+            <ItemImg sx={sx} item={medias[0]} />
+          )}
+        </Box>
       )}
-    </Box>
+    </>
   );
 };
 

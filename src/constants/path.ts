@@ -3,5 +3,6 @@ export const CPath = {
   login: '/login',
   register: '/register',
   notFound: '*',
-  host: process.env.HOST
+  host: process.env.HOST,
+  baseURL: 'http://localhost:8000/api/v1'
 };

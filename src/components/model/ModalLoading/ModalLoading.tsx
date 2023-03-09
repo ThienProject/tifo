@@ -1,7 +1,6 @@
 import React from 'react';
 import MODAL_IDS from 'src/constants/modal';
 import ModalWrapper from '../ModelWrapper';
-import CloseIcon from '@mui/icons-material/Close';
 import { Box, CircularProgress } from '@mui/material';
 interface IProps {
   ConfirmForm: React.ReactNode;

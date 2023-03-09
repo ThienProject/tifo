@@ -159,7 +159,7 @@ const Media = (prop: IProp) => {
                           onClick={() => {
                             const indexDlt = value.indexOf(itemValue);
                             value.splice(indexDlt, 1);
-                            console.log(value);
+
                             onChange(value);
                           }}
                         >

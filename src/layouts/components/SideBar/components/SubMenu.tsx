@@ -16,13 +16,6 @@ const SubMenu = ({
     return state.userSlice;
   });
 
-  // const MenuItemCpn = (menuItem: any) => {
-  //   console.log(menuItem);
-  //   return (
-
-  //   );
-  // };
-
   return (
     <Box>
       {subMenus.map((menuItem) => {

@@ -43,7 +43,7 @@ const RegisterForm = () => {
   });
   const handleOnSubmit = (data: IPayloadRegister) => {
     const { email, password, fullname, username } = data;
-    console.log('có');
+
     dispatch(
       registerThunk({
         email,
@@ -54,7 +54,6 @@ const RegisterForm = () => {
     )
       .unwrap()
       .then((data) => {
-        // console.log(data.mess);
         toastMessage.success(data.message ? data.message : 'Register success!');
         navigate('/auth/login');
       });

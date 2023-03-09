@@ -1,16 +1,8 @@
 import axios, { AxiosError } from 'axios';
-// const setClientToken = (accessToken: string, refreshToken: string) => {
-//   if (accessToken) {
-//     console.log('có', accessToken);
-//     axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-//     axios.defaults.headers.common['refreshToken'] = `Bearer ${refreshToken}`;
-//   } else {
-//     delete axios.defaults.headers.common.Authorization;
-//   }
-// };
+import { CPath } from 'src/constants';
 
 export const createClient = () => {
-  const baseURL = 'http://localhost:8000/api/v1';
+  const baseURL = CPath.baseURL;
 
   const instance = axios.create({
     baseURL,
