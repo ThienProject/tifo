@@ -6,8 +6,10 @@ import Typography from '@mui/material/Typography';
 import { getTimeFromDay } from 'src/functions';
 import { FavoriteBorder, Favorite, MoreHoriz } from '@mui/icons-material';
 import MenuOption from 'src/components/MenuOption';
-import { useAppSelector } from 'src/redux_store';
 import ProtectBox from 'src/components/ProtectBox';
+import { useAppDispatch } from 'src/redux_store';
+import { closeModal } from 'src/redux_store/common/modal/modal_slice';
+import MODAL_IDS from 'src/constants/modal';
 
 const ItemComment = (props: {
   setCommentList?: React.Dispatch<SetStateAction<IComment[]>>;
@@ -23,6 +25,7 @@ const ItemComment = (props: {
   const { fullname, username, id_user, avatar, date_time, loves } = comment;
   const user = { fullname, username, id_user, avatar };
   const [isLove, setIsLove] = useState(false);
+  const dispatch = useAppDispatch();
   return (
     <Box
       sx={{
@@ -45,7 +48,14 @@ const ItemComment = (props: {
         elevation={3}
       >
         <Stack alignItems={'center'} direction={'row'}>
-          <UserItem size='small' user={user} />
+          <Box
+            onClick={() => {
+              const action = closeModal({ modalId: MODAL_IDS.postDetail });
+              dispatch(action);
+            }}
+          >
+            <UserItem size='small' user={user} />
+          </Box>
 
           <Box mb={0} width={'100%'} display={'flex'} alignItems='center'>
             {replyName && (

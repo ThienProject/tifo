@@ -29,7 +29,7 @@ const UserItem = ({ user, size }: { user: IUser; size: string }) => {
                   borderRadius: '50%'
                 }}
                 alt='avatar'
-                src={CPath.host_public + user?.avatar}
+                src={CPath.host + '/medias/' + user?.avatar}
               />
             </Box>
             <Typography

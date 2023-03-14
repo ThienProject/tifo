@@ -39,50 +39,52 @@ export default function MenuOption(props: {
       >
         {icon}
       </IconButton>
-      <Menu
-        id='long-menu'
-        MenuListProps={{
-          'aria-labelledby': 'long-button'
-        }}
-        anchorOrigin={
-          anchorOrigin || {
-            vertical: 'bottom',
-            horizontal: 'right'
+      {options.length > 0 && (
+        <Menu
+          id='long-menu'
+          MenuListProps={{
+            'aria-labelledby': 'long-button'
+          }}
+          anchorOrigin={
+            anchorOrigin || {
+              vertical: 'bottom',
+              horizontal: 'right'
+            }
           }
-        }
-        transformOrigin={
-          transformOrigin || {
-            vertical: 'bottom',
-            horizontal: 'right'
+          transformOrigin={
+            transformOrigin || {
+              vertical: 'bottom',
+              horizontal: 'right'
+            }
           }
-        }
-        // transformOrigin={{
-        //   vertical: 'top',
-        //   horizontal: 'right'
-        // }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            maxHeight: ITEM_HEIGHT * 4.5,
-            width: '20ch'
-          }
-        }}
-      >
-        {options.map((option, index) => (
-          <MenuItem
-            key={index}
-            selected={option === 'Pyxis'}
-            onClick={() => {
-              handleClose();
-              option.handleClick && option.handleClick();
-            }}
-          >
-            {option.name || option}
-          </MenuItem>
-        ))}
-      </Menu>
+          // transformOrigin={{
+          //   vertical: 'top',
+          //   horizontal: 'right'
+          // }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          PaperProps={{
+            style: {
+              maxHeight: ITEM_HEIGHT * 4.5,
+              width: '20ch'
+            }
+          }}
+        >
+          {options.map((option, index) => (
+            <MenuItem
+              key={index}
+              selected={option === 'Pyxis'}
+              onClick={() => {
+                handleClose();
+                option.handleClick && option.handleClick();
+              }}
+            >
+              {option.element || option.name || option}
+            </MenuItem>
+          ))}
+        </Menu>
+      )}
     </div>
   );
 }

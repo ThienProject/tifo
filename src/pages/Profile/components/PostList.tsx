@@ -11,48 +11,49 @@ import { IPost } from 'src/types/post';
 const PostList = (props: { posts: IPost[]; handleLoadMore: () => void }) => {
   const { posts, handleLoadMore } = props;
   const dispatch = useAppDispatch();
-
   return (
     <Box>
-      <InfiniteScroll
-        dataLength={posts.length}
-        next={handleLoadMore}
-        hasMore={true}
-        loader={<p>{posts.length > 0 ? /* 'Loading...' */ '' : 'No any post !'}</p>}
-      >
-        <Stack flexDirection={'row'} gap={1} flexWrap={'wrap'}>
-          {posts.map((post, index) => {
-            return (
-              <Box
-                key={index}
-                width={'30%'}
-                bgcolor={'#888'}
-                onClick={() => {
-                  const model_id = MODAL_IDS.postDetail;
-                  const action = openModal({ modalId: model_id, dialogComponent: <PostDetail post={post} /> });
-                  dispatch(action);
-                }}
-              >
-                {post?.medias && (
-                  <CardActionArea>
-                    <CardMedia
-                      // sx={sx}
-                      sx={{
-                        height: 300
-                      }}
-                      component={post.medias[0].type_media === 'video' ? 'video' : 'img'}
-                      alt='media'
-                      src={CPath.host_public + post.medias[0].media_link}
-                      title={post.medias[0].type_media}
-                    />
-                  </CardActionArea>
-                )}
-                {/* <img alt={post.id_post} src={CPath.host_public + (post?.medias ? post.medias[0].media_link : '')} /> */}
-              </Box>
-            );
-          })}
-        </Stack>
-      </InfiniteScroll>
+      {posts.length > 0 && (
+        <InfiniteScroll
+          dataLength={posts.length}
+          next={handleLoadMore}
+          hasMore={true}
+          loader={<p>{posts.length > 0 ? /* 'Loading...' */ '' : 'No any post !'}</p>}
+        >
+          <Stack flexDirection={'row'} gap={1} flexWrap={'wrap'}>
+            {posts.map((post, index) => {
+              return (
+                <Box
+                  key={index}
+                  width={'30%'}
+                  bgcolor={'#888'}
+                  onClick={() => {
+                    const model_id = MODAL_IDS.postDetail;
+                    const action = openModal({ modalId: model_id, dialogComponent: <PostDetail post={post} /> });
+                    dispatch(action);
+                  }}
+                >
+                  {post?.medias && (
+                    <CardActionArea>
+                      <CardMedia
+                        // sx={sx}
+                        sx={{
+                          height: 300
+                        }}
+                        component={post.medias[0].type_media === 'video' ? 'video' : 'img'}
+                        alt='media'
+                        src={CPath.host_public + post.medias[0].media_link}
+                        title={post.medias[0].type_media}
+                      />
+                    </CardActionArea>
+                  )}
+                  {/* <img alt={post.id_post} src={CPath.host_public + (post?.medias ? post.medias[0].media_link : '')} /> */}
+                </Box>
+              );
+            })}
+          </Stack>
+        </InfiniteScroll>
+      )}
     </Box>
   );
 };

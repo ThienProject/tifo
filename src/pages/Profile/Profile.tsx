@@ -14,42 +14,43 @@ const Profile = () => {
   const { me } = useAppSelector((state) => state.userSlice);
   const dispatch = useAppDispatch();
   const [user, setUser] = useState<IUser>();
-  const [tabList, setTabList] = useState<any[]>([]);
+  const [tabs, setTabs] = useState<any[]>([]);
 
   useEffect(() => {
-    let userID = '';
-    if (pathName.startsWith('USER_')) {
+    if (pathName === 'profile' || pathName === me.id_user) {
+      setUser(me);
+    } else if (pathName.startsWith('USER_')) {
       const action = getUserThunk({ id_user: pathName });
       dispatch(action)
         .unwrap()
         .then((data: any) => {
           const { user } = data;
           if (user.id_user) {
-            userID = user.id_user;
             setUser(user);
           }
         });
-    } else if (pathName === 'profile') {
-      setUser(me);
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathName]);
+
   useEffect(() => {
-    if (user) {
+    if (user && user.id_user) {
+      console.log('settablist');
       const tabList = [
         {
           tabName: 'posts',
-          element: <TabElement.TabPost id_user={user.id_user!} />
+          element: <TabElement.TabPost key={user.id_user} id_user={user.id_user} />
         },
-        { tabName: 'reels', element: <TabElement.TabReel id_user={user.id_user!} /> }
+        { tabName: 'reels', element: <TabElement.TabReel key={user.id_user} id_user={user.id_user} /> }
       ];
-      if (pathName === 'profile') {
-        tabList.push({ tabName: 'saves', element: <TabElement.TabSave id_user={user.id_user!} /> });
+      if (pathName === 'profile' || pathName === me.id_user) {
+        tabList.push({ tabName: 'saves', element: <TabElement.TabSave key={user.id_user} id_user={user.id_user} /> });
       }
-
-      setTabList(tabList);
+      setTabs(tabList);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
-
+  console.log('render', tabs);
   return (
     <Box
       mt={2}
@@ -62,7 +63,7 @@ const Profile = () => {
     >
       {user ? <TopProfile user={user} /> : "Can't find this Page"}
 
-      {tabList.length > 0 && <Tab TabList={tabList} />}
+      {tabs.length > 0 && <Tab TabList={tabs} />}
     </Box>
   );
 };

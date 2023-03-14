@@ -38,6 +38,10 @@ function a11yProps(index: number) {
 
 export default function TabCNP(props: { TabList: any[] }) {
   const { TabList } = props;
+  const [tabs, setTabs] = React.useState(TabList);
+  React.useEffect(() => {
+    setTabs(TabList);
+  }, [TabList]);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -48,12 +52,12 @@ export default function TabCNP(props: { TabList: any[] }) {
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label='basic tabs example'>
-          {TabList.map((tab, index) => (
+          {tabs.map((tab, index) => (
             <Tab key={index} label={tab.tabName} {...a11yProps(index)} />
           ))}
         </Tabs>
       </Box>
-      {TabList.map((tab, index) => (
+      {tabs.map((tab, index) => (
         <TabPanel key={index} value={value} index={index}>
           {tab.element}
         </TabPanel>
