@@ -16,7 +16,7 @@ const UserItem = ({ user, size }: { user: IUser; size: string }) => {
   return (
     <>
       {user && (
-        <Link to={`/profile/${user?.id_user}`} style={{ textDecoration: 'none' }}>
+        <Link to={`/${user?.id_user}`} style={{ textDecoration: 'none' }}>
           <Box pl={1} display='flex' alignItems={'center'}>
             <Box width={newSize} height={newSize}>
               <Avatar
@@ -29,7 +29,7 @@ const UserItem = ({ user, size }: { user: IUser; size: string }) => {
                   borderRadius: '50%'
                 }}
                 alt='avatar'
-                src={CPath.host + '/medias/' + user?.avatar}
+                src={CPath.host_public + user?.avatar}
               />
             </Box>
             <Typography

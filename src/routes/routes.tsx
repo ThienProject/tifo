@@ -34,6 +34,10 @@ const routes: IRoute = (login) => [
         element: <ProtectedRoute login={login} children={<Profile />} />
       },
       {
+        path: '/:id_user',
+        element: <Profile />
+      },
+      {
         path: '/reels',
         element: <Reels />
       },

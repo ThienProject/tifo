@@ -5,6 +5,7 @@ const images = {
   loginPhone: require('src/assets/images/loginPhone.jpg').default,
   full_Logo_white: require('src/assets/images/full_Logo_white.png').default,
   full_Logo_black: require('src/assets/images/full_Logo_black.jpg').default,
-  loading_white: require('src/assets/images/loading_white.gif').default
+  loading_white: require('src/assets/images/loading_white.gif').default,
+  account: require('src/assets/images/account.jpg').default
 };
 export default images;

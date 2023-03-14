@@ -1,4 +1,5 @@
 import { IPayloadLogin, IPayloadRegister } from 'src/types/auth';
+import { IPayloadGetPost, IPost } from 'src/types/post';
 import { createClient } from './axios_client';
 
 const client = createClient();
@@ -9,5 +10,23 @@ export const userApi = {
   },
   register: (payload: IPayloadRegister) => {
     return client.post<any>('/auth/register', payload);
+  },
+  getPosts: (params: IPayloadGetPost) => {
+    return client.get<IPost>(`/user/getPosts`, {
+      params: params
+    });
+  },
+  getUser: (payload: { id_user: string }) => {
+    return client.post('/user/get', payload);
+  },
+  getReels: (params: IPayloadGetPost) => {
+    return client.get<IPost>(`/user/getReels`, {
+      params: params
+    });
+  },
+  getSaves: (params: IPayloadGetPost) => {
+    return client.get<IPost>(`/user/getSaves`, {
+      params: params
+    });
   }
 };

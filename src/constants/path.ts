@@ -4,5 +4,6 @@ export const CPath = {
   register: '/register',
   notFound: '*',
   host: process.env.HOST,
-  baseURL: 'http://localhost:8000/api/v1'
+  host_public: process.env.HOST + '/medias/',
+  baseURL: process.env.HOST + '/api/v1'
 };

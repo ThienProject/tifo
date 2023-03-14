@@ -8,4 +8,7 @@ export interface IUser {
   address?: string;
   gender?: string;
   avatar?: string;
+  posts?: number;
+  followers?: number;
+  followings?: number;
 }

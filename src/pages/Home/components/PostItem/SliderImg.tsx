@@ -25,7 +25,7 @@ function ItemImg(props: { item: IMedia; sx: SxProps }) {
             sx={sx}
             component={item.type_media === 'video' ? 'video' : 'img'}
             alt='media'
-            src={CPath.host + '/medias/' + item.media_link}
+            src={CPath.host_public + item.media_link}
             title={item.type_media}
             controls
           />
