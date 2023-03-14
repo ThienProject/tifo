@@ -11,6 +11,8 @@ import {
   sendCommentThunk
 } from 'src/redux_store/post/post_action';
 import ItemComment from './ItemComment';
+import ProtectBox from 'src/components/ProtectBox';
+import MODAL_IDS from 'src/constants/modal';
 
 const defaultPayloadCmt = { id_parent: '0', id_reply: '0', id_comment: '' };
 const Comment = (props: { socket: any; id_post: string /* comments: IComment[] */ }) => {
@@ -297,10 +299,11 @@ const Comment = (props: { socket: any; id_post: string /* comments: IComment[] *
             );
           }}
         />
-
-        <IconButton onClick={handleSubmit(handleSubmitCmt)} type='submit'>
-          <SendRounded color='info' />
-        </IconButton>
+        <ProtectBox toLogin idCloseModel={MODAL_IDS.postDetail}>
+          <IconButton onClick={handleSubmit(handleSubmitCmt)} type='submit'>
+            <SendRounded color='info' />
+          </IconButton>
+        </ProtectBox>
       </Stack>
     </>
   );

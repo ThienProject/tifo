@@ -7,6 +7,7 @@ import { getTimeFromDay } from 'src/functions';
 import { FavoriteBorder, Favorite, MoreHoriz } from '@mui/icons-material';
 import MenuOption from 'src/components/MenuOption';
 import { useAppSelector } from 'src/redux_store';
+import ProtectBox from 'src/components/ProtectBox';
 
 const ItemComment = (props: {
   setCommentList?: React.Dispatch<SetStateAction<IComment[]>>;
@@ -18,7 +19,6 @@ const ItemComment = (props: {
   updateComment?: (value?: string) => void;
   deleteComment?: () => void;
 }) => {
-  const { me } = useAppSelector((state) => state.userSlice);
   const { setCommentList, comment, sx, replyName, indexCmt, setPayload, deleteComment, updateComment } = props;
   const { fullname, username, id_user, avatar, date_time, loves } = comment;
   const user = { fullname, username, id_user, avatar };
@@ -56,34 +56,36 @@ const ItemComment = (props: {
             <Typography sx={{ p: 0, mb: 0, width: '85%', overflowWrap: 'break-word' }}>{comment.comment}</Typography>
           </Box>
         </Stack>
-        {me?.id_user === comment.id_user && (
-          <Box>
-            <MenuOption
-              anchorOrigin={{ vertical: 'center', horizontal: 'right' }}
-              transformOrigin={{
-                vertical: 'center',
-                horizontal: 'right'
-              }}
-              classIcon='optionCmt'
-              sxIcon={{ display: 'none', position: 'absolute', right: -40, top: '25%' }}
-              icon={<MoreHoriz />}
-              options={[
-                {
-                  name: 'Edit',
-                  handleClick: () => {
-                    updateComment && updateComment(comment.comment);
+        {
+          <ProtectBox id_owner={comment.id_user}>
+            <Box>
+              <MenuOption
+                anchorOrigin={{ vertical: 'center', horizontal: 'right' }}
+                transformOrigin={{
+                  vertical: 'center',
+                  horizontal: 'right'
+                }}
+                classIcon='optionCmt'
+                sxIcon={{ display: 'none', position: 'absolute', right: -40, top: '25%' }}
+                icon={<MoreHoriz />}
+                options={[
+                  {
+                    name: 'Edit',
+                    handleClick: () => {
+                      updateComment && updateComment(comment.comment);
+                    }
+                  },
+                  {
+                    name: 'Delete',
+                    handleClick: () => {
+                      deleteComment && deleteComment();
+                    }
                   }
-                },
-                {
-                  name: 'Delete',
-                  handleClick: () => {
-                    deleteComment && deleteComment();
-                  }
-                }
-              ]}
-            />
-          </Box>
-        )}
+                ]}
+              />
+            </Box>
+          </ProtectBox>
+        }
       </Paper>
 
       <Stack ml={2} alignItems={'center'} direction={'row'}>
@@ -108,14 +110,16 @@ const ItemComment = (props: {
             {!comment.collapsed ? 'View replies' : 'Hide replies'}
           </Button>
         )}
-        <Button
-          sx={{ mr: 0, textTransform: 'capitalize', fontWeight: 600, fontSize: 13, color: 'text.secondary' }}
-          onClick={() => {
-            setPayload && setPayload();
-          }}
-        >
-          Reply
-        </Button>
+        <ProtectBox>
+          <Button
+            sx={{ mr: 0, textTransform: 'capitalize', fontWeight: 600, fontSize: 13, color: 'text.secondary' }}
+            onClick={() => {
+              setPayload && setPayload();
+            }}
+          >
+            Reply
+          </Button>
+        </ProtectBox>
         <IconButton
           onClick={() => {
             setIsLove(!isLove);

@@ -20,7 +20,7 @@ const modalSlice = createSlice({
       };
     },
 
-    closeModal: (state, action: IModalPayload) => {
+    closeModal: (state: any, action: IModalPayload) => {
       const { modalId } = action.payload;
       delete state[modalId as keyof IModalState];
     },
