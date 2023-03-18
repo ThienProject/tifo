@@ -23,10 +23,10 @@ function ItemImg(props: { item: IMedia; sx: SxProps }) {
         /* !isLightBox  && */ <CardActionArea>
           <CardMedia
             sx={sx}
-            component={item.type_media === 'video' ? 'video' : 'img'}
+            component={item.type === 'video' ? 'video' : 'img'}
             alt='media'
             src={CPath.host_public + item.media_link}
-            title={item.type_media}
+            title={item.type}
             controls
           />
         </CardActionArea>

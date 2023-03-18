@@ -9,6 +9,7 @@ import Home from 'src/pages/Home';
 import Messages from 'src/pages/Messages';
 import Profile from 'src/pages/Profile';
 import Reels from 'src/pages/Reels';
+import UpdatePost from 'src/pages/UpdatePost';
 import { ILogin } from 'src/types/auth';
 import { ProtectedRoute } from './ProtectedRoute';
 
@@ -54,6 +55,10 @@ const routes: IRoute = (login) => [
             element: <ProtectedRoute login={login} children={<Create type={'reels'} />} />
           }
         ]
+      },
+      {
+        path: '/update/:id_post',
+        element: <UpdatePost />
       }
     ]
   },

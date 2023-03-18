@@ -1,8 +1,8 @@
 import { IUser } from './user';
 
-export interface IMedia {
+export interface IMedia extends File {
   id_media: string;
-  type_media: string;
+  type: string;
   media_link: string;
   caption: string;
 }
@@ -37,8 +37,15 @@ export interface IPayloadCreatePost {
   id_user?: string;
   type?: string;
   target?: string;
-  medias?: [];
+  medias?: IMedia[];
   description?: string;
+}
+export interface IPayloadUpdatePost {
+  id_user?: string;
+  type?: string;
+  target_update?: string;
+  medias_update?: IMedia[];
+  description_update?: string;
 }
 
 export interface IPayloadGetPost {

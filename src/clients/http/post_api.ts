@@ -12,6 +12,20 @@ export const postApi = {
       params: params
     });
   },
+  update: (payload: FormData) => {
+    return client.post('/post/update', payload);
+  },
+  replaceMedias: (payload: FormData) => {
+    return client.post('/post/replaceMedias', payload);
+  },
+  deleteMedias: (payload: any[]) => {
+    return client.post('/post/deleteMedias', payload);
+  },
+  getPostByID: (params: { id_post: string }) => {
+    return client.get<IPost>(`/post/getPostByID`, {
+      params: params
+    });
+  },
   sendComment: (payload: IPayloadCreateComment) => {
     return client.post('/comment/create', payload);
   },

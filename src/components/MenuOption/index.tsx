@@ -8,7 +8,7 @@ import { PopoverOrigin } from '@mui/material/Popover';
 const ITEM_HEIGHT = 48;
 
 export default function MenuOption(props: {
-  options: any[];
+  options: { element?: React.ReactNode; handleClick?: () => void; name?: string }[];
   icon: React.ReactNode;
   sxIcon?: SxProps;
   classIcon?: string;
@@ -74,13 +74,13 @@ export default function MenuOption(props: {
           {options.map((option, index) => (
             <MenuItem
               key={index}
-              selected={option === 'Pyxis'}
+              // selected={option === 'Pyxis'}
               onClick={() => {
                 handleClose();
                 option.handleClick && option.handleClick();
               }}
             >
-              {option.element || option.name || option}
+              {option.element || option.name}
             </MenuItem>
           ))}
         </Menu>

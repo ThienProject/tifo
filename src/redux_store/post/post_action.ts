@@ -15,6 +15,42 @@ export const createPostThunk = createAsyncThunk<any, FormData>(
     }
   }
 );
+export const updatePostThunk = createAsyncThunk<any, FormData>(
+  'post/updatePostThunk',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await postApi.update(payload);
+      return data;
+    } catch (error: any) {
+      toastMessage.setErrors(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+export const deleteMediasThunk = createAsyncThunk<any, any>(
+  'post/deleteMediasThunk',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await postApi.deleteMedias(payload);
+      return data;
+    } catch (error: any) {
+      toastMessage.setErrors(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+export const replaceMediasThunk = createAsyncThunk<any, FormData>(
+  'post/replaceMediasThunk',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await postApi.replaceMedias(payload);
+      return data;
+    } catch (error: any) {
+      toastMessage.setErrors(error);
+      return rejectWithValue(error);
+    }
+  }
+);
 
 export const getPostsThunk = createAsyncThunk<any, IPayloadGetPost>(
   'post/getPostsThunk',
@@ -28,6 +64,17 @@ export const getPostsThunk = createAsyncThunk<any, IPayloadGetPost>(
   }
 );
 
+export const getPostByIDThunk = createAsyncThunk<any, { id_post: string }>(
+  'post/getPostByIDThunk',
+  async (payload: { id_post: string }, { rejectWithValue }) => {
+    try {
+      const { data } = await postApi.getPostByID(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
 export const sendCommentThunk = createAsyncThunk<any, IPayloadCreateComment>(
   'post/sendCommentThunk',
   async (payload, { rejectWithValue }) => {

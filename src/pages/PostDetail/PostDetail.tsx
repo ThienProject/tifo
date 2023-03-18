@@ -12,8 +12,12 @@ import * as io from 'socket.io-client';
 import { CPath } from 'src/constants';
 import MenuOption from 'src/components/MenuOption';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
-import { closeModal } from 'src/redux_store/common/modal/modal_slice';
+import { closeModal, openModal } from 'src/redux_store/common/modal/modal_slice';
+import { useNavigate } from 'react-router';
+import ConfirmationDialog from 'src/components/model/confirmation_dialog';
+
 const PostDetail = (props: { post: IPost }) => {
+  const navigate = useNavigate();
   const socket = io.connect(CPath.host || 'http://localhost:8000');
   const { post } = props;
   const { medias, id_post, fullname, avatar, username, id_user } = post;
@@ -24,10 +28,33 @@ const PostDetail = (props: { post: IPost }) => {
   const optionOwner: any[] = [
     {
       name: 'edit post',
-      element: <Box> Edit post </Box>
+      handleClick: () => {
+        const action = closeModal({ modalId: MODAL_IDS.postDetail });
+        dispatch(action);
+        navigate(`update/${id_post}`);
+      },
+      element: <Box> Edit post</Box>
     },
     {
       name: 'delete post',
+      handleClick: () => {
+        const action = openModal({
+          modalId: MODAL_IDS.confirmDeletePost,
+          dialogComponent: (
+            <ConfirmationDialog
+              modalId={MODAL_IDS.confirmDeletePost}
+              describe={'Are you sure delete this post ?'}
+              sliceName={'DELETE POST'}
+              functionName={'deleting'}
+              callback={function () {
+                alert('ok');
+                /// fetch api delete post
+              }}
+            />
+          )
+        });
+        dispatch(action);
+      },
       element: <Box> Delete post </Box>
     }
   ];

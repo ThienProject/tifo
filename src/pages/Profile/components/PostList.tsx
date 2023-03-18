@@ -40,10 +40,10 @@ const PostList = (props: { posts: IPost[]; handleLoadMore: () => void }) => {
                         sx={{
                           height: 300
                         }}
-                        component={post.medias[0].type_media === 'video' ? 'video' : 'img'}
+                        component={post.medias[0].type === 'video' ? 'video' : 'img'}
                         alt='media'
                         src={CPath.host_public + post.medias[0].media_link}
-                        title={post.medias[0].type_media}
+                        title={post.medias[0].type}
                       />
                     </CardActionArea>
                   )}

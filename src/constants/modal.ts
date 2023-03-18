@@ -2,6 +2,7 @@ const MODAL_IDS = {
   //accountManagement
   loading: 'loading',
   confirmCancelPost: 'confirmCancelPost',
-  postDetail: 'postDetail'
+  postDetail: 'postDetail',
+  confirmDeletePost: 'confirmDeletePost'
 };
 export default MODAL_IDS;

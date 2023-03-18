@@ -1,5 +1,5 @@
 import moment from 'moment';
-
+import * as yup from 'yup';
 export function objectToFormData(obj: any) {
   const formData = new FormData();
   for (const key in obj) {
@@ -12,6 +12,27 @@ export function objectToFormData(obj: any) {
     }
   }
   return formData;
+}
+
+export const schemaCreatePost = (target: string, description: string, medias: string) => {
+  return yup.object().shape({
+    [target]: yup.string().required(),
+    [description]: yup.string().required("Can't empty description! "),
+    [medias]: yup
+      .mixed()
+      .test('has-image-or-video', 'At least one image or video is required', (files: any) => {
+        return files.some((file: File) => {
+          return file.type.startsWith('image') || file.type.startsWith('video');
+        });
+      })
+      .test('max-size', 'File size must not exceed 5MB', (files: any) => {
+        return files.some((file: File) => {
+          const fileSizeLimit = 5 * 1024 * 1024; // 1MB in bytes
+          const isWithinSizeLimit = file.size >= fileSizeLimit;
+          return !isWithinSizeLimit;
+        });
+      })
+  });
 }
 export const getTimeFromDay = (date: Date) => {
   const now = moment(); // Lấy thời điểm hiện tại

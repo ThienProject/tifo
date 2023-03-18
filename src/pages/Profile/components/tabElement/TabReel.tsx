@@ -20,7 +20,6 @@ const TabReel = ({ id_user }: { id_user: string }) => {
       .then((data) => {
         const { posts } = data;
         setPosts((prev) => [...prev, ...posts]);
-        console.log(data);
       });
   };
   const handleLoadMore = () => {

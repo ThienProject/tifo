@@ -35,7 +35,6 @@ const Profile = () => {
 
   useEffect(() => {
     if (user && user.id_user) {
-      console.log('settablist');
       const tabList = [
         {
           tabName: 'posts',
@@ -50,7 +49,6 @@ const Profile = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
-  console.log('render', tabs);
   return (
     <Box
       mt={2}

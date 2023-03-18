@@ -3,18 +3,19 @@ import * as yup from 'yup';
 import { Box, Button, Grid, Paper, Typography, Divider } from '@mui/material';
 import React, { useEffect } from 'react';
 import { IPayloadCreatePost } from 'src/types/post';
-import Media from './components/form_media';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { FormInput } from 'src/components/hooks_form/form_input';
 import { FormSelect } from 'src/components/hooks_form/form_select';
 import { createPostThunk } from 'src/redux_store/post/post_action';
 import { toastMessage } from 'src/utils/toast';
-import { objectToFormData } from 'src/functions';
+import { objectToFormData, schemaCreatePost } from 'src/functions';
 import { useIsRequestError, useIsRequestPending } from 'src/hooks/use_status';
 import { closeModal, openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
-import ModalLoadingCreate from './components/ModalLoadingCreate/ModalLoadingCreate';
+
+import Media from 'src/components/hooks_form/form_media';
+import ModalLoadingCreate from '../components/ModalLoadingCreate';
 const initCreatePost: IPayloadCreatePost = {
   target: '',
   type: '',
@@ -37,16 +38,7 @@ const target = [
     target: 'follower'
   }
 ];
-const schemaCreate = yup.object().shape({
-  target: yup.string().required(),
-  description: yup.string().required("Can't empty description! "),
-  medias: yup
-    .array()
-    .min(1, 'At least one file is required')
-    .test('has-image-or-video', 'At least one image or video is required', (files: any) => {
-      return files.some((file: any) => file.type.startsWith('image/') || file.type.startsWith('video/'));
-    })
-});
+const schemaCreate = schemaCreatePost('target', 'description', 'medias');
 
 const Create = (props: { type: string }) => {
   const isLoading = useIsRequestPending('post', 'createPostThunk');
