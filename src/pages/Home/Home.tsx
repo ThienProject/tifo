@@ -7,32 +7,35 @@ import { IPayloadGetPost, IPost } from 'src/types/post';
 import Suggestions from './components/Suggestions';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { getPostsThunk } from 'src/redux_store/post/post_action';
+import { fontSize } from '@mui/system';
 
 const Home = () => {
   const dispatch = useAppDispatch();
   const { me } = useAppSelector((state) => state.userSlice);
-  const [postList, setPosts] = useState<IPost[]>([]);
+  const postList = useAppSelector((state) => state.postSlice.posts);
+  // const [postList, setPosts] = useState<IPost[]>([]);
   const [isLoadMore, setIsLoadMore] = useState(true);
-  const fetchApi = () => {
-    if (isLoadMore) {
-      const id_user = me.id_user;
-      const offset = postList.length;
-      const params: IPayloadGetPost = { id_user: id_user || '', limit: 10, offset: offset };
-      const action = getPostsThunk(params);
-      dispatch(action)
-        .unwrap()
-        .then((data: { message: string; posts: IPost[] }) => {
-          const { posts } = data;
-          if (!posts || posts.length === 0) {
-            setIsLoadMore(false);
-          } else {
-            setPosts((prev) => [...prev, ...posts]);
-          }
-        });
-    }
+  const fetchApi = (offset: number) => {
+    const id_user = me.id_user;
+    const params: IPayloadGetPost = { id_user: id_user || '', limit: 10, offset: offset };
+    const action = getPostsThunk(params);
+    dispatch(action)
+      .unwrap()
+      .then((data: { message: string; posts: IPost[] }) => {
+        const { posts } = data;
+        if (!posts || posts.length === 0) {
+          setIsLoadMore(false);
+        }
+        // else {
+        //   if (offset == 0) {
+        //     setPosts(posts);
+        //   } else setPosts((prev) => [...prev, ...posts]);
+        // }
+      });
   };
   useEffect(() => {
-    fetchApi();
+    const offset = postList.length;
+    fetchApi(offset);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -46,9 +49,17 @@ const Home = () => {
               <Box>
                 <InfiniteScroll
                   dataLength={postList.length}
-                  next={fetchApi}
+                  next={() => {
+                    if (isLoadMore) {
+                      fetchApi(postList.length);
+                    }
+                  }}
                   hasMore={true}
-                  loader={<p>{isLoadMore ? 'Loading...' : 'No more posts, come back later !'}</p>}
+                  loader={
+                    <p style={{ fontSize: '14px', color: 'rgb(124 108 108)' }}>
+                      {isLoadMore ? 'Loading...' : 'No more posts, come back later !'}
+                    </p>
+                  }
                 >
                   {postList.map((post, index) => {
                     return <PostItem index={index} key={post.id_post} post={post} />;

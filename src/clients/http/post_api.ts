@@ -1,4 +1,11 @@
-import { IComment, IPayloadCreateComment, IPayloadEditComment, IPayloadGetPost, IPost } from 'src/types/post';
+import {
+  IComment,
+  IPayloadCreateComment,
+  IPayloadEditComment,
+  IPayloadGetPost,
+  IPost,
+  IUpdateLove
+} from 'src/types/post';
 import { createClient } from './axios_client';
 
 const client = createClient();
@@ -14,6 +21,12 @@ export const postApi = {
   },
   update: (payload: FormData) => {
     return client.post('/post/update', payload);
+  },
+  updateLove: (payload: IUpdateLove) => {
+    return client.post('/post/updateLove', payload);
+  },
+  deletePost: (payload: { id_post: string }) => {
+    return client.delete('/post/delete', { data: payload });
   },
   replaceMedias: (payload: FormData) => {
     return client.post('/post/replaceMedias', payload);

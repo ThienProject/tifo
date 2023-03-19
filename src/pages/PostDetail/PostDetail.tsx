@@ -15,6 +15,9 @@ import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { closeModal, openModal } from 'src/redux_store/common/modal/modal_slice';
 import { useNavigate } from 'react-router';
 import ConfirmationDialog from 'src/components/model/confirmation_dialog';
+import { deletePostThunk } from 'src/redux_store/post/post_action';
+import { toast } from 'react-hot-toast';
+import { toastMessage } from 'src/utils/toast';
 
 const PostDetail = (props: { post: IPost }) => {
   const navigate = useNavigate();
@@ -47,8 +50,16 @@ const PostDetail = (props: { post: IPost }) => {
               sliceName={'DELETE POST'}
               functionName={'deleting'}
               callback={function () {
-                alert('ok');
-                /// fetch api delete post
+                if (post.id_post) {
+                  const action = deletePostThunk({ id_post: post.id_post });
+                  dispatch(action)
+                    .unwrap()
+                    .then((data) => {
+                      toastMessage.success(data.message || 'Delete post success!');
+                      const action = closeModal({ modalId: MODAL_IDS.postDetail });
+                      dispatch(action);
+                    });
+                }
               }}
             />
           )

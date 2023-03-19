@@ -42,7 +42,7 @@ const schemaCreate = schemaCreatePost('target', 'description', 'medias');
 
 const Create = (props: { type: string }) => {
   const isLoading = useIsRequestPending('post', 'createPostThunk');
-  const isError = useIsRequestError('post', 'createPostThunk');
+  const Error = useIsRequestError('post', 'createPostThunk');
   const { type } = props;
 
   const { me } = useAppSelector((state: any) => state.userSlice);
@@ -81,11 +81,6 @@ const Create = (props: { type: string }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
-  useEffect(() => {
-    if (isError) {
-      toastMessage.error('Network is slow, Please try again later !');
-    }
-  }, [isError]);
 
   return (
     <Box component='form' m={2} onSubmit={handleSubmit(handleOnSubmit)}>

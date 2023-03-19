@@ -58,7 +58,14 @@ function ConfirmationDialog(props: IConfirmationDialog) {
           <Button color='primary' onClick={handleClose}>
             {cancelLabel}
           </Button>
-          <LoadingButton variant='contained' onClick={callback} loading={isLoading}>
+          <LoadingButton
+            variant='contained'
+            onClick={() => {
+              handleClose();
+              callback && callback();
+            }}
+            loading={isLoading}
+          >
             {okLabel}
           </LoadingButton>
         </Box>

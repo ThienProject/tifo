@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { postApi } from 'src/clients/http/post_api';
-import { IPayloadCreateComment, IPayloadEditComment, IPayloadGetPost } from 'src/types/post';
+import { IPayloadCreateComment, IPayloadEditComment, IPayloadGetPost, IUpdateLove } from 'src/types/post';
 import { toastMessage } from 'src/utils/toast';
 
 export const createPostThunk = createAsyncThunk<any, FormData>(
@@ -10,8 +10,9 @@ export const createPostThunk = createAsyncThunk<any, FormData>(
       const { data } = await postApi.create(payload);
       return data;
     } catch (error: any) {
-      toastMessage.setErrors(error);
-      return rejectWithValue(error);
+      // handle other errors
+      toastMessage.setErrors(error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -20,6 +21,30 @@ export const updatePostThunk = createAsyncThunk<any, FormData>(
   async (payload, { rejectWithValue }) => {
     try {
       const { data } = await postApi.update(payload);
+      return data;
+    } catch (error: any) {
+      toastMessage.setErrors(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+export const updateLoveThunk = createAsyncThunk<any, IUpdateLove>(
+  'post/updateLoveThunk',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await postApi.updateLove(payload);
+      return { ...data, ...payload };
+    } catch (error: any) {
+      toastMessage.setErrors(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+export const deletePostThunk = createAsyncThunk<any, { id_post: string }>(
+  'post/deletePostThunk',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await postApi.deletePost(payload);
       return data;
     } catch (error: any) {
       toastMessage.setErrors(error);

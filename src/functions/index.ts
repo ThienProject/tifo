@@ -33,7 +33,7 @@ export const schemaCreatePost = (target: string, description: string, medias: st
         });
       })
   });
-}
+};
 export const getTimeFromDay = (date: Date) => {
   const now = moment(); // Lấy thời điểm hiện tại
   const startDate = moment(date); // Ngày bắt đầu tính

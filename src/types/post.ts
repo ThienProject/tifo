@@ -17,6 +17,7 @@ export interface IPost extends IUser {
   is_banned?: boolean;
   banned_reason?: string;
   loves?: number | string;
+  isLove?: boolean;
   commentLength: number;
 }
 
@@ -67,4 +68,10 @@ export interface IPayloadEditComment extends IPayloadCreateComment {
 export interface IPayloadDeleteComment {
   id_comment?: string | number;
   id_parent?: string | number;
+}
+
+export interface IUpdateLove {
+  id_post: string;
+  id_user: string;
+  isLove: boolean;
 }

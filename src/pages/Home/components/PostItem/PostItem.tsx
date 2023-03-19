@@ -17,13 +17,14 @@ import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
 import PostDetail from 'src/pages/PostDetail';
+import { updateLoveThunk } from 'src/redux_store/post/post_action';
 
 const PostItem = ({ post, index }: { post: IPost; index: number }) => {
   // Before the component definition:
   const [isLove, setIsLove] = useState(false);
   const [isMark, setIsMark] = useState(false);
   const dispatch = useAppDispatch();
-  const postSlice = useAppSelector((state) => state.postSlice.posts[index]);
+  // const postSlice = useAppSelector((state) => state.postSlice.posts[index]);
   const { id_user, username, fullname, avatar } = post;
   const user: IUser = { id_user, username, fullname, avatar };
   return (
@@ -48,10 +49,14 @@ const PostItem = ({ post, index }: { post: IPost; index: number }) => {
             sx={{ p: 0 }}
             size='small'
             onClick={() => {
-              setIsLove((prev) => !prev);
+              // setIsLove((prev) => !prev);
+              if (id_user) {
+                const action = updateLoveThunk({ id_user: id_user, isLove: !post.isLove, id_post: post.id_post });
+                dispatch(action).unwrap();
+              }
             }}
           >
-            {!isLove ? <FavoriteBorder /> : <Favorite color='error' />}
+            {!post.isLove ? <FavoriteBorder /> : <Favorite color='error' />}
           </IconButton>
           <IconButton
             sx={{ pl: 2 }}
@@ -77,13 +82,13 @@ const PostItem = ({ post, index }: { post: IPost; index: number }) => {
         </IconButton>
       </Stack>
       <Typography color='common.black' fontSize={14} fontWeight={550}>
-        {postSlice.loves ? postSlice.loves : 0} likes
+        {post.loves ? post.loves : 0} likes
       </Typography>
       <Typography fontSize={14} fontWeight={550}>
         {post.description}
       </Typography>
       <Button sx={{ p: 0, fontWeight: '600', fontSize: 10, color: 'text.secondary' }}>see translation</Button>
-      {postSlice?.commentLength ? (
+      {post.commentLength ? (
         <Button
           fullWidth
           sx={{ justifyContent: 'start', p: 0, fontSize: 10, color: 'text.secondary' }}
@@ -95,7 +100,7 @@ const PostItem = ({ post, index }: { post: IPost; index: number }) => {
             dispatch(action);
           }}
         >
-          {'view all ' + postSlice.commentLength + ' comments'}
+          {'view all ' + post.commentLength + ' comments'}
         </Button>
       ) : (
         ''
