@@ -43,8 +43,8 @@ const schemaUpdatePost = schemaCreatePost('target_update', 'description_update',
 const UpdatePost = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const isLoading = useIsRequestPending('post', 'createPostThunk');
-  const isError = useIsRequestError('post', 'createPostThunk');
+  const isLoading = useIsRequestPending('post', 'updatePostThunk');
+  const isError = useIsRequestError('post', 'updatePostThunk');
   const [post, setPost] = useState<IPost>();
   const [mediasReplace, setMediaReplace] = useState<any[]>([]);
   const [mediasDelete, setMediaDelete] = useState<{ id_media: string; media_link: string }[]>([]);
@@ -76,9 +76,9 @@ const UpdatePost = () => {
       }
       replaceForm.append(`old_medias`, JSON.stringify(old_medias));
       // log form
-      // for (const [key, value] of mediasReplace.entries()) {
-      //   console.log(key + ' : ', value);
-      // }
+      for (const [key, value] of mediasReplace.entries()) {
+        console.log(key + ' : ', value);
+      }
       const actionReplace = replaceMediasThunk(replaceForm);
       await dispatch(actionReplace)
         .unwrap()
@@ -121,7 +121,16 @@ const UpdatePost = () => {
     await dispatch(actionUpdateForm)
       .unwrap()
       .then((data) => {
-        setPost(data.post);
+        const post = data.post;
+        setPost(post);
+        setMediaDelete([]);
+        setMediaReplace([]);
+        reset({
+          medias_update: post?.medias,
+          description_update: post?.description,
+          target_update: post?.target,
+          type: post?.type
+        });
         toastMessage.success('update post success !');
       });
   };
@@ -154,12 +163,11 @@ const UpdatePost = () => {
           const post: IPost = data.post;
           setPost(post);
           reset({
-            medias_update: post.medias,
-            description_update: post.description,
-            target_update: post.target,
-            type: post.type
+            medias_update: post?.medias,
+            description_update: post?.description,
+            target_update: post?.target,
+            type: post?.type
           });
-          // console.log('post updata', data.post);
         });
     }
   }, []);

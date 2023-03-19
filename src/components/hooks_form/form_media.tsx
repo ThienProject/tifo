@@ -152,7 +152,7 @@ const Media = (prop: IProp) => {
                 <Card key={itemValue.name || itemValue.id_media} sx={{ my: 2 }}>
                   <CardActionArea>
                     <CardMedia
-                      component={itemValue.type === 'video/mp4' || itemValue.type === 'video' ? 'video' : 'img'}
+                      component={itemValue.type.startsWith('video') ? 'video' : 'img'}
                       alt={itemValue.name || itemValue.id_media}
                       height='240'
                       src={url}
@@ -162,7 +162,7 @@ const Media = (prop: IProp) => {
                   </CardActionArea>
                   <CardContent>
                     <input
-                      id={'file-change' + itemValue.name}
+                      id={'file-change' + (itemValue.name || itemValue.id_media)}
                       accept={accept}
                       style={{ display: 'none' }}
                       type={'file'}
@@ -193,7 +193,11 @@ const Media = (prop: IProp) => {
                       options={[
                         {
                           element: (
-                            <label style={{ display: 'block' }} key={1} htmlFor={'file-change' + itemValue.name}>
+                            <label
+                              style={{ display: 'block' }}
+                              key={1}
+                              htmlFor={'file-change' + (itemValue.name || itemValue.id_media)}
+                            >
                               <Button sx={{ p: 0 }} variant='text' component='span'>
                                 <ChangeCircleOutlined fontSize='medium' />
                                 <Typography pl={2} fontSize={13} fontWeight={100} color='text.secondary'>
