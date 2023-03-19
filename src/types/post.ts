@@ -8,6 +8,7 @@ export interface IMedia extends File {
 }
 
 export interface IPost extends IUser {
+
   id_post: string;
   medias?: IMedia[];
   target?: string;
@@ -18,6 +19,7 @@ export interface IPost extends IUser {
   banned_reason?: string;
   loves?: number | string;
   isLove?: boolean;
+  isSave?: boolean;
   commentLength: number;
 }
 

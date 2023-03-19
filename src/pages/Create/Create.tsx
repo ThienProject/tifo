@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Box, Button, Grid, Paper, Typography, Divider } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IPayloadCreatePost } from 'src/types/post';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
@@ -16,6 +16,7 @@ import MODAL_IDS from 'src/constants/modal';
 
 import Media from 'src/components/hooks_form/form_media';
 import ModalLoadingCreate from '../components/ModalLoadingCreate';
+import { sendMessage } from 'src/clients/http/chatGPT_api';
 const initCreatePost: IPayloadCreatePost = {
   target: '',
   type: '',
@@ -44,7 +45,7 @@ const Create = (props: { type: string }) => {
   const isLoading = useIsRequestPending('post', 'createPostThunk');
   const Error = useIsRequestError('post', 'createPostThunk');
   const { type } = props;
-
+  const [suggest, setSuggest] = useState('');
   const { me } = useAppSelector((state: any) => state.userSlice);
   const dispatch = useAppDispatch();
   const { control, handleSubmit, reset } = useForm({
@@ -117,6 +118,19 @@ const Create = (props: { type: string }) => {
               type='text'
               required
             />
+          </Box>
+          <Box sx={{ mb: 3 }}>
+            <Button
+              onClick={async () => {
+                const status = await sendMessage(
+                  'tạo một status 20 từ bằng tiếng việt, phong cách của nhà thơ xuân diệu với từ khóa : mưa'
+                );
+                setSuggest(status);
+              }}
+            >
+              Suggest
+            </Button>
+            <Typography>{suggest && suggest}</Typography>
           </Box>
           <Box sx={{ mb: 3 }}>
             <Typography>Who can watch this video </Typography>

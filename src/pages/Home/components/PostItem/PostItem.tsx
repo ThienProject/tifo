@@ -21,7 +21,6 @@ import { updateLoveThunk } from 'src/redux_store/post/post_action';
 
 const PostItem = ({ post, index }: { post: IPost; index: number }) => {
   // Before the component definition:
-  const [isLove, setIsLove] = useState(false);
   const [isMark, setIsMark] = useState(false);
   const dispatch = useAppDispatch();
   // const postSlice = useAppSelector((state) => state.postSlice.posts[index]);
@@ -78,7 +77,7 @@ const PostItem = ({ post, index }: { post: IPost; index: number }) => {
             setIsMark((prev) => !prev);
           }}
         >
-          {isMark ? <BookmarkOutlined sx={{ color: 'common.black' }} /> : <BookmarkBorderOutlined />}
+          {post.isSave ? <BookmarkOutlined sx={{ color: 'common.black' }} /> : <BookmarkBorderOutlined />}
         </IconButton>
       </Stack>
       <Typography color='common.black' fontSize={14} fontWeight={550}>
