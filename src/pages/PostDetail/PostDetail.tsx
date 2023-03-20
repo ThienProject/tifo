@@ -16,7 +16,6 @@ import { closeModal, openModal } from 'src/redux_store/common/modal/modal_slice'
 import { useNavigate } from 'react-router';
 import ConfirmationDialog from 'src/components/model/confirmation_dialog';
 import { deletePostThunk } from 'src/redux_store/post/post_action';
-import { toast } from 'react-hot-toast';
 import { toastMessage } from 'src/utils/toast';
 
 const PostDetail = (props: { post: IPost }) => {
@@ -32,7 +31,7 @@ const PostDetail = (props: { post: IPost }) => {
     {
       name: 'edit post',
       handleClick: () => {
-        const action = closeModal({ modalId: MODAL_IDS.postDetail });
+        const action: any = closeModal({ modalId: MODAL_IDS.postDetail });
         dispatch(action);
         navigate(`update/${id_post}`);
       },

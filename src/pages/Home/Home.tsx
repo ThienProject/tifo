@@ -7,7 +7,6 @@ import { IPayloadGetPost, IPost } from 'src/types/post';
 import Suggestions from './components/Suggestions';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { getPostsThunk } from 'src/redux_store/post/post_action';
-import { fontSize } from '@mui/system';
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -61,8 +60,8 @@ const Home = () => {
                     </p>
                   }
                 >
-                  {postList.map((post, index) => {
-                    return <PostItem index={index} key={post.id_post} post={post} />;
+                  {postList.map((post) => {
+                    return <PostItem key={post.id_post} post={post} />;
                   })}
                 </InfiniteScroll>
               </Box>

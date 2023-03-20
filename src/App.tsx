@@ -3,6 +3,7 @@ import 'src/assets/styles/app.scss';
 import { useRoutes } from 'react-router';
 import routes from 'src/routes/routes';
 import { useAppSelector } from './redux_store';
+import 'src/configs/translations';
 // Add with other imports
 
 const App = () => {

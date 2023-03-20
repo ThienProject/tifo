@@ -1,10 +1,11 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { IUser } from 'src/types/user';
 
-const ItemFriend = ({ itemFriend }: { itemFriend: { name: string; avatar: string } }) => {
+const ItemFriend = ({ itemFriend }: { itemFriend: IUser }) => {
   return (
-    <Link to={`/profile/${itemFriend?.name}`} style={{ textDecoration: 'none' }}>
+    <Link to={`/${itemFriend?.id_user}`} style={{ textDecoration: 'none' }}>
       <Box pl={2} display='flex' flexDirection='column'>
         <Box width={50} height={50}>
           <img
@@ -29,7 +30,7 @@ const ItemFriend = ({ itemFriend }: { itemFriend: { name: string; avatar: string
           textOverflow={'ellipsis'}
           fontSize={10}
         >
-          {itemFriend.name}
+          {itemFriend.fullname}
         </Typography>
       </Box>
     </Link>

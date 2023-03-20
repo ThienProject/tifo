@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled, CSSObject, Theme } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import MenuSideBar from './SidebarMenu';
@@ -23,9 +23,11 @@ import {
   LogoutOutlined,
   MovieRounded,
   Menu,
-  MenuOpenRounded
+  MenuOpenRounded,
+  Forum,
+  ForumOutlined,
+  TranslateOutlined
 } from '@mui/icons-material';
-
 import ModeSwitcher from 'src/theme/ModeSwitcher';
 import { ImenuItem } from 'src/types/common';
 import Search from 'src/pages/Search';
@@ -33,14 +35,14 @@ import Notification from 'src/pages/Notification';
 import { useAppDispatch } from 'src/redux_store';
 import { logout } from 'src/redux_store/user/user_slice';
 import { toastMessage } from 'src/utils/toast';
+import { useTranslation } from 'react-i18next';
 const SideBar = () => {
-  // const { me } = useAppSelector((state) => {
-  //   return state.userSlice;
-  // });
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
   const dispatch = useAppDispatch();
-  // const theme = useTheme();
   const drawerWidth = 240;
-  // const [open, setOpen] = React.useState(true);
   const [open, setOpen] = React.useState(true);
   const openedMixin = (theme: Theme): CSSObject => ({
     width: drawerWidth,
@@ -76,6 +78,7 @@ const SideBar = () => {
     shouldForwardProp: (prop) => prop !== 'open'
   })(({ theme, open }) => ({
     width: drawerWidth,
+    overflowX: 'hidden',
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
@@ -108,28 +111,32 @@ const SideBar = () => {
   };
   const menuLists: ImenuItem[] = [
     {
-      name: 'Home',
+      key: 'Home',
+      name: t('sidebar.home'),
       icon: <HomeOutlined />,
       iconActive: <HomeRounded />,
       to: '/',
       active: window.location.pathname === '/home' ? true : false
     },
     {
-      name: 'Search',
+      key: 'Search',
+      name: t('sidebar.search'),
       icon: <SearchRounded />,
       iconActive: <SearchRounded />,
       childNode: <Search />,
       active: false
     },
     {
-      name: 'Reels',
+      key: 'reels',
+      name: t('sidebar.reels'),
       icon: <MovieOutlined />,
       iconActive: <MovieRounded />,
       to: 'reels',
       active: window.location.pathname === '/reels' ? true : false
     },
     {
-      name: 'Notifications',
+      key: 'Notification',
+      name: t('sidebar.notification'),
       icon: <NotificationsNoneRounded />,
       iconActive: <NotificationsActiveRounded />,
       childNode: <Notification />,
@@ -137,18 +144,21 @@ const SideBar = () => {
       isAuth: true
     },
     {
-      name: 'Create',
+      key: 'Create',
+      name: t('sidebar.create'),
       icon: <AddCircleOutlineRounded />,
       iconActive: <AddCircleRounded />,
       active: window.location.pathname === '/create' ? true : false,
       isAuth: true,
       child: [
         {
+          key: 'Reels',
           name: 'Reels',
           icon: <SettingsSuggestOutlined />,
           to: '/create/reels'
         },
         {
+          key: 'Post',
           name: 'Post',
           icon: <SettingsSuggestOutlined />,
           to: '/create/post'
@@ -157,7 +167,8 @@ const SideBar = () => {
       isMore: true
     },
     {
-      name: 'Profile',
+      key: 'Profile',
+      name: t('sidebar.profile'),
       icon: <AccountCircleOutlined />,
       iconActive: <AccountCircleRounded />,
       to: 'profile',
@@ -165,33 +176,58 @@ const SideBar = () => {
       isAuth: true
     },
     {
-      name: 'Login',
+      key: 'Message',
+      name: t('sidebar.chat'),
+      icon: <ForumOutlined />,
+      iconActive: <Forum />,
+      to: 'message',
+      active: window.location.pathname === '/message' ? true : false,
+      isAuth: true
+    },
+    {
+      key: 'Login',
+      name: t('sidebar.login'),
       icon: <ExitToAppRounded />,
       iconActive: <ExitToAppRounded />,
       to: 'auth/login',
       active: false
     },
     {
-      name: 'More',
+      key: 'More',
+      name: t('sidebar.more'),
       icon: <Menu />,
       iconActive: <MenuOpenRounded />,
       child: [
         {
-          name: 'Settings',
+          key: 'Setting',
+          name: t('sidebar.setting'),
           icon: <SettingsSuggestOutlined />,
           to: 'setting'
         },
         {
-          name: 'Switch appearance',
+          key: 'switchAppearance',
+          name: t('sidebar.switchAppearance'),
           icon: <ModeSwitcher />
         },
         {
-          name: 'Logout',
+          key: 'switchLanguage',
+          name: t('sidebar.switchLanguage'),
+          icon: <TranslateOutlined />,
+          action: () => {
+            const newLang = i18n.language === 'en' ? 'vi' : 'en';
+            changeLanguage(newLang);
+            localStorage.setItem('i18nLanguage', newLang);
+            toastMessage.success(t('sidebar.toast.switchLanguage'));
+          }
+        },
+        {
+          key: 'Logout',
+          name: t('sidebar.logout'),
           icon: <LogoutOutlined />,
           isAuth: true,
           action: () => {
             dispatch(logout());
-            toastMessage.success('bye bye !');
+            toastMessage.success(t('logout'));
           }
         }
       ],
@@ -201,6 +237,10 @@ const SideBar = () => {
   ];
   const action = { handleDrawerOpen: handleDrawerOpen, handleDrawerClose: handleDrawerClose };
   const [menus, setMenus] = useState<ImenuItem[]>(menuLists);
+  useEffect(() => {
+    setMenus(menuLists);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [i18n.language]);
   return (
     <Box component='nav'>
       <Drawer variant='permanent' open={open}>

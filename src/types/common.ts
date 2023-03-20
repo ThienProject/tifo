@@ -1,4 +1,5 @@
 export interface ImenuItem {
+  key: string;
   name: string;
   icon: React.ReactNode;
   iconActive?: React.ReactNode;

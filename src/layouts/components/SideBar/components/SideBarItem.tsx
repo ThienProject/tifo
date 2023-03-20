@@ -34,11 +34,8 @@ const SideBarItem = ({
   const handleClosePopper = () => {
     setMenus &&
       setMenus((prev) => {
-        const index = prev.findIndex((itemPrev) => itemPrev.name === item.name);
+        const index = prev.findIndex((itemPrev) => itemPrev.key === item.key);
         const newMenus = [...prev.slice(0, index), { ...prev[index], active: false }, ...prev.slice(index + 1)];
-        // if (newMenus[index].active === false) {
-        //   newMenus[index].action.handleDrawerClose();
-        // } else newMenus[index].action.handleDrawerOpen();
         return newMenus;
       });
     action.handleDrawerOpen();
@@ -47,8 +44,7 @@ const SideBarItem = ({
     <MenuItem sx={{ m: 0, p: 0 }}>
       <Box
         display={'flex'}
-        ref={anchorRef}
-        sx={{ color: 'text.primary', p: { xs: 1, sm: 2 }, py: 2, width: '100%' }}
+        sx={{ color: 'text.primary', ml: 0.5, p: { xs: 1, sm: 2 }, py: 2, width: '100%' }}
         onClick={() => {
           if (item.to) {
             action?.handleDrawerOpen();
@@ -69,7 +65,7 @@ const SideBarItem = ({
           if (setMenus) {
             setMenus((prev) => {
               const newMenus = prev.map((newItem) => {
-                if (newItem.name === item.name) {
+                if (newItem.key === item.key) {
                   if (item.active === true) {
                     return { ...newItem, active: false };
                   } else {
@@ -83,11 +79,12 @@ const SideBarItem = ({
         }}
       >
         <ListItemIcon
+          ref={anchorRef}
           sx={{
             color: 'text.primary',
             minWidth: 0,
             justifyContent: 'center',
-            mr: { xs: 0, sm: 2 }
+            pr: { xs: 0, sm: 2 }
           }}
         >
           {item.active ? item.iconActive : item.icon}

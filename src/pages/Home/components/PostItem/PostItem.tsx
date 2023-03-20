@@ -1,5 +1,5 @@
 import { Box, IconButton, Typography, Stack, Divider, Button } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   MoreHoriz,
   FavoriteBorder,
@@ -13,15 +13,14 @@ import { IPost } from 'src/types/post';
 import SliderImg from './SliderImg';
 import { IUser } from 'src/types/user';
 import moment from 'moment';
-import { useAppDispatch, useAppSelector } from 'src/redux_store';
+import { useAppDispatch } from 'src/redux_store';
 import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
 import PostDetail from 'src/pages/PostDetail';
 import { updateLoveThunk } from 'src/redux_store/post/post_action';
 
-const PostItem = ({ post, index }: { post: IPost; index: number }) => {
+const PostItem = ({ post }: { post: IPost }) => {
   // Before the component definition:
-  const [isMark, setIsMark] = useState(false);
   const dispatch = useAppDispatch();
   // const postSlice = useAppSelector((state) => state.postSlice.posts[index]);
   const { id_user, username, fullname, avatar } = post;
@@ -74,7 +73,8 @@ const PostItem = ({ post, index }: { post: IPost; index: number }) => {
         <IconButton
           size='small'
           onClick={() => {
-            setIsMark((prev) => !prev);
+            console.log(post.isSave);
+            // setIsMark((prev) => !prev);
           }}
         >
           {post.isSave ? <BookmarkOutlined sx={{ color: 'common.black' }} /> : <BookmarkBorderOutlined />}

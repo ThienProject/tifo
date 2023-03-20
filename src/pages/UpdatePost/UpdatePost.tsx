@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { Box, Button, Grid, Paper, Typography, Divider } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { IPayloadUpdatePost, IPost } from 'src/types/post';
@@ -170,6 +169,7 @@ const UpdatePost = () => {
           });
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Box component='form' m={2} onSubmit={handleSubmit(handleOnSubmit)}>

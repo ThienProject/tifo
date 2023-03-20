@@ -28,7 +28,7 @@ const SubMenu = ({
           <MenuItem
             divider
             sx={{ minWidth: 200, py: 2, px: 3, display: 'flex', justifyContent: 'space-between' }}
-            key={menuItem.name}
+            key={menuItem.key}
             onClick={(e) => {
               const action = menuItem.action;
               if (action) {

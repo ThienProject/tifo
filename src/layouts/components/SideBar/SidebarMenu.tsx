@@ -43,20 +43,18 @@ const Menu = ({
         >
           <img className={cx('logo-only', 'iconActive')} alt='home-icon' src={images.only_logo_white_background} />
           <img className={cx('logo', 'iconActive')} alt='home-icon' src={images.black_only_word} />
-          {/* <menuItem.icon  fontSize='large' />
-          <menuItem.iconActive  fontSize='large' /> */}
         </ListItemIcon>
       </MenuItem>
       {menus.map((menuItem) => {
         if (menuItem.isAuth) {
           if (isLogin) {
-            return <SideBarItem action={action} setMenus={setMenus} key={menuItem.name} item={menuItem} />;
+            return <SideBarItem action={action} setMenus={setMenus} key={menuItem.key} item={menuItem} />;
           }
         } else {
           if (isLogin) {
-            if (menuItem.name === 'Login') return;
+            if (menuItem.key === 'Login') return;
           }
-          return <SideBarItem action={action} setMenus={setMenus} key={menuItem.name} item={menuItem} />;
+          return <SideBarItem action={action} setMenus={setMenus} key={menuItem.key} item={menuItem} />;
         }
       })}
     </MenuList>

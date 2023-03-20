@@ -8,7 +8,6 @@ export interface IMedia extends File {
 }
 
 export interface IPost extends IUser {
-
   id_post: string;
   medias?: IMedia[];
   target?: string;

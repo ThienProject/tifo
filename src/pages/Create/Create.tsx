@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { Box, Button, Grid, Paper, Typography, Divider } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { IPayloadCreatePost } from 'src/types/post';
@@ -10,7 +9,7 @@ import { FormSelect } from 'src/components/hooks_form/form_select';
 import { createPostThunk } from 'src/redux_store/post/post_action';
 import { toastMessage } from 'src/utils/toast';
 import { objectToFormData, schemaCreatePost } from 'src/functions';
-import { useIsRequestError, useIsRequestPending } from 'src/hooks/use_status';
+import { useIsRequestPending } from 'src/hooks/use_status';
 import { closeModal, openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
 
@@ -23,11 +22,6 @@ const initCreatePost: IPayloadCreatePost = {
   description: '',
   medias: []
 };
-// const fileSchema = yup.object().shape({
-//   name: yup.string(),
-//   type: yup.string(),
-//   size: yup.number().max(1000000, 'File size must not exceed 1MB')
-// });
 const target = [
   {
     target: 'public'
@@ -43,7 +37,6 @@ const schemaCreate = schemaCreatePost('target', 'description', 'medias');
 
 const Create = (props: { type: string }) => {
   const isLoading = useIsRequestPending('post', 'createPostThunk');
-  const Error = useIsRequestError('post', 'createPostThunk');
   const { type } = props;
   const [suggest, setSuggest] = useState('');
   const { me } = useAppSelector((state: any) => state.userSlice);
