@@ -18,5 +18,20 @@ export default {
       logout: 'Logout success!',
       login: 'Login success!'
     }
+  },
+  search: {
+    noAccount: 'There are no matching accounts',
+    recent: 'Recent'
+  },
+  notification: {
+    content: {
+      follow: ' wants to follow you',
+      post_love: ' liked your post',
+      post_comment: ' commented on your post',
+      reply: 'responds to your comment'
+    }
+  },
+  button: {
+    accept: 'Accept'
   }
 };

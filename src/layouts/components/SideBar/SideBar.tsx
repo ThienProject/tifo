@@ -123,7 +123,7 @@ const SideBar = () => {
       name: t('sidebar.search'),
       icon: <SearchRounded />,
       iconActive: <SearchRounded />,
-      childNode: <Search />,
+      childNode: Search,
       active: false
     },
     {
@@ -139,7 +139,7 @@ const SideBar = () => {
       name: t('sidebar.notification'),
       icon: <NotificationsNoneRounded />,
       iconActive: <NotificationsActiveRounded />,
-      childNode: <Notification />,
+      childNode: Notification,
       active: false,
       isAuth: true
     },

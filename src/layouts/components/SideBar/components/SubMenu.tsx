@@ -26,6 +26,7 @@ const SubMenu = ({
         }
         return (
           <MenuItem
+            onKeyDown={(e) => e.stopPropagation()}
             divider
             sx={{ minWidth: 200, py: 2, px: 3, display: 'flex', justifyContent: 'space-between' }}
             key={menuItem.key}

@@ -16,6 +16,19 @@ export const loginThunk = createAsyncThunk<any, IPayloadLogin>(
     }
   }
 );
+
+export const getNotifications = createAsyncThunk<any, { id_user: string }>(
+  'user/getNotifications',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.getNotifications(payload);
+      return data;
+    } catch (error: any) {
+      toastMessage.setErrors(error);
+      return rejectWithValue(error);
+    }
+  }
+);
 export const getUserThunk = createAsyncThunk<any, { id_user: string }>(
   'user/getUser',
   async (payload, { rejectWithValue }) => {
@@ -68,6 +81,17 @@ export const getSavesThunk = createAsyncThunk<any, IPayloadGetPost>(
   async (payload: IPayloadGetPost, { rejectWithValue }) => {
     try {
       const { data } = await userApi.getSaves(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const getUsersThunk = createAsyncThunk<any, { q: string }>(
+  'user/getUsersThunk',
+  async (payload: { q: string }, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.getUsers(payload);
       return data;
     } catch (error: any) {
       return rejectWithValue(error);

@@ -4,7 +4,7 @@ export interface ImenuItem {
   icon: React.ReactNode;
   iconActive?: React.ReactNode;
   to?: string;
-  childNode?: React.ReactNode;
+  childNode?: any;
   child?: ImenuItem[];
   active?: boolean;
   isAuth?: boolean;

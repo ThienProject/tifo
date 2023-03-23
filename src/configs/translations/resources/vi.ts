@@ -18,5 +18,20 @@ export default {
       logout: 'Đăng xuất thành công!',
       login: 'Đăng nhập thành công!'
     }
+  },
+  search: {
+    noAccount: 'Không có tài khoản nào trùng khớp!',
+    recent: 'Gần đây'
+  },
+  notification: {
+    content: {
+      follow: ' Muốn follow bạn',
+      post_love: 'đã thích bài đăng bạn',
+      post_comment: ' đã bình luận bài viết của bạn',
+      reply: 'đã phản hồi bình luận của bạn'
+    }
+  },
+  button: {
+    accept: 'Chấp nhận'
   }
 };

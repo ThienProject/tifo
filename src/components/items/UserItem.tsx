@@ -4,7 +4,17 @@ import { Link } from 'react-router-dom';
 import { CPath } from 'src/constants';
 import { IUser } from 'src/types/user';
 
-const UserItem = ({ user, size }: { user: IUser; size: string }) => {
+const UserItem = ({
+  user,
+  size,
+  sx,
+  isFullname
+}: {
+  sx?: React.CSSProperties;
+  user: IUser;
+  size: string;
+  isFullname?: boolean;
+}) => {
   let newSize: number;
   if (size === 'media') {
     newSize = 50;
@@ -16,7 +26,7 @@ const UserItem = ({ user, size }: { user: IUser; size: string }) => {
   return (
     <>
       {user && (
-        <Link to={`/${user?.id_user}`} style={{ textDecoration: 'none' }}>
+        <Link to={`/${user?.id_user}`} style={{ ...sx, textDecoration: 'none' }}>
           <Box pl={1} display='flex' alignItems={'center'}>
             <Box width={newSize} height={newSize}>
               <Avatar
@@ -32,18 +42,35 @@ const UserItem = ({ user, size }: { user: IUser; size: string }) => {
                 src={CPath.host + '/medias/' + user?.avatar}
               />
             </Box>
-            <Typography
-              px={1}
-              fontWeight={700}
-              overflow={'hidden'}
-              maxWidth={100}
-              whiteSpace={'nowrap'}
-              textOverflow={'ellipsis'}
-              fontSize={14}
-              color={'common.black'}
-            >
-              {user.username}
-            </Typography>
+            <Box>
+              <Typography
+                px={1}
+                fontWeight={700}
+                overflow={'hidden'}
+                // maxWidth={100}
+                whiteSpace={'nowrap'}
+                textOverflow={'ellipsis'}
+                fontSize={14}
+                color={'common.black'}
+              >
+                {user.username}
+              </Typography>
+              {isFullname && (
+                <Typography
+                  px={1}
+                  fontWeight={300}
+                  overflow={'hidden'}
+                  // maxWidth={100}
+                  whiteSpace={'nowrap'}
+                  textOverflow={'ellipsis'}
+                  fontSize={14}
+                  color={'text.secondary'}
+                >
+                  {user.fullname}
+                </Typography>
+              )}
+            </Box>
+
             <Divider />
           </Box>
         </Link>

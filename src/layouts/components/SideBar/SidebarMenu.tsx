@@ -32,13 +32,17 @@ const Menu = ({
         display: { xs: 'flex', sm: 'block' }
       }}
     >
-      <MenuItem sx={{ color: 'text.primary', pl: 1, display: { xs: 'none', sm: 'block' } }}>
+      <MenuItem
+        onKeyDown={(e) => e.stopPropagation()}
+        sx={{ color: 'text.primary', pl: 1, display: { xs: 'none', sm: 'block' } }}
+      >
         <ListItemIcon
           sx={{
             color: 'text.primary',
             minWidth: 0,
             justifyContent: 'center',
-            ml: 3
+            ml: 3,
+            mr: 2
           }}
         >
           <img className={cx('logo-only', 'iconActive')} alt='home-icon' src={images.only_logo_white_background} />

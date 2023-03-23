@@ -41,7 +41,7 @@ const SideBarItem = ({
     action.handleDrawerOpen();
   };
   return (
-    <MenuItem sx={{ m: 0, p: 0 }}>
+    <MenuItem onKeyDown={(e) => e.stopPropagation()} sx={{ m: 0, p: 0 }}>
       <Box
         display={'flex'}
         sx={{ color: 'text.primary', ml: 0.5, p: { xs: 1, sm: 2 }, py: 2, width: '100%' }}
@@ -84,7 +84,8 @@ const SideBarItem = ({
             color: 'text.primary',
             minWidth: 0,
             justifyContent: 'center',
-            pr: { xs: 0, sm: 2 }
+            pr: { xs: 0, sm: 2 },
+            mr: 1
           }}
         >
           {item.active ? item.iconActive : item.icon}
@@ -114,7 +115,11 @@ const SideBarItem = ({
                     aria-labelledby='composition-button'
                     // onKeyDown={handleListKeyDown}
                   >
-                    {item.child ? <SubMenu subMenus={item.child} handleClose={handleClosePopper} /> : <SubSidebar />}
+                    {item.child ? (
+                      <SubMenu subMenus={item.child} handleClose={handleClosePopper} />
+                    ) : (
+                      <SubSidebar handleClose={handleClosePopper} item={item} />
+                    )}
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
