@@ -1,4 +1,6 @@
-import { RouteObject } from 'react-router';
+import { Navigate, RouteObject } from 'react-router';
+import Status404 from 'src/content/pages/Status/Status404';
+import SidebarLayout from 'src/layouts/admin/SidebarLayout';
 import Auth from 'src/layouts/Auth';
 import MainLayout from 'src/layouts/Main';
 import ForgetPassword from 'src/pages/Auth/ForgetPassword';
@@ -9,11 +11,30 @@ import Home from 'src/pages/Home';
 import Messages from 'src/pages/Messages';
 import Profile from 'src/pages/Profile';
 import Reels from 'src/pages/Reels';
+import { Suspense, lazy } from 'react';
 import UpdatePost from 'src/pages/UpdatePost';
 import { ILogin } from 'src/types/auth';
 import { ProtectedRoute } from './ProtectedRoute';
 
-// cách 1
+// Dashboards
+import SuspenseLoader from 'src/components/admin/SuspenseLoader';
+
+const Loader = (Component: any) => (props: any) =>
+  (
+    <Suspense fallback={<SuspenseLoader />}>
+      <Component {...props} />
+    </Suspense>
+  );
+
+const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
+
+// Applications
+
+const Messenger = Loader(lazy(() => import('src/content/applications/Messenger')));
+// const Transactions = Loader(lazy(() => import('src/content/applications/Transactions')));
+// const UserProfile = Loader(lazy(() => import('src/content/applications/Users/profile')));
+// const UserSettings = Loader(lazy(() => import('src/content/applications/Users/settings')));
+
 interface IRoute {
   (login: ILogin): RouteObject[];
 }
@@ -27,7 +48,7 @@ const routes: IRoute = (login) => [
         element: <Home />
       },
       {
-        path: '/messages',
+        path: '/message',
         element: <ProtectedRoute login={login} children={<Messages />} />
       },
       {
@@ -80,35 +101,74 @@ const routes: IRoute = (login) => [
         element: <ForgetPassword />
       }
     ]
+  },
+  {
+    path: '/admin',
+    element: <SidebarLayout />,
+    children: [
+      {
+        path: '',
+        element: <Navigate to='dashboards' replace />
+      },
+      {
+        path: 'dashboards',
+        children: [
+          {
+            path: '',
+            element: <Navigate to='crypto' replace />
+          },
+          {
+            path: 'crypto',
+            element: <Crypto />
+          },
+          {
+            path: 'messenger',
+            element: <Messenger />
+          }
+        ]
+      }
+
+      // {
+      // path: 'management',
+      // element: <SidebarLayout />,
+      // children: [
+      //   {
+      //     path: '',
+      //     element: <Navigate to='transactions' replace />
+      //   },
+      //   {
+      //     path: 'transactions',
+      //     element: <Transactions />
+      //   }
+      // {
+      //   path: 'profile',
+      //   children: [
+      //     {
+      //       path: '',
+      //       element: <Navigate to='details' replace />
+      //     },
+      //     {
+      //       path: 'details',
+      //       element: <UserProfile />
+      //     },
+      //     {
+      //       path: 'settings',
+      //       element: <UserSettings />
+      //     }
+      //   ]
+      // }
+      // ]
+      // }
+    ]
+  },
+  {
+    path: 'notfound',
+    element: <Status404 />
+  },
+  {
+    path: '*',
+    element: <Status404 />
   }
 ];
 
-// cách 2
-// interface IRoute { fc : (isLogin: boolean) => RouteObject[]};
-// const routes: IRoute['fc'] = (isLogin) => [
-//   {
-//     path: '/',
-//     element: <MainLayout />,
-//     children: [
-//       {
-//         index: true,
-//         element: <Home />
-//       }
-//     ]
-//   }
-// ];
-
-/// cách 3
-// const routes: (isLogin: boolean) => RouteObject[] = (isLogin: boolean) => [
-//   {
-//     path: '/',
-//     element: <MainLayout />,
-//     children: [
-//       {
-//         index: true,
-//         element: <Home />
-//       }
-//     ]
-//   }
-// ];
 export default routes;

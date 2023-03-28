@@ -4,7 +4,7 @@ import Tab from 'src/components/Tab';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import TabElement from './components/tabElement';
 import TopProfile from './components/TopProfile';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { IUser } from 'src/types/user';
 import { getUserThunk } from 'src/redux_store/user/user_action';
 
@@ -59,7 +59,7 @@ const Profile = () => {
       }}
       color={'common.black'}
     >
-      {user ? <TopProfile user={user} /> : "Can't find this Page"}
+      {user ? <TopProfile user={user} /> : <Navigate to='/notfound' />}
 
       {tabs.length > 0 && <Tab TabList={tabs} />}
     </Box>
