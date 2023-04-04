@@ -4,12 +4,13 @@ import Tab from 'src/components/Tab';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import TabElement from './components/tabElement';
 import TopProfile from './components/TopProfile';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { IUser } from 'src/types/user';
 import { getUserThunk } from 'src/redux_store/user/user_action';
 
 const Profile = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const pathName = location.pathname.substring(1);
   const { me } = useAppSelector((state) => state.userSlice);
   const dispatch = useAppDispatch();
@@ -27,8 +28,13 @@ const Profile = () => {
           const { user } = data;
           if (user.id_user) {
             setUser(user);
-          }
+          } else navigate('/notfound', { replace: true });
+        })
+        .catch(() => {
+          navigate('/notfound', { replace: true });
         });
+    } else {
+      navigate('/notfound', { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathName]);
@@ -59,7 +65,7 @@ const Profile = () => {
       }}
       color={'common.black'}
     >
-      {user ? <TopProfile user={user} /> : <Navigate to='/notfound' />}
+      {user && <TopProfile user={user} />}
 
       {tabs.length > 0 && <Tab TabList={tabs} />}
     </Box>

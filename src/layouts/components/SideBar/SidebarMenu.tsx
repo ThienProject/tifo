@@ -6,6 +6,8 @@ import images from 'src/assets/images';
 import { ImenuItem } from 'src/types/common';
 import SideBarItem from './components/SideBarItem';
 import { useAppSelector } from 'src/redux_store';
+import { useTheme } from '@mui/material/styles';
+
 const cx = classNames.bind(styles);
 
 const Menu = ({
@@ -20,6 +22,7 @@ const Menu = ({
     handleDrawerClose: () => void;
   };
 }) => {
+  const theme = useTheme();
   const { me } = useAppSelector((state) => {
     return state.userSlice;
   });
@@ -34,20 +37,13 @@ const Menu = ({
     >
       <MenuItem
         onKeyDown={(e) => e.stopPropagation()}
-        sx={{ color: 'text.primary', pl: 1, display: { xs: 'none', sm: 'block' } }}
+        sx={{ color: 'text.primary', display: { xs: 'none', sm: 'block' } }}
       >
-        <ListItemIcon
-          sx={{
-            color: 'text.primary',
-            minWidth: 0,
-            justifyContent: 'center',
-            ml: 3,
-            mr: 2
-          }}
-        >
-          <img className={cx('logo-only', 'iconActive')} alt='home-icon' src={images.only_logo_white_background} />
-          <img className={cx('logo', 'iconActive')} alt='home-icon' src={images.black_only_word} />
-        </ListItemIcon>
+        <img
+          className={cx('logo')}
+          alt='home-icon'
+          src={theme.palette.mode === 'dark' ? images.home_Logo_black : images.home_Logo_white}
+        />
       </MenuItem>
       {menus.map((menuItem) => {
         if (menuItem.isAuth) {

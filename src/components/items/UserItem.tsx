@@ -31,7 +31,7 @@ const UserItem = ({
             <Box width={newSize} height={newSize}>
               <Avatar
                 style={{
-                  boxShadow: '1px 2px 1px #888',
+                  boxShadow: 'var(--mui-shadows-1)',
                   // border: '1px solid var(--mui-palette-Slider-errorTrack)',
                   objectFit: 'contain',
                   width: '100%',

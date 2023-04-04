@@ -39,7 +39,7 @@ const Suggestions = () => {
         <Stack direction={'row'} alignItems='center'>
           <Avatar
             sizes='large'
-            sx={{ mr: 1 }}
+            sx={{ mr: 1, boxShadow: 1 }}
             alt="it's me"
             src='https://instagram.fdad3-5.fna.fbcdn.net/v/t51.2885-15/274193622_633941284504134_4933464597307664209_n.jpg?stp=c0.248.640.640a_dst-jpg_e15_s150x150&_nc_ht=instagram.fdad3-5.fna.fbcdn.net&_nc_cat=106&_nc_ohc=QEZ3-3oky4gAX-i9X7r&edm=ANmP7GQBAAAA&ccb=7-5&oh=00_AfB5A8fTtThZG_0I3CgqcHdw0o5IcCvYJLyYVVVimfWhLg&oe=63FE653A&_nc_sid=276363'
           />

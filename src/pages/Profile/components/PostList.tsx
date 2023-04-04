@@ -26,6 +26,9 @@ const PostList = (props: { posts: IPost[]; handleLoadMore: () => void }) => {
                 <Box
                   key={index}
                   width={'30%'}
+                  overflow={'hidden'}
+                  borderRadius={2}
+                  boxShadow={2}
                   bgcolor={'#888'}
                   onClick={() => {
                     const model_id = MODAL_IDS.postDetail;

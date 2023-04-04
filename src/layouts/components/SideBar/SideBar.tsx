@@ -46,6 +46,7 @@ const SideBar = () => {
   const [open, setOpen] = React.useState(true);
   const openedMixin = (theme: Theme): CSSObject => ({
     width: drawerWidth,
+    boxShadow: theme.shadows[1],
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen

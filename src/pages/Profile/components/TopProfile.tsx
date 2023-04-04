@@ -10,7 +10,7 @@ const TopProfile = (prop: { user: IUser }) => {
   return (
     <Stack direction={'row'}>
       <Box minWidth={250}>
-        <Avatar sx={{ width: 100, height: 100, margin: '0 auto' }} src={user?.avatar || images.account} />
+        <Avatar sx={{ width: 100, height: 100, margin: '0 auto', boxShadow: 1 }} src={user?.avatar || images.account} />
       </Box>
       <Box>
         <Stack direction={'row'} alignItems={'center'}>
