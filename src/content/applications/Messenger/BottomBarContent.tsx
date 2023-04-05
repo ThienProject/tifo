@@ -1,15 +1,4 @@
-import {
-  Avatar,
-  Tooltip,
-  IconButton,
-  Box,
-  Button,
-  styled,
-  InputBase,
-  useTheme,
-  Typography,
-  FormLabel
-} from '@mui/material';
+import { Avatar, Tooltip, IconButton, Box, Button, styled, InputBase, useTheme, FormLabel } from '@mui/material';
 import AttachFileTwoToneIcon from '@mui/icons-material/AttachFileTwoTone';
 import SendTwoToneIcon from '@mui/icons-material/SendTwoTone';
 

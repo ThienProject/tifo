@@ -20,7 +20,7 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
           height: '100%',
 
           '.MuiPageTitle-wrapper': {
-            background: theme.palette.mode === 'dark' ? theme.palette.grey[50] : theme.palette.grey[50],
+            background: theme.palette.mode === 'dark' ? theme.palette.grey[50] : 'rgb(242, 245, 249);',
             marginBottom: `${theme.spacing(4)}`,
             boxShadow:
               theme.palette.mode === 'dark'
@@ -49,7 +49,7 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
             }
           }}
         >
-          <Box display='block'>
+          <Box display='block' bgcolor={theme.palette.mode === 'dark' ? theme.palette.grey[50] : 'rgb(242, 245, 249);'}>
             <Outlet />
           </Box>
         </Box>

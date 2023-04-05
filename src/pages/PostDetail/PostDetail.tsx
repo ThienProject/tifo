@@ -1,6 +1,6 @@
 import React from 'react';
 import MODAL_IDS from 'src/constants/modal';
-import { Box, Divider, Stack } from '@mui/material';
+import { Box, Divider, Stack, Typography } from '@mui/material';
 import ModalWrapper from 'src/components/model/ModelWrapper';
 import Grid from '@mui/material/Grid';
 import SliderImg from '../Home/components/PostItem/SliderImg';
@@ -22,7 +22,7 @@ const PostDetail = (props: { post: IPost }) => {
   const navigate = useNavigate();
   const socket = io.connect(CPath.host || 'http://localhost:8000');
   const { post } = props;
-  const { medias, id_post, fullname, avatar, username, id_user } = post;
+  const { medias, id_post, description, fullname, avatar, username, id_user } = post;
   const user = { id_user, fullname, avatar, username };
   const { me } = useAppSelector((state) => state.userSlice);
   const dispatch = useAppDispatch();
@@ -100,18 +100,23 @@ const PostDetail = (props: { post: IPost }) => {
             }}
             boxSizing={'border-box'}
           >
-            <Stack direction={'row'} justifyContent='space-between'>
-              <Box
-                onClick={() => {
-                  const action = closeModal({ modalId: MODAL_IDS.postDetail });
-                  dispatch(action);
-                }}
-              >
-                <UserItem size='small' user={user} />
-              </Box>
+            <Box>
+              <Stack direction={'row'} justifyContent='space-between'>
+                <Box
+                  onClick={() => {
+                    const action = closeModal({ modalId: MODAL_IDS.postDetail });
+                    dispatch(action);
+                  }}
+                >
+                  <UserItem size='small' user={user} />
+                </Box>
+                <MenuOption icon={<MoreHoriz />} options={options} />
+              </Stack>
+              <Typography mt={2} ml={2} fontSize={14}>
+                {description}
+              </Typography>
+            </Box>
 
-              <MenuOption icon={<MoreHoriz />} options={options} />
-            </Stack>
             <Divider sx={{ my: 2 }} />
             <Comment socket={socket} id_post={id_post} />
           </Box>

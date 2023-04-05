@@ -9,7 +9,7 @@ import { Scrollbars } from 'react-custom-scrollbars-2';
 import { Box, styled, Divider, Drawer, IconButton, useTheme } from '@mui/material';
 
 const RootWrapper = styled(Box)(
-  ({ theme }) => `
+  () => `
        height: calc(100vh - 60px);
        display: flex;
 `

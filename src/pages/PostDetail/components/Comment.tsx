@@ -169,7 +169,7 @@ const Comment = (props: { socket: any; id_post: string /* comments: IComment[] *
 
   return (
     <>
-      <Box height={'85%'} sx={{ overflowY: 'scroll', maxWidth: '100%' }}>
+      <Box height={'80%'} sx={{ overflowY: 'scroll', maxWidth: '100%' }}>
         {commentList.map((comment, index) => {
           const id_cmt = comment.id_comment;
           return (
@@ -269,7 +269,7 @@ const Comment = (props: { socket: any; id_post: string /* comments: IComment[] *
           );
         })}
       </Box>
-      <Stack maxHeight={'15%'} component='form' flexDirection={'row'}>
+      <Stack maxHeight={'20%'} component='form' flexDirection={'row'}>
         <Controller
           name='comment'
           rules={{
@@ -285,7 +285,7 @@ const Comment = (props: { socket: any; id_post: string /* comments: IComment[] *
                 inputRef={ref}
                 rows={2}
                 fullWidth
-                sx={{ with: '100%' }}
+                sx={{ with: '100%', py: 0, padding: 0, '& input ': { py: 1 } }}
                 value={value}
                 onChange={(e) => {
                   const value = e.target.value;

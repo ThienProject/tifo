@@ -1,7 +1,6 @@
 import { Switch, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
-import { FormInput } from 'src/components/hooks_form/form_input';
 import UserItem from 'src/components/items/UserItem';
 import TabCNP from 'src/components/Tab/Tab';
 import { useAppSelector } from 'src/redux_store';

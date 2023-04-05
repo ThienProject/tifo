@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Paper } from '@mui/material';
 import { ImenuItem } from 'src/types/common';
-import Search from 'src/pages/Search';
 
 const SubSidebar = ({
   handleClose,
@@ -13,7 +12,7 @@ const SubSidebar = ({
   const CPN = item.childNode;
   return (
     <Paper>
-      <Box sx={{ width: '500px', height: '100vh' }}>{<CPN handleClose={handleClose} />}</Box>
+      <Box sx={{ width: '450px', height: '100vh' }}>{<CPN handleClose={handleClose} />}</Box>
     </Paper>
   );
 };

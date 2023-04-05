@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItemIcon, MenuItem, MenuList } from '@mui/material';
+import { MenuItem, MenuList } from '@mui/material';
 import styles from './SideBar.module.scss';
 import classNames from 'classnames/bind';
 import images from 'src/assets/images';
@@ -13,7 +13,8 @@ const cx = classNames.bind(styles);
 const Menu = ({
   menus,
   setMenus,
-  action
+  action,
+  openDrawer
 }: {
   menus: ImenuItem[];
   setMenus: React.Dispatch<React.SetStateAction<ImenuItem[]>>;
@@ -21,6 +22,7 @@ const Menu = ({
     handleDrawerOpen: () => void;
     handleDrawerClose: () => void;
   };
+  openDrawer: boolean;
 }) => {
   const theme = useTheme();
   const { me } = useAppSelector((state) => {
@@ -39,11 +41,15 @@ const Menu = ({
         onKeyDown={(e) => e.stopPropagation()}
         sx={{ color: 'text.primary', display: { xs: 'none', sm: 'block' } }}
       >
-        <img
-          className={cx('logo')}
-          alt='home-icon'
-          src={theme.palette.mode === 'dark' ? images.home_Logo_black : images.home_Logo_white}
-        />
+        {openDrawer ? (
+          <img
+            className={cx('logo')}
+            alt='home-icon'
+            src={theme.palette.mode === 'dark' ? images.home_Logo_black : images.home_Logo_white}
+          />
+        ) : (
+          <img style={{ height: '30px' }} className={cx('logo')} alt='home-icon' src={images.logo} />
+        )}
       </MenuItem>
       {menus.map((menuItem) => {
         if (menuItem.isAuth) {

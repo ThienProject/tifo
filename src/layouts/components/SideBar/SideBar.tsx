@@ -245,7 +245,7 @@ const SideBar = () => {
   return (
     <Box component='nav'>
       <Drawer variant='permanent' open={open}>
-        <MenuSideBar menus={menus} action={action} setMenus={setMenus} />
+        <MenuSideBar menus={menus} openDrawer={open} action={action} setMenus={setMenus} />
       </Drawer>
     </Box>
   );

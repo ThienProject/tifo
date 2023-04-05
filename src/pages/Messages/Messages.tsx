@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import React from 'react';
 import ChatBox from './component/ChatBox';
 import SidebarChat from './component/SidebarChat';

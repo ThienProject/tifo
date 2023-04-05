@@ -3,7 +3,7 @@ import { Scrollbars } from 'react-custom-scrollbars-2';
 
 import { SidebarContext } from 'src/contexts/SidebarContext';
 
-import { Box, Drawer, alpha, styled, Divider, useTheme, Button, lighten, darken, Tooltip } from '@mui/material';
+import { Box, Drawer, alpha, styled, Divider, useTheme, lighten, darken } from '@mui/material';
 
 import SidebarMenu from './SidebarMenu';
 import Logo from 'src/components/admin/LogoSign';
@@ -36,10 +36,7 @@ function Sidebar() {
           position: 'fixed',
           left: 0,
           top: 0,
-          background:
-            theme.palette.mode === 'dark'
-              ? alpha(lighten(theme.palette.grey[300], 0.1), 0.5)
-              : darken(theme.palette.grey[900], 0.5),
+          background: theme.palette.mode === 'dark' ? alpha(lighten('rgb(17, 25, 42)', 0.1), 0.5) : 'rgb(17, 25, 42)',
           boxShadow: theme.palette.mode === 'dark' ? theme.shadows[16] : 'none'
         }}
       >
@@ -65,7 +62,7 @@ function Sidebar() {
         </Scrollbars>
         <Divider
           sx={{
-            background: theme.palette.grey[50]
+            background: 'rgba(255, 255, 255, 0.1)'
           }}
         />
       </SidebarWrapper>
@@ -100,7 +97,7 @@ function Sidebar() {
               sx={{
                 mt: theme.spacing(3),
                 mx: theme.spacing(2),
-                background: theme.palette.grey[50]
+                background: 'rgba(255, 255, 255, 0.1)'
               }}
             />
             <SidebarMenu />

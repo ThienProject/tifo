@@ -26,7 +26,16 @@ const NotiItem = ({
   const dispatch = useAppDispatch();
   return (
     <MenuItem
-      sx={{ py: 2, alignItems: 'center' }}
+      sx={{
+        py: 2,
+        alignItems: 'center',
+        my: 2,
+        mx: 1.5,
+        borderRadius: 2,
+        boxShadow: 'var(--mui-shadows-1)',
+        borderBottom: '1px solid var(--mui-palette-divider)',
+        bgcolor: '#fcfcfc'
+      }}
       onClick={(e) => {
         if (noti.type === 'follow') {
           navigate('/' + noti.id_actor);
@@ -50,10 +59,10 @@ const NotiItem = ({
         if (handleClose) handleClose(e);
       }}
     >
-      <Stack width='85%' direction={'row'} alignItems='center'>
+      <Stack width='80%' direction={'row'} alignItems='center'>
         <Avatar sx={{ mr: 1 }} alt='avatar' src={CPath.host_public + noti.avatar} />
-        <Box>
-          <Typography sx={{ width: '85%', overflowWrap: 'break-word' }}>
+        <Box maxWidth='100%'>
+          <Typography sx={{ fontSize: 15, whiteSpace: 'pre-wrap' }}>
             {noti.username}
             {t(`notification.content.${noti.type}`)}
           </Typography>
@@ -62,7 +71,8 @@ const NotiItem = ({
 
       {noti.type === 'follow' && (
         <Button
-          sx={{ flex: 'flex-end', color: 'white' }}
+          size='small'
+          sx={{ flex: 'flex-end', fontSize: 12, color: 'white', textTransform: 'capitalize' }}
           onClick={(e) => {
             e.stopPropagation();
           }}

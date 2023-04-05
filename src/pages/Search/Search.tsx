@@ -10,7 +10,7 @@ import { IUser } from 'src/types/user';
 import { useTranslation } from 'react-i18next';
 
 const Search = ({ handleClose }: { handleClose: (event: Event | React.SyntheticEvent) => void }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [value, setValue] = useState<string>('');
   const debounced = useDebounced(value);

@@ -16,7 +16,7 @@ import { styled } from '@mui/material/styles';
 import images from 'src/assets/images';
 
 const MainContent = styled(Box)(
-  ({ theme }) => `
+  () => `
     height: 100%;
     display: flex;
     flex: 1;

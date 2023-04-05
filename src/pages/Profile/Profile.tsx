@@ -4,7 +4,7 @@ import Tab from 'src/components/Tab';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import TabElement from './components/tabElement';
 import TopProfile from './components/TopProfile';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { IUser } from 'src/types/user';
 import { getUserThunk } from 'src/redux_store/user/user_action';
 
