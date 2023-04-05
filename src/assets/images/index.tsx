@@ -7,6 +7,7 @@ const images = {
   home_Logo_white: require('src/assets/images/home_Logo_white.png').default,
   notfound: require('src/assets/images/404.svg').default,
   home_Logo_black: require('src/assets/images/home_Logo_black.png').default,
-  logo: require('src/assets/images/icon.png').default
+  logo: require('src/assets/images/icon.png').default,
+  avatar: require('src/assets/images/avatar.jpg').default
 };
 export default images;

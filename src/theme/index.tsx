@@ -36,6 +36,9 @@ const paletteDark: PaletteOptions = {
   }
 };
 const paletteLight: PaletteOptions = {
+  background: {
+    default: '#fff'
+  },
   primary: {
     main: '#4db5f9',
     light: '#757ce8'
