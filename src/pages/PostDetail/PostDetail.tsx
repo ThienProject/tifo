@@ -21,6 +21,7 @@ import { toastMessage } from 'src/utils/toast';
 const PostDetail = (props: { post: IPost }) => {
   const navigate = useNavigate();
   const socket = io.connect(CPath.host || 'http://localhost:8000');
+  console.log('CPath.host ', CPath.host);
   const { post } = props;
   const { medias, id_post, description, fullname, avatar, username, id_user } = post;
   const user = { id_user, fullname, avatar, username };

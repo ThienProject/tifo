@@ -1,4 +1,5 @@
 export default {
+  language: 'en',
   sidebar: {
     home: 'Home',
     search: 'Search',
@@ -32,6 +33,40 @@ export default {
     }
   },
   button: {
-    accept: 'Accept'
+    accept: 'Accept',
+    follow: 'Follow',
+    edit: 'Edit',
+    delete: 'Delete',
+    group: 'Create Team',
+    block: 'Block user'
+  },
+  home: {
+    suggestTab: 'Suggestion for you',
+    view_comment: 'View all {{count}} comments',
+    translate: 'See Translation'
+  },
+  postDetail: {
+    reply: 'reply',
+    viewReply: 'View Replies'
+  },
+  message: {
+    customize: {
+      title: 'Customize Chat',
+      search: 'Search in Conversation',
+      change_theme: 'Change Theme Styling',
+      change_emoji: 'Choose Default Emoji'
+    },
+    privacy: {
+      title: 'Privacy & Support',
+      notification: 'Turn off notifications',
+      ignore: 'Ignore all messages',
+      report: "Something's Wrong"
+    },
+    share_file: {
+      title: 'Shared Files'
+    },
+    create_group: 'Create Group',
+    enter_group_name: 'Enter group name',
+    add_member: 'Add Member'
   }
 };

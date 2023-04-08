@@ -2,6 +2,11 @@ import { Box, Avatar, Typography, Card, styled, Divider } from '@mui/material';
 
 import { formatDistance, format, subDays, subHours, subMinutes } from 'date-fns';
 import ScheduleTwoToneIcon from '@mui/icons-material/ScheduleTwoTone';
+import { IChat, IChatDates, IGroup } from 'src/types/group';
+import { useAppSelector } from 'src/redux_store';
+import { useEffect } from 'react';
+import { getSubTimeFromDayFNS } from 'src/functions';
+import { useTranslation } from 'react-i18next';
 
 const DividerWrapper = styled(Divider)(
   ({ theme }) => `
@@ -40,7 +45,10 @@ const CardWrapperSecondary = styled(Card)(
 `
 );
 
-function ChatContent() {
+function ChatContent({ chatDates }: { chatDates: IChatDates[] }) {
+  const { me } = useAppSelector((state) => state.userSlice);
+  const { t } = useTranslation();
+  const id_me = me.id_user;
   const user = {
     name: 'Catherine Pike',
     avatar: '/static/images/avatars/1.jpg'
@@ -48,7 +56,99 @@ function ChatContent() {
 
   return (
     <Box p={3} bgcolor={'rgb(242, 245, 249)'}>
-      <DividerWrapper>{format(subDays(new Date(), 3), 'MMMM dd yyyy')}</DividerWrapper>
+      {chatDates &&
+        chatDates.map((chatDate) => {
+          const date = Object.keys(chatDate)[0];
+          const dateFormat = new Date(date);
+          const chats = chatDate[date];
+          return (
+            <Box key={date}>
+              <DividerWrapper>{format(dateFormat, 'MMMM dd yyyy')}</DividerWrapper>
+              {chats.map((chat) => {
+                const chatDatetime = new Date(chat.datetime);
+                console.log('chatDatetime', chatDatetime);
+                console.log('chatDatetime', chatDatetime.getTime());
+                if (chat.id_user === id_me) {
+                  return (
+                    <Box key={chat.id_chat} display='flex' alignItems='flex-start' justifyContent='flex-end' py={3}>
+                      <Box display='flex' alignItems='flex-end' flexDirection='column' justifyContent='flex-end' mr={2}>
+                        <CardWrapperPrimary>{chat.message}</CardWrapperPrimary>
+                        <Typography
+                          variant='subtitle1'
+                          color={'rgba(34, 51, 84, 0.7)'}
+                          sx={{
+                            pt: 1,
+                            fontSize: 13,
+                            display: 'flex',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <ScheduleTwoToneIcon
+                            sx={{
+                              mr: 0.5
+                            }}
+                            fontSize='small'
+                          />
+                          {chat.datetime && getSubTimeFromDayFNS(chat.datetime, t('language'))}
+                        </Typography>
+                      </Box>
+                      <Avatar
+                        variant='rounded'
+                        sx={{
+                          width: 50,
+                          height: 50
+                        }}
+                        alt={user.name}
+                        src={user.avatar}
+                      />
+                    </Box>
+                  );
+                } else {
+                  return (
+                    <Box display='flex' key={chat.id_chat} alignItems='flex-start' justifyContent='flex-start' py={3}>
+                      <Avatar
+                        variant='rounded'
+                        sx={{
+                          width: 50,
+                          height: 50
+                        }}
+                        alt='Zain Baptista'
+                        src='/static/images/avatars/2.jpg'
+                      />
+                      <Box
+                        display='flex'
+                        alignItems='flex-start'
+                        flexDirection='column'
+                        justifyContent='flex-start'
+                        ml={2}
+                      >
+                        <CardWrapperSecondary>{chat.message}</CardWrapperSecondary>
+                        <Typography
+                          color={'rgba(34, 51, 84, 0.7)'}
+                          sx={{
+                            pt: 1,
+                            fontSize: 13,
+                            display: 'flex',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <ScheduleTwoToneIcon
+                            sx={{
+                              mr: 0.5
+                            }}
+                            fontSize='small'
+                          />
+                          {chat.datetime && getSubTimeFromDayFNS(chat.datetime, t('language'))}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  );
+                }
+              })}
+            </Box>
+          );
+        })}
+      {/* <DividerWrapper>{format(subDays(new Date(), 3), 'MMMM dd yyyy')}</DividerWrapper>
 
       <Box display='flex' alignItems='flex-start' justifyContent='flex-start' py={3}>
         <Avatar
@@ -120,7 +220,6 @@ function ChatContent() {
           src={user.avatar}
         />
       </Box>
-      <DividerWrapper>{format(subDays(new Date(), 5), 'MMMM dd yyyy')}</DividerWrapper>
 
       <Box display='flex' alignItems='flex-start' justifyContent='flex-end' py={3}>
         <Box display='flex' alignItems='flex-end' flexDirection='column' justifyContent='flex-end' mr={2}>
@@ -247,7 +346,7 @@ function ChatContent() {
           alt={user.name}
           src={user.avatar}
         />
-      </Box>
+      </Box> */}
     </Box>
   );
 }

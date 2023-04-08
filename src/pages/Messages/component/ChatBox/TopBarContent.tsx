@@ -25,13 +25,19 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
 import ColorLensTwoToneIcon from '@mui/icons-material/ColorLensTwoTone';
 import NotificationsOffTwoToneIcon from '@mui/icons-material/NotificationsOffTwoTone';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import EmojiEmotionsTwoToneIcon from '@mui/icons-material/EmojiEmotionsTwoTone';
 import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
 import BlockTwoToneIcon from '@mui/icons-material/BlockTwoTone';
 import WarningTwoToneIcon from '@mui/icons-material/WarningTwoTone';
 import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
 import images from 'src/assets/images';
-
+import { useTranslation } from 'react-i18next';
+import { useAppDispatch } from 'src/redux_store';
+import { openModal } from 'src/redux_store/common/modal/modal_slice';
+import MODAL_IDS from 'src/constants/modal';
+import CreateGroup from '../CreateGroup';
+import { IUser } from 'src/types/user';
 const RootWrapper = styled(Box)(
   ({ theme }) => `
         @media (min-width: ${theme.breakpoints.values.md}px) {
@@ -73,7 +79,7 @@ const AccordionSummaryWrapper = styled(AccordionSummary)(
 
           &.Mui-expanded,
           &:hover {
-            background: ${theme.palette.grey[300]};
+            background: rgba(34, 51, 84, 0.1);
 
             .MuiSvgIcon-root {
               color: ${theme.palette.primary.main};
@@ -83,9 +89,10 @@ const AccordionSummaryWrapper = styled(AccordionSummary)(
 `
 );
 
-function TopBarContent() {
+function TopBarContent({ user }: { user?: IUser }) {
+  const { t } = useTranslation();
   const theme = useTheme();
-
+  const dispatch = useAppDispatch();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -176,9 +183,11 @@ function TopBarContent() {
               alt='Zain Baptista'
               src='/static/images/avatars/1.jpg'
             />
-            <Typography variant='h4'>Zain Baptista</Typography>
+            <Typography fontWeight={700} fontSize={16} variant='h4'>
+              Zain Baptista
+            </Typography>
             <Typography variant='subtitle2'>
-              Active{' '}
+              Active
               {formatDistance(subMinutes(new Date(), 7), new Date(), {
                 addSuffix: true
               })}
@@ -192,7 +201,9 @@ function TopBarContent() {
 
           <Accordion expanded={expanded === 'section1'} onChange={handleChange('section1')}>
             <AccordionSummaryWrapper expandIcon={<ExpandMoreIcon />}>
-              <Typography variant='h5'>Customize Chat</Typography>
+              <Typography fontSize={14} variant='h5' color={'rgb(34, 51, 84)'}>
+                {t('message.customize.title')}
+              </Typography>
             </AccordionSummaryWrapper>
             <AccordionDetails
               sx={{
@@ -204,26 +215,40 @@ function TopBarContent() {
                   <ListItemIconWrapper>
                     <SearchTwoToneIcon />
                   </ListItemIconWrapper>
-                  <ListItemText primary='Search in Conversation' primaryTypographyProps={{ variant: 'h5' }} />
+                  <ListItemText
+                    sx={{ fontSize: 14 }}
+                    primary={t('message.customize.search')}
+                    primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
+                  />
                 </ListItem>
                 <ListItem button>
                   <ListItemIconWrapper>
                     <ColorLensTwoToneIcon />
                   </ListItemIconWrapper>
-                  <ListItemText primary='Change Theme Styling' primaryTypographyProps={{ variant: 'h5' }} />
+                  <ListItemText
+                    sx={{ fontSize: 14 }}
+                    primary={t('message.customize.change_theme')}
+                    primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
+                  />
                 </ListItem>
                 <ListItem button>
                   <ListItemIconWrapper>
                     <EmojiEmotionsTwoToneIcon />
                   </ListItemIconWrapper>
-                  <ListItemText primary='Choose Default Emoji' primaryTypographyProps={{ variant: 'h5' }} />
+                  <ListItemText
+                    sx={{ fontSize: 14 }}
+                    primary={t('message.customize.change_emoji')}
+                    primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
+                  />
                 </ListItem>
               </List>
             </AccordionDetails>
           </Accordion>
           <Accordion expanded={expanded === 'section2'} onChange={handleChange('section2')}>
             <AccordionSummaryWrapper expandIcon={<ExpandMoreIcon />}>
-              <Typography variant='h5'>Privacy & Support</Typography>
+              <Typography fontSize={14} variant='h5' color={'rgb(34, 51, 84)'}>
+                {t('message.privacy.title')}
+              </Typography>
             </AccordionSummaryWrapper>
             <AccordionDetails
               sx={{
@@ -235,29 +260,63 @@ function TopBarContent() {
                   <ListItemIconWrapper>
                     <NotificationsOffTwoToneIcon />
                   </ListItemIconWrapper>
-                  <ListItemText primary='Turn off notifications' primaryTypographyProps={{ variant: 'h5' }} />
+                  <ListItemText
+                    sx={{ fontSize: 14 }}
+                    primary={t('message.privacy.notification')}
+                    primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
+                  />
                 </ListItem>
+                {user && Object.keys(user).length !== 0 && (
+                  <ListItem button>
+                    <ListItemIconWrapper>
+                      <GroupAddIcon />
+                    </ListItemIconWrapper>
+                    <ListItemText
+                      sx={{ fontSize: 14 }}
+                      primary={t('button.group')}
+                      onClick={() => {
+                        const action = openModal({
+                          modalId: MODAL_IDS.createGroup,
+                          dialogComponent: <CreateGroup user={user} />
+                        });
+                        console.log('open modal');
+                        dispatch(action);
+                      }}
+                      primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
+                    />
+                  </ListItem>
+                )}
+
                 <ListItem button>
                   <ListItemIconWrapper>
                     <CancelTwoToneIcon />
                   </ListItemIconWrapper>
-                  <ListItemText primary='Ignore all messages' primaryTypographyProps={{ variant: 'h5' }} />
+                  <ListItemText
+                    sx={{ fontSize: 14 }}
+                    primary={t('message.privacy.ignore')}
+                    primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
+                  />
                 </ListItem>
                 <ListItem button>
                   <ListItemIconWrapper>
                     <BlockTwoToneIcon />
                   </ListItemIconWrapper>
-                  <ListItemText primary='Block user' primaryTypographyProps={{ variant: 'h5' }} />
+                  <ListItemText
+                    sx={{ fontSize: 14 }}
+                    primary={t('button.block')}
+                    primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
+                  />
                 </ListItem>
                 <ListItem button>
                   <ListItemIconWrapper>
                     <WarningTwoToneIcon />
                   </ListItemIconWrapper>
                   <ListItemText
-                    primary="Something's Wrong"
-                    primaryTypographyProps={{ variant: 'h5' }}
+                    sx={{ fontSize: 14 }}
+                    primary={t('message.privacy.report')}
+                    primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
                     secondary='Report the conversation and provide feedback'
-                    secondaryTypographyProps={{ variant: 'subtitle1' }}
+                    secondaryTypographyProps={{ variant: 'subtitle1', color: 'rgba(34, 51, 84, 0.7)', fontSize: 14 }}
                   />
                 </ListItem>
               </List>
@@ -265,7 +324,9 @@ function TopBarContent() {
           </Accordion>
           <Accordion expanded={expanded === 'section3'} onChange={handleChange('section3')}>
             <AccordionSummaryWrapper expandIcon={<ExpandMoreIcon />}>
-              <Typography variant='h5'>Shared Files</Typography>
+              <Typography fontSize={14} variant='h5' color={'rgb(34, 51, 84)'}>
+                {t('message.share_file.title')}
+              </Typography>
             </AccordionSummaryWrapper>
             <AccordionDetails
               sx={{
@@ -278,10 +339,11 @@ function TopBarContent() {
                     <DescriptionTwoToneIcon />
                   </ListItemIconWrapper>
                   <ListItemText
+                    sx={{ fontSize: 14 }}
                     primary='HolidayPictures.zip'
-                    primaryTypographyProps={{ variant: 'h5' }}
+                    primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
                     secondary='You opened in the past year'
-                    secondaryTypographyProps={{ variant: 'subtitle1' }}
+                    secondaryTypographyProps={{ variant: 'subtitle1', color: 'rgba(34, 51, 84, 0.7)', fontSize: 14 }}
                   />
                 </ListItem>
                 <ListItem button>
@@ -289,10 +351,11 @@ function TopBarContent() {
                     <DescriptionTwoToneIcon />
                   </ListItemIconWrapper>
                   <ListItemText
+                    sx={{ fontSize: 14 }}
                     primary='2021Screenshot.jpg'
-                    primaryTypographyProps={{ variant: 'h5' }}
+                    primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
                     secondary='You edited this file yesterday'
-                    secondaryTypographyProps={{ variant: 'subtitle1' }}
+                    secondaryTypographyProps={{ variant: 'subtitle1', color: 'rgba(34, 51, 84, 0.7)', fontSize: 14 }}
                   />
                 </ListItem>
                 <ListItem button>
@@ -300,10 +363,11 @@ function TopBarContent() {
                     <DescriptionTwoToneIcon />
                   </ListItemIconWrapper>
                   <ListItemText
+                    sx={{ fontSize: 14 }}
                     primary='PresentationDeck.pdf'
-                    primaryTypographyProps={{ variant: 'h5' }}
+                    primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
                     secondary='Never opened'
-                    secondaryTypographyProps={{ variant: 'subtitle1' }}
+                    secondaryTypographyProps={{ variant: 'subtitle1', color: 'rgba(34, 51, 84, 0.7)', fontSize: 14 }}
                   />
                 </ListItem>
               </List>

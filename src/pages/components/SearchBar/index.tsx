@@ -10,11 +10,13 @@ const SearchBar = ({
   actionThunk,
   setResult,
   setNote,
+  placeholder,
   sx
 }: {
   actionThunk: any;
   setResult: (result: any[]) => void;
   setNote: (note: string) => void;
+  placeholder?: string;
   sx?: SxProps;
 }) => {
   const { t } = useTranslation();
@@ -66,7 +68,8 @@ const SearchBar = ({
         value={value}
         fullWidth
         disableUnderline
-        placeholder='search'
+        sx={{ fontSize: 14 }}
+        placeholder={placeholder || 'search'}
         onChange={(e) => {
           const val = e.target.value;
           setValue(val.trim());

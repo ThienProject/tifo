@@ -15,6 +15,7 @@ const paletteDark: PaletteOptions = {
     black: '#ffffff',
     white: '#262626'
   },
+
   text: {
     primary: '#7c7d7c'
   },

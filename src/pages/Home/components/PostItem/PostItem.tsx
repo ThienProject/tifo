@@ -18,10 +18,12 @@ import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
 import PostDetail from 'src/pages/PostDetail';
 import { updateLoveThunk } from 'src/redux_store/post/post_action';
+import { useTranslation } from 'react-i18next';
 
 const PostItem = ({ post }: { post: IPost }) => {
   // Before the component definition:
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   // const postSlice = useAppSelector((state) => state.postSlice.posts[index]);
   const { id_user, username, fullname, avatar } = post;
   const user: IUser = { id_user, username, fullname, avatar };
@@ -86,7 +88,7 @@ const PostItem = ({ post }: { post: IPost }) => {
       <Typography fontSize={14} fontWeight={550}>
         {post.description}
       </Typography>
-      <Button sx={{ p: 0, fontWeight: '600', fontSize: 10, color: 'text.secondary' }}>see translation</Button>
+      <Button sx={{ p: 0, fontWeight: '600', fontSize: 10, color: 'text.secondary' }}>{t('home.translate')}</Button>
       {post.commentLength ? (
         <Button
           fullWidth
@@ -99,7 +101,7 @@ const PostItem = ({ post }: { post: IPost }) => {
             dispatch(action);
           }}
         >
-          {'view all ' + post.commentLength + ' comments'}
+          {t('home.view_comment', { count: post.commentLength })}
         </Button>
       ) : (
         ''

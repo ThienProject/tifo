@@ -3,6 +3,7 @@ const MODAL_IDS = {
   loading: 'loading',
   confirmCancelPost: 'confirmCancelPost',
   postDetail: 'postDetail',
-  confirmDeletePost: 'confirmDeletePost'
+  confirmDeletePost: 'confirmDeletePost',
+  createGroup: 'createGroup'
 };
 export default MODAL_IDS;

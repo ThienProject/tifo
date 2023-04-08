@@ -49,7 +49,16 @@ const routes: IRoute = (login) => [
       },
       {
         path: '/message',
-        element: <ProtectedRoute login={login} children={<Messages />} />
+        element: <ProtectedRoute login={login} children={<Messages />} />,
+        children: [
+          {
+            index: true,
+            path: 'direct'
+          },
+          {
+            path: ':id_group'
+          }
+        ]
       },
       {
         path: '/profile',
