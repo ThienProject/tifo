@@ -15,7 +15,7 @@ const Home = () => {
   // const [postList, setPosts] = useState<IPost[]>([]);
   const [isLoadMore, setIsLoadMore] = useState(true);
   const fetchApi = (offset: number) => {
-    const id_user = me.id_user;
+    const id_user = me?.id_user;
     const params: IPayloadGetPost = { id_user: id_user || '', limit: 10, offset: offset };
     const action = getPostsThunk(params);
     dispatch(action)

@@ -38,10 +38,10 @@ const schemaCreate = schemaCreatePost('target', 'description', 'medias');
 const Create = (props: { type: string }) => {
   const isLoading = useIsRequestPending('post', 'createPostThunk');
   const { type } = props;
-  const [suggest, setSuggest] = useState('');
+  const [suggest, setSuggest] = useState([]);
   const { me } = useAppSelector((state: any) => state.userSlice);
   const dispatch = useAppDispatch();
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset, setValue, getValues } = useForm({
     defaultValues: initCreatePost,
     resolver: yupResolver(schemaCreate)
   });
@@ -116,14 +116,36 @@ const Create = (props: { type: string }) => {
             <Button
               onClick={async () => {
                 const status = await sendMessage(
-                  'tạo một status 20 từ bằng tiếng việt, phong cách của nhà thơ xuân diệu với từ khóa : mưa'
+                  `tạo 5 status 20 từ bằng tiếng việt, với từ khóa : ${getValues('description') || 'ngẫu nhiên'}`
                 );
-                setSuggest(status);
+                const newArr = status
+                  .replace(/[0-9\n]/g, '')
+                  .split('.')
+                  .map((item) => {
+                    if (item.trim() != '') return item;
+                  });
+                setSuggest(newArr);
               }}
             >
               Suggest
             </Button>
-            <Typography>{suggest && suggest}</Typography>
+            <Box>
+              {suggest.map((item, index) => {
+                if (index < suggest.length - 1)
+                  return (
+                    <Box
+                      sx={{ mt: 2, p: 1.5 }}
+                      onClick={() => {
+                        setValue('description', item);
+                      }}
+                      boxShadow={1}
+                      key={index}
+                    >
+                      {item}
+                    </Box>
+                  );
+              })}
+            </Box>
           </Box>
           <Box sx={{ mb: 3 }}>
             <Typography>Who can watch this video </Typography>

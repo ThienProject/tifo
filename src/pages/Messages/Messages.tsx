@@ -1,35 +1,50 @@
-import { Grid, styled, Drawer, useTheme, Box, IconButton } from '@mui/material';
+import { styled, Drawer, useTheme, Box, IconButton } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ChatBox from './component/ChatBox';
 import SidebarChat from './component/SidebarChat';
-
 import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
-import { IGroup } from 'src/types/group';
-import { useLocation, useNavigate } from 'react-router';
+import { useAppDispatch, useAppSelector } from 'src/redux_store';
+import { getChatsByIDGroupThunk, getGroupsThunk } from 'src/redux_store/group/group_action';
+import { useParams, useNavigate } from 'react-router';
+import { createChat } from 'src/redux_store/group/group_slice';
 
-const Messages = ({
-  groups,
-  setGroups
-}: {
-  groups: IGroup[];
-  setGroups: React.Dispatch<React.SetStateAction<IGroup[]>>;
-}) => {
-  const theme = useTheme();
-
-  const location = useLocation();
-  const pathName = location.pathname.split('/').pop();
-
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [currentGroup, setCurrentGroup] = useState<IGroup>();
+const Messages = ({ socket }: { socket: any }) => {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  const { me } = useAppSelector((state) => state.userSlice);
+  const { id_group } = useParams();
+  const groups = useAppSelector((state) => state.groupSlice);
   useEffect(() => {
-    if (pathName !== 'message') {
-      const group = groups.find((item) => item.id_group === pathName);
-      if (group) {
-        setCurrentGroup(group);
-      } else navigate('/notfound');
-    } else navigate('/message/' + groups[0].id_group);
-  }, [pathName]);
+    const id_user = me.id_user;
+    if (id_user) {
+      const action = getGroupsThunk({ id_user, offset: 0, limit: 10 });
+      dispatch(action);
+    }
+    return () => {
+      /// setset state group
+    };
+  }, []);
+  useEffect(() => {
+    socket.on('new-chat', ({ chat, id_group, id_user, date }: any) => {
+      const action = createChat({ chat, id_group, id_user, date });
+      dispatch(action);
+    });
+    return () => {
+      socket.off('new-chat');
+    };
+  }, []);
+  useEffect(() => {
+    if (id_group) {
+      const action = getChatsByIDGroupThunk({ id_group: id_group, offset: 0, limit: 10 });
+      const index = groups.groups.findIndex((item: any) => item.id_group === id_group);
+      if (index > -1) dispatch(action);
+      else {
+        navigate('/message');
+      }
+    }
+  }, [id_group]);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -64,6 +79,7 @@ const Messages = ({
   background: ${theme.palette.common.white};
 `
   );
+
   const buttonToggle = (
     <IconButtonToggle
       sx={{
@@ -77,30 +93,32 @@ const Messages = ({
       <MenuTwoToneIcon />
     </IconButtonToggle>
   );
-  console.log('groups', groups);
   return (
-    <RootWrapper mt={2}>
-      <DrawerWrapperMobile
-        sx={{
-          display: { lg: 'none', xs: 'inline-block' }
-        }}
-        variant='temporary'
-        anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-      >
-        <SidebarChat groups={groups} setGroups={setGroups} />
-      </DrawerWrapperMobile>
-      <Sidebar
-        sx={{
-          display: { xs: 'none', lg: 'inline-block' }
-        }}
-      >
-        <SidebarChat groups={groups} setGroups={setGroups} />
-      </Sidebar>
-
-      {currentGroup && <ChatBox group={currentGroup} ButtonToggle={buttonToggle} />}
-    </RootWrapper>
+    <>
+      {
+        <RootWrapper mt={2}>
+          <DrawerWrapperMobile
+            sx={{
+              display: { lg: 'none', xs: 'inline-block' }
+            }}
+            variant='temporary'
+            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+          >
+            <SidebarChat />
+          </DrawerWrapperMobile>
+          <Sidebar
+            sx={{
+              display: { xs: 'none', lg: 'inline-block' }
+            }}
+          >
+            <SidebarChat />
+          </Sidebar>
+          <ChatBox ButtonToggle={buttonToggle} />
+        </RootWrapper>
+      }
+    </>
   );
 };
 

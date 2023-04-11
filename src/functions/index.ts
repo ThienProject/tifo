@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { formatDistance, format, subYears, subDays, subMonths, subHours, subMinutes } from 'date-fns';
-import { enUS, vi } from 'date-fns/locale'
+import { enUS, vi } from 'date-fns/locale';
 
 import * as yup from 'yup';
 export function objectToFormData(obj: any) {
@@ -67,25 +67,14 @@ export const getSubTimeFromDayFNS = (date: Date, language: string) => {
   const diffInHours = now.diff(startDate, 'hours'); // Tính số giờ khác nhau
   const diffInMinutes = now.diff(startDate, 'minutes'); // Tính số giờ khác nhau
   if (diffInYears >= 1) {
-    return formatDistance(subYears(new Date(), diffInYears), new Date(),
-      { locale, addSuffix: true }
-    );
+    return formatDistance(subYears(new Date(), diffInYears), new Date(), { locale, addSuffix: true });
   } else if (diffInMonths >= 1) {
-    return formatDistance(subMonths(new Date(), diffInMonths), new Date(),
-      { locale, addSuffix: true }
-    );
+    return formatDistance(subMonths(new Date(), diffInMonths), new Date(), { locale, addSuffix: true });
   } else if (diffInDays >= 1) {
-    return formatDistance(subDays(new Date(), diffInDays), new Date(),
-      { locale, addSuffix: true }
-    );
+    return formatDistance(subDays(new Date(), diffInDays), new Date(), { locale, addSuffix: true });
   } else if (diffInHours >= 1) {
-    return formatDistance(subHours(new Date(), diffInHours), new Date(),
-      { locale, addSuffix: true }
-    );
+    return formatDistance(subHours(new Date(), diffInHours), new Date(), { locale, addSuffix: true });
   } else {
-    return formatDistance(subMinutes(new Date(), diffInMinutes), new Date(),
-      { locale, addSuffix: true }
-    );
+    return formatDistance(subMinutes(new Date(), diffInMinutes), new Date(), { locale, addSuffix: true });
   }
 };
-

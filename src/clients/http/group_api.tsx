@@ -1,7 +1,7 @@
 import { IPayloadLogin, IPayloadRegister } from 'src/types/auth';
 import { IPayloadGetPost, IPost } from 'src/types/post';
 import { createClient } from './axios_client';
-import { IPayloadChats, IPayloadGroups } from 'src/types/message';
+import { IPayloadChats, IPayloadCreateChat, IPayloadGroups } from 'src/types/group';
 
 const client = createClient();
 
@@ -20,5 +20,8 @@ export const messageApi = {
     return client.get<any>(`/chat/gets`, {
       params: params
     });
+  },
+  createChat: (payload: IPayloadCreateChat) => {
+    return client.post<any>(`/chat/create`, payload);
   }
 };

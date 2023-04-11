@@ -7,16 +7,17 @@ import { CPath } from 'src/constants';
 import { useNavigate, useLocation } from 'react-router';
 import { useAppSelector } from 'src/redux_store';
 
-const ChatItem = ({ group }: { group: IGroup }) => {
+const ChatItem = ({ group, chatDemo }: { group: IGroup; chatDemo: string }) => {
   const location = useLocation();
   const pathName = location.pathname.split('/').pop();
-  const { id_me } = useAppSelector((state) => state.userSlice.me);
+  const { me } = useAppSelector((state) => state.userSlice);
   const navigate = useNavigate();
   const isChatFriend = group.users?.length === 2;
   let avatar = group.avatar ? CPath.host_public + group.avatar : images.account;
   let chatName = group.name;
-  const chatDemo = group?.chats ? group.chats[0].message : 'say hello !';
+
   if (isChatFriend && group.users) {
+    const id_me = me?.id_user;
     const friend: IUser = group.users[0].id_user === id_me ? group.users[1] : group.users[0];
     if (friend.avatar) {
       avatar = CPath.host_public + friend.avatar;
