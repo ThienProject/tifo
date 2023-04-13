@@ -19,7 +19,7 @@ export interface IGroup {
 }
 export interface IPayloadSearchGroup {
   id_user?: string;
-  q?: string,
+  q?: string;
   limit?: number;
   offset?: number;
 }

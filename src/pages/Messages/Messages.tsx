@@ -78,7 +78,7 @@ const Messages = () => {
   );
 
   return (
-    <RootWrapper mt={2}>
+    <RootWrapper my={0}>
       <DrawerWrapperMobile
         sx={{
           display: { lg: 'none', xs: 'inline-block' }

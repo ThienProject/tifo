@@ -38,7 +38,6 @@ import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
 import CreateGroup from '../CreateGroup';
 import { IUser } from 'src/types/user';
-import { toggleMenu } from 'src/redux_store/group/group_slice';
 import { useParams } from 'react-router';
 import { CPath } from 'src/constants';
 const RootWrapper = styled(Box)(
@@ -48,6 +47,13 @@ const RootWrapper = styled(Box)(
           align-items: center;
           justify-content: space-between;
       }
+       @media (min-width: ${theme.breakpoints.values.xs}px) {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex:1
+      }
+
 `
 );
 
@@ -92,9 +98,9 @@ const AccordionSummaryWrapper = styled(AccordionSummary)(
 `
 );
 
-function TopBarContent({ user }: { user?: IUser }) {
+function TopBarContent() {
   const { t } = useTranslation();
-  const mobileOpen = useAppSelector((state) => state.groupSlice).isOpenMenu;
+  const [isOpenSetting, setIsOpenSetting] = useState(false);
   const groups = useAppSelector((state) => state.groupSlice.groups);
 
   const { id_group } = useParams();
@@ -116,10 +122,6 @@ function TopBarContent({ user }: { user?: IUser }) {
   }
   const theme = useTheme();
   const dispatch = useAppDispatch();
-
-  const handleDrawerToggle = () => {
-    dispatch(toggleMenu());
-  };
 
   const [expanded, setExpanded] = useState<string | false>('section1');
 
@@ -153,7 +155,7 @@ function TopBarContent({ user }: { user?: IUser }) {
         </Box>
         <Box
           sx={{
-            display: { xs: 'none', lg: 'flex' }
+            display: { xs: 'flex', lg: 'flex' }
           }}
         >
           <Tooltip placement='bottom' title='Start a voice call'>
@@ -167,25 +169,31 @@ function TopBarContent({ user }: { user?: IUser }) {
             </IconButton>
           </Tooltip>
           <Tooltip placement='bottom' title='Conversation information'>
-            <IconButton color='primary' onClick={handleDrawerToggle}>
+            <IconButton
+              color='primary'
+              onClick={() => {
+                setIsOpenSetting((prev) => !prev);
+              }}
+            >
               <InfoTwoToneIcon />
             </IconButton>
           </Tooltip>
         </Box>
       </RootWrapper>
       <Drawer
-        sx={{
-          display: { xs: 'none', md: 'flex' }
-        }}
         variant='temporary'
         anchor={theme.direction === 'rtl' ? 'left' : 'right'}
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
+        open={isOpenSetting}
+        onClose={() => {
+          setIsOpenSetting(false);
+        }}
         elevation={9}
       >
         <Box
           sx={{
-            minWidth: 360
+            maxWidth: 360,
+            overflowX: 'hidden',
+            overflowY: 'scroll'
           }}
           p={2}
         >
@@ -288,7 +296,7 @@ function TopBarContent({ user }: { user?: IUser }) {
                     primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
                   />
                 </ListItem>
-                {user && Object.keys(user).length !== 0 && (
+                {isChatFriend && (
                   <ListItem button>
                     <ListItemIconWrapper>
                       <GroupAddIcon />
@@ -299,7 +307,7 @@ function TopBarContent({ user }: { user?: IUser }) {
                       onClick={() => {
                         const action = openModal({
                           modalId: MODAL_IDS.createGroup,
-                          dialogComponent: <CreateGroup user={user} />
+                          dialogComponent: <CreateGroup user={friend} />
                         });
                         console.log('open modal');
                         dispatch(action);

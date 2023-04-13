@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { IChatGroup, IGroup } from 'src/types/group';
 import { getChatsByIDGroupThunk, getGroupsThunk } from './group_action';
 
-
 const initialState: {
   groups: IGroup[];
   chats: IChatGroup;

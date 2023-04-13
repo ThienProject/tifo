@@ -39,7 +39,7 @@ const Menu = ({
     >
       <MenuItem
         onKeyDown={(e) => e.stopPropagation()}
-        sx={{ color: 'text.primary', display: { xs: 'none', sm: 'block' } }}
+        sx={{ color: 'text.primary', ml: { xs: -1, md: 0 }, display: { xs: 'none', sm: 'block' } }}
       >
         {openDrawer ? (
           <img

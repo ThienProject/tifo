@@ -1,4 +1,4 @@
-import { Avatar, Tooltip, IconButton, Box, Button, styled, InputBase, useTheme, FormLabel } from '@mui/material';
+import { Avatar, Tooltip, IconButton, Box, Button, styled, useTheme, FormLabel } from '@mui/material';
 import AttachFileTwoToneIcon from '@mui/icons-material/AttachFileTwoTone';
 import SendTwoToneIcon from '@mui/icons-material/SendTwoTone';
 import { Controller, useForm } from 'react-hook-form';
@@ -44,7 +44,6 @@ function BottomBarContent() {
 
     const payload: IPayloadCreateChat = { message, id_user, id_group };
     if (base64String && base64String !== '') payload.image = base64String;
-    // const formData = objectToFormData(payload);
     if (message !== '' || image !== '') {
       const action = createChatThunk(payload);
       dispatch(action)
@@ -86,7 +85,7 @@ function BottomBarContent() {
         <Controller
           control={control}
           name='image'
-          render={({ field: { value, onChange } }) => {
+          render={({ field: { onChange } }) => {
             return (
               <Input
                 onChange={(e) => {

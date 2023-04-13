@@ -15,4 +15,3 @@ export interface IUser {
 export interface IUserChat extends IUser {
   id_group?: string;
 }
-
