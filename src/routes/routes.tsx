@@ -18,6 +18,7 @@ import { ProtectedRoute } from './ProtectedRoute';
 
 // Dashboards
 import SuspenseLoader from 'src/components/admin/SuspenseLoader';
+import ChatBox from 'src/pages/Messages/component/ChatBox';
 
 const Loader = (Component: any) => (props: any) =>
   (
@@ -30,7 +31,6 @@ const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
 
 // Applications
 
-const Messenger = Loader(lazy(() => import('src/content/applications/Messenger')));
 // const Transactions = Loader(lazy(() => import('src/content/applications/Transactions')));
 // const UserProfile = Loader(lazy(() => import('src/content/applications/Users/profile')));
 // const UserSettings = Loader(lazy(() => import('src/content/applications/Users/settings')));
@@ -52,11 +52,15 @@ const routes: IRoute = (login) => [
         element: <ProtectedRoute login={login} children={<Messages />} />,
         children: [
           {
-            index: true,
-            path: 'direct'
+            index: true
           },
           {
-            path: ':id_group'
+            path: ':id_group',
+            element: <ChatBox />
+          },
+          {
+            path: 'new/:id_user',
+            element: <ChatBox />
           }
         ]
       },
@@ -129,10 +133,6 @@ const routes: IRoute = (login) => [
           {
             path: 'crypto',
             element: <Crypto />
-          },
-          {
-            path: 'messenger',
-            element: <Messenger />
           }
         ]
       }

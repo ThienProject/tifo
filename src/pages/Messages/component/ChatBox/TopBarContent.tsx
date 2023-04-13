@@ -33,11 +33,14 @@ import WarningTwoToneIcon from '@mui/icons-material/WarningTwoTone';
 import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
 import images from 'src/assets/images';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from 'src/redux_store';
+import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
 import CreateGroup from '../CreateGroup';
 import { IUser } from 'src/types/user';
+import { toggleMenu } from 'src/redux_store/group/group_slice';
+import { useParams } from 'react-router';
+import { CPath } from 'src/constants';
 const RootWrapper = styled(Box)(
   ({ theme }) => `
         @media (min-width: ${theme.breakpoints.values.md}px) {
@@ -91,12 +94,31 @@ const AccordionSummaryWrapper = styled(AccordionSummary)(
 
 function TopBarContent({ user }: { user?: IUser }) {
   const { t } = useTranslation();
+  const mobileOpen = useAppSelector((state) => state.groupSlice).isOpenMenu;
+  const groups = useAppSelector((state) => state.groupSlice.groups);
+
+  const { id_group } = useParams();
+  const group = groups.find((item: any) => item.id_group === id_group);
+
+  const { me } = useAppSelector((state) => state.userSlice);
+
+  const isChatFriend = group?.users?.length === 2;
+  let avatar = group?.avatar ? CPath.host_user + group.avatar : images.groupDefault;
+  let chatName = group?.name;
+  let friend: IUser = {};
+  if (isChatFriend && group.users) {
+    const me_id = me.id_user;
+    friend = group.users.find((us) => us.id_user != me_id) || {};
+    if (friend.avatar) {
+      avatar = CPath.host_user + friend.avatar;
+    }
+    chatName = friend.fullname;
+  }
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    dispatch(toggleMenu());
   };
 
   const [expanded, setExpanded] = useState<string | false>('section1');
@@ -115,12 +137,12 @@ function TopBarContent({ user }: { user?: IUser }) {
               width: 48,
               height: 48
             }}
-            alt='Zain Baptista'
-            src={images.avatar}
+            alt={chatName}
+            src={avatar}
           />
           <Box ml={1}>
             <Typography variant='h4' fontSize={16} fontWeight={'700'}>
-              Zain Baptista
+              {chatName}
             </Typography>
             <Typography fontSize={14} color={'text.secondary'} variant='subtitle1'>
               {formatDistance(subMinutes(new Date(), 8), new Date(), {

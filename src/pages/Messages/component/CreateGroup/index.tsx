@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ModalWrapper from 'src/components/model/ModelWrapper';
 import MODAL_IDS from 'src/constants/modal';
 import {
   Box,
   Typography,
-  Popper,
   Stack,
-  Fade,
   MenuList,
   MenuItem,
   Avatar,
@@ -125,7 +123,7 @@ const CreateGroup = ({ user }: { user: IUser }) => {
                           setValue('users', [...getValues('users'), user]);
                         }}
                       >
-                        <Avatar src={CPath.host_public + user.avatar} sx={{ mr: 2 }} />
+                        <Avatar src={CPath.host_user + user.avatar} sx={{ mr: 2 }} />
                         <Typography fontSize={14}>{user.fullname}</Typography>
                       </MenuItem>
                     );

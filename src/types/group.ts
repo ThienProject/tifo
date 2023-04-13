@@ -3,11 +3,10 @@ export interface IChatDates {
   [date: string]: IChat[];
 }
 export interface IChatGroup {
-  [id_group: string]: IChatDates[]
+  [id_group: string]: IChatDates[];
 }
-export interface IChat {
+export interface IChat extends IUser {
   id_chat?: string;
-  id_user?: string;
   message?: string;
   datetime: Date;
 }
@@ -18,10 +17,22 @@ export interface IGroup {
   users?: IUser[];
   chats?: IChatDates[];
 }
+export interface IPayloadSearchGroup {
+  id_user?: string;
+  q?: string,
+  limit?: number;
+  offset?: number;
+}
+
 export interface IPayloadGroups {
   id_user?: string;
   limit?: string | number;
   offset?: string | number;
+}
+
+export interface IPayloadGroup {
+  id_me?: string;
+  id_friend?: string;
 }
 export interface IPayloadChats {
   id_group?: string;

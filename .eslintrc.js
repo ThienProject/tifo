@@ -36,6 +36,7 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "off",
     '@typescript-eslint/no-var-requires': 0,
     "import/no-named-as-default": "off",
+    "@typescript-eslint/no-non-null-assertion": 'off',
     "import/named": "off",
     // Tắt rule yêu cầu import React trong file jsx
     'react/react-in-jsx-scope': 'off',

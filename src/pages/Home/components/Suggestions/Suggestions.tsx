@@ -71,7 +71,7 @@ const Suggestions = () => {
         {users.map((user) => {
           return (
             <Stack my={2} key={user.id_user} direction={'row'} justifyContent='space-between'>
-              <UserItem size='small' user={user} />
+              <UserItem to={`/${user.id_user}`} size='small' user={user} />
               <Button sx={{ fontSize: 13, textTransform: 'lowercase' }}>follow</Button>
             </Stack>
           );

@@ -14,6 +14,7 @@ interface IProps {
   size?: 'small' | 'medium';
   disabled?: boolean;
   variant?: 'standard' | 'filled' | 'outlined';
+  inputBase?: boolean;
   margin?: 'none' | 'dense' | 'normal';
   type?: 'text' | 'password' | 'number';
   showClearable?: boolean;
@@ -38,6 +39,7 @@ export const FormInput = (props: IProps) => {
     size = 'small',
     disabled = false,
     variant = 'outlined',
+    inputBase = false,
     margin = 'dense',
     type = 'text',
     showClearable = false,
@@ -69,9 +71,20 @@ export const FormInput = (props: IProps) => {
       }}
       control={control}
       render={({ field: { value, onChange }, fieldState: { error, invalid } }) => (
-        <FormControl required={required} fullWidth size={size} margin={margin} sx={sx}>
+        <FormControl
+          required={required}
+          fullWidth
+          size={size}
+          margin={margin}
+          sx={{
+            ...sx,
+            '& :after': { display: inputBase ? 'none' : '' },
+            '& :before': { border: inputBase ? 'none !important' : '', outline: inputBase ? 'none !important' : '' }
+          }}
+        >
           <TextField
             fullWidth
+            sx={{ border: inputBase ? 'none' : '' }}
             size={size}
             type={isShowPassword ? 'text' : type}
             variant={variant}

@@ -60,7 +60,7 @@ const NotiItem = ({
       }}
     >
       <Stack width='80%' direction={'row'} alignItems='center'>
-        <Avatar sx={{ mr: 1 }} alt='avatar' src={CPath.host_public + noti.avatar} />
+        <Avatar sx={{ mr: 1 }} alt='avatar' src={CPath.host_user + noti.avatar} />
         <Box maxWidth='100%'>
           <Typography sx={{ fontSize: 15, whiteSpace: 'pre-wrap' }}>
             {noti.username}

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Box, TextField, Typography, Input, SxProps } from '@mui/material';
+import { Box, Input, SxProps } from '@mui/material';
 import { SearchRounded, Cancel, RotateRightRounded } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import useDebounced from 'src/hooks/useDebounced';
 import { useAppDispatch } from 'src/redux_store';
-import { getUsersThunk } from 'src/redux_store/user/user_action';
 import { useTranslation } from 'react-i18next';
 const SearchBar = ({
   actionThunk,

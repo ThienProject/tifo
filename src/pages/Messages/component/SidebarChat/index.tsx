@@ -1,4 +1,4 @@
-import { Switch, Stack, Typography, Divider, SxProps } from '@mui/material';
+import { Switch, Stack, Typography, Divider, SxProps, MenuList, MenuItem, Paper } from '@mui/material';
 import { Box } from '@mui/system';
 
 import React, { useState } from 'react';
@@ -7,7 +7,7 @@ import { useAppSelector } from 'src/redux_store';
 import SearchBar from 'src/pages/components/SearchBar';
 import { getUsersThunk } from 'src/redux_store/user/user_action';
 import GroupList from './GroupList';
-import ItemFriend from 'src/pages/Home/components/ListFriends/ItemFriend';
+import { IUserChat } from 'src/types/user';
 
 const SidebarChat = ({ sx }: { sx?: SxProps }) => {
   const { me } = useAppSelector((state) => state.userSlice);
@@ -17,7 +17,7 @@ const SidebarChat = ({ sx }: { sx?: SxProps }) => {
   return (
     <Box p={2} sx={sx} height='100%' borderRadius={2} border={'1px solid #e6dddd'}>
       <Box>
-        <UserItem size='media' user={me} isFullname />
+        <UserItem to={`/${me.id_user}`} size='medium' user={me} isFullname />
         <Stack mt={0.3} ml={7} direction={'row'} alignItems={'center'}>
           <Switch size='small' />
           <Typography fontSize={12} color={'text.secondary'}>
@@ -38,12 +38,23 @@ const SidebarChat = ({ sx }: { sx?: SxProps }) => {
             setResult={setResult}
           />
           <Box>
-            {result &&
-              result.length > 0 &&
-              result.map((item: any) => <ItemFriend key={item.id_user} itemFriend={item} />)}
-          </Box>
+            {result && result.length > 0 && (
+              <Paper sx={{ p: 0, my: 1 }}>
+                <MenuList sx={{ my: 0, py: 0, maxHeight: 300, overflow: 'auto' }}>
+                  {result.map((item: IUserChat) => {
+                    const to = item?.id_group ? `/message/${item.id_group}` : `/message/new/${item.id_user}`;
+                    return (
+                      <MenuItem key={item.id_user} sx={{ my: 1, px: 0.5, mx: 0.5, borderRadius: 2 }}>
+                        <UserItem to={to} size='small' user={item} />
+                      </MenuItem>
+                    );
+                  })}
+                </MenuList>
 
-          <Typography>{note && note}</Typography>
+                {note && <Typography sx={{ p: 1, m: 1, fontSize: 12 }}>{note}</Typography>}
+              </Paper>
+            )}
+          </Box>
         </Box>
         <Divider />
         <Box>

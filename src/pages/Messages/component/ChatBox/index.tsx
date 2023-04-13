@@ -1,38 +1,44 @@
-import { Box, Divider, styled } from '@mui/material';
-import React, { useEffect, useRef } from 'react';
+import { Box, Divider, styled, IconButton } from '@mui/material';
+import React from 'react';
 import images from 'src/assets/images';
 import { CPath } from 'src/constants';
-import { IUser } from 'src/types/user';
 import ChatContent from './ChatContent';
-import { Scrollbars } from 'react-custom-scrollbars-2';
+
 import BottomBarContent from './BottomBarContent';
 import TopBarContent from './TopBarContent';
+import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
+import { useAppDispatch, useAppSelector } from 'src/redux_store';
 
-import { useAppSelector } from 'src/redux_store';
-import { useParams } from 'react-router';
+import * as io from 'socket.io-client';
+import { toggleMenu } from 'src/redux_store/group/group_slice';
+const IconButtonToggle = styled(IconButton)(
+  ({ theme }) => `
+  width: ${theme.spacing(4)};
+  height: ${theme.spacing(4)};
+  background: ${theme.palette.common.white};
+`
+);
+const ChatBox = () => {
+  const dispatch = useAppDispatch();
 
-const ChatBox = ({ ButtonToggle }: { ButtonToggle: React.ReactNode }) => {
-  const groups = useAppSelector((state) => state.groupSlice.groups);
-  const scrollbarsRef = useRef<any>();
-  const { id_group } = useParams();
-  const group = groups.find((item: any) => item.id_group === id_group);
-  const chats = useAppSelector((state) => {
-    if (id_group) return state.groupSlice.chats[id_group];
-  });
-  const { me } = useAppSelector((state) => state.userSlice);
+  const handleDrawerToggle = () => {
+    dispatch(toggleMenu());
+  };
+  const buttonToggle = (
+    <IconButtonToggle
+      sx={{
+        display: { lg: 'none', xs: 'flex' },
+        mr: 2
+      }}
+      color='primary'
+      onClick={handleDrawerToggle}
+      size='small'
+    >
+      <MenuTwoToneIcon />
+    </IconButtonToggle>
+  );
+  const socket = io.connect(CPath.host || 'http://localhost:8000');
 
-  const isChatFriend = group?.users?.length === 2;
-  let avatar = group?.avatar ? CPath.host_public + group.avatar : images.account;
-  let chatName = group?.name;
-  let friend: IUser = {};
-  if (isChatFriend && group.users) {
-    const me_id = me.id_user;
-    friend = group.users.find((us) => us.id_user != me_id) || {};
-    if (friend.avatar) {
-      avatar = CPath.host_public + group?.users[1].avatar;
-    }
-    chatName = friend.fullname;
-  }
   const ChatTopBar = styled(Box)(
     ({ theme }) => `
         background: ${theme.palette.common.white};
@@ -50,29 +56,23 @@ const ChatBox = ({ ButtonToggle }: { ButtonToggle: React.ReactNode }) => {
         flex: 1;
 `
   );
-  useEffect(() => {
-    scrollbarsRef.current?.scrollToBottom();
-  }, []);
+
   return (
-    <>
-      {group && (
-        <ChatWindow>
-          <ChatTopBar
-            sx={{
-              display: { xs: 'flex', lg: 'inline-block' }
-            }}
-          >
-            {ButtonToggle}
-            <TopBarContent user={friend} />
-          </ChatTopBar>
-          <Box bgcolor={'rgb(242, 245, 249)'} flex={1}>
-            <Scrollbars ref={scrollbarsRef}>{chats && <ChatContent chatDates={chats} />}</Scrollbars>
-          </Box>
-          <Divider />
-          <BottomBarContent id_group={group.id_group} />
-        </ChatWindow>
-      )}
-    </>
+    <ChatWindow>
+      <ChatTopBar
+        sx={{
+          display: { xs: 'flex', lg: 'inline-block' }
+        }}
+      >
+        {buttonToggle}
+        <TopBarContent />
+      </ChatTopBar>
+      <Box bgcolor={'rgb(242, 245, 249)'} flex={1}>
+        <ChatContent socket={socket} />
+      </Box>
+      <Divider />
+      <BottomBarContent />
+    </ChatWindow>
   );
 };
 

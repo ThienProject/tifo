@@ -12,3 +12,7 @@ export interface IUser {
   followers?: number;
   followings?: number;
 }
+export interface IUserChat extends IUser {
+  id_group?: string;
+}
+

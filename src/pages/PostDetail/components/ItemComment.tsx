@@ -54,7 +54,7 @@ const ItemComment = (props: {
               dispatch(action);
             }}
           >
-            <UserItem size='small' user={user} />
+            <UserItem to={`/${user.id_user}`} size='small' user={user} />
           </Box>
 
           <Box mb={0} width={'100%'} display={'flex'} alignItems='center'>

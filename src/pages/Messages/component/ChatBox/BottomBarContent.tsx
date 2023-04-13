@@ -5,26 +5,24 @@ import { Controller, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { IPayloadCreateChat } from 'src/types/group';
 import { createChatThunk } from 'src/redux_store/group/group_action';
-const MessageInputWrapper = styled(InputBase)(
-  ({ theme }) => `
-    font-size: ${theme.typography.pxToRem(14)};
-    padding: ${theme.spacing(1)};
-    width: 100%;
-`
-);
+import { useParams } from 'react-router';
+import { FormInput } from 'src/components/hooks_form/form_input';
 
 const Input = styled('input')({
   display: 'none'
 });
 
-function BottomBarContent({ id_group }: { id_group?: string }) {
+function BottomBarContent() {
   const theme = useTheme();
   const { me } = useAppSelector((state) => state.userSlice);
+  const { id_group } = useParams();
   const dispatch = useAppDispatch();
   const user = {
     name: 'Catherine Pike',
     avatar: '/static/images/avatars/1.jpg'
   };
+
+  const { control, handleSubmit, reset } = useForm({ defaultValues: { message: '', image: '' } });
   const handleOnSubmit = (data: any) => {
     const id_user = me.id_user;
     const { image, message } = data;
@@ -47,15 +45,15 @@ function BottomBarContent({ id_group }: { id_group?: string }) {
     const payload: IPayloadCreateChat = { message, id_user, id_group };
     if (base64String && base64String !== '') payload.image = base64String;
     // const formData = objectToFormData(payload);
-    const action = createChatThunk(payload);
-    dispatch(action)
-      .unwrap()
-      .then((data) => {
-        console.log(data);
-      });
+    if (message !== '' || image !== '') {
+      const action = createChatThunk(payload);
+      dispatch(action)
+        .unwrap()
+        .then(() => {
+          reset();
+        });
+    }
   };
-
-  const { control, handleSubmit } = useForm();
 
   return (
     <Box
@@ -65,27 +63,18 @@ function BottomBarContent({ id_group }: { id_group?: string }) {
         alignItems: 'center',
         p: 2
       }}
+      component='form'
+      onSubmit={handleSubmit(handleOnSubmit)}
     >
       <Box flexGrow={1} display='flex' alignItems='center'>
         <Avatar sx={{ display: { xs: 'none', sm: 'flex' }, mr: 1 }} alt={user.name} src={user.avatar} />
-        <Controller
+        <FormInput
+          type='text'
+          variant='standard'
+          placeholder='Write your message here...'
           name='message'
-          defaultValue={''}
           control={control}
-          render={({ field: { value, onChange } }) => {
-            return (
-              <MessageInputWrapper
-                value={value}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  console.log(value);
-                  onChange(val);
-                }}
-                placeholder='Write your message here...'
-                fullWidth
-              />
-            );
-          }}
+          inputBase
         />
       </Box>
       <Box>
@@ -121,12 +110,7 @@ function BottomBarContent({ id_group }: { id_group?: string }) {
             </IconButton>
           </FormLabel>
         </Tooltip>
-        <Button
-          onClick={handleSubmit(handleOnSubmit)}
-          sx={{ color: '#fff' }}
-          startIcon={<SendTwoToneIcon />}
-          variant='contained'
-        >
+        <Button type='submit' sx={{ color: '#fff' }} startIcon={<SendTwoToneIcon />} variant='contained'>
           Send
         </Button>
       </Box>

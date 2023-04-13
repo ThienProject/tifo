@@ -1,6 +1,6 @@
 import { Avatar, Box, Divider, Typography } from '@mui/material';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CPath } from 'src/constants';
 import { IUser } from 'src/types/user';
 
@@ -8,25 +8,35 @@ const UserItem = ({
   user,
   size,
   sx,
-  isFullname
+  isFullname,
+  to
 }: {
   sx?: React.CSSProperties;
   user: IUser;
   size: string;
   isFullname?: boolean;
+  to?: string;
 }) => {
   let newSize: number;
-  if (size === 'media') {
+  if (size === 'medium') {
     newSize = 50;
   } else {
     if (size === 'small') {
       newSize = 30;
     } else newSize = 100;
   }
+  const navigate = useNavigate();
   return (
     <>
       {user && (
-        <Link to={`/${user?.id_user}`} style={{ ...sx, textDecoration: 'none' }}>
+        <Box
+          sx={{ ...sx, width: '100%' }}
+          onClick={() => {
+            if (to) {
+              navigate(to);
+            }
+          }}
+        >
           <Box pl={1} display='flex' alignItems={'center'}>
             <Box width={newSize} height={newSize}>
               <Avatar
@@ -39,7 +49,7 @@ const UserItem = ({
                   borderRadius: '50%'
                 }}
                 alt='avatar'
-                src={CPath.host + '/medias/' + user?.avatar}
+                src={CPath.host_user + user?.avatar}
               />
             </Box>
             <Box>
@@ -73,7 +83,7 @@ const UserItem = ({
 
             <Divider />
           </Box>
-        </Link>
+        </Box>
       )}
     </>
   );

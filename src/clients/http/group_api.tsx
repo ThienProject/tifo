@@ -1,5 +1,3 @@
-import { IPayloadLogin, IPayloadRegister } from 'src/types/auth';
-import { IPayloadGetPost, IPost } from 'src/types/post';
 import { createClient } from './axios_client';
 import { IPayloadChats, IPayloadCreateChat, IPayloadGroups } from 'src/types/group';
 
@@ -8,6 +6,16 @@ const client = createClient();
 export const messageApi = {
   getGroups: (params: IPayloadGroups) => {
     return client.get<any>(`/group/gets`, {
+      params: params
+    });
+  },
+  searchGroup: (params: { q: string }) => {
+    return client.get<any>(`/group/search`, {
+      params: params
+    });
+  },
+  getGroupByUserID: (params: IPayloadGroups) => {
+    return client.get<any>(`/group/get`, {
       params: params
     });
   },

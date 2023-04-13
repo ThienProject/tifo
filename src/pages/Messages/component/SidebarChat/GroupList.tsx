@@ -29,10 +29,7 @@ const ChatList = () => {
               const lastDateObj = chats[group.id_group][Object.keys(chats[group.id_group]).length - 1];
               const dateArr = lastDateObj ? Object.values(lastDateObj) : [];
               const listMess = dateArr[dateArr.length - 1];
-              chatDemo = listMess[listMess.length - 1].message;
-              console.log('lastDateObj', lastDateObj);
-              console.log('messageArr', listMess);
-              console.log('chatDemo', chatDemo);
+              chatDemo = listMess[listMess.length - 1].message || '';
             }
             return <GroupItem key={group.id_group} group={group} chatDemo={chatDemo} />;
           })}

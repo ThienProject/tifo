@@ -8,6 +8,7 @@ const images = {
   notfound: require('src/assets/images/404.svg').default,
   home_Logo_black: require('src/assets/images/home_Logo_black.png').default,
   logo: require('src/assets/images/icon.png').default,
-  avatar: require('src/assets/images/avatar.jpg').default
+  avatar: require('src/assets/images/avatar.jpg').default,
+  groupDefault: require('src/assets/images/group_default.jpg').default
 };
 export default images;

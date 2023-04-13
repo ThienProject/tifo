@@ -29,7 +29,13 @@ const Search = ({ handleClose }: { handleClose: (event: Event | React.SyntheticE
             <MenuList>
               {result.map((user) => (
                 <MenuItem onClick={handleClose} sx={{ p: 0, borderRadius: '5px' }} key={user.id_user}>
-                  <UserItem sx={{ padding: '10px 5px', width: '100%' }} isFullname={true} size='media' user={user} />
+                  <UserItem
+                    to={`/${user.id_user}`}
+                    sx={{ padding: '10px 5px', width: '100%' }}
+                    isFullname={true}
+                    size='media'
+                    user={user}
+                  />
                 </MenuItem>
               ))}
             </MenuList>

@@ -32,7 +32,7 @@ const PostItem = ({ post }: { post: IPost }) => {
       {/* top */}
       <Stack mb={1.2} direction='row' justifyContent='space-between'>
         <Box display='flex' alignItems='center'>
-          <UserItem size='small' user={user} />
+          <UserItem size='small' to={`/${user.id_user}`} user={user} />
           <Typography sx={{ opacity: '0.6' }} fontSize={12}>
             {moment(post.date_time).format('DD-MM-YYYY')}
           </Typography>
@@ -94,7 +94,7 @@ const PostItem = ({ post }: { post: IPost }) => {
           fullWidth
           sx={{ justifyContent: 'start', p: 0, fontSize: 10, color: 'text.secondary' }}
           onClick={() => {
-            const action = openModal({
+            const action: any = openModal({
               modalId: MODAL_IDS.postDetail,
               dialogComponent: <PostDetail post={post} />
             });

@@ -109,7 +109,7 @@ const PostDetail = (props: { post: IPost }) => {
                     dispatch(action);
                   }}
                 >
-                  <UserItem size='small' user={user} />
+                  <UserItem to={`/${user.id_user}`} size='small' user={user} />
                 </Box>
                 <MenuOption icon={<MoreHoriz />} options={options} />
               </Stack>

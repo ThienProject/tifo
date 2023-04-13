@@ -2,13 +2,16 @@ import { createSlice } from '@reduxjs/toolkit';
 import { IChatGroup, IGroup } from 'src/types/group';
 import { getChatsByIDGroupThunk, getGroupsThunk } from './group_action';
 
+
 const initialState: {
-  groups: IGroup[],
-  chats: IChatGroup,
+  groups: IGroup[];
+  chats: IChatGroup;
+  isOpenMenu: boolean;
 } = {
   groups: [],
-  chats: {}
-}
+  chats: {},
+  isOpenMenu: false
+};
 const groupSlice = createSlice({
   name: 'groups',
   initialState,
@@ -19,22 +22,21 @@ const groupSlice = createSlice({
       if (chatDates) {
         const index = chatDates.findIndex((dateItem: any) => Object.keys(dateItem)[0] === date);
         if (index > -1) {
-          chatDates[index][date].push(chat)
+          chatDates[index][date].push(chat);
         } else {
-          chatDates.push({ [date]: [chat] })
+          chatDates.push({ [date]: [chat] });
         }
       } else {
-        state.chats[id_group] = [{ [date]: [chat] }]
+        state.chats[id_group] = [{ [date]: [chat] }];
       }
-
-      // // const index = state.findIndex((group) => group.id_group == id_group);
-      // const group = state.chats[id_group];
-      // if (group.chats) {
-      //   const chatState = group.chats[length - 1];
-      //   chatState[Object.keys(chatState)[0]].push(chat);
-      // } else {
-      //   group.chats = [{ [date]: [chat] }];
-      // }
+    },
+    resetGroup: (state) => {
+      state.groups = initialState.groups;
+      state.chats = initialState.chats;
+      state.isOpenMenu = false;
+    },
+    toggleMenu: (state) => {
+      state.isOpenMenu = !state.isOpenMenu;
     }
   },
   extraReducers: (builder) => {
@@ -46,19 +48,15 @@ const groupSlice = createSlice({
         if (restGroup.id_group && chats) {
           state.chats[restGroup.id_group] = chats;
         }
-      })
+      });
     });
     builder.addCase(getChatsByIDGroupThunk.fulfilled, (state, action) => {
       const { id_group, chats } = action.payload;
       state.chats[id_group] = chats;
     });
-    // builder.addCase(createChatThunk.fulfilled, (state, action) => {
-    //   const { chat } = action.payload;
-    //   state.posts.push(post);
-    // });
   }
 });
 
 const { reducer, actions } = groupSlice;
-export const { createChat } = actions;
+export const { createChat, resetGroup, toggleMenu } = actions;
 export default reducer;
