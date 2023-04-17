@@ -21,7 +21,7 @@ import { getUsersThunk } from 'src/redux_store/user/user_action';
 import { Close } from '@mui/icons-material';
 import { CPath } from 'src/constants';
 import { Controller, useForm } from 'react-hook-form';
-const CreateGroup = ({ user }: { user: IUser }) => {
+const CreateRoom = ({ user }: { user: IUser }) => {
   const { t } = useTranslation();
   const [result, setResult] = useState<IUser[]>([]);
   const [note, setNote] = useState<string>('');
@@ -41,7 +41,7 @@ const CreateGroup = ({ user }: { user: IUser }) => {
     console.log(data);
   };
   return (
-    <ModalWrapper modalId={MODAL_IDS.createGroup}>
+    <ModalWrapper modalId={MODAL_IDS.createroom}>
       <Box maxWidth={'34vw'} p={2}>
         <Box>
           <Controller
@@ -50,9 +50,9 @@ const CreateGroup = ({ user }: { user: IUser }) => {
             render={({ field: { value, onChange }, fieldState: { error, invalid } }) => {
               return (
                 <Stack direction={'row'} alignItems={'center'}>
-                  <Typography mr={2}>{t('message.create_group')} :</Typography>
+                  <Typography mr={2}>{t('message.create_room')} :</Typography>
                   <Input
-                    placeholder={t('message.enter_group_name') || ''}
+                    placeholder={t('message.enter_room_name') || ''}
                     sx={{ fontSize: 13 }}
                     type='text'
                     value={value}
@@ -140,11 +140,11 @@ const CreateGroup = ({ user }: { user: IUser }) => {
           onClick={handleSubmit(handleOnSubmit)}
           variant='contained'
         >
-          {t('button.group')}
+          {t('button.room')}
         </Button>
       </Box>
     </ModalWrapper>
   );
 };
 
-export default CreateGroup;
+export default CreateRoom;

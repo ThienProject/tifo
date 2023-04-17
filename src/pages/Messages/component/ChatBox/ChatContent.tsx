@@ -9,8 +9,9 @@ import { useTranslation } from 'react-i18next';
 
 import { CPath } from 'src/constants';
 import { Socket } from 'socket.io-client';
-import { createChat } from 'src/redux_store/group/group_slice';
+import { createChat, createFirstChat } from 'src/redux_store/room/room_slice';
 import { useParams } from 'react-router';
+import { IUser } from 'src/types/user';
 
 const DividerWrapper = styled(Divider)(
   ({ theme }) => `
@@ -30,7 +31,7 @@ const CardWrapperPrimary = styled(Card)(
       padding: 12px;
       border-radius: ${10};
       border-top-right-radius: ${3};
-      max-width: 380px;
+      max-width: 80%;
        font-size: ${theme.typography.pxToRem(14)};
       display: inline-flex;
 `
@@ -40,42 +41,49 @@ const CardWrapperSecondary = styled(Card)(
   ({ theme }) => `
       background: rgba(34, 51, 84, 0.1);
       color: rgb(34, 51, 84);
-      padding: ${theme.spacing(2)};
+      padding: 12px;
       border-radius: ${10};
       border-top-left-radius: ${3};
       font-size: ${theme.typography.pxToRem(14)};
-      max-width: 380px;
+      max-width: 80%;
       display: inline-flex;
 `
 );
 
 function ChatContent({ socket }: { socket: Socket }) {
   const { me } = useAppSelector((state) => state.userSlice);
-  const { id_group } = useParams();
+  const { id_room } = useParams();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const scrollbarsRef = useRef<any>();
   const id_me = me.id_user;
   const chatDates = useAppSelector((state) => {
-    if (id_group) return state.groupSlice.chats[id_group];
+    if (id_room) return state.roomSlice.chats[id_room];
   });
   useEffect(() => {
-    socket.on('new-chat', ({ chat, id_group, id_user, date }: any) => {
-      const action = createChat({ chat, id_group, id_user, date });
+    socket.on('new-chat', ({ chat, id_room, id_user, date }: any) => {
+      const action = createChat({ chat, id_room, id_user, date });
+      dispatch(action);
+    });
+    socket.on('first-chat', ({ chat, users, date, id_room, avatar, type, name }: any) => {
+      const user = users.find((item: IUser) => item.id_user != id_me);
+      const action = createFirstChat({ chat, id_room, date, user, avatar, type, name });
       dispatch(action);
     });
     return () => {
       socket.off('new-chat');
+      socket.off('first-chat');
     };
   }, []);
   useEffect(() => {
-    scrollbarsRef.current?.scrollToBottom();
+    if (chatDates) scrollbarsRef.current?.scrollToBottom();
   }, [chatDates]);
   return (
     <Scrollbars ref={scrollbarsRef}>
       <Box p={3} bgcolor={'rgb(242, 245, 249)'}>
         <Box>
           {chatDates &&
+            chatDates.length > 0 &&
             chatDates.map((chatDate) => {
               const date = Object.keys(chatDate)[0];
               const dateFormat = new Date(date);
@@ -84,7 +92,7 @@ function ChatContent({ socket }: { socket: Socket }) {
               return (
                 <Box key={date}>
                   <DividerWrapper>{format(dateFormat, 'MMMM dd yyyy')}</DividerWrapper>
-                  {chats.map((chat) => {
+                  {chats.map((chat, index) => {
                     return (
                       <Box key={chat.id_chat}>
                         {chat.id_user === id_me ? (
@@ -95,26 +103,33 @@ function ChatContent({ socket }: { socket: Socket }) {
                               flexDirection='column'
                               justifyContent='flex-end'
                               mr={2}
+                              width={'100%'}
                             >
-                              <CardWrapperPrimary>{chat.message}</CardWrapperPrimary>
-                              <Typography
-                                variant='subtitle1'
-                                color={'rgba(34, 51, 84, 0.7)'}
-                                sx={{
-                                  pt: 1,
-                                  fontSize: 13,
-                                  display: 'flex',
-                                  alignItems: 'center'
-                                }}
-                              >
-                                <ScheduleTwoToneIcon
+                              <CardWrapperPrimary>
+                                <Typography sx={{ overflowWrap: 'break-word', width: '100%' }}>
+                                  {chat.message}
+                                </Typography>
+                              </CardWrapperPrimary>
+                              {index === chats.length - 1 && (
+                                <Typography
+                                  variant='subtitle1'
+                                  color={'rgba(34, 51, 84, 0.7)'}
                                   sx={{
-                                    mr: 0.5
+                                    pt: 1,
+                                    fontSize: 13,
+                                    display: 'flex',
+                                    alignItems: 'center'
                                   }}
-                                  fontSize='small'
-                                />
-                                {chat.datetime && getSubTimeFromDayFNS(chat.datetime, t('language'))}
-                              </Typography>
+                                >
+                                  <ScheduleTwoToneIcon
+                                    sx={{
+                                      mr: 0.5
+                                    }}
+                                    fontSize='small'
+                                  />
+                                  {chat.datetime && getSubTimeFromDayFNS(chat.datetime, t('language'))}
+                                </Typography>
+                              )}
                             </Box>
                             <Avatar
                               variant='circular'
@@ -149,25 +164,32 @@ function ChatContent({ socket }: { socket: Socket }) {
                               flexDirection='column'
                               justifyContent='flex-start'
                               ml={2}
+                              width={'100%'}
                             >
-                              <CardWrapperSecondary>{chat.message}</CardWrapperSecondary>
-                              <Typography
-                                color={'rgba(34, 51, 84, 0.7)'}
-                                sx={{
-                                  pt: 1,
-                                  fontSize: 13,
-                                  display: 'flex',
-                                  alignItems: 'center'
-                                }}
-                              >
-                                <ScheduleTwoToneIcon
+                              <CardWrapperSecondary>
+                                <Typography sx={{ overflowWrap: 'break-word', width: '100%' }}>
+                                  {chat.message}
+                                </Typography>
+                              </CardWrapperSecondary>
+                              {index === chats.length - 1 && (
+                                <Typography
+                                  color={'rgba(34, 51, 84, 0.7)'}
                                   sx={{
-                                    mr: 0.5
+                                    pt: 1,
+                                    fontSize: 13,
+                                    display: 'flex',
+                                    alignItems: 'center'
                                   }}
-                                  fontSize='small'
-                                />
-                                {chat.datetime && getSubTimeFromDayFNS(chat.datetime, t('language'))}
-                              </Typography>
+                                >
+                                  <ScheduleTwoToneIcon
+                                    sx={{
+                                      mr: 0.5
+                                    }}
+                                    fontSize='small'
+                                  />
+                                  {chat.datetime && getSubTimeFromDayFNS(chat.datetime, t('language'))}
+                                </Typography>
+                              )}
                             </Box>
                           </Box>
                         )}

@@ -3,10 +3,12 @@ import AttachFileTwoToneIcon from '@mui/icons-material/AttachFileTwoTone';
 import SendTwoToneIcon from '@mui/icons-material/SendTwoTone';
 import { Controller, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
-import { IPayloadCreateChat } from 'src/types/group';
-import { createChatThunk } from 'src/redux_store/group/group_action';
-import { useParams } from 'react-router';
+import { IPayloadCreateChat } from 'src/types/room';
+import { createChatThunk, createFirstChatThunk } from 'src/redux_store/room/room_action';
+import { useNavigate, useParams } from 'react-router';
 import { FormInput } from 'src/components/hooks_form/form_input';
+import { createChat } from 'src/redux_store/room/room_slice';
+import { CPath } from 'src/constants';
 
 const Input = styled('input')({
   display: 'none'
@@ -15,7 +17,8 @@ const Input = styled('input')({
 function BottomBarContent() {
   const theme = useTheme();
   const { me } = useAppSelector((state) => state.userSlice);
-  const { id_group } = useParams();
+  const { id_room, id_user } = useParams();
+  const navigation = useNavigate();
   const dispatch = useAppDispatch();
   const user = {
     name: 'Catherine Pike',
@@ -24,10 +27,10 @@ function BottomBarContent() {
 
   const { control, handleSubmit, reset } = useForm({ defaultValues: { message: '', image: '' } });
   const handleOnSubmit = (data: any) => {
-    const id_user = me.id_user;
+    const id_me = me.id_user;
     const { image, message } = data;
     let base64String = '';
-    if (id_user) {
+    if (id_me) {
       if (image) {
         const fileReader = new FileReader();
         fileReader.onload = function (event: Event) {
@@ -42,13 +45,20 @@ function BottomBarContent() {
       }
     }
 
-    const payload: IPayloadCreateChat = { message, id_user, id_group };
+    const payload: IPayloadCreateChat = { message, id_user: id_me, id_room };
+    if (id_user) {
+      payload.id_friend = id_user;
+    }
     if (base64String && base64String !== '') payload.image = base64String;
     if (message !== '' || image !== '') {
-      const action = createChatThunk(payload);
+      const action = id_user ? createFirstChatThunk(payload) : createChatThunk(payload);
       dispatch(action)
         .unwrap()
-        .then(() => {
+        .then((data) => {
+          const { id_room } = data;
+          if (id_user && id_room) {
+            navigation(`/message/${id_room}`);
+          }
           reset();
         });
     }
@@ -66,7 +76,11 @@ function BottomBarContent() {
       onSubmit={handleSubmit(handleOnSubmit)}
     >
       <Box flexGrow={1} display='flex' alignItems='center'>
-        <Avatar sx={{ display: { xs: 'none', sm: 'flex' }, mr: 1 }} alt={user.name} src={user.avatar} />
+        <Avatar
+          sx={{ display: { xs: 'none', sm: 'flex' }, mr: 1 }}
+          alt={me.username}
+          src={CPath.host_user + me.avatar}
+        />
         <FormInput
           type='text'
           variant='standard'

@@ -5,17 +5,20 @@ import IconButton from '@mui/material/IconButton';
 import useDebounced from 'src/hooks/useDebounced';
 import { useAppDispatch } from 'src/redux_store';
 import { useTranslation } from 'react-i18next';
+
 const SearchBar = ({
   actionThunk,
   setResult,
   setNote,
   placeholder,
+  param = {},
   sx
 }: {
   actionThunk: any;
   setResult: (result: any[]) => void;
   setNote: (note: string) => void;
   placeholder?: string;
+  param?: { q?: string; [x: string]: any; limit?: number; offset?: number };
   sx?: SxProps;
 }) => {
   const { t } = useTranslation();
@@ -23,9 +26,15 @@ const SearchBar = ({
   const [value, setValue] = useState<string>('');
   const debounced = useDebounced(value);
   const [pending, setPending] = useState<boolean>(false);
+
   const fetchApi = (debounced: string) => {
     setPending(true);
-    const action = actionThunk({ q: debounced });
+    if (!param.limit) {
+      param.limit = 15;
+      param.offset = 0;
+    }
+    param.q = debounced;
+    const action = actionThunk(param);
     dispatch(action)
       .unwrap()
       .then((data: any) => {
@@ -38,8 +47,8 @@ const SearchBar = ({
           setNote(t('search.noAccount'));
         }
       })
-      .catch((e: any) => {
-        setNote(e);
+      .catch(() => {
+        setNote(t('toast.sometimeError'));
         setResult([]);
       });
   };

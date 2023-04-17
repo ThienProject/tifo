@@ -32,12 +32,17 @@ export default {
       reply: 'đã phản hồi bình luận của bạn'
     }
   },
+  toast: {
+    sometimeError: 'Thỉnh thoảng có lỗi xảy ra !',
+    timeOutLogin: 'Hết hạn đăng nhập. Xin vui lòng đăng nhập lại !',
+    netWorkSlow: 'Mạng yếu, vui lòng thử lại sau!'
+  },
   button: {
     accept: 'Chấp nhận',
     follow: 'Theo dõi',
     edit: 'Chỉnh sửa',
     delete: 'Xóa',
-    group: 'Tạo nhóm',
+    room: 'Tạo nhóm',
     block: 'Chặn người dùng'
   },
   home: {
@@ -65,8 +70,8 @@ export default {
     share_file: {
       title: 'File phương tiện'
     },
-    create_group: 'Tạo nhóm',
-    enter_group_name: 'Nhập tên nhóm',
+    create_room: 'Tạo nhóm',
+    enter_room_name: 'Nhập tên nhóm',
     add_member: 'Thêm thành viên'
   }
 };

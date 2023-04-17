@@ -4,6 +4,6 @@ const MODAL_IDS = {
   confirmCancelPost: 'confirmCancelPost',
   postDetail: 'postDetail',
   confirmDeletePost: 'confirmDeletePost',
-  createGroup: 'createGroup'
+  createroom: 'createroom'
 };
 export default MODAL_IDS;

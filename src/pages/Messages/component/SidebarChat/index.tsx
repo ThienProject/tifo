@@ -5,9 +5,9 @@ import React, { useState } from 'react';
 import UserItem from 'src/components/items/UserItem';
 import { useAppSelector } from 'src/redux_store';
 import SearchBar from 'src/pages/components/SearchBar';
-import { getUsersThunk } from 'src/redux_store/user/user_action';
-import GroupList from './GroupList';
+import RoomList from './RoomList';
 import { IUserChat } from 'src/types/user';
+import { searchRoomOrUserThunk } from 'src/redux_store/room/room_action';
 
 const SidebarChat = ({ sx }: { sx?: SxProps }) => {
   const { me } = useAppSelector((state) => state.userSlice);
@@ -33,19 +33,28 @@ const SidebarChat = ({ sx }: { sx?: SxProps }) => {
               ':hover': { border: '1px solid #999' },
               ':focus-within': { border: '1.4px solid var(--mui-palette-primary-main)' }
             }}
-            actionThunk={getUsersThunk}
+            actionThunk={searchRoomOrUserThunk}
             setNote={setNote}
             setResult={setResult}
+            param={{ id_user: me.id_user }}
           />
           <Box>
             {result && result.length > 0 && (
               <Paper sx={{ p: 0, my: 1 }}>
                 <MenuList sx={{ my: 0, py: 0, maxHeight: 300, overflow: 'auto' }}>
                   {result.map((item: IUserChat) => {
-                    const to = item?.id_group ? `/message/${item.id_group}` : `/message/new/${item.id_user}`;
+                    const to = item?.id_room ? `/message/${item.id_room}` : `/message/new/${item.id_user}`;
+                    let chatObject: IUserChat = {};
+                    if (item.id_user) {
+                      chatObject = item;
+                    } else {
+                      chatObject.id_user = item.id_room;
+                      chatObject.username = item.name;
+                      chatObject.avatar = item.room_avatar;
+                    }
                     return (
                       <MenuItem key={item.id_user} sx={{ my: 1, px: 0.5, mx: 0.5, borderRadius: 2 }}>
-                        <UserItem to={to} size='small' user={item} />
+                        <UserItem to={to} size='small' user={chatObject} />
                       </MenuItem>
                     );
                   })}
@@ -58,7 +67,7 @@ const SidebarChat = ({ sx }: { sx?: SxProps }) => {
         </Box>
         <Divider />
         <Box>
-          <GroupList />
+          <RoomList />
         </Box>
       </Box>
     </Box>

@@ -13,5 +13,7 @@ export interface IUser {
   followings?: number;
 }
 export interface IUserChat extends IUser {
-  id_group?: string;
+  id_room?: string;
+  room_avatar?: string;
+  name?: string;
 }

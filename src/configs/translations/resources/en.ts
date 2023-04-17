@@ -37,8 +37,13 @@ export default {
     follow: 'Follow',
     edit: 'Edit',
     delete: 'Delete',
-    group: 'Create Team',
+    room: 'Create Team',
     block: 'Block user'
+  },
+  toast: {
+    sometimeError: 'Sometime has error occurred !',
+    timeOutLogin: 'Login timeout. Please login again !',
+    netWorkSlow: 'Network is slow, please try again later!'
   },
   home: {
     suggestTab: 'Suggestion for you',
@@ -65,8 +70,8 @@ export default {
     share_file: {
       title: 'Shared Files'
     },
-    create_group: 'Create Group',
-    enter_group_name: 'Enter group name',
+    create_room: 'Create room',
+    enter_room_name: 'Enter room name',
     add_member: 'Add Member'
   }
 };

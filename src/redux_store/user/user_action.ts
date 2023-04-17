@@ -36,7 +36,6 @@ export const getUserThunk = createAsyncThunk<any, { id_user: string }>(
       const { data } = await userApi.getUser(payload);
       return data;
     } catch (error: any) {
-      toastMessage.setErrors(error);
       return rejectWithValue(error);
     }
   }

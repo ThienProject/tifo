@@ -36,10 +36,12 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
-import CreateGroup from '../CreateGroup';
+
 import { IUser } from 'src/types/user';
 import { useParams } from 'react-router';
 import { CPath } from 'src/constants';
+import { IRoom } from 'src/types/room';
+import CreateRoom from '../CreateRoom';
 const RootWrapper = styled(Box)(
   ({ theme }) => `
         @media (min-width: ${theme.breakpoints.values.md}px) {
@@ -101,23 +103,25 @@ const AccordionSummaryWrapper = styled(AccordionSummary)(
 function TopBarContent() {
   const { t } = useTranslation();
   const [isOpenSetting, setIsOpenSetting] = useState(false);
-  const groups = useAppSelector((state) => state.groupSlice.groups);
+  const rooms: IRoom[] = useAppSelector((state) => state.roomSlice.rooms);
+  const newUserChat = useAppSelector((state) => state.roomSlice.newUserChat);
+  const { id_room } = useParams();
+  const room = rooms.find((item: any) => item.id_room === id_room);
+  console.log('room', room);
+  const isChatFriend = room && (room.type === 'friend' || room.type === 'chatbot');
 
-  const { id_group } = useParams();
-  const group = groups.find((item: any) => item.id_group === id_group);
-
-  const { me } = useAppSelector((state) => state.userSlice);
-
-  const isChatFriend = group?.users?.length === 2;
-  let avatar = group?.avatar ? CPath.host_user + group.avatar : images.groupDefault;
-  let chatName = group?.name;
-  let friend: IUser = {};
-  if (isChatFriend && group.users) {
-    const me_id = me.id_user;
-    friend = group.users.find((us) => us.id_user != me_id) || {};
-    if (friend.avatar) {
-      avatar = CPath.host_user + friend.avatar;
-    }
+  let avatar = room?.avatar ? CPath.host_user + room.avatar : images.roomDefault;
+  let chatName = room?.name;
+  let friend: IUser | null = null;
+  if (isChatFriend && room.users) {
+    friend = room.users[0];
+    console.log(friend);
+  }
+  if (newUserChat && Object.keys(newUserChat).length > 0) {
+    friend = newUserChat;
+  }
+  if (friend) {
+    avatar = CPath.host_user + friend.avatar;
     chatName = friend.fullname;
   }
   const theme = useTheme();
@@ -296,18 +300,18 @@ function TopBarContent() {
                     primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
                   />
                 </ListItem>
-                {isChatFriend && (
+                {friend && (
                   <ListItem button>
                     <ListItemIconWrapper>
                       <GroupAddIcon />
                     </ListItemIconWrapper>
                     <ListItemText
                       sx={{ fontSize: 14 }}
-                      primary={t('button.group')}
+                      primary={t('button.room')}
                       onClick={() => {
                         const action = openModal({
-                          modalId: MODAL_IDS.createGroup,
-                          dialogComponent: <CreateGroup user={friend} />
+                          modalId: MODAL_IDS.createroom,
+                          dialogComponent: <CreateRoom user={friend!} />
                         });
                         console.log('open modal');
                         dispatch(action);
