@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { closeModal } from 'src/redux_store/common/modal/modal_slice';
@@ -18,17 +19,18 @@ const ProtectBox = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const { me } = useAppSelector((state) => state.userSlice);
-  if (id_owner) return <>{me.id_user === id_owner && children}</>;
+  if (id_owner) return <>{me?.id_user === id_owner && children}</>;
   else {
-    if (toLogin && !me.id_user) {
+    if (toLogin && !me?.id_user) {
       return (
         <Box
           m={0}
           p={0}
           onClick={() => {
+            toastMessage.error(t('toast.requestLogin'));
             if (idCloseModel) {
-              toastMessage.error('Please login to use this function !');
               const action = closeModal({ modalId: idCloseModel });
               dispatch(action);
             }
@@ -39,7 +41,7 @@ const ProtectBox = ({
         </Box>
       );
     } else {
-      return <>{me.id_user && children}</>;
+      return <>{me?.id_user && children}</>;
     }
   }
 };

@@ -119,7 +119,7 @@ const Comment = (props: { socket: any; id_post: string /* comments: IComment[] *
       socket.off('edit-comment');
       socket.off('delete-comment');
     };
-  }, [setCommentList, socket, me.id_user]);
+  }, [setCommentList, socket, me?.id_user]);
   const handleSubmitCmt = (data: { comment: string; action: string }) => {
     const { comment, action } = data;
     const id_user = me.id_user;

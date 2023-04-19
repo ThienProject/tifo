@@ -2,6 +2,8 @@ import axios, { AxiosError } from 'axios';
 import { CPath } from 'src/constants';
 import { toastMessage } from 'src/utils/toast';
 import i18n from 'src/configs/translations';
+import store from 'src/redux_store';
+import { logout } from 'src/redux_store/user/user_slice';
 export const createClient = () => {
   const baseURL = CPath.baseURL;
   const t = i18n.t;
@@ -20,9 +22,9 @@ export const createClient = () => {
         // handle timeout error
         toastMessage.error(t('toast.netWorkSlow'));
       }
-      // toastMessage.error(t('toast.timeOutLogin'))
       if ((error as any)?.response?.data?.code == '401') {
         toastMessage.error(t('toast.timeOutLogin'));
+        store.dispatch(logout());
       }
       console.log(error);
       return Promise.reject(error.response?.data);

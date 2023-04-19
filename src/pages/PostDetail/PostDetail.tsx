@@ -3,7 +3,7 @@ import MODAL_IDS from 'src/constants/modal';
 import { Box, Divider, Stack, Typography } from '@mui/material';
 import ModalWrapper from 'src/components/model/ModelWrapper';
 import Grid from '@mui/material/Grid';
-import SliderImg from '../Home/components/PostItem/SliderImg';
+import SliderImg from '../Home/components/PostItem/SliderMedia';
 import { IPost } from 'src/types/post';
 import UserItem from 'src/components/items/UserItem';
 import { MoreHoriz } from '@mui/icons-material';

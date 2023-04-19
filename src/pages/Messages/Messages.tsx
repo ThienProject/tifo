@@ -57,9 +57,6 @@ const Messages = () => {
             if (!data.user && !data.chats) {
               toastMessage.error('Sometime is error !');
             }
-          })
-          .catch(() => {
-            navigate('/notfound', { replace: true });
           });
       } else {
         if (rooms.length > 0) navigate('/notfound', { replace: true });

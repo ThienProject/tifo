@@ -43,7 +43,6 @@ const UpdatePost = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const isLoading = useIsRequestPending('post', 'updatePostThunk');
-  const isError = useIsRequestError('post', 'updatePostThunk');
   const [post, setPost] = useState<IPost>();
   const [mediasReplace, setMediaReplace] = useState<any[]>([]);
   const [mediasDelete, setMediaDelete] = useState<{ id_media: string; media_link: string }[]>([]);
@@ -83,7 +82,6 @@ const UpdatePost = () => {
         .unwrap()
         .then(() => {
           reset();
-          // toastMessage.success('media post success !');
         });
     }
   };
@@ -146,11 +144,6 @@ const UpdatePost = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
-  useEffect(() => {
-    if (isError) {
-      toastMessage.error('Network is slow, Please try again later !');
-    }
-  }, [isError]);
   useEffect(() => {
     const pathArray = location.pathname.split('/');
     const postId = pathArray[2];

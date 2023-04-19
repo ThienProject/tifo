@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { userApi } from 'src/clients/http/user_api';
 import { IPayloadLogin, IPayloadRegister } from 'src/types/auth';
 import { IPayloadGetPost } from 'src/types/post';
-import { toastMessage } from 'src/utils/toast';
+
 
 export const loginThunk = createAsyncThunk<any, IPayloadLogin>(
   'user/loginUser',
@@ -11,7 +11,6 @@ export const loginThunk = createAsyncThunk<any, IPayloadLogin>(
       const { data } = await userApi.login(payload);
       return data;
     } catch (error: any) {
-      toastMessage.setErrors(error);
       return rejectWithValue(error);
     }
   }
@@ -24,7 +23,6 @@ export const getNotifications = createAsyncThunk<any, { id_user: string }>(
       const { data } = await userApi.getNotifications(payload);
       return data;
     } catch (error: any) {
-      toastMessage.setErrors(error);
       return rejectWithValue(error);
     }
   }
@@ -47,7 +45,6 @@ export const registerThunk = createAsyncThunk<any, IPayloadRegister>(
       const { data }: any = await userApi.register(payload);
       return data;
     } catch (error: any) {
-      toastMessage.setErrors(error);
       return rejectWithValue(error);
     }
   }

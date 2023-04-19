@@ -3,7 +3,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { FormControl, IconButton, InputAdornment, SxProps, TextField } from '@mui/material';
-import { isNumber, isString } from 'lodash';
+import { isNumber, isString, multiply } from 'lodash';
 import { Controller } from 'react-hook-form';
 
 interface IProps {
@@ -22,6 +22,8 @@ interface IProps {
   sx?: SxProps;
   notSpacing?: boolean;
   handleChange?: (name: string, value: any) => void;
+  multiline?: boolean;
+  maxRows?: number;
   InputProps?:
     | React.ReactElement<any, any>
     | {
@@ -47,7 +49,9 @@ export const FormInput = (props: IProps) => {
     notSpacing = false,
     handleChange,
     InputProps,
-    placeholder
+    placeholder,
+    multiline = false,
+    maxRows = 0
   } = props;
 
   const [isShowPassword, setIsShowPassword] = React.useState<boolean>(false);
@@ -84,6 +88,8 @@ export const FormInput = (props: IProps) => {
         >
           <TextField
             fullWidth
+            multiline={multiline}
+            maxRows={maxRows}
             sx={{ border: inputBase ? 'none' : '' }}
             size={size}
             type={isShowPassword ? 'text' : type}

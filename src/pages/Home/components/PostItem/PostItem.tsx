@@ -10,15 +10,17 @@ import {
 } from '@mui/icons-material';
 import UserItem from 'src/components/items/UserItem';
 import { IPost } from 'src/types/post';
-import SliderImg from './SliderImg';
+
 import { IUser } from 'src/types/user';
 import moment from 'moment';
-import { useAppDispatch } from 'src/redux_store';
+import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
 import PostDetail from 'src/pages/PostDetail';
 import { updateLoveThunk } from 'src/redux_store/post/post_action';
 import { useTranslation } from 'react-i18next';
+import ProtectBox from 'src/components/ProtectBox/ProtectBox';
+import SliderMedia from './SliderMedia';
 
 const PostItem = ({ post }: { post: IPost }) => {
   // Before the component definition:
@@ -27,6 +29,7 @@ const PostItem = ({ post }: { post: IPost }) => {
   // const postSlice = useAppSelector((state) => state.postSlice.posts[index]);
   const { id_user, username, fullname, avatar } = post;
   const user: IUser = { id_user, username, fullname, avatar };
+  const { me } = useAppSelector((state) => state.userSlice);
   return (
     <Box>
       {/* top */}
@@ -42,22 +45,23 @@ const PostItem = ({ post }: { post: IPost }) => {
         </IconButton>
       </Stack>
       {/* media */}
-      <SliderImg sx={{ height: 300 }} medias={post?.medias} />{' '}
+      <SliderMedia sx={{ height: 300 }} medias={post?.medias} />{' '}
       <Stack mt={0.7} justifyContent={'space-between'} direction={'row'}>
         <Stack direction={'row'}>
-          <IconButton
-            sx={{ p: 0 }}
-            size='small'
-            onClick={() => {
-              // setIsLove((prev) => !prev);
-              if (id_user) {
-                const action = updateLoveThunk({ id_user: id_user, isLove: !post.isLove, id_post: post.id_post });
-                dispatch(action).unwrap();
-              }
-            }}
-          >
-            {!post.isLove ? <FavoriteBorder /> : <Favorite color='error' />}
-          </IconButton>
+          <ProtectBox toLogin>
+            <IconButton
+              sx={{ p: 0 }}
+              size='small'
+              onClick={() => {
+                if (me?.id_user) {
+                  const action = updateLoveThunk({ id_user: me.id_user, isLove: !post.isLove, id_post: post.id_post });
+                  dispatch(action).unwrap();
+                }
+              }}
+            >
+              {!post.isLove ? <FavoriteBorder /> : <Favorite color='error' />}
+            </IconButton>
+          </ProtectBox>
           <IconButton
             sx={{ pl: 2 }}
             size='small'

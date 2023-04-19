@@ -38,12 +38,14 @@ export default {
     edit: 'Edit',
     delete: 'Delete',
     room: 'Create Team',
-    block: 'Block user'
+    block: 'Block user',
+    addMedia: 'Add Media'
   },
   toast: {
     sometimeError: 'Sometime has error occurred !',
     timeOutLogin: 'Login timeout. Please login again !',
-    netWorkSlow: 'Network is slow, please try again later!'
+    netWorkSlow: 'Network is slow, please try again later!',
+    requestLogin: 'Please login to use this function !'
   },
   home: {
     suggestTab: 'Suggestion for you',
@@ -73,5 +75,16 @@ export default {
     create_room: 'Create room',
     enter_room_name: 'Enter room name',
     add_member: 'Add Member'
+  },
+  createPost: {
+    uploadTitle: 'Upload post',
+    description: 'Description',
+    target: 'Who can watch this post?',
+    suggest: 'Suggest by AI',
+    upload: 'Upload',
+    toast: {
+      createSuccess: 'Create post success !',
+
+    }
   }
 };

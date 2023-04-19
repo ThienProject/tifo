@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { postApi } from 'src/clients/http/post_api';
 import { IPayloadCreateComment, IPayloadEditComment, IPayloadGetPost, IUpdateLove } from 'src/types/post';
-import { toastMessage } from 'src/utils/toast';
+
 
 export const createPostThunk = createAsyncThunk<any, FormData>(
   'post/createPostThunk',
@@ -10,8 +10,6 @@ export const createPostThunk = createAsyncThunk<any, FormData>(
       const { data } = await postApi.create(payload);
       return data;
     } catch (error: any) {
-      // handle other errors
-      toastMessage.setErrors(error.message);
       return rejectWithValue(error.message);
     }
   }
@@ -23,7 +21,6 @@ export const updatePostThunk = createAsyncThunk<any, FormData>(
       const { data } = await postApi.update(payload);
       return data;
     } catch (error: any) {
-      toastMessage.setErrors(error);
       return rejectWithValue(error);
     }
   }
@@ -35,7 +32,6 @@ export const updateLoveThunk = createAsyncThunk<any, IUpdateLove>(
       const { data } = await postApi.updateLove(payload);
       return { ...data, ...payload };
     } catch (error: any) {
-      toastMessage.setErrors(error);
       return rejectWithValue(error);
     }
   }
@@ -47,7 +43,6 @@ export const deletePostThunk = createAsyncThunk<any, { id_post: string }>(
       const { data } = await postApi.deletePost(payload);
       return data;
     } catch (error: any) {
-      toastMessage.setErrors(error);
       return rejectWithValue(error);
     }
   }
@@ -59,7 +54,6 @@ export const deleteMediasThunk = createAsyncThunk<any, any>(
       const { data } = await postApi.deleteMedias(payload);
       return data;
     } catch (error: any) {
-      toastMessage.setErrors(error);
       return rejectWithValue(error);
     }
   }
@@ -71,7 +65,6 @@ export const replaceMediasThunk = createAsyncThunk<any, FormData>(
       const { data } = await postApi.replaceMedias(payload);
       return data;
     } catch (error: any) {
-      toastMessage.setErrors(error);
       return rejectWithValue(error);
     }
   }
@@ -107,7 +100,6 @@ export const sendCommentThunk = createAsyncThunk<any, IPayloadCreateComment>(
       const { data } = await postApi.sendComment(payload);
       return data;
     } catch (error: any) {
-      toastMessage.setErrors(error);
       return rejectWithValue(error);
     }
   }
@@ -120,7 +112,6 @@ export const getCommentsThunk = createAsyncThunk<any, string>(
       const { data } = await postApi.getComments(payload);
       return data;
     } catch (error: any) {
-      // toastMessage.setErrors(error);
       return rejectWithValue(error);
     }
   }
@@ -132,7 +123,6 @@ export const editCommentThunk = createAsyncThunk<any, IPayloadEditComment>(
       const { data } = await postApi.editComment(payload);
       return data;
     } catch (error: any) {
-      toastMessage.setErrors(error);
       return rejectWithValue(error);
     }
   }
@@ -144,7 +134,6 @@ export const deleteCommentThunk = createAsyncThunk<any, any>(
       const { data } = await postApi.deleteComment(payload);
       return { ...data, ...payload };
     } catch (error: any) {
-      // toastMessage.setErrors(error);
       return rejectWithValue(error);
     }
   }

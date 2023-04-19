@@ -35,7 +35,8 @@ export default {
   toast: {
     sometimeError: 'Thỉnh thoảng có lỗi xảy ra !',
     timeOutLogin: 'Hết hạn đăng nhập. Xin vui lòng đăng nhập lại !',
-    netWorkSlow: 'Mạng yếu, vui lòng thử lại sau!'
+    netWorkSlow: 'Mạng yếu, vui lòng thử lại sau!',
+    requestLogin: 'Vui lòng đăng nhập để sử dụng chức năng này !'
   },
   button: {
     accept: 'Chấp nhận',
@@ -43,7 +44,8 @@ export default {
     edit: 'Chỉnh sửa',
     delete: 'Xóa',
     room: 'Tạo nhóm',
-    block: 'Chặn người dùng'
+    block: 'Chặn người dùng',
+    addMedia: 'Thêm phương tiện'
   },
   home: {
     suggestTab: 'Đề xuất cho bạn',
@@ -73,5 +75,15 @@ export default {
     create_room: 'Tạo nhóm',
     enter_room_name: 'Nhập tên nhóm',
     add_member: 'Thêm thành viên'
+  },
+  createPost: {
+    uploadTitle: 'Tạo bài đăng',
+    description: 'Mô tả',
+    target: 'Ai có thể nhìn thấy bài đăng này? ',
+    suggest: 'Gợi ý với AI',
+    upload: 'Đăng bài',
+    toast: {
+      createSuccess: 'Đăng bài thành công !',
+    }
   }
 };
