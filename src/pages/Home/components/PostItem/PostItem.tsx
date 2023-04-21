@@ -36,7 +36,7 @@ const PostItem = ({ post }: { post: IPost }) => {
       <Stack mb={1.2} direction='row' justifyContent='space-between'>
         <Box display='flex' alignItems='center'>
           <UserItem size='small' to={`/${user.id_user}`} user={user} />
-          <Typography sx={{ opacity: '0.6' }} fontSize={12}>
+          <Typography width={'100%'} sx={{ opacity: '0.6' }} fontSize={12}>
             {moment(post.date_time).format('DD-MM-YYYY')}
           </Typography>
         </Box>

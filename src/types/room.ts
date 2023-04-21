@@ -51,4 +51,5 @@ export interface IPayloadCreateChat {
   id_friend?: string;
   image?: string;
   message?: string;
+  isChatbot?: boolean;
 }

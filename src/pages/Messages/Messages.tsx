@@ -47,7 +47,6 @@ const Messages = () => {
       }
     }
     if (param.id_room) {
-      console.log('có param.id_room', param.id_room);
       const index = rooms.findIndex((item: any) => item.id_room === param.id_room);
       if (index !== -1) {
         const action = getChatsByIDroomThunk(param);

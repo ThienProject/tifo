@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IChatroom, IRoom } from 'src/types/room';
+import { IChatDates, IChatroom, IRoom } from 'src/types/room';
 import { getChatsByIDroomThunk, getRoomsThunk } from './room_action';
 import { IUser } from 'src/types/user';
 
@@ -21,9 +21,9 @@ const roomSlice = createSlice({
     createChat: (state, action) => {
       const { id_room, chat, date } = action.payload;
       if (date && chat && id_room) {
-        const chatDates = state.chats[id_room];
+        const chatDates: IChatDates[] = state.chats[id_room];
         if (chatDates) {
-          const index = chatDates.findIndex((dateItem: any) => Object.keys(dateItem)[0] === date);
+          const index = chatDates.findIndex((dateItem) => Object.keys(dateItem)[0] === date);
           if (index > -1) {
             chatDates[index][date].push(chat);
           } else {
