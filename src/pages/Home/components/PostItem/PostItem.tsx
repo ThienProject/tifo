@@ -21,6 +21,7 @@ import { updateLoveThunk } from 'src/redux_store/post/post_action';
 import { useTranslation } from 'react-i18next';
 import ProtectBox from 'src/components/ProtectBox/ProtectBox';
 import SliderMedia from './SliderMedia';
+import CustomTypography from 'src/components/CustomTypography';
 
 const PostItem = ({ post }: { post: IPost }) => {
   // Before the component definition:
@@ -89,9 +90,7 @@ const PostItem = ({ post }: { post: IPost }) => {
       <Typography color='common.black' fontSize={14} fontWeight={550}>
         {post.loves ? post.loves : 0} likes
       </Typography>
-      <Typography fontSize={14} fontWeight={550}>
-        {post.description}
-      </Typography>
+      <CustomTypography textAlign={'justify'} text={post.description!} fontSize={14} fontWeight={550} max={100} />
       <Button sx={{ p: 0, fontWeight: '600', fontSize: 10, color: 'text.secondary' }}>{t('home.translate')}</Button>
       {post.commentLength ? (
         <Button

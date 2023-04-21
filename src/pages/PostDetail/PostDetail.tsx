@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router';
 import ConfirmationDialog from 'src/components/model/confirmation_dialog';
 import { deletePostThunk } from 'src/redux_store/post/post_action';
 import { toastMessage } from 'src/utils/toast';
+import CustomTypography from 'src/components/CustomTypography';
 
 const PostDetail = (props: { post: IPost }) => {
   const navigate = useNavigate();
@@ -97,7 +98,8 @@ const PostDetail = (props: { post: IPost }) => {
             sx={{
               height: {
                 lg: '80vh'
-              }
+              },
+              overflowY: 'scroll'
             }}
             boxSizing={'border-box'}
           >
@@ -113,9 +115,16 @@ const PostDetail = (props: { post: IPost }) => {
                 </Box>
                 <MenuOption icon={<MoreHoriz />} options={options} />
               </Stack>
-              <Typography mt={2} ml={2} fontSize={14}>
-                {description}
-              </Typography>
+              <Box>
+                <CustomTypography
+                  mt={2}
+                  textAlign={'justify'}
+                  text={description!}
+                  fontSize={14}
+                  fontWeight={550}
+                  max={100}
+                />
+              </Box>
             </Box>
 
             <Divider sx={{ my: 2 }} />

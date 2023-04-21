@@ -45,7 +45,9 @@ export default {
     delete: 'Xóa',
     room: 'Tạo nhóm',
     block: 'Chặn người dùng',
-    addMedia: 'Thêm phương tiện'
+    addMedia: 'Thêm phương tiện',
+    seeMore: 'Xem thêm',
+    seeLess: 'Ít hơn'
   },
   home: {
     suggestTab: 'Đề xuất cho bạn',

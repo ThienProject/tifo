@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Stack, IconButton, TextField, Divider } from '@mui/material';
+import { Box, Stack, IconButton, TextField, Divider, SxProps } from '@mui/material';
 import { IComment, IPayloadCreateComment, IPayloadDeleteComment, IPayloadEditComment } from 'src/types/post';
 import { useForm, Controller } from 'react-hook-form';
 import { SendRounded } from '@mui/icons-material';
@@ -15,8 +15,8 @@ import ProtectBox from 'src/components/ProtectBox';
 import MODAL_IDS from 'src/constants/modal';
 
 const defaultPayloadCmt = { id_parent: '0', id_reply: '0', id_comment: '' };
-const Comment = (props: { socket: any; id_post: string /* comments: IComment[] */ }) => {
-  const { id_post, socket } = props;
+const Comment = (props: { socket: any; id_post: string; sx?: SxProps }) => {
+  const { id_post, socket, sx } = props;
   const { control, handleSubmit, setValue, reset, setFocus } = useForm({
     defaultValues: { comment: '', action: 'send', id_commentEdit: '' }
   });
@@ -170,7 +170,7 @@ const Comment = (props: { socket: any; id_post: string /* comments: IComment[] *
 
   return (
     <>
-      <Box height={'80%'} sx={{ overflowY: 'scroll', maxWidth: '100%' }}>
+      <Box height={'80%'} sx={{ maxWidth: '100%' }}>
         {commentList.map((comment, index) => {
           const id_cmt = comment.id_comment;
           return (
@@ -270,7 +270,12 @@ const Comment = (props: { socket: any; id_post: string /* comments: IComment[] *
           );
         })}
       </Box>
-      <Stack maxHeight={'20%'} component='form' flexDirection={'row'}>
+      <Stack
+        sx={{ position: 'fixed', bottom: 25, width: { lg: '45vw' } }}
+        maxHeight={'20%'}
+        component='form'
+        flexDirection={'row'}
+      >
         <Controller
           name='comment'
           rules={{

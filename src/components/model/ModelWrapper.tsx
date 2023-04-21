@@ -63,6 +63,8 @@ const ModalWrapper = (props: IDialogWrapperProps) => {
       maxWidth={maxWidthDialog}
       fullWidth={isFullWidth}
       sx={{
+        '& .MuiDialog-container': { overflowY: 'hidden' },
+
         '& .MuiDialog-paper': {
           bgcolor: !isBgContent ? 'transparent' : '',
           boxShadow: !isBgContent ? 'none' : ''

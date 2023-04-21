@@ -39,7 +39,9 @@ export default {
     delete: 'Delete',
     room: 'Create Team',
     block: 'Block user',
-    addMedia: 'Add Media'
+    addMedia: 'Add Media',
+    seeMore: 'See more',
+    seeLess: 'See less'
   },
   toast: {
     sometimeError: 'Sometime has error occurred !',
