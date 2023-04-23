@@ -41,7 +41,7 @@ export default {
     block: 'Block user',
     addMedia: 'Add Media',
     seeMore: 'See more',
-    seeLess: 'See less'
+    seeLess: 'See less',
   },
   toast: {
     sometimeError: 'Sometime has error occurred !',
@@ -76,7 +76,8 @@ export default {
     },
     create_room: 'Create room',
     enter_room_name: 'Enter room name',
-    add_member: 'Add Member'
+    add_member: 'Add Member',
+    dleRoom: 'Delete this room'
   },
   createPost: {
     uploadTitle: 'Upload post',
@@ -86,7 +87,7 @@ export default {
     upload: 'Upload',
     toast: {
       createSuccess: 'Create post success !',
-
     }
-  }
+  },
+
 };

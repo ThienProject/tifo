@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { postApi } from 'src/clients/http/post_api';
 import { IPayloadCreateComment, IPayloadEditComment, IPayloadGetPost, IUpdateLove } from 'src/types/post';
 
-
 export const createPostThunk = createAsyncThunk<any, FormData>(
   'post/createPostThunk',
   async (payload, { rejectWithValue }) => {

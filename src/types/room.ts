@@ -33,12 +33,17 @@ export interface IPayloadRooms {
   limit?: string | number;
   offset?: string | number;
 }
+export interface IPayloadDleChats {
+  id_user?: string;
+  id_room?: string;
+}
 
 export interface IPayloadroom {
   id_me?: string;
   id_friend?: string;
 }
 export interface IPayloadChats {
+  id_user?: string;
   id_room?: string;
   isChatbot?: boolean;
   limit?: string | number;

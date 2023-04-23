@@ -2,7 +2,7 @@ import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { SxProps } from '@mui/material';
+import { SxProps, Box } from '@mui/material';
 import { PopoverOrigin } from '@mui/material/Popover';
 
 const ITEM_HEIGHT = 48;
@@ -19,6 +19,7 @@ export default function MenuOption(props: {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -26,7 +27,7 @@ export default function MenuOption(props: {
   };
 
   return (
-    <div>
+    <Box>
       <IconButton
         aria-label='more'
         id='long-button'
@@ -85,6 +86,6 @@ export default function MenuOption(props: {
           ))}
         </Menu>
       )}
-    </div>
+    </Box>
   );
 }

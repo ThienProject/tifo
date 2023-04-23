@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IChatDates, IChatroom, IRoom } from 'src/types/room';
-import { getChatsByIDroomThunk, getRoomsThunk } from './room_action';
+import { clearChatsThunk, getChatsByIDroomThunk, getRoomsThunk } from './room_action';
 import { IUser } from 'src/types/user';
 
 const initialState: {
@@ -75,6 +75,12 @@ const roomSlice = createSlice({
       const { id_room, chats } = action.payload;
       if (chats && chats[0]) {
         state.chats[id_room] = chats;
+      }
+    });
+    builder.addCase(clearChatsThunk.fulfilled, (state, action) => {
+      const { id_room } = action.payload;
+      if (id_room) {
+        state.chats[id_room] = [];
       }
     });
   }

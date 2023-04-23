@@ -1,13 +1,23 @@
 import React from 'react';
-import { Box, Stack, Avatar, Typography } from '@mui/material';
+import { Box, Stack, Avatar, Typography, Button } from '@mui/material';
 import { IRoom } from 'src/types/room';
 import { IUser } from 'src/types/user';
 import images from 'src/assets/images';
 import { CPath } from 'src/constants';
 import { useNavigate, useLocation } from 'react-router';
-
+import MenuOption from 'src/components/MenuOption';
+import { MoreHoriz } from '@mui/icons-material';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { useTranslation } from 'react-i18next';
+import { makeStyles } from '@mui/styles';
+import { clearChatsThunk } from 'src/redux_store/room/room_action';
+import { useAppDispatch, useAppSelector } from 'src/redux_store';
+import { toastMessage } from 'src/utils/toast';
 const ChatItem = ({ room, chatDemo }: { room: IRoom; chatDemo?: string }) => {
   const location = useLocation();
+  const { t } = useTranslation();
+  const { me } = useAppSelector((state) => state.userSlice);
+  const dispatch = useAppDispatch();
   const pathName = location.pathname.split('/').pop();
   const navigate = useNavigate();
   const isChatFriend = room.type === 'friend' || room.type === 'chatbot';
@@ -21,8 +31,10 @@ const ChatItem = ({ room, chatDemo }: { room: IRoom; chatDemo?: string }) => {
     }
     chatName = friend.fullname;
   }
+  const classes = useStyles();
   return (
     <Stack
+      className={classes.wrapper}
       direction={'row'}
       py={2}
       px={1}
@@ -62,8 +74,53 @@ const ChatItem = ({ room, chatDemo }: { room: IRoom; chatDemo?: string }) => {
           {chatDemo}
         </Typography>
       </Box>
+
+      <MenuOption
+        classIcon='menu-option__room'
+        transformOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        sxIcon={{ position: 'absolute', right: 0 }}
+        icon={<MoreHoriz />}
+        options={[
+          {
+            element: (
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const id_user = me?.id_user;
+                  console.log('me?.id_user', me);
+                  if (id_user) {
+                    toastMessage.success('ok');
+                    const action = clearChatsThunk({ id_user, id_room: room.id_room });
+                    dispatch(action);
+                  }
+                }}
+                key={2}
+                startIcon={<DeleteOutlineIcon fontSize='small' />}
+                sx={{ p: 0, justifyContent: 'flex-start' }}
+                color='error'
+                variant='text'
+                fullWidth
+              >
+                <Typography textTransform={'capitalize'} fontSize={13} fontWeight={100} color='text.secondary'>
+                  {t('message.dleRoom')}
+                </Typography>
+              </Button>
+            )
+          }
+        ]}
+      />
     </Stack>
   );
 };
+const useStyles = makeStyles(() => ({
+  wrapper: {
+    position: 'relative',
+    '& .menu-option__room': { display: 'none' },
 
+    '&:hover .menu-option__room': {
+      display: 'block'
+    }
+  }
+}));
 export default ChatItem;

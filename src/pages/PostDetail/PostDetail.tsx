@@ -21,7 +21,7 @@ import CustomTypography from 'src/components/CustomTypography';
 
 const PostDetail = (props: { post: IPost }) => {
   const navigate = useNavigate();
-  const socket = io.connect(CPath.host || 'http://localhost:8000');
+  const socket = io.connect('ws://localhost:8000');
   console.log('CPath.host ', CPath.host);
   const { post } = props;
   const { medias, id_post, description, fullname, avatar, username, id_user } = post;

@@ -107,13 +107,12 @@ function TopBarContent() {
   const newUserChat = useAppSelector((state) => state.roomSlice.newUserChat);
   const { id_room } = useParams();
   const room = rooms.find((item: any) => item.id_room === id_room);
-  console.log('room', room);
-  const isChatFriend = room && (room.type === 'friend' || room.type === 'chatbot');
-
+  const isChatFriend = room && room.type === 'friend';
+  const isChatbot = room && room.type === 'chatbot';
   let avatar = room?.avatar ? CPath.host_user + room.avatar : images.roomDefault;
   let chatName = room?.name;
   let friend: IUser | null = null;
-  if (isChatFriend && room.users) {
+  if ((isChatFriend || isChatbot) && room.users) {
     friend = room.users[0];
     console.log(friend);
   }
@@ -300,7 +299,7 @@ function TopBarContent() {
                     primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
                   />
                 </ListItem>
-                {friend && (
+                {isChatFriend && friend && (
                   <ListItem button>
                     <ListItemIconWrapper>
                       <GroupAddIcon />

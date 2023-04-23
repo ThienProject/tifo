@@ -25,13 +25,16 @@ const ChatList = () => {
         >
           {rooms.map((room: IRoom) => {
             let chatDemo: string | undefined = 'say hello !';
-            if (room.id_room && chats[room.id_room]) {
-              const lastDateObj = chats[room.id_room][Object.keys(chats[room.id_room]).length - 1];
-              const dateArr = lastDateObj ? Object.values(lastDateObj) : [];
-              const listMess = dateArr[dateArr.length - 1];
-              chatDemo = listMess && listMess?.length ? listMess[listMess.length - 1].message : '';
+            const chatsRoom = chats[room.id_room!];
+            if ((chatsRoom && chatsRoom.length > 0) || room.type === 'chatbot') {
+              if (chatsRoom) {
+                const lastDateObj = chatsRoom[Object.keys(chatsRoom).length - 1];
+                const dateArr = lastDateObj ? Object.values(lastDateObj) : [];
+                const listMess = dateArr[dateArr.length - 1];
+                chatDemo = listMess && listMess?.length ? listMess[listMess.length - 1].message : '';
+              }
+              return <RoomItem key={room.id_room} room={room} chatDemo={chatDemo} />;
             }
-            return <RoomItem key={room.id_room} room={room} chatDemo={chatDemo} />;
           })}
         </InfiniteScroll>
       )}

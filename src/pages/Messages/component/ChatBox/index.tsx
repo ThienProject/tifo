@@ -39,7 +39,7 @@ const ChatBox = () => {
       <MenuTwoToneIcon />
     </IconButtonToggle>
   );
-  const socket = io.connect(CPath.host || 'http://localhost:8000');
+  const socket = io.connect('ws://localhost:8000');
 
   const ChatTopBar = styled(Box)(
     ({ theme }) => `
