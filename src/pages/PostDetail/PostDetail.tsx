@@ -1,6 +1,6 @@
 import React from 'react';
 import MODAL_IDS from 'src/constants/modal';
-import { Box, Divider, Stack, Typography } from '@mui/material';
+import { Box, Divider, Stack } from '@mui/material';
 import ModalWrapper from 'src/components/model/ModelWrapper';
 import Grid from '@mui/material/Grid';
 import SliderImg from '../Home/components/PostItem/SliderMedia';
@@ -8,8 +8,6 @@ import { IPost } from 'src/types/post';
 import UserItem from 'src/components/items/UserItem';
 import { MoreHoriz } from '@mui/icons-material';
 import Comment from './components/Comment';
-import * as io from 'socket.io-client';
-import { CPath } from 'src/constants';
 import MenuOption from 'src/components/MenuOption';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { closeModal, openModal } from 'src/redux_store/common/modal/modal_slice';
@@ -21,8 +19,7 @@ import CustomTypography from 'src/components/CustomTypography';
 
 const PostDetail = (props: { post: IPost }) => {
   const navigate = useNavigate();
-  const socket = io.connect('ws://localhost:8000');
-  console.log('CPath.host ', CPath.host);
+  const socket = useAppSelector((state) => state.userSlice.socket);
   const { post } = props;
   const { medias, id_post, description, fullname, avatar, username, id_user } = post;
   const user = { id_user, fullname, avatar, username };

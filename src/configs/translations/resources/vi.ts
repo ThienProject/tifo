@@ -41,13 +41,15 @@ export default {
   button: {
     accept: 'Chấp nhận',
     follow: 'Theo dõi',
+    requested: 'Đã gửi yêu cầu',
     edit: 'Chỉnh sửa',
     delete: 'Xóa',
     room: 'Tạo nhóm',
     block: 'Chặn người dùng',
     addMedia: 'Thêm phương tiện',
     seeMore: 'Xem thêm',
-    seeLess: 'Ít hơn'
+    seeLess: 'Ít hơn',
+    chat: 'Chat'
   },
   home: {
     suggestTab: 'Đề xuất cho bạn',
@@ -86,7 +88,7 @@ export default {
     suggest: 'Gợi ý với AI',
     upload: 'Đăng bài',
     toast: {
-      createSuccess: 'Đăng bài thành công !',
+      createSuccess: 'Đăng bài thành công !'
     }
   }
 };

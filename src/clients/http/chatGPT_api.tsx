@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const model = 'text-davinci-003';
-const apiKey = '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';
+const apiKey = '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';
 export const sendMessage = async (prompt: string) => {
   return await axios
     .post(
@@ -11,7 +11,7 @@ export const sendMessage = async (prompt: string) => {
         max_tokens: 500,
         n: 1,
         stop: null,
-        temperature: 1
+        temperature: 0.5
       },
       {
         headers: {

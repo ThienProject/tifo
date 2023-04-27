@@ -7,6 +7,7 @@ import TopProfile from './components/TopProfile';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IUser } from 'src/types/user';
 import { getUserThunk } from 'src/redux_store/user/user_action';
+import { IPayloadGetUser } from 'src/types/auth';
 
 const Profile = () => {
   const location = useLocation();
@@ -18,24 +19,26 @@ const Profile = () => {
   const [tabs, setTabs] = useState<any[]>([]);
 
   useEffect(() => {
-    if (pathName === 'profile' || pathName === me.id_user) {
-      setUser(me);
-    } else if (pathName.startsWith('USER_')) {
-      const action = getUserThunk({ id_user: pathName });
-      dispatch(action)
-        .unwrap()
-        .then((data: any) => {
-          const { user } = data;
-          if (user.id_user) {
-            setUser(user);
-          } else navigate('/notfound', { replace: true });
-        })
-        .catch(() => {
-          navigate('/notfound', { replace: true });
-        });
-    } else {
-      navigate('/notfound', { replace: true });
+    let id_user = pathName;
+    if (pathName === 'profile') {
+      id_user = me?.id_user;
     }
+    const params: IPayloadGetUser = { id_user };
+    if (me?.id_user) {
+      params.id_me = me.id_user;
+    }
+    const action = getUserThunk(params);
+    dispatch(action)
+      .unwrap()
+      .then((data: any) => {
+        const { user } = data;
+        if (user.id_user) {
+          setUser(user);
+        } else navigate('/notfound', { replace: true });
+      })
+      .catch(() => {
+        navigate('/notfound', { replace: true });
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathName]);
 
@@ -56,17 +59,8 @@ const Profile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
   return (
-    <Box
-      mt={2}
-      sx={{
-        ml: {
-          lg: 10
-        }
-      }}
-      color={'common.black'}
-    >
+    <Box mt={2} sx={{}} color={'common.black'}>
       {user && <TopProfile user={user} />}
-
       {tabs.length > 0 && <Tab TabList={tabs} />}
     </Box>
   );

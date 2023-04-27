@@ -16,10 +16,12 @@ import { INotification } from 'src/types/notification';
 
 const NotiItem = ({
   noti,
-  handleClose
+  handleClose,
+  handleAcceptFollow
 }: {
   noti: INotification;
   handleClose: (event: Event | React.SyntheticEvent) => void;
+  handleAcceptFollow: (noti: INotification) => void;
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -32,8 +34,8 @@ const NotiItem = ({
         my: 2,
         mx: 1.5,
         borderRadius: 2,
-        boxShadow: 'var(--mui-shadows-1)',
-        borderBottom: '1px solid var(--mui-palette-divider)',
+        // boxShadow: 'var(--mui-shadows-1)',
+        // border: '1px solid var(--mui-palette-divider)',
         bgcolor: '#fcfcfc'
       }}
       onClick={(e) => {
@@ -75,6 +77,7 @@ const NotiItem = ({
           sx={{ flex: 'flex-end', fontSize: 12, color: 'white', textTransform: 'capitalize' }}
           onClick={(e) => {
             e.stopPropagation();
+            handleAcceptFollow(noti);
           }}
           variant='contained'
         >

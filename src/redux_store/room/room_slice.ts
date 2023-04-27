@@ -32,6 +32,12 @@ const roomSlice = createSlice({
         } else {
           state.chats[id_room] = [{ [date]: [chat] }];
         }
+        // move item room to top
+        const index = state.rooms.findIndex((item) => item.id_room === id_room);
+        if (index > -1) {
+          const room = state.rooms.splice(index, 1)[0];
+          state.rooms.unshift(room);
+        }
       }
     },
     createFirstChat: (state, action) => {

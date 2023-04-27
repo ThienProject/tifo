@@ -9,6 +9,7 @@ const images = {
   home_Logo_black: require('src/assets/images/home_Logo_black.png').default,
   logo: require('src/assets/images/icon.png').default,
   avatar: require('src/assets/images/avatar.jpg').default,
-  roomDefault: require('src/assets/images/room_default.jpg').default
+  roomDefault: require('src/assets/images/room_default.jpg').default,
+  coverDefault: require('src/assets/images/cover_default.jpg').default
 };
 export default images;

@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { userApi } from 'src/clients/http/user_api';
-import { IPayloadLogin, IPayloadRegister } from 'src/types/auth';
+import { IPayloadGetUser, IPayloadLogin, IPayloadRegister } from 'src/types/auth';
 import { IPayloadGetPost } from 'src/types/post';
-
+import { IPayloadFollow } from 'src/types/user';
 
 export const loginThunk = createAsyncThunk<any, IPayloadLogin>(
   'user/loginUser',
@@ -27,9 +27,9 @@ export const getNotifications = createAsyncThunk<any, { id_user: string }>(
     }
   }
 );
-export const getUserThunk = createAsyncThunk<any, { id_user: string }>(
+export const getUserThunk = createAsyncThunk<any, IPayloadGetUser>(
   'user/getUser',
-  async (payload, { rejectWithValue }) => {
+  async (payload: IPayloadGetUser, { rejectWithValue }) => {
     try {
       const { data } = await userApi.getUser(payload);
       return data;
@@ -88,6 +88,50 @@ export const getUsersThunk = createAsyncThunk<any, { q: string }>(
   async (payload: { q: string }, { rejectWithValue }) => {
     try {
       const { data } = await userApi.getUsers(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const requestFollowThunk = createAsyncThunk<any, IPayloadFollow>(
+  'user/requestFollowThunk',
+  async (payload: IPayloadFollow, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.requestFollow(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const acceptFollowThunk = createAsyncThunk<any, IPayloadFollow>(
+  'user/acceptFollowThunk',
+  async (payload: IPayloadFollow, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.acceptFollow(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const rejectFollowThunk = createAsyncThunk<any, IPayloadFollow>(
+  'user/rejectFollowThunk',
+  async (payload: IPayloadFollow, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.rejectFollow(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const unfollowThunk = createAsyncThunk<any, IPayloadFollow>(
+  'user/unfollowThunk',
+  async (payload: IPayloadFollow, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.unfollow(payload);
       return data;
     } catch (error: any) {
       return rejectWithValue(error);

@@ -10,7 +10,15 @@ import { Toaster } from 'react-hot-toast';
 import { Provider } from 'react-redux';
 import store from './redux_store';
 import ModalController from './components/model/modal_controller';
-
+import * as io from 'socket.io-client';
+import { setSocket } from './redux_store/user/user_slice';
+const { me } = store.getState().userSlice;
+const socket = io.connect('ws://localhost:8000', {
+  query: {
+    id_user: me?.id_user
+  }
+});
+store.dispatch(setSocket(socket));
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
     <CssVarsProvider theme={theme}>

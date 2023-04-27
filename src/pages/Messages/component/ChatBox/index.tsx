@@ -8,7 +8,6 @@ import TopBarContent from './TopBarContent';
 import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 
-import * as io from 'socket.io-client';
 import { deleteNewUserChat, setNewUserChat, toggleMenu } from 'src/redux_store/room/room_slice';
 import { useNavigate, useParams } from 'react-router';
 import { getUserThunk } from 'src/redux_store/user/user_action';
@@ -20,6 +19,7 @@ const IconButtonToggle = styled(IconButton)(
 `
 );
 const ChatBox = () => {
+  const socket = useAppSelector((state) => state.userSlice.socket);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const handleDrawerToggle = () => {
@@ -39,7 +39,6 @@ const ChatBox = () => {
       <MenuTwoToneIcon />
     </IconButtonToggle>
   );
-  const socket = io.connect('ws://localhost:8000');
 
   const ChatTopBar = styled(Box)(
     ({ theme }) => `

@@ -35,6 +35,7 @@ export default {
   button: {
     accept: 'Accept',
     follow: 'Follow',
+    requested: 'Requested',
     edit: 'Edit',
     delete: 'Delete',
     room: 'Create Team',
@@ -42,6 +43,7 @@ export default {
     addMedia: 'Add Media',
     seeMore: 'See more',
     seeLess: 'See less',
+    chat: 'Chat'
   },
   toast: {
     sometimeError: 'Sometime has error occurred !',
@@ -86,8 +88,7 @@ export default {
     suggest: 'Suggest by AI',
     upload: 'Upload',
     toast: {
-      createSuccess: 'Create post success !',
+      createSuccess: 'Create post success !'
     }
-  },
-
+  }
 };

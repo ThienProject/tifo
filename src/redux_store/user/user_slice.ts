@@ -3,10 +3,16 @@ import { loginThunk } from './user_action';
 
 const authLocalStorage: any = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || '') : null;
 
-const { me, accessToken, refreshToken } = authLocalStorage || { me: '', accessToken: '', refreshToken: '' };
+const { me, socket, accessToken, refreshToken } = authLocalStorage || {
+  me: '',
+  socket: null,
+  accessToken: '',
+  refreshToken: ''
+};
 
 const initialState = {
   me,
+  socket,
   accessToken,
   refreshToken
 };
@@ -15,6 +21,13 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    setSocket: (state, action) => {
+      const socket = action.payload;
+      state.socket = socket;
+    },
+    removeSocket: (state) => {
+      state.socket = initialState.socket;
+    },
     logout: (state) => {
       localStorage.clear();
       state.me = null;
@@ -34,5 +47,5 @@ const userSlice = createSlice({
 });
 
 const { reducer, actions } = userSlice;
-export const { logout } = actions;
+export const { logout, setSocket, removeSocket } = actions;
 export default reducer;
