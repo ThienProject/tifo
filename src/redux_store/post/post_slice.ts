@@ -8,6 +8,7 @@ import {
   sendCommentThunk,
   updateLoveThunk
 } from './post_action';
+import { logout } from '../user/user_slice';
 
 // const authLocalStorage: any = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || '') : null;
 
@@ -19,7 +20,11 @@ const initialState = { posts: posts };
 const postSlice = createSlice({
   name: 'post',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    clearPost: (state) => {
+      state.posts = initialState.posts;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(getPostsThunk.fulfilled, (state, action) => {
       const { posts } = action.payload;
@@ -63,8 +68,12 @@ const postSlice = createSlice({
         }
       }
     });
+    builder.addCase(logout, (state) => {
+      state.posts = initialState.posts;
+    });
   }
 });
 
-const { reducer } = postSlice;
+const { reducer, actions } = postSlice;
+export const { clearPost } = actions;
 export default reducer;

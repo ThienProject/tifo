@@ -229,6 +229,7 @@ const SideBar = () => {
           action: () => {
             dispatch(logout());
             toastMessage.success(t('logout'));
+            window.location.reload();
           }
         }
       ],

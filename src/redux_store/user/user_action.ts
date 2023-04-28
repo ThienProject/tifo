@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { userApi } from 'src/clients/http/user_api';
 import { IPayloadGetUser, IPayloadLogin, IPayloadRegister } from 'src/types/auth';
 import { IPayloadGetPost } from 'src/types/post';
-import { IPayloadFollow } from 'src/types/user';
+import { IPayloadFollow, IPayloadGetUsers } from 'src/types/user';
 
 export const loginThunk = createAsyncThunk<any, IPayloadLogin>(
   'user/loginUser',
@@ -83,11 +83,22 @@ export const getSavesThunk = createAsyncThunk<any, IPayloadGetPost>(
     }
   }
 );
-export const getUsersThunk = createAsyncThunk<any, { q: string }>(
+export const getUsersThunk = createAsyncThunk<any, IPayloadGetUsers>(
   'user/getUsersThunk',
-  async (payload: { q: string }, { rejectWithValue }) => {
+  async (payload: IPayloadGetUsers, { rejectWithValue }) => {
     try {
       const { data } = await userApi.getUsers(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const getUserSuggestsThunk = createAsyncThunk<any, IPayloadGetUsers>(
+  'user/getUserSuggestsThunk',
+  async (payload: IPayloadGetUsers, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.getSuggests(payload);
       return data;
     } catch (error: any) {
       return rejectWithValue(error);

@@ -1,48 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Divider, Box, Stack, Avatar, Typography, Button } from '@mui/material';
 import UserItem from 'src/components/items/UserItem';
-import images from 'src/assets/images';
 import { Link } from 'react-router-dom';
-import { useAppSelector } from 'src/redux_store';
+import { useAppDispatch, useAppSelector } from 'src/redux_store';
+import { useTranslation } from 'react-i18next';
+import { IUser } from 'src/types/user';
+import { getUserSuggestsThunk, getUsersThunk } from 'src/redux_store/user/user_action';
+import { CPath } from 'src/constants';
 const Suggestions = () => {
   const { me } = useAppSelector((state) => state.userSlice);
+  const dispatch = useAppDispatch();
+  const [users, setUsers] = useState<IUser[]>([]);
+  const { t } = useTranslation();
   const isLogin = me?.id_user;
-  const users = [
-    {
-      id_user: '1',
-      username: 'sybuivan',
-      fullname: 'Phamj vawn Thien',
-      avatar: images.full_Logo_black
-    },
-    {
-      id_user: '2',
-      username: 'sybuivan',
-      fullname: 'Phamj vawn Thien',
-      avatar: images.full_Logo_black
-    },
-    {
-      id_user: '3',
-      username: 'sybuivan',
-      fullname: 'Phamj vawn Thien',
-      avatar: images.full_Logo_black
-    },
-    {
-      id_user: '4',
-      username: 'sybuivan',
-      fullname: 'Phamj vawn Thien',
-      avatar: images.full_Logo_black
+  useEffect(() => {
+    if (me?.id_user) {
+      const action = getUserSuggestsThunk({ id_user: me.id_user, limit: 10, offset: 0 });
+      dispatch(action)
+        .unwrap()
+        .then((data) => {
+          const { users } = data;
+          if (users) {
+            setUsers(users);
+          }
+        });
     }
-  ];
+  }, []);
   return (
     <Box>
       <Link to={isLogin ? '/profile' : '/auth/login'} style={{ textDecoration: 'none' }}>
         <Stack direction={'row'} alignItems='center'>
-          <Avatar
-            sizes='large'
-            sx={{ mr: 1, boxShadow: 1 }}
-            alt="it's me"
-            src='https://instagram.fdad3-5.fna.fbcdn.net/v/t51.2885-15/274193622_633941284504134_4933464597307664209_n.jpg?stp=c0.248.640.640a_dst-jpg_e15_s150x150&_nc_ht=instagram.fdad3-5.fna.fbcdn.net&_nc_cat=106&_nc_ohc=QEZ3-3oky4gAX-i9X7r&edm=ANmP7GQBAAAA&ccb=7-5&oh=00_AfB5A8fTtThZG_0I3CgqcHdw0o5IcCvYJLyYVVVimfWhLg&oe=63FE653A&_nc_sid=276363'
-          />
+          <Avatar sizes='large' sx={{ mr: 1, boxShadow: 1 }} alt="it's me" src={CPath.host_user + me?.avatar} />
           <Box>
             <Button
               sx={{
@@ -66,7 +54,7 @@ const Suggestions = () => {
       <Divider sx={{ mt: 3, mb: 1 }} />
       <Box>
         <Typography color={'text.secondary'} fontWeight={500}>
-          Suggestions for you
+          {t('home.suggestTab')}
         </Typography>
         {users.map((user) => {
           return (

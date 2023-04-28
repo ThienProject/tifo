@@ -7,6 +7,7 @@ import { IPayloadGetPost, IPost } from 'src/types/post';
 import Suggestions from './components/Suggestions';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { getPostsThunk } from 'src/redux_store/post/post_action';
+import { clearPost } from 'src/redux_store/post/post_slice';
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -36,6 +37,11 @@ const Home = () => {
     const offset = postList.length;
     fetchApi(offset);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    return () => {
+      const action = clearPost();
+      dispatch(action);
+    };
   }, []);
 
   return (

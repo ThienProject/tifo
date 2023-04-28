@@ -25,3 +25,9 @@ export interface IPayloadFollow {
   id_follower?: string;
   id_user?: string;
 }
+export interface IPayloadGetUsers {
+  id_user?: string;
+  q?: string;
+  limit?: number;
+  offset?: number;
+}
