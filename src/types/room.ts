@@ -16,7 +16,7 @@ export interface IRoom {
   type?: 'friend' | 'room' | 'chatbot';
   avatar?: string;
   name?: string;
-  users?: IUser[];
+  users: IUser[];
   chats?: IChatDates[];
 }
 export interface IPayloadSearchRoom {

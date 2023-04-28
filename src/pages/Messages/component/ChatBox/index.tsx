@@ -1,6 +1,5 @@
 import { Box, Divider, styled, IconButton } from '@mui/material';
 import React, { useEffect } from 'react';
-import { CPath } from 'src/constants';
 import ChatContent from './ChatContent';
 
 import BottomBarContent from './BottomBarContent';
@@ -97,7 +96,7 @@ const ChatBox = () => {
         {buttonToggle}
         <TopBarContent />
       </ChatTopBar>
-      <Box bgcolor={'rgb(242, 245, 249)'} flex={1}>
+      <Box bgcolor='common.white' flex={1}>
         <ChatContent socket={socket} />
       </Box>
       <Divider />

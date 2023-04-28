@@ -1,4 +1,4 @@
-import { Box, Avatar, Typography, Card, styled, Divider } from '@mui/material';
+import { Box, Avatar, Typography, Card, styled, Divider, useTheme } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
 import { format } from 'date-fns';
 import ScheduleTwoToneIcon from '@mui/icons-material/ScheduleTwoTone';
@@ -12,14 +12,13 @@ import { Socket } from 'socket.io-client';
 import { createChat, createFirstChat } from 'src/redux_store/room/room_slice';
 import { useParams } from 'react-router';
 import { IUser } from 'src/types/user';
-
 const DividerWrapper = styled(Divider)(
   ({ theme }) => `
       .MuiDivider-wrapper {
         border-radius: ${3};
         text-transform: none;
         font-size: ${theme.typography.pxToRem(14)};
-        color: ${theme.palette.grey[800]};
+        color: ${theme.palette.mode === 'dark' ? '#c3c5c8' : theme.palette.grey[800]};
       }
 `
 );
@@ -39,8 +38,8 @@ const CardWrapperPrimary = styled(Card)(
 
 const CardWrapperSecondary = styled(Card)(
   ({ theme }) => `
-      background: rgba(34, 51, 84, 0.1);
-      color: rgb(34, 51, 84);
+      background:  rgba(34, 51, 84, 0.1);
+      color: ${theme.palette.mode === 'dark' ? '#c3c5c8' : 'rgb(34, 51, 84)'};
       padding: 12px;
       border-radius: ${10};
       border-top-left-radius: ${3};
@@ -52,6 +51,7 @@ const CardWrapperSecondary = styled(Card)(
 
 function ChatContent({ socket }: { socket: Socket }) {
   const { me } = useAppSelector((state) => state.userSlice);
+  const theme = useTheme();
   const { id_room } = useParams();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -80,7 +80,7 @@ function ChatContent({ socket }: { socket: Socket }) {
   }, [chatDates]);
   return (
     <Scrollbars ref={scrollbarsRef}>
-      <Box p={3} bgcolor={'rgb(242, 245, 249)'}>
+      <Box p={3} bgcolor={theme.palette.mode === 'dark' ? theme.palette.common.white : 'rgb(242, 245, 249)'}>
         <Box>
           {chatDates &&
             chatDates.length > 0 &&
@@ -113,7 +113,7 @@ function ChatContent({ socket }: { socket: Socket }) {
                               {index === chats.length - 1 && (
                                 <Typography
                                   variant='subtitle1'
-                                  color={'rgba(34, 51, 84, 0.7)'}
+                                  color={theme.palette.mode === 'dark' ? '#c3c5c8' : 'rgba(34, 51, 84, 0.7)'}
                                   sx={{
                                     pt: 1,
                                     fontSize: 13,
@@ -173,7 +173,7 @@ function ChatContent({ socket }: { socket: Socket }) {
                               </CardWrapperSecondary>
                               {index === chats.length - 1 && (
                                 <Typography
-                                  color={'rgba(34, 51, 84, 0.7)'}
+                                  color={theme.palette.mode === 'dark' ? '#c3c5c8' : 'rgba(34, 51, 84, 0.7)'}
                                   sx={{
                                     pt: 1,
                                     fontSize: 13,

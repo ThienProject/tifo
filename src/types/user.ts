@@ -1,4 +1,6 @@
 export interface IUser {
+  off_time?: Date;
+  status?: 'online' | 'offline' | 'banned';
   follow?: 'accept' | 'waiting' | null;
   id_user?: string;
   username?: string;

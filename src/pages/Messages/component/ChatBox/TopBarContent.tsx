@@ -42,6 +42,7 @@ import { useParams } from 'react-router';
 import { CPath } from 'src/constants';
 import { IRoom } from 'src/types/room';
 import CreateRoom from '../CreateRoom';
+import { getSubTimeFromDayFNS } from 'src/functions';
 const RootWrapper = styled(Box)(
   ({ theme }) => `
         @media (min-width: ${theme.breakpoints.values.md}px) {
@@ -114,7 +115,6 @@ function TopBarContent() {
   let friend: IUser | null = null;
   if ((isChatFriend || isChatbot) && room.users) {
     friend = room.users[0];
-    console.log(friend);
   }
   if (newUserChat && Object.keys(newUserChat).length > 0) {
     friend = newUserChat;
@@ -149,11 +149,11 @@ function TopBarContent() {
             <Typography variant='h4' fontSize={16} fontWeight={'700'}>
               {chatName}
             </Typography>
-            <Typography fontSize={14} color={'text.secondary'} variant='subtitle1'>
-              {formatDistance(subMinutes(new Date(), 8), new Date(), {
-                addSuffix: true
-              })}
-            </Typography>
+            {friend?.status === 'offline' && (
+              <Typography fontSize={14} color={'text.secondary'} variant='subtitle1'>
+                {friend?.off_time && getSubTimeFromDayFNS(friend.off_time, t('language'))}
+              </Typography>
+            )}
           </Box>
         </Box>
         <Box

@@ -57,6 +57,14 @@ const roomSlice = createSlice({
       console.log(user);
       state.newUserChat = user;
     },
+    setStatusRoom: (state, action) => {
+      const { id_room, status, id_user } = action.payload;
+      const index = state.rooms.findIndex((item) => item.id_room === id_room);
+      if (index > -1) {
+        const user = state.rooms[index].users[0];
+        if (user && user.id_user === id_user) user.status = status;
+      }
+    },
     deleteNewUserChat: (state) => {
       state.newUserChat = {};
     },
@@ -93,5 +101,5 @@ const roomSlice = createSlice({
 });
 
 const { reducer, actions } = roomSlice;
-export const { createChat, createFirstChat, resetRoom, toggleMenu, setNewUserChat, deleteNewUserChat } = actions;
+export const { createChat, setStatusRoom, createFirstChat, resetRoom, toggleMenu, setNewUserChat, deleteNewUserChat } = actions;
 export default reducer;

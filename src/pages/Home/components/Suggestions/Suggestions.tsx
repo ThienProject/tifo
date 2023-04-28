@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { useTranslation } from 'react-i18next';
 import { IUser } from 'src/types/user';
-import { getUserSuggestsThunk, getUsersThunk } from 'src/redux_store/user/user_action';
+import { getUserSuggestsThunk } from 'src/redux_store/user/user_action';
 import { CPath } from 'src/constants';
 const Suggestions = () => {
   const { me } = useAppSelector((state) => state.userSlice);

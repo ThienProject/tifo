@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loginThunk } from './user_action';
+import * as io from 'socket.io-client';
 
 const authLocalStorage: any = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || '') : null;
 
@@ -42,9 +43,19 @@ const userSlice = createSlice({
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
       localStorage.setItem('auth', JSON.stringify({ me: user, accessToken, refreshToken }));
+      if (state.socket) {
+        state.socket.disconnect();
+        const socket = io.connect('ws://localhost:8000', {
+          query: {
+            id_user: user?.id_user
+          }
+        });
+        state.socket = socket;
+      }
     });
   }
-});
+}
+);
 
 const { reducer, actions } = userSlice;
 export const { logout, setSocket, removeSocket } = actions;

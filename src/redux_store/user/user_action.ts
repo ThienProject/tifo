@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { postApi } from 'src/clients/http/post_api';
 import { userApi } from 'src/clients/http/user_api';
 import { IPayloadGetUser, IPayloadLogin, IPayloadRegister } from 'src/types/auth';
 import { IPayloadGetPost } from 'src/types/post';
@@ -54,7 +55,7 @@ export const getPostsThunk = createAsyncThunk<any, IPayloadGetPost>(
   'user/getPostsThunk',
   async (payload: IPayloadGetPost, { rejectWithValue }) => {
     try {
-      const { data } = await userApi.getPosts(payload);
+      const { data } = await postApi.getPostsByIDUser(payload);
       return data;
     } catch (error: any) {
       return rejectWithValue(error);
@@ -65,7 +66,7 @@ export const getReelsThunk = createAsyncThunk<any, IPayloadGetPost>(
   'user/getReelsThunk',
   async (payload: IPayloadGetPost, { rejectWithValue }) => {
     try {
-      const { data } = await userApi.getReels(payload);
+      const { data } = await postApi.getReelsByIDUser(payload);
       return data;
     } catch (error: any) {
       return rejectWithValue(error);
@@ -76,7 +77,7 @@ export const getSavesThunk = createAsyncThunk<any, IPayloadGetPost>(
   'user/getSavesThunk',
   async (payload: IPayloadGetPost, { rejectWithValue }) => {
     try {
-      const { data } = await userApi.getSaves(payload);
+      const { data } = await postApi.getSavesByIDUser(payload);
       return data;
     } catch (error: any) {
       return rejectWithValue(error);

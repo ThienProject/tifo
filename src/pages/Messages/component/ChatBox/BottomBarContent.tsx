@@ -87,7 +87,7 @@ function BottomBarContent() {
   return (
     <Box
       sx={{
-        background: theme.palette.grey[50],
+        background: theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.grey[50],
         display: 'flex',
         alignItems: 'center',
         p: 2

@@ -15,11 +15,6 @@ export const userApi = {
   getNotifications: (payload: { id_user: string }) => {
     return client.post<any>('/auth/getNotifications', payload);
   },
-  getPosts: (params: IPayloadGetPost) => {
-    return client.get<IPost>(`/user/getPosts`, {
-      params: params
-    });
-  },
   getUser: (payload: IPayloadGetUser) => {
     return client.post('/user/get', payload);
   },
@@ -31,16 +26,6 @@ export const userApi = {
   getSuggests: (payload: IPayloadGetUsers) => {
     return client.get('/user/suggests/gets', {
       params: payload
-    });
-  },
-  getReels: (params: IPayloadGetPost) => {
-    return client.get<IPost>(`/user/getReels`, {
-      params: params
-    });
-  },
-  getSaves: (params: IPayloadGetPost) => {
-    return client.get<IPost>(`/user/getSaves`, {
-      params: params
     });
   },
   requestFollow: (payload: IPayloadFollow) => {

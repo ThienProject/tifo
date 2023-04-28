@@ -19,6 +19,21 @@ export const postApi = {
       params: params
     });
   },
+  getPostsByIDUser: (params: IPayloadGetPost) => {
+    return client.get<IPost>(`/post/getPostsByIDUser`, {
+      params: params
+    });
+  },
+  getReelsByIDUser: (params: IPayloadGetPost) => {
+    return client.get<IPost>(`/post/getReelsByIDUser`, {
+      params: params
+    });
+  },
+  getSavesByIDUser: (params: IPayloadGetPost) => {
+    return client.get<IPost>(`/post/getSavesByIDUser`, {
+      params: params
+    });
+  },
   update: (payload: FormData) => {
     return client.post('/post/update', payload);
   },

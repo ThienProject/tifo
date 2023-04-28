@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, Stack, Avatar, Typography, Button } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Stack, Avatar, Typography, Button, Badge } from '@mui/material';
 import { IRoom } from 'src/types/room';
 import { IUser } from 'src/types/user';
 import images from 'src/assets/images';
@@ -13,7 +13,9 @@ import { makeStyles } from '@mui/styles';
 import { clearChatsThunk } from 'src/redux_store/room/room_action';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { toastMessage } from 'src/utils/toast';
-const ChatItem = ({ room, chatDemo }: { room: IRoom; chatDemo?: string }) => {
+import { Socket } from 'socket.io-client';
+import { setStatusRoom } from 'src/redux_store/room/room_slice';
+const ChatItem = ({ socket, room, chatDemo }: { socket: Socket; room: IRoom; chatDemo?: string }) => {
   const location = useLocation();
   const { t } = useTranslation();
   const { me } = useAppSelector((state) => state.userSlice);
@@ -21,16 +23,31 @@ const ChatItem = ({ room, chatDemo }: { room: IRoom; chatDemo?: string }) => {
   const pathName = location.pathname.split('/').pop();
   const navigate = useNavigate();
   const isChatFriend = room.type === 'friend' || room.type === 'chatbot';
+
   let avatar = room.avatar ? CPath.host_user + room.avatar : images.roomDefault;
   let chatName = room.name;
-
+  let status = 'offline';
   if (isChatFriend && room.users) {
     const friend: IUser = room.users[0];
     if (friend.avatar) {
       avatar = CPath.host_user + friend.avatar;
     }
     chatName = friend.fullname;
+    status = room.users[0]?.status || '';
   }
+  useEffect(() => {
+    if (isChatFriend) {
+      socket.on('status', ({ id_user, status }: any) => {
+        if (isChatFriend && room.users && room.users[0].id_user === id_user) {
+          const action = setStatusRoom({ id_room: room.id_room, id_user, status });
+          dispatch(action);
+        }
+      });
+      return () => {
+        socket.off('status');
+      };
+    }
+  }, []);
   const classes = useStyles();
   return (
     <Stack
@@ -50,7 +67,19 @@ const ChatItem = ({ room, chatDemo }: { room: IRoom; chatDemo?: string }) => {
         navigate('/message/' + room.id_room);
       }}
     >
-      <Avatar alt='chat-img' src={avatar} sx={{ mr: 1.5 }} />
+      <Badge
+        sx={{
+          mr: 1.5,
+          '& .MuiBadge-dot': { boxShadow: status === 'online' ? '0 0 0 2px var(--mui-palette-common-white)' : 'none' }
+        }}
+        color={status === 'online' ? 'success' : 'default'}
+        overlap='circular'
+        variant='dot'
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Avatar alt='chat-img' src={avatar} />
+      </Badge>
+      {/* <Avatar alt='chat-img' src={avatar} sx={{ mr: 1.5 }} /> */}
       <Box width={'100%'}>
         <Typography
           textOverflow='ellipsis'

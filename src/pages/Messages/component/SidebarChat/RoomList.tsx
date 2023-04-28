@@ -8,6 +8,7 @@ import { IRoom } from 'src/types/room';
 const ChatList = () => {
   const rooms = useAppSelector((state) => state.roomSlice.rooms);
   const chats = useAppSelector((state) => state.roomSlice.chats);
+  const socket = useAppSelector((state) => state.userSlice.socket);
   const handleLoadMore = () => {
     // setrooms(fakerooms);
   };
@@ -33,7 +34,7 @@ const ChatList = () => {
                 const listMess = dateArr[dateArr.length - 1];
                 chatDemo = listMess && listMess?.length ? listMess[listMess.length - 1].message : '';
               }
-              return <RoomItem key={room.id_room} room={room} chatDemo={chatDemo} />;
+              return <RoomItem socket={socket} key={room.id_room} room={room} chatDemo={chatDemo} />;
             }
           })}
         </InfiniteScroll>
