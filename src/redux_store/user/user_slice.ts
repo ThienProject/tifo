@@ -30,7 +30,7 @@ const userSlice = createSlice({
       state.socket = initialState.socket;
     },
     logout: (state) => {
-      localStorage.clear();
+      localStorage.removeItem('auth');
       state.me = null;
       state.refreshToken = null;
       state.accessToken = null;

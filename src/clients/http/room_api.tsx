@@ -2,9 +2,11 @@ import { createClient } from './axios_client';
 import {
   IPayloadChats,
   IPayloadCreateChat,
+  IPayloadCreateRoom,
   IPayloadDleChats,
   IPayloadRooms,
   IPayloadSearchRoom,
+  IRoom,
   ISearchRoom
 } from 'src/types/room';
 
@@ -16,7 +18,9 @@ export const messageApi = {
       params: params
     });
   },
-
+  createRoom: (payload: IPayloadCreateRoom) => {
+    return client.post<any>(`/room/create`, payload);
+  },
   searchRoomOrUser: (params: IPayloadSearchRoom) => {
     return client.get<ISearchRoom>(`/room/search`, {
       params: params

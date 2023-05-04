@@ -90,5 +90,8 @@ export default {
     toast: {
       createSuccess: 'Create post success !'
     }
+  },
+  createRoom: {
+    rulerUser: 'Must have at least two users'
   }
 };

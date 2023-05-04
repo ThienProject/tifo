@@ -47,6 +47,13 @@ const roomSlice = createSlice({
         state.rooms.unshift({ id_room, name, avatar, type, users: [user] });
       }
     },
+    createRoom: (state, action) => {
+      const { name, id_room, chat, avatar, date, users, type } = action.payload;
+      if (date && chat && id_room) {
+        state.chats[id_room] = [{ [date]: [chat] }];
+        state.rooms.unshift({ id_room, name, avatar, type, users: users });
+      }
+    },
     resetRoom: (state) => {
       state.rooms = initialState.rooms;
       state.chats = initialState.chats;
@@ -101,5 +108,14 @@ const roomSlice = createSlice({
 });
 
 const { reducer, actions } = roomSlice;
-export const { createChat, setStatusRoom, createFirstChat, resetRoom, toggleMenu, setNewUserChat, deleteNewUserChat } = actions;
+export const {
+  createChat,
+  createRoom,
+  setStatusRoom,
+  createFirstChat,
+  resetRoom,
+  toggleMenu,
+  setNewUserChat,
+  deleteNewUserChat
+} = actions;
 export default reducer;

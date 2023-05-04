@@ -90,5 +90,8 @@ export default {
     toast: {
       createSuccess: 'Đăng bài thành công !'
     }
+  },
+  createRoom: {
+    rulerUser: 'Ít nhất phải có hai user!'
   }
 };

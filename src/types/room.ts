@@ -19,6 +19,9 @@ export interface IRoom {
   users: IUser[];
   chats?: IChatDates[];
 }
+export interface IPayloadCreateRoom {
+  users: { id_user: string; isOwner?: boolean }[];
+}
 export interface IPayloadSearchRoom {
   id_user?: string;
   q?: string;

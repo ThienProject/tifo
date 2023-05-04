@@ -309,7 +309,7 @@ function TopBarContent() {
                       primary={t('button.room')}
                       onClick={() => {
                         const action = openModal({
-                          modalId: MODAL_IDS.createroom,
+                          modalId: MODAL_IDS.createRoom,
                           dialogComponent: <CreateRoom user={friend!} />
                         });
                         console.log('open modal');

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { messageApi } from 'src/clients/http/room_api';
-import { IPayloadChats, IPayloadCreateChat, IPayloadDleChats, IPayloadRooms, ISearchRoom } from 'src/types/room';
+import { IPayloadChats, IPayloadCreateChat, IPayloadCreateRoom, IPayloadDleChats, IPayloadRooms, IRoom, ISearchRoom } from 'src/types/room';
 
 export const createChatThunk = createAsyncThunk<any, IPayloadCreateChat>(
   'rooms/createChatThunk',
@@ -53,6 +53,18 @@ export const getRoomsThunk = createAsyncThunk<any, IPayloadRooms>(
   async (payload: IPayloadRooms, { rejectWithValue }) => {
     try {
       const { data } = await messageApi.getRooms(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const createRoomThunk = createAsyncThunk<any, IPayloadCreateRoom>(
+  'rooms/createRoomThunk',
+  async (payload: IPayloadCreateRoom, { rejectWithValue }) => {
+    try {
+      const { data } = await messageApi.createRoom(payload);
       return data;
     } catch (error: any) {
       return rejectWithValue(error);

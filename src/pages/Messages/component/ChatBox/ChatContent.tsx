@@ -9,9 +9,10 @@ import { useTranslation } from 'react-i18next';
 
 import { CPath } from 'src/constants';
 import { Socket } from 'socket.io-client';
-import { createChat, createFirstChat } from 'src/redux_store/room/room_slice';
+import { createChat, createFirstChat, createRoom } from 'src/redux_store/room/room_slice';
 import { useParams } from 'react-router';
 import { IUser } from 'src/types/user';
+import CreateRoom from '../CreateRoom';
 const DividerWrapper = styled(Divider)(
   ({ theme }) => `
       .MuiDivider-wrapper {
@@ -70,9 +71,14 @@ function ChatContent({ socket }: { socket: Socket }) {
       const action = createFirstChat({ chat, id_room, date, user, avatar, type, name });
       dispatch(action);
     });
+    socket.on('create-room', ({ chat, users, date, id_room, avatar, type, name }: any) => {
+      const action = createRoom({ chat, id_room, date, users, avatar, type, name });
+      dispatch(action);
+    });
     return () => {
       socket.off('new-chat');
       socket.off('first-chat');
+      socket.off('create-room');
     };
   }, []);
   useEffect(() => {
