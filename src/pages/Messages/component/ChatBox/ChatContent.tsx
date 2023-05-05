@@ -12,7 +12,6 @@ import { Socket } from 'socket.io-client';
 import { createChat, createFirstChat, createRoom } from 'src/redux_store/room/room_slice';
 import { useParams } from 'react-router';
 import { IUser } from 'src/types/user';
-import CreateRoom from '../CreateRoom';
 const DividerWrapper = styled(Divider)(
   ({ theme }) => `
       .MuiDivider-wrapper {

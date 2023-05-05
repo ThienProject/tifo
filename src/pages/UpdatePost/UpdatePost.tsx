@@ -15,7 +15,7 @@ import {
 } from 'src/redux_store/post/post_action';
 import { toastMessage } from 'src/utils/toast';
 import { objectToFormData, schemaCreatePost } from 'src/functions';
-import { useIsRequestError, useIsRequestPending } from 'src/hooks/use_status';
+import { useIsRequestPending } from 'src/hooks/use_status';
 import { closeModal, openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
 import { useLocation } from 'react-router';

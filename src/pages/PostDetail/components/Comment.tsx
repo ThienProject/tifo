@@ -16,7 +16,7 @@ import MODAL_IDS from 'src/constants/modal';
 
 const defaultPayloadCmt = { id_parent: '0', id_reply: '0', id_comment: '' };
 const Comment = (props: { socket: any; id_post: string; sx?: SxProps }) => {
-  const { id_post, socket, sx } = props;
+  const { id_post, socket } = props;
   const { control, handleSubmit, setValue, reset, setFocus } = useForm({
     defaultValues: { comment: '', action: 'send', id_commentEdit: '' }
   });

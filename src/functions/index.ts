@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { formatDistance, format, subYears, subDays, subMonths, subHours, subMinutes } from 'date-fns';
+import { formatDistance, subYears, subDays, subMonths, subHours, subMinutes } from 'date-fns';
 import { enUS, vi } from 'date-fns/locale';
 
 import * as yup from 'yup';

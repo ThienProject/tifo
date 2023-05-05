@@ -81,7 +81,7 @@ const CreateRoom = ({ user }: { user: IUser }) => {
                 message: 'Not empty!'
               }
             }}
-            render={({ field: { value, onChange }, fieldState: { error, invalid } }) => {
+            render={({ field: { onChange }, fieldState: { error, invalid } }) => {
               return (
                 <Stack direction={'row'} alignItems={'center'}>
                   <Typography mr={2}>{t('message.create_room')} :</Typography>

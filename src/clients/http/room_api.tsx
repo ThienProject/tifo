@@ -6,7 +6,6 @@ import {
   IPayloadDleChats,
   IPayloadRooms,
   IPayloadSearchRoom,
-  IRoom,
   ISearchRoom
 } from 'src/types/room';
 

@@ -3,7 +3,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { FormControl, IconButton, InputAdornment, SxProps, TextField } from '@mui/material';
-import { isNumber, isString, multiply } from 'lodash';
+import { isNumber, isString } from 'lodash';
 import { Controller } from 'react-hook-form';
 
 interface IProps {

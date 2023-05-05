@@ -1,13 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
-import { Box, Button, CardActionArea, IconButton } from '@mui/material';
+import { Box, CardActionArea } from '@mui/material';
 import { IMedia } from 'src/types/post';
-// import LightBox from './LightBox';
 import { CPath } from 'src/constants';
 import CardMedia from '@mui/material/CardMedia/CardMedia';
 import { SxProps } from '@mui/material/styles';
-import { ArrowForwardIos, ArrowBackIosNew } from '@mui/icons-material';
-// import { Waypoint } from 'react-waypoint';
 function ItemMedia(props: { item: IMedia; sx: SxProps; isClose?: boolean }) {
   const { item, sx, isClose = false } = props;
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -55,7 +52,7 @@ function ItemMedia(props: { item: IMedia; sx: SxProps; isClose?: boolean }) {
   );
 }
 const SliderMedia = ({ medias, sx }: { medias?: IMedia[]; sx: SxProps }) => {
-  const [isClose, setIsClose] = useState(false);
+  const [isClose] = useState(false);
   return (
     <>
       {medias && (

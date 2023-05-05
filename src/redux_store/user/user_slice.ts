@@ -58,8 +58,7 @@ const userSlice = createSlice({
       state.me.invisible = invisible;
     });
   }
-}
-);
+});
 
 const { reducer, actions } = userSlice;
 export const { logout, setSocket, removeSocket } = actions;

@@ -1,6 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { messageApi } from 'src/clients/http/room_api';
-import { IPayloadChats, IPayloadCreateChat, IPayloadCreateRoom, IPayloadDleChats, IPayloadRooms, IRoom, ISearchRoom } from 'src/types/room';
+import {
+  IPayloadChats,
+  IPayloadCreateChat,
+  IPayloadCreateRoom,
+  IPayloadDleChats,
+  IPayloadRooms,
+  ISearchRoom
+} from 'src/types/room';
 
 export const createChatThunk = createAsyncThunk<any, IPayloadCreateChat>(
   'rooms/createChatThunk',
