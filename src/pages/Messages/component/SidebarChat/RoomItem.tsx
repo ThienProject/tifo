@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Box, Stack, Avatar, Typography, Button, Badge } from '@mui/material';
 import { IRoom } from 'src/types/room';
 import { IUser } from 'src/types/user';
@@ -23,17 +23,19 @@ const ChatItem = ({ socket, room, chatDemo }: { socket: Socket; room: IRoom; cha
   const pathName = location.pathname.split('/').pop();
   const navigate = useNavigate();
   const isChatFriend = room.type === 'friend' || room.type === 'chatbot';
-
   let avatar = room.avatar ? CPath.host_user + room.avatar : images.roomDefault;
   let chatName = room.name;
-  let status = 'offline';
+  let isOnline = false;
+
   if (isChatFriend && room.users) {
     const friend: IUser = room.users[0];
     if (friend.avatar) {
       avatar = CPath.host_user + friend.avatar;
     }
     chatName = friend.fullname;
-    status = room.users[0]?.status || '';
+    isOnline = !me?.invisible && !friend?.invisible && friend?.status === 'online';
+
+    console.log(isOnline, 'isOnline');
   }
   useEffect(() => {
     if (isChatFriend) {
@@ -70,9 +72,9 @@ const ChatItem = ({ socket, room, chatDemo }: { socket: Socket; room: IRoom; cha
       <Badge
         sx={{
           mr: 1.5,
-          '& .MuiBadge-dot': { boxShadow: status === 'online' ? '0 0 0 2px var(--mui-palette-common-white)' : 'none' }
+          '& .MuiBadge-dot': { boxShadow: isOnline ? '0 0 0 2px var(--mui-palette-common-white)' : 'none' }
         }}
-        color={status === 'online' ? 'success' : 'default'}
+        color={isOnline ? 'success' : 'default'}
         overlap='circular'
         variant='dot'
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}

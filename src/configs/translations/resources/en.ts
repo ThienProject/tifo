@@ -79,7 +79,8 @@ export default {
     create_room: 'Create room',
     enter_room_name: 'Enter room name',
     add_member: 'Add Member',
-    dleRoom: 'Delete this room'
+    dleRoom: 'Delete this room',
+    invisible: 'Invisible'
   },
   createPost: {
     uploadTitle: 'Upload post',

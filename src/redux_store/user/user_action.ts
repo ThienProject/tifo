@@ -3,13 +3,24 @@ import { postApi } from 'src/clients/http/post_api';
 import { userApi } from 'src/clients/http/user_api';
 import { IPayloadGetUser, IPayloadLogin, IPayloadRegister } from 'src/types/auth';
 import { IPayloadGetPost } from 'src/types/post';
-import { IPayloadFollow, IPayloadGetUsers } from 'src/types/user';
+import { IPayloadFollow, IPayloadGetUsers, IPayloadInvisible } from 'src/types/user';
 
 export const loginThunk = createAsyncThunk<any, IPayloadLogin>(
   'user/loginUser',
   async (payload, { rejectWithValue }) => {
     try {
       const { data } = await userApi.login(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const updateInvisible = createAsyncThunk<any, IPayloadInvisible>(
+  'user/updateInvisible',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.updateInvisible(payload);
       return data;
     } catch (error: any) {
       return rejectWithValue(error);

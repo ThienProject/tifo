@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loginThunk } from './user_action';
+import { loginThunk, updateInvisible } from './user_action';
 import * as io from 'socket.io-client';
 
 const authLocalStorage: any = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || '') : null;
@@ -52,6 +52,10 @@ const userSlice = createSlice({
         });
         state.socket = socket;
       }
+    });
+    builder.addCase(updateInvisible.fulfilled, (state, action) => {
+      const { invisible } = action.payload;
+      state.me.invisible = invisible;
     });
   }
 }

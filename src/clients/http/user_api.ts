@@ -1,7 +1,6 @@
 import { IPayloadGetUser, IPayloadLogin, IPayloadRegister } from 'src/types/auth';
-import { IPayloadGetPost, IPost } from 'src/types/post';
 import { createClient } from './axios_client';
-import { IPayloadFollow, IPayloadGetUsers } from 'src/types/user';
+import { IPayloadFollow, IPayloadGetUsers, IPayloadInvisible } from 'src/types/user';
 
 const client = createClient();
 
@@ -11,6 +10,9 @@ export const userApi = {
   },
   register: (payload: IPayloadRegister) => {
     return client.post<any>('/auth/register', payload);
+  },
+  updateInvisible: (payload: IPayloadInvisible) => {
+    return client.post('/auth/updateInvisible', payload);
   },
   getNotifications: (payload: { id_user: string }) => {
     return client.post<any>('/auth/getNotifications', payload);

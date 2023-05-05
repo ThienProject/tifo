@@ -3,14 +3,18 @@ import { Box } from '@mui/system';
 
 import React, { useState } from 'react';
 import UserItem from 'src/components/items/UserItem';
-import { useAppSelector } from 'src/redux_store';
+import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import SearchBar from 'src/pages/components/SearchBar';
 import RoomList from './RoomList';
 import { IUserChat } from 'src/types/user';
 import { searchRoomOrUserThunk } from 'src/redux_store/room/room_action';
+import { useTranslation } from 'react-i18next';
+import { updateInvisible } from 'src/redux_store/user/user_action';
 
 const SidebarChat = ({ sx }: { sx?: SxProps }) => {
   const { me } = useAppSelector((state) => state.userSlice);
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const [result, setResult] = useState<any[]>([]);
   const [note, setNote] = useState<string | null>('');
 
@@ -19,9 +23,16 @@ const SidebarChat = ({ sx }: { sx?: SxProps }) => {
       <Box>
         <UserItem to={`/${me.id_user}`} size='medium' user={me} isFullname />
         <Stack mt={0.3} ml={7} direction={'row'} alignItems={'center'}>
-          <Switch size='small' />
+          <Switch
+            onChange={(e) => {
+              const action = updateInvisible({ id_user: me.id_user, invisible: e.target.checked });
+              dispatch(action);
+            }}
+            defaultChecked={!!me.invisible}
+            size='small'
+          />
           <Typography fontSize={12} color={'text.secondary'}>
-            Invisible
+            {t('message.invisible')}
           </Typography>
         </Stack>
         <Box my={2}>

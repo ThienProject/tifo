@@ -79,7 +79,8 @@ export default {
     create_room: 'Tạo nhóm',
     enter_room_name: 'Nhập tên nhóm',
     add_member: 'Thêm thành viên',
-    dleRoom: 'Xóa cuộc trò chuỵen này'
+    dleRoom: 'Xóa cuộc trò chuyện',
+    invisible: 'Ẩn trạng thái'
   },
   createPost: {
     uploadTitle: 'Tạo bài đăng',
