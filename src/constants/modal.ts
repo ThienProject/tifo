@@ -4,6 +4,9 @@ const MODAL_IDS = {
   confirmCancelPost: 'confirmCancelPost',
   postDetail: 'postDetail',
   confirmDeletePost: 'confirmDeletePost',
-  createRoom: 'createRoom'
+  confirmDeleteRoom: 'confirmDeleteRoom',
+  createRoom: 'createRoom',
+  memberManager: 'memberManager',
+  addMember: 'addMember'
 };
 export default MODAL_IDS;

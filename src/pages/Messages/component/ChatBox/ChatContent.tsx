@@ -35,6 +35,17 @@ const CardWrapperPrimary = styled(Card)(
       display: inline-flex;
 `
 );
+const CardWrapperRoof = styled(Card)(
+  ({ theme }) => `
+      color: #777;
+      padding: 12px;
+      border-radius: ${10};
+      border-top-right-radius: ${3};
+      max-width: 80%;
+      font-size: ${theme.typography.pxToRem(12)};
+      display: inline-flex;
+`
+);
 
 const CardWrapperSecondary = styled(Card)(
   ({ theme }) => `
@@ -100,103 +111,116 @@ function ChatContent({ socket }: { socket: Socket }) {
                   {chats.map((chat, index) => {
                     return (
                       <Box key={chat.id_chat}>
-                        {chat.id_user === id_me ? (
-                          <Box display='flex' alignItems='flex-start' justifyContent='flex-end' py={1}>
-                            <Box
-                              display='flex'
-                              alignItems='flex-end'
-                              flexDirection='column'
-                              justifyContent='flex-end'
-                              mr={2}
-                              width={'100%'}
-                            >
-                              <CardWrapperPrimary>
-                                <Typography sx={{ overflowWrap: 'break-word', width: '100%' }}>
-                                  {chat.message}
-                                </Typography>
-                              </CardWrapperPrimary>
-                              {index === chats.length - 1 && (
-                                <Typography
-                                  variant='subtitle1'
-                                  color={theme.palette.mode === 'dark' ? '#c3c5c8' : 'rgba(34, 51, 84, 0.7)'}
-                                  sx={{
-                                    pt: 1,
-                                    fontSize: 13,
-                                    display: 'flex',
-                                    alignItems: 'center'
-                                  }}
-                                >
-                                  <ScheduleTwoToneIcon
-                                    sx={{
-                                      mr: 0.5
-                                    }}
-                                    fontSize='small'
-                                  />
-                                  {chat.datetime && getSubTimeFromDayFNS(chat.datetime, t('language'))}
-                                </Typography>
-                              )}
-                            </Box>
-                            <Avatar
-                              variant='circular'
-                              sx={{
-                                width: 40,
-                                height: 40
-                              }}
-                              alt={me.fullname}
-                              src={CPath.host_user + me.avatar}
-                            />
+                        {chat.type ? (
+                          <Box display='flex' justifyContent='center'>
+                            <Typography sx={{ color: '#777' }}>
+                              {t('message.room_action.' + chat.type, {
+                                actor: chat.username,
+                                affected_username: chat?.affected_username
+                              })}
+                            </Typography>
                           </Box>
                         ) : (
-                          <Box
-                            display='flex'
-                            key={chat.id_chat}
-                            alignItems='flex-start'
-                            justifyContent='flex-start'
-                            py={1}
-                          >
-                            <Avatar
-                              variant='circular'
-                              sx={{
-                                width: 40,
-                                height: 40
-                              }}
-                              alt={chat.fullname}
-                              src={CPath.host_user + chat.avatar}
-                            />
-                            <Box
-                              display='flex'
-                              alignItems='flex-start'
-                              flexDirection='column'
-                              justifyContent='flex-start'
-                              ml={2}
-                              width={'100%'}
-                            >
-                              <CardWrapperSecondary>
-                                <Typography sx={{ overflowWrap: 'break-word', width: '100%' }}>
-                                  {chat.message}
-                                </Typography>
-                              </CardWrapperSecondary>
-                              {index === chats.length - 1 && (
-                                <Typography
-                                  color={theme.palette.mode === 'dark' ? '#c3c5c8' : 'rgba(34, 51, 84, 0.7)'}
-                                  sx={{
-                                    pt: 1,
-                                    fontSize: 13,
-                                    display: 'flex',
-                                    alignItems: 'center'
-                                  }}
+                          <>
+                            {chat.id_user === id_me ? (
+                              <Box display='flex' alignItems='flex-start' justifyContent='flex-end' py={1}>
+                                <Box
+                                  display='flex'
+                                  alignItems='flex-end'
+                                  flexDirection='column'
+                                  justifyContent='flex-end'
+                                  mr={2}
+                                  width={'100%'}
                                 >
-                                  <ScheduleTwoToneIcon
-                                    sx={{
-                                      mr: 0.5
-                                    }}
-                                    fontSize='small'
-                                  />
-                                  {chat.datetime && getSubTimeFromDayFNS(chat.datetime, t('language'))}
-                                </Typography>
-                              )}
-                            </Box>
-                          </Box>
+                                  <CardWrapperPrimary>
+                                    <Typography sx={{ overflowWrap: 'break-word', width: '100%' }}>
+                                      {chat.message}
+                                    </Typography>
+                                  </CardWrapperPrimary>
+                                  {index === chats.length - 1 && (
+                                    <Typography
+                                      variant='subtitle1'
+                                      color={theme.palette.mode === 'dark' ? '#c3c5c8' : 'rgba(34, 51, 84, 0.7)'}
+                                      sx={{
+                                        pt: 1,
+                                        fontSize: 13,
+                                        display: 'flex',
+                                        alignItems: 'center'
+                                      }}
+                                    >
+                                      <ScheduleTwoToneIcon
+                                        sx={{
+                                          mr: 0.5
+                                        }}
+                                        fontSize='small'
+                                      />
+                                      {chat.datetime && getSubTimeFromDayFNS(chat.datetime, t('language'))}
+                                    </Typography>
+                                  )}
+                                </Box>
+                                <Avatar
+                                  variant='circular'
+                                  sx={{
+                                    width: 40,
+                                    height: 40
+                                  }}
+                                  alt={me.fullname}
+                                  src={CPath.host_user + me.avatar}
+                                />
+                              </Box>
+                            ) : (
+                              <Box
+                                display='flex'
+                                key={chat.id_chat}
+                                alignItems='flex-start'
+                                justifyContent='flex-start'
+                                py={1}
+                              >
+                                <Avatar
+                                  variant='circular'
+                                  sx={{
+                                    width: 40,
+                                    height: 40
+                                  }}
+                                  alt={chat.fullname}
+                                  src={CPath.host_user + chat.avatar}
+                                />
+                                <Box
+                                  display='flex'
+                                  alignItems='flex-start'
+                                  flexDirection='column'
+                                  justifyContent='flex-start'
+                                  ml={2}
+                                  width={'100%'}
+                                >
+                                  <CardWrapperSecondary>
+                                    <Typography sx={{ overflowWrap: 'break-word', width: '100%' }}>
+                                      {chat.message}
+                                    </Typography>
+                                  </CardWrapperSecondary>
+                                  {index === chats.length - 1 && (
+                                    <Typography
+                                      color={theme.palette.mode === 'dark' ? '#c3c5c8' : 'rgba(34, 51, 84, 0.7)'}
+                                      sx={{
+                                        pt: 1,
+                                        fontSize: 13,
+                                        display: 'flex',
+                                        alignItems: 'center'
+                                      }}
+                                    >
+                                      <ScheduleTwoToneIcon
+                                        sx={{
+                                          mr: 0.5
+                                        }}
+                                        fontSize='small'
+                                      />
+                                      {chat.datetime && getSubTimeFromDayFNS(chat.datetime, t('language'))}
+                                    </Typography>
+                                  )}
+                                </Box>
+                              </Box>
+                            )}
+                          </>
                         )}
                       </Box>
                     );

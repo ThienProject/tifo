@@ -9,11 +9,13 @@ export interface IChat extends IUser {
   id_chat?: string;
   message?: string;
   datetime: Date;
+  affected_username?: string;
+  type?: string;
 }
 
 export interface IRoom {
   id_room?: string;
-  type?: 'friend' | 'room' | 'chatbot';
+  type?: 'friend' | 'group' | 'chatbot';
   avatar?: string;
   name?: string;
   users: IUser[];
@@ -21,6 +23,10 @@ export interface IRoom {
 }
 export interface IPayloadCreateRoom {
   users: { id_user: string; isOwner?: boolean }[];
+}
+export interface IPayloadAddMember {
+  users: { id_user: string }[];
+  id_room: string;
 }
 export interface IPayloadSearchRoom {
   id_user?: string;

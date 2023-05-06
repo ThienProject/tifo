@@ -49,7 +49,13 @@ export default {
     sometimeError: 'Sometime has error occurred !',
     timeOutLogin: 'Login timeout. Please login again !',
     netWorkSlow: 'Network is slow, please try again later!',
-    requestLogin: 'Please login to use this function !'
+    requestLogin: 'Please login to use this function !',
+    deleteSuccess: 'Delete {{object}} success!'
+  },
+  confirm: {
+    cancelCreatePost: 'Do you want to cancel create post',
+    deletePost: 'Do you want to delete this post',
+    deleteRoom: 'Do you want to delete this room'
   },
   home: {
     suggestTab: 'Suggestion for you',
@@ -70,7 +76,10 @@ export default {
     privacy: {
       title: 'Privacy & Support',
       notification: 'Turn off notifications',
+      members: 'Member',
       ignore: 'Ignore all messages',
+      leave: 'Leave the group',
+      remove: 'Delete group',
       report: "Something's Wrong"
     },
     share_file: {
@@ -80,7 +89,14 @@ export default {
     enter_room_name: 'Enter room name',
     add_member: 'Add Member',
     dleRoom: 'Delete this room',
-    invisible: 'Invisible'
+    invisible: 'Invisible',
+    memberTitle: 'All members',
+    leader: 'Leader',
+    room_action: {
+      create: '{{actor}} created this group!',
+      remove: '{{actor}} removed {{affected_username}} from the group!',
+      add: '{{actor}} added {{affected_username}} to the group!'
+    }
   },
   createPost: {
     uploadTitle: 'Upload post',

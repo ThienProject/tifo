@@ -10,12 +10,13 @@ const ITEM_HEIGHT = 48;
 export default function MenuOption(props: {
   options: { element?: React.ReactNode; handleClick?: () => void; name?: string }[];
   icon: React.ReactNode;
+  sx?: SxProps;
   sxIcon?: SxProps;
   classIcon?: string;
   anchorOrigin?: PopoverOrigin;
   transformOrigin?: PopoverOrigin;
 }) {
-  const { options, icon, sxIcon, classIcon, anchorOrigin, transformOrigin } = props;
+  const { options, icon, sxIcon, classIcon, anchorOrigin, transformOrigin, sx } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -27,7 +28,7 @@ export default function MenuOption(props: {
   };
 
   return (
-    <Box>
+    <Box sx={sx}>
       <IconButton
         aria-label='more'
         id='long-button'

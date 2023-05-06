@@ -2,7 +2,12 @@ import { Box, Button, Typography, TypographyProps } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const CustomTypography = ({ text, max = 50, ...props }: { text: string; max: number } & TypographyProps) => {
+const CustomTypography = ({
+  myRef,
+  text,
+  max = 50,
+  ...props
+}: { myRef?: any; text: string; max: number } & TypographyProps) => {
   const [showMore, setShowMore] = useState(false);
   const { t } = useTranslation();
   const [isShowButton] = useState(() => {
@@ -29,7 +34,10 @@ const CustomTypography = ({ text, max = 50, ...props }: { text: string; max: num
               fontSize: 11,
               color: 'text.secondary'
             }}
-            onClick={() => setShowMore(!showMore)}
+            onClick={() => {
+              setShowMore(!showMore);
+              if (myRef.current && showMore) myRef.current.scrollIntoView({ behavior: 'smooth' });
+            }}
           >
             {showMore ? t('button.seeLess') : t('button.seeMore')}
           </Button>

@@ -17,32 +17,33 @@ import {
   styled,
   useTheme
 } from '@mui/material';
-import { formatDistance, subMinutes } from 'date-fns';
 import CallTwoToneIcon from '@mui/icons-material/CallTwoTone';
 import VideoCameraFrontTwoToneIcon from '@mui/icons-material/VideoCameraFrontTwoTone';
 import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
 import ColorLensTwoToneIcon from '@mui/icons-material/ColorLensTwoTone';
-import NotificationsOffTwoToneIcon from '@mui/icons-material/NotificationsOffTwoTone';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import EmojiEmotionsTwoToneIcon from '@mui/icons-material/EmojiEmotionsTwoTone';
-import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
 import BlockTwoToneIcon from '@mui/icons-material/BlockTwoTone';
 import WarningTwoToneIcon from '@mui/icons-material/WarningTwoTone';
 import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
+import { PeopleOutline, GroupAddOutlined, ExitToAppOutlined, RemoveCircleOutlineOutlined } from '@mui/icons-material';
 import images from 'src/assets/images';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
-import { openModal } from 'src/redux_store/common/modal/modal_slice';
+import { closeModal, openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
 
 import { IUser } from 'src/types/user';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { CPath } from 'src/constants';
 import { IRoom } from 'src/types/room';
 import CreateRoom from '../CreateRoom';
 import { getSubTimeFromDayFNS } from 'src/functions';
+import ConfirmationDialog from 'src/components/model/confirmation_dialog';
+import { deleteRoomThunk } from 'src/redux_store/room/room_action';
+import { toastMessage } from 'src/utils/toast';
+import Member from '../Member';
 const RootWrapper = styled(Box)(
   ({ theme }) => `
         @media (min-width: ${theme.breakpoints.values.md}px) {
@@ -105,14 +106,18 @@ function TopBarContent() {
   const { t } = useTranslation();
   const [isOpenSetting, setIsOpenSetting] = useState(false);
   const rooms: IRoom[] = useAppSelector((state) => state.roomSlice.rooms);
+  const { me } = useAppSelector((state) => state.userSlice);
   const newUserChat = useAppSelector((state) => state.roomSlice.newUserChat);
   const { id_room } = useParams();
+  const navigation = useNavigate();
   const room = rooms.find((item: any) => item.id_room === id_room);
   const isChatFriend = room && room.type === 'friend';
   const isChatbot = room && room.type === 'chatbot';
+  const isChatGroup = room && room.type === 'group';
   let avatar = room?.avatar ? CPath.host_user + room.avatar : images.roomDefault;
   let chatName = room?.name;
   let friend: IUser | null = null;
+  const isOwner = isChatGroup && room?.users.find((u) => u.role === 1 && u.id_user === me?.id_user);
   if ((isChatFriend || isChatbot) && room.users) {
     friend = room.users[0];
   }
@@ -214,17 +219,17 @@ function TopBarContent() {
               }}
               variant='rounded'
               alt='Zain Baptista'
-              src='/static/images/avatars/1.jpg'
+              src={avatar}
             />
             <Typography fontWeight={700} fontSize={16} variant='h4'>
-              Zain Baptista
+              {chatName}
             </Typography>
-            <Typography variant='subtitle2'>
-              Active
-              {formatDistance(subMinutes(new Date(), 7), new Date(), {
-                addSuffix: true
-              })}
-            </Typography>
+
+            {friend?.status === 'offline' && (
+              <Typography fontSize={14} color={'text.secondary'} variant='subtitle1'>
+                {friend?.off_time && getSubTimeFromDayFNS(friend.off_time, t('language'))}
+              </Typography>
+            )}
           </Box>
           <Divider
             sx={{
@@ -289,57 +294,114 @@ function TopBarContent() {
               }}
             >
               <List component='nav'>
-                <ListItem button>
-                  <ListItemIconWrapper>
-                    <NotificationsOffTwoToneIcon />
-                  </ListItemIconWrapper>
-                  <ListItemText
-                    sx={{ fontSize: 14 }}
-                    primary={t('message.privacy.notification')}
-                    primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
-                  />
-                </ListItem>
                 {isChatFriend && friend && (
-                  <ListItem button>
-                    <ListItemIconWrapper>
-                      <GroupAddIcon />
-                    </ListItemIconWrapper>
-                    <ListItemText
-                      sx={{ fontSize: 14 }}
-                      primary={t('button.room')}
-                      onClick={() => {
-                        const action = openModal({
-                          modalId: MODAL_IDS.createRoom,
-                          dialogComponent: <CreateRoom user={friend!} />
-                        });
-                        console.log('open modal');
-                        dispatch(action);
-                      }}
-                      primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
-                    />
-                  </ListItem>
+                  <>
+                    <ListItem button>
+                      <ListItemIconWrapper>
+                        <GroupAddOutlined />
+                      </ListItemIconWrapper>
+                      <ListItemText
+                        sx={{ fontSize: 14 }}
+                        primary={t('button.room')}
+                        onClick={() => {
+                          const action = openModal({
+                            modalId: MODAL_IDS.createRoom,
+                            dialogComponent: <CreateRoom user={friend!} />
+                          });
+                          dispatch(action);
+                        }}
+                        primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
+                      />
+                    </ListItem>
+                    <ListItem button>
+                      <ListItemIconWrapper>
+                        <BlockTwoToneIcon />
+                      </ListItemIconWrapper>
+                      <ListItemText
+                        sx={{ fontSize: 14 }}
+                        primary={t('button.block')}
+                        primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
+                      />
+                    </ListItem>
+                  </>
                 )}
 
-                <ListItem button>
-                  <ListItemIconWrapper>
-                    <CancelTwoToneIcon />
-                  </ListItemIconWrapper>
-                  <ListItemText
-                    sx={{ fontSize: 14 }}
-                    primary={t('message.privacy.ignore')}
-                    primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
-                  />
-                </ListItem>
-                <ListItem button>
-                  <ListItemIconWrapper>
-                    <BlockTwoToneIcon />
-                  </ListItemIconWrapper>
-                  <ListItemText
-                    sx={{ fontSize: 14 }}
-                    primary={t('button.block')}
-                    primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
-                  />
-                </ListItem>
+                {isChatGroup && (
+                  <>
+                    <ListItem
+                      button
+                      onClick={() => {
+                        const action = openModal({
+                          modalId: MODAL_IDS.memberManager,
+                          dialogComponent: <Member id_room={room.id_room!} />
+                        });
+                        dispatch(action);
+                      }}
+                    >
+                      <ListItemIconWrapper>
+                        <PeopleOutline />
+                      </ListItemIconWrapper>
+                      <ListItemText
+                        sx={{ fontSize: 14 }}
+                        primary={t('message.privacy.members')}
+                        primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
+                      />
+                    </ListItem>
+                    {isOwner ? (
+                      <ListItem
+                        button
+                        onClick={() => {
+                          dispatch(
+                            openModal({
+                              modalId: MODAL_IDS.confirmDeleteRoom,
+                              dialogComponent: (
+                                <ConfirmationDialog
+                                  describe={t('confirm.deleteRoom')}
+                                  sliceName={'rooms'}
+                                  functionName={'deleteRoomThunk'}
+                                  modalId={MODAL_IDS.confirmDeleteRoom}
+                                  callback={() => {
+                                    if (id_room) {
+                                      const action = deleteRoomThunk({ id_room });
+                                      dispatch(action)
+                                        .unwrap()
+                                        .then(() => {
+                                          toastMessage.success(t('toast.deleteSuccess', { object: 'room' }));
+                                          dispatch(closeModal({ modalId: MODAL_IDS.confirmDeleteRoom }));
+                                          navigation('/message');
+                                        });
+                                    }
+                                  }}
+                                />
+                              )
+                            })
+                          );
+                        }}
+                      >
+                        <ListItemIconWrapper>
+                          <RemoveCircleOutlineOutlined />
+                        </ListItemIconWrapper>
+                        <ListItemText
+                          sx={{ fontSize: 14 }}
+                          primary={t('message.privacy.remove')}
+                          primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
+                        />
+                      </ListItem>
+                    ) : (
+                      <ListItem button>
+                        <ListItemIconWrapper>
+                          <ExitToAppOutlined />
+                        </ListItemIconWrapper>
+                        <ListItemText
+                          sx={{ fontSize: 14 }}
+                          primary={t('message.privacy.leave')}
+                          primaryTypographyProps={{ variant: 'h5', fontSize: 14, color: 'rgb(136, 150, 255)' }}
+                        />
+                      </ListItem>
+                    )}
+                  </>
+                )}
+
                 <ListItem button>
                   <ListItemIconWrapper>
                     <WarningTwoToneIcon />

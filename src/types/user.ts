@@ -17,6 +17,7 @@ export interface IUser {
   cover?: string;
   description?: string;
   invisible?: boolean;
+  role?: number;
 }
 export interface IUserChat extends IUser {
   id_room?: string;

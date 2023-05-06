@@ -1,5 +1,5 @@
 import { Box, IconButton, Typography, Stack, Divider, Button } from '@mui/material';
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   MoreHoriz,
   FavoriteBorder,
@@ -25,6 +25,7 @@ import CustomTypography from 'src/components/CustomTypography';
 
 const PostItem = ({ post }: { post: IPost }) => {
   // Before the component definition:
+  const myRef = useRef<HTMLElement>(null);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   // const postSlice = useAppSelector((state) => state.postSlice.posts[index]);
@@ -32,7 +33,7 @@ const PostItem = ({ post }: { post: IPost }) => {
   const user: IUser = { id_user, username, fullname, avatar };
   const { me } = useAppSelector((state) => state.userSlice);
   return (
-    <Box>
+    <Box ref={myRef}>
       {/* top */}
       <Stack mb={1.2} direction='row' justifyContent='space-between'>
         <Box display='flex' alignItems='center'>
@@ -90,7 +91,14 @@ const PostItem = ({ post }: { post: IPost }) => {
       <Typography color='common.black' fontSize={14} fontWeight={550}>
         {post.loves ? post.loves : 0} likes
       </Typography>
-      <CustomTypography textAlign={'justify'} text={post.description!} fontSize={14} fontWeight={550} max={100} />
+      <CustomTypography
+        myRef={myRef}
+        textAlign={'justify'}
+        text={post.description!}
+        fontSize={14}
+        fontWeight={550}
+        max={100}
+      />
       <Button sx={{ p: 0, fontWeight: '600', fontSize: 10, color: 'text.secondary' }}>{t('home.translate')}</Button>
       {post.commentLength ? (
         <Button

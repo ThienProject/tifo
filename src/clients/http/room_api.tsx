@@ -1,5 +1,6 @@
 import { createClient } from './axios_client';
 import {
+  IPayloadAddMember,
   IPayloadChats,
   IPayloadCreateChat,
   IPayloadCreateRoom,
@@ -19,6 +20,17 @@ export const messageApi = {
   },
   createRoom: (payload: IPayloadCreateRoom) => {
     return client.post<any>(`/room/create`, payload);
+  },
+  deleteRoom: (payload: { id_room: string }) => {
+    return client.post<any>(`/room/delete`, payload);
+  },
+  addMembers: (payload: IPayloadAddMember) => {
+    return client.post<any>(`/room/addMembers`, payload);
+  },
+  getUsersByIDRoom: (params: { id_room: string }) => {
+    return client.get<ISearchRoom>(`/room/getUsersByIDRoom`, {
+      params: params
+    });
   },
   searchRoomOrUser: (params: IPayloadSearchRoom) => {
     return client.get<ISearchRoom>(`/room/search`, {

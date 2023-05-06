@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IChatDates, IChatroom, IRoom } from 'src/types/room';
-import { clearChatsThunk, getChatsByIDroomThunk, getRoomsThunk } from './room_action';
+import { clearChatsThunk, deleteRoomThunk, getChatsByIDroomThunk, getRoomsThunk, getUsersByIDRoomThunk } from './room_action';
 import { IUser } from 'src/types/user';
 
 const initialState: {
@@ -92,6 +92,13 @@ const roomSlice = createSlice({
         }
       });
     });
+    builder.addCase(getUsersByIDRoomThunk.fulfilled, (state, action) => {
+      const { id_room, users } = action.payload;
+      const index = state.rooms.findIndex((item) => item.id_room === id_room);
+      if (index != -1) {
+        state.rooms[index].users = users;
+      }
+    });
     builder.addCase(getChatsByIDroomThunk.fulfilled, (state, action) => {
       const { id_room, chats } = action.payload;
       if (chats && chats[0]) {
@@ -102,6 +109,13 @@ const roomSlice = createSlice({
       const { id_room } = action.payload;
       if (id_room) {
         state.chats[id_room] = [];
+      }
+    });
+    builder.addCase(deleteRoomThunk.fulfilled, (state, action) => {
+      const { id_room } = action.payload;
+      if (id_room) {
+        state.chats[id_room] = [];
+        state.rooms = state.rooms.filter((item) => item.id_room !== id_room);
       }
     });
   }

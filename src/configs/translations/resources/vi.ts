@@ -36,7 +36,13 @@ export default {
     sometimeError: 'Thỉnh thoảng có lỗi xảy ra !',
     timeOutLogin: 'Hết hạn đăng nhập. Xin vui lòng đăng nhập lại !',
     netWorkSlow: 'Mạng yếu, vui lòng thử lại sau!',
-    requestLogin: 'Vui lòng đăng nhập để sử dụng chức năng này !'
+    requestLogin: 'Vui lòng đăng nhập để sử dụng chức năng này !',
+    deleteSuccess: 'Xóa {{object}} thành công!'
+  },
+  confirm: {
+    cancelCreatePost: 'Bạn muốn hủy bài đăng này ?',
+    deletePost: 'Bạn muốn xóa bài đăng này ?',
+    deleteRoom: 'Bạn muốn xóa phòng này ?'
   },
   button: {
     accept: 'Chấp nhận',
@@ -69,8 +75,11 @@ export default {
     },
     privacy: {
       title: 'Quyền riêng tư & hỗ trợ',
-      notification: 'Tắc thông báo',
+      notification: 'Tắt thông báo',
+      members: 'Thành viên',
       ignore: 'Bỏ qua tin nhắn',
+      leave: 'Rời nhóm',
+      remove: 'Xóa nhóm',
       report: 'Báo cáo lỗi'
     },
     share_file: {
@@ -80,7 +89,14 @@ export default {
     enter_room_name: 'Nhập tên nhóm',
     add_member: 'Thêm thành viên',
     dleRoom: 'Xóa cuộc trò chuyện',
-    invisible: 'Ẩn trạng thái'
+    invisible: 'Ẩn trạng thái',
+    memberTitle: 'Tất cả thành viên',
+    leader: 'Trưởng nhóm',
+    room_action: {
+      create: '{{actor}} đã tạo nhóm!',
+      remove: '{{actor}} đã xóa {{affected_username}} khỏi nhóm!',
+      add: '{{actor}} đã thêm {{affected_username}} vào nhóm!'
+    }
   },
   createPost: {
     uploadTitle: 'Tạo bài đăng',
@@ -94,5 +110,5 @@ export default {
   },
   createRoom: {
     rulerUser: 'Ít nhất phải có hai user!'
-  }
+  },
 };

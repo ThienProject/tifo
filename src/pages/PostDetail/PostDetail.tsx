@@ -56,6 +56,8 @@ const PostDetail = (props: { post: IPost }) => {
                       toastMessage.success(data.message || 'Delete post success!');
                       const action = closeModal({ modalId: MODAL_IDS.postDetail });
                       dispatch(action);
+                      const action2 = closeModal({ modalId: MODAL_IDS.confirmDeletePost });
+                      dispatch(action2);
                     });
                 }
               }}

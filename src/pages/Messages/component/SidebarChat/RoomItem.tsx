@@ -52,65 +52,68 @@ const ChatItem = ({ socket, room, chatDemo }: { socket: Socket; room: IRoom; cha
   }, []);
   const classes = useStyles();
   return (
-    <Stack
+    <Box
       className={classes.wrapper}
-      direction={'row'}
+      sx={{
+        background: pathName === room.id_room ? 'rgba(85, 105, 255, 0.1)' : '',
+        width: '100%',
+        ':hover': { background: 'rgba(85, 105, 255, 0.1);' }
+      }}
       py={2}
       px={1}
       my={1}
       borderRadius={2}
-      sx={{
-        background: pathName === room.id_room ? 'rgba(85, 105, 255, 0.1)' : '',
-        width: '100%',
-        ':hover': { background: 'rgba(85, 105, 255, 0.1);' },
-        overflow: 'hidden'
-      }}
-      onClick={() => {
-        navigate('/message/' + room.id_room);
-      }}
     >
-      <Badge
-        sx={{
-          mr: 1.5,
-          '& .MuiBadge-dot': { boxShadow: isOnline ? '0 0 0 2px var(--mui-palette-common-white)' : 'none' }
+      <Stack
+        direction={'row'}
+        sx={{ overflow: 'hidden' }}
+        onClick={() => {
+          navigate('/message/' + room.id_room);
         }}
-        color={isOnline ? 'success' : 'default'}
-        overlap='circular'
-        variant='dot'
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        <Avatar alt='chat-img' src={avatar} />
-      </Badge>
-      {/* <Avatar alt='chat-img' src={avatar} sx={{ mr: 1.5 }} /> */}
-      <Box width={'100%'}>
-        <Typography
-          textOverflow='ellipsis'
-          maxWidth={'75%'}
-          whiteSpace='nowrap'
-          overflow='hidden'
-          fontSize={15}
-          fontWeight={700}
+        <Badge
+          sx={{
+            mr: 1.5,
+            '& .MuiBadge-dot': { boxShadow: isOnline ? '0 0 0 2px var(--mui-palette-common-white)' : 'none' }
+          }}
+          color={isOnline ? 'success' : 'default'}
+          overlap='circular'
+          variant='dot'
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         >
-          {chatName}
-        </Typography>
-        <Typography
-          fontSize={12}
-          fontWeight={300}
-          textOverflow='ellipsis'
-          maxWidth={'75%'}
-          whiteSpace='nowrap'
-          overflow='hidden'
-          color={'text.secondary'}
-        >
-          {chatDemo}
-        </Typography>
-      </Box>
-
+          <Avatar alt='chat-img' src={avatar} />
+        </Badge>
+        {/* <Avatar alt='chat-img' src={avatar} sx={{ mr: 1.5 }} /> */}
+        <Box width={'100%'}>
+          <Typography
+            textOverflow='ellipsis'
+            maxWidth={'75%'}
+            whiteSpace='nowrap'
+            overflow='hidden'
+            fontSize={15}
+            fontWeight={700}
+          >
+            {chatName}
+          </Typography>
+          <Typography
+            fontSize={12}
+            fontWeight={300}
+            textOverflow='ellipsis'
+            maxWidth={'75%'}
+            whiteSpace='nowrap'
+            overflow='hidden'
+            color={'text.secondary'}
+          >
+            {chatDemo}
+          </Typography>
+        </Box>
+      </Stack>
       <MenuOption
         classIcon='menu-option__room'
         transformOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        sxIcon={{ position: 'absolute', right: 0 }}
+        sx={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)' }}
+        // sxIcon={{ position: 'absolute', right: 0, zIndex: 2 }}
         icon={<MoreHoriz />}
         options={[
           {
@@ -141,7 +144,7 @@ const ChatItem = ({ socket, room, chatDemo }: { socket: Socket; room: IRoom; cha
           }
         ]}
       />
-    </Stack>
+    </Box>
   );
 };
 const useStyles = makeStyles(() => ({

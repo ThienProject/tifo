@@ -61,7 +61,6 @@ function ConfirmationDialog(props: IConfirmationDialog) {
           <LoadingButton
             variant='contained'
             onClick={() => {
-              handleClose();
               callback && callback();
             }}
             loading={isLoading}

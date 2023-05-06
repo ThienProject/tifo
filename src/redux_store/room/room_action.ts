@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { messageApi } from 'src/clients/http/room_api';
 import {
+  IPayloadAddMember,
   IPayloadChats,
   IPayloadCreateChat,
   IPayloadCreateRoom,
@@ -66,7 +67,17 @@ export const getRoomsThunk = createAsyncThunk<any, IPayloadRooms>(
     }
   }
 );
-
+export const getUsersByIDRoomThunk = createAsyncThunk<any, { id_room: string }>(
+  'rooms/getUsersByIDRoom',
+  async (payload: { id_room: string }, { rejectWithValue }) => {
+    try {
+      const { data } = await messageApi.getUsersByIDRoom(payload);
+      return { ...data, ...payload };
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
 export const createRoomThunk = createAsyncThunk<any, IPayloadCreateRoom>(
   'rooms/createRoomThunk',
   async (payload: IPayloadCreateRoom, { rejectWithValue }) => {
@@ -84,6 +95,28 @@ export const getChatsByIDroomThunk = createAsyncThunk<any, IPayloadChats>(
     try {
       const { data } = await messageApi.getChatsByIDroom(payload);
       return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const deleteRoomThunk = createAsyncThunk<any, { id_room: string }>(
+  'rooms/deleteRoomThunk',
+  async (payload: { id_room: string }, { rejectWithValue }) => {
+    try {
+      const { data } = await messageApi.deleteRoom(payload);
+      return { ...payload, ...data };
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const addMembersThunk = createAsyncThunk<any, IPayloadAddMember>(
+  'rooms/addMembersThunk',
+  async (payload: IPayloadAddMember, { rejectWithValue }) => {
+    try {
+      const { data } = await messageApi.addMembers(payload);
+      return { ...payload, ...data };
     } catch (error: any) {
       return rejectWithValue(error);
     }
