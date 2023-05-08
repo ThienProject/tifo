@@ -75,7 +75,6 @@ function ChatContent({ socket }: { socket: Socket }) {
       dispatch(action);
     });
     socket.on('add_members', ({ room, message, chats, limit, users }: any) => {
-      console.log('add_members');
       const action = addMembers({ room, message, chats, limit, users });
       dispatch(action);
     });

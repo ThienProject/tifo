@@ -81,11 +81,11 @@ const ChatBox = () => {
       } else {
         navigate('/message', { replace: true });
       }
+      return () => {
+        const actionReset = deleteNewUserChat();
+        dispatch(actionReset);
+      };
     }
-    return () => {
-      const actionReset = deleteNewUserChat();
-      dispatch(actionReset);
-    };
   }, [id_user]);
 
   return (

@@ -50,13 +50,15 @@ export default {
     timeOutLogin: 'Login timeout. Please login again !',
     netWorkSlow: 'Network is slow, please try again later!',
     requestLogin: 'Please login to use this function !',
-    deleteSuccess: 'Delete {{object}} success!'
+    deleteSuccess: 'Delete {{object}} success!',
+    leaveGroup: 'Leaved group success!'
   },
   confirm: {
     cancelCreatePost: 'Do you want to cancel create post',
     deletePost: 'Do you want to delete this post',
     deleteRoom: 'Do you want to delete this room',
-    deleteUser: 'Do you want to delete this user'
+    deleteUser: 'Do you want to delete this user',
+    leave: 'Do you want to leave this room?'
   },
   home: {
     suggestTab: 'Suggestion for you',
@@ -97,7 +99,8 @@ export default {
     room_action: {
       create: '{{actor}} created this group!',
       remove: '{{actor}} removed {{affected_username}} from the group!',
-      add: '{{actor}} added {{affected_username}} to the group!'
+      add: '{{actor}} added {{affected_username}} to the group!',
+      leave: '{{actor}} leaved this group!'
     }
   },
   createPost: {

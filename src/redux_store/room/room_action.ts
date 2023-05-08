@@ -112,7 +112,7 @@ export const deleteRoomThunk = createAsyncThunk<any, { id_room: string }>(
     }
   }
 );
-export const deleteUserThunk = createAsyncThunk<any, { id_user: string; id_room: string; id_owner: string }>(
+export const deleteUserThunk = createAsyncThunk<any, { id_user: string; id_room: string; id_owner?: string }>(
   'rooms/deleteUserThunk',
   async (payload: { id_user: string; id_room: string }, { rejectWithValue }) => {
     try {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ModalWrapper from 'src/components/model/ModelWrapper';
 import MODAL_IDS from 'src/constants/modal';
 import { Box, Typography, Stack, MenuList, MenuItem, Button, Avatar } from '@mui/material';
@@ -21,18 +21,12 @@ const Member = ({ id_room }: { id_room: string }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { me } = useAppSelector((state) => state.userSlice);
-  // const { rooms } = useAppSelector((state) => state.roomSlice);
-  // const room = rooms.find((item) => item.id_room === id_room);
-  const [users, setUsers] = useState<IUser[]>([]);
-  // const users = room?.users;
+  const { rooms } = useAppSelector((state) => state.roomSlice);
+  const room = rooms.find((item) => item.id_room === id_room);
+  const users = room?.users;
   useEffect(() => {
     const action = getUsersByIDRoomThunk({ id_room });
-    dispatch(action)
-      .unwrap()
-      .then((data) => {
-        const { users } = data;
-        setUsers(users);
-      });
+    dispatch(action).unwrap();
   }, []);
   const isLeader = users && users.some((item) => item.id_user === me?.id_user && item.role === 1);
   return (
@@ -57,7 +51,7 @@ const Member = ({ id_room }: { id_room: string }) => {
         ) : (
           <Typography>{t('message.memberTitle')}</Typography>
         )}
-        <Scrollbars autoHide={false} autoHeight={true} autoHeightMin={300} autoHeightMax={600}>
+        <Scrollbars autoHide={false} autoHeight={true} autoHeightMin={300} autoHeightMax={400}>
           <MenuList>
             {users?.map((user: IUser) => {
               return (
@@ -113,7 +107,7 @@ const Member = ({ id_room }: { id_room: string }) => {
                                           <ConfirmationDialog
                                             describe={t('confirm.deleteUser')}
                                             sliceName={'rooms'}
-                                            functionName={'deleteRoomThunk'}
+                                            functionName={'deleteUserThunk'}
                                             modalId={MODAL_IDS.confirmDeleteUser}
                                             callback={() => {
                                               if (id_room) {
@@ -126,12 +120,6 @@ const Member = ({ id_room }: { id_room: string }) => {
                                                   .unwrap()
                                                   .then(() => {
                                                     toastMessage.success(t('toast.deleteSuccess', { object: 'user' }));
-                                                    setUsers((prev) => {
-                                                      const newUser = prev.filter(
-                                                        (item) => item.id_user !== user.id_user
-                                                      );
-                                                      return newUser;
-                                                    });
                                                     dispatch(closeModal({ modalId: MODAL_IDS.confirmDeleteUser }));
                                                   });
                                               }

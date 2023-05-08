@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IChatDates, IChatroom, IRoom } from 'src/types/room';
-import { clearChatsThunk, deleteRoomThunk, getChatsByIDroomThunk, getRoomsThunk } from './room_action';
+import { clearChatsThunk, deleteRoomThunk, deleteUserThunk, getChatsByIDroomThunk, getRoomsThunk, getUsersByIDRoomThunk } from './room_action';
 import { IUser } from 'src/types/user';
 
 const initialState: {
@@ -80,6 +80,7 @@ const roomSlice = createSlice({
     },
     addMembers: (state, action) => {
       const { room, chats, limit, users } = action.payload;
+      console.log(limit);
       const indexRoom = state.rooms.findIndex((r) => r.id_room === room?.id_room);
       if (indexRoom == -1) {
         state.rooms.unshift({ ...room, users });
@@ -98,9 +99,7 @@ const roomSlice = createSlice({
     deleteMember: (state, action) => {
       const { id_me, id_user, id_room, chat, date } = action.payload;
       const indexRoom = state.rooms.findIndex((r) => r.id_room === id_room);
-      console.log('có xóa', { id_me, id_user });
       if (id_me === id_user) {
-        console.log('xóa user in room', id_room);
         state.rooms = state.rooms.filter((item) => item.id_room != id_room);
         delete state.chats[id_room];
       } else {
@@ -132,14 +131,13 @@ const roomSlice = createSlice({
         }
       });
     });
-
-    // builder.addCase(getUsersByIDRoomThunk.fulfilled, (state, action) => {
-    //   const { id_room, users } = action.payload;
-    //   const index = state.rooms.findIndex((item) => item.id_room === id_room);
-    //   if (index != -1) {
-    //     state.rooms[index].users = users;
-    //   }
-    // });
+    builder.addCase(getUsersByIDRoomThunk.fulfilled, (state, action) => {
+      const { id_room, users } = action.payload;
+      const index = state.rooms.findIndex((item) => item.id_room === id_room);
+      if (index != -1) {
+        state.rooms[index].users = users;
+      }
+    });
     builder.addCase(getChatsByIDroomThunk.fulfilled, (state, action) => {
       const { id_room, chats } = action.payload;
       if (chats && chats[0]) {
@@ -156,6 +154,13 @@ const roomSlice = createSlice({
       const { id_room } = action.payload;
       if (id_room) {
         state.chats[id_room] = [];
+        state.rooms = state.rooms.filter((item) => item.id_room !== id_room);
+      }
+    });
+    builder.addCase(deleteUserThunk.fulfilled, (state, action) => {
+      const { id_room, id_owner } = action.payload;
+      if (id_room && !id_owner) {
+        delete state.chats[id_room];
         state.rooms = state.rooms.filter((item) => item.id_room !== id_room);
       }
     });

@@ -37,13 +37,15 @@ export default {
     timeOutLogin: 'Hết hạn đăng nhập. Xin vui lòng đăng nhập lại !',
     netWorkSlow: 'Mạng yếu, vui lòng thử lại sau!',
     requestLogin: 'Vui lòng đăng nhập để sử dụng chức năng này !',
-    deleteSuccess: 'Xóa {{object}} thành công!'
+    deleteSuccess: 'Xóa {{object}} thành công!',
+    leaveGroup: 'Rời nhóm thành công!'
   },
   confirm: {
     cancelCreatePost: 'Bạn muốn hủy bài đăng này ?',
     deletePost: 'Bạn muốn xóa bài đăng này ?',
     deleteRoom: 'Bạn muốn xóa phòng này ?',
-    deleteUser: 'Bạn muốn xóa người dùng này?'
+    deleteUser: 'Bạn muốn xóa người dùng này?',
+    leave: 'Bạn muốn rời phòng này?'
   },
   button: {
     accept: 'Chấp nhận',
@@ -96,7 +98,8 @@ export default {
     room_action: {
       create: '{{actor}} đã tạo nhóm!',
       remove: '{{actor}} đã xóa {{affected_username}} khỏi nhóm!',
-      add: '{{actor}} đã thêm {{affected_username}} vào nhóm!'
+      add: '{{actor}} đã thêm {{affected_username}} vào nhóm!',
+      leave: '{{actor}} đã rời nhóm!'
     }
   },
   createPost: {

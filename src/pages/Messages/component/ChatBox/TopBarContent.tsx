@@ -41,7 +41,7 @@ import { IRoom } from 'src/types/room';
 import CreateRoom from '../CreateRoom';
 import { getSubTimeFromDayFNS } from 'src/functions';
 import ConfirmationDialog from 'src/components/model/confirmation_dialog';
-import { deleteRoomThunk } from 'src/redux_store/room/room_action';
+import { deleteRoomThunk, deleteUserThunk } from 'src/redux_store/room/room_action';
 import { toastMessage } from 'src/utils/toast';
 import Member from '../Member';
 const RootWrapper = styled(Box)(
@@ -388,7 +388,39 @@ function TopBarContent() {
                         />
                       </ListItem>
                     ) : (
-                      <ListItem button>
+                      <ListItem
+                        button
+                        onClick={() => {
+                          const action = openModal({
+                            modalId: MODAL_IDS.confirmDeleteUser,
+                            dialogComponent: (
+                              <ConfirmationDialog
+                                describe={t('confirm.leave')}
+                                sliceName={'rooms'}
+                                functionName={'deleteUserThunk'}
+                                modalId={MODAL_IDS.confirmDeleteUser}
+                                callback={() => {
+                                  if (id_room) {
+                                    const action = deleteUserThunk({
+                                      id_user: me?.id_user,
+                                      id_room: id_room
+                                    });
+                                    dispatch(action)
+                                      .unwrap()
+                                      .then((data) => {
+                                        toastMessage.success(t('toast.leaveGroup'));
+                                        dispatch(closeModal({ modalId: MODAL_IDS.confirmDeleteUser }));
+                                        navigation('/message');
+                                        // dispatch(leaveRoom({ id_room: data.id_room }));
+                                      });
+                                  }
+                                }}
+                              />
+                            )
+                          });
+                          dispatch(action);
+                        }}
+                      >
                         <ListItemIconWrapper>
                           <ExitToAppOutlined />
                         </ListItemIconWrapper>
