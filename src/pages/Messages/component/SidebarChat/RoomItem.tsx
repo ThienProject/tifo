@@ -57,16 +57,19 @@ const ChatItem = ({ socket, room, chatDemo }: { socket: Socket; room: IRoom; cha
       sx={{
         background: pathName === room.id_room ? 'rgba(85, 105, 255, 0.1)' : '',
         width: '100%',
-        ':hover': { background: 'rgba(85, 105, 255, 0.1);' }
+        ':hover': {
+          cursor: 'pointer',
+          background: 'rgba(85, 105, 255, 0.1);'
+        }
       }}
-      py={2}
-      px={1}
       my={1}
       borderRadius={2}
     >
       <Stack
         direction={'row'}
         sx={{ overflow: 'hidden' }}
+        py={2}
+        px={1}
         onClick={() => {
           navigate('/message/' + room.id_room);
         }}
@@ -83,7 +86,6 @@ const ChatItem = ({ socket, room, chatDemo }: { socket: Socket; room: IRoom; cha
         >
           <Avatar alt='chat-img' src={avatar} />
         </Badge>
-        {/* <Avatar alt='chat-img' src={avatar} sx={{ mr: 1.5 }} /> */}
         <Box width={'100%'}>
           <Typography
             textOverflow='ellipsis'
@@ -113,7 +115,6 @@ const ChatItem = ({ socket, room, chatDemo }: { socket: Socket; room: IRoom; cha
         transformOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         sx={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)' }}
-        // sxIcon={{ position: 'absolute', right: 0, zIndex: 2 }}
         icon={<MoreHoriz />}
         options={[
           {

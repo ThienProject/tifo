@@ -47,7 +47,8 @@ const SearchBar = ({
           setNote(t('search.noAccount'));
         }
       })
-      .catch(() => {
+      .catch((e: any) => {
+        console.log(e);
         setNote(t('toast.sometimeError'));
         setResult([]);
       });

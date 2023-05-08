@@ -3,6 +3,7 @@ import { postApi } from 'src/clients/http/post_api';
 import { userApi } from 'src/clients/http/user_api';
 import { IPayloadGetUser, IPayloadLogin, IPayloadRegister } from 'src/types/auth';
 import { IPayloadGetPost } from 'src/types/post';
+import { IPayloadSearchRoom } from 'src/types/room';
 import { IPayloadFollow, IPayloadGetUsers, IPayloadInvisible } from 'src/types/user';
 
 export const loginThunk = createAsyncThunk<any, IPayloadLogin>(
@@ -155,6 +156,17 @@ export const unfollowThunk = createAsyncThunk<any, IPayloadFollow>(
   async (payload: IPayloadFollow, { rejectWithValue }) => {
     try {
       const { data } = await userApi.unfollow(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const getUsersNotInRoomThunk = createAsyncThunk<any, IPayloadSearchRoom>(
+  'rooms/getUsersNotInRoomThunk',
+  async (payload: IPayloadSearchRoom, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.getUsersNotInRoom(payload);
       return data;
     } catch (error: any) {
       return rejectWithValue(error);

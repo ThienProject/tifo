@@ -42,7 +42,8 @@ export default {
   confirm: {
     cancelCreatePost: 'Bạn muốn hủy bài đăng này ?',
     deletePost: 'Bạn muốn xóa bài đăng này ?',
-    deleteRoom: 'Bạn muốn xóa phòng này ?'
+    deleteRoom: 'Bạn muốn xóa phòng này ?',
+    deleteUser: 'Bạn muốn xóa người dùng này?'
   },
   button: {
     accept: 'Chấp nhận',
@@ -109,6 +110,9 @@ export default {
     }
   },
   createRoom: {
-    rulerUser: 'Ít nhất phải có hai user!'
+    rulerUser: 'Ít nhất phải có hai người dùng!'
   },
+  rule: {
+    minUser: 'Ít nhất phải có một người dùng'
+  }
 };

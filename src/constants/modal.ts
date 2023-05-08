@@ -5,6 +5,7 @@ const MODAL_IDS = {
   postDetail: 'postDetail',
   confirmDeletePost: 'confirmDeletePost',
   confirmDeleteRoom: 'confirmDeleteRoom',
+  confirmDeleteUser: 'confirmDeleteUser',
   createRoom: 'createRoom',
   memberManager: 'memberManager',
   addMember: 'addMember'

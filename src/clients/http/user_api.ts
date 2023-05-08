@@ -1,6 +1,7 @@
 import { IPayloadGetUser, IPayloadLogin, IPayloadRegister } from 'src/types/auth';
 import { createClient } from './axios_client';
 import { IPayloadFollow, IPayloadGetUsers, IPayloadInvisible } from 'src/types/user';
+import { IPayloadSearchRoom, ISearchRoom } from 'src/types/room';
 
 const client = createClient();
 
@@ -41,5 +42,10 @@ export const userApi = {
   },
   unfollow: (payload: IPayloadFollow) => {
     return client.post('/user/unfollow', payload);
+  },
+  getUsersNotInRoom: (params: IPayloadSearchRoom) => {
+    return client.get<ISearchRoom>(`/user/getUsersNotInRoom`, {
+      params: params
+    });
   }
 };

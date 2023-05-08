@@ -78,6 +78,7 @@ export const getUsersByIDRoomThunk = createAsyncThunk<any, { id_room: string }>(
     }
   }
 );
+
 export const createRoomThunk = createAsyncThunk<any, IPayloadCreateRoom>(
   'rooms/createRoomThunk',
   async (payload: IPayloadCreateRoom, { rejectWithValue }) => {
@@ -106,6 +107,17 @@ export const deleteRoomThunk = createAsyncThunk<any, { id_room: string }>(
     try {
       const { data } = await messageApi.deleteRoom(payload);
       return { ...payload, ...data };
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const deleteUserThunk = createAsyncThunk<any, { id_user: string; id_room: string; id_owner: string }>(
+  'rooms/deleteUserThunk',
+  async (payload: { id_user: string; id_room: string }, { rejectWithValue }) => {
+    try {
+      const { data } = await messageApi.deleteUser(payload);
+      return data;
     } catch (error: any) {
       return rejectWithValue(error);
     }

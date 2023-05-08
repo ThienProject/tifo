@@ -111,11 +111,12 @@ function BottomBarContent() {
         />
       </Box>
       <Box>
-        <Tooltip arrow placement='top' title='Choose an emoji'>
+        {/* <Tooltip arrow placement='top' title='Choose an emoji'>
+          <EmojiPicker />
           <IconButton sx={{ fontSize: theme.typography.pxToRem(16) }} color='primary'>
             😀
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
         <Controller
           control={control}
           name='image'

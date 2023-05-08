@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IChatDates, IChatroom, IRoom } from 'src/types/room';
-import { clearChatsThunk, deleteRoomThunk, getChatsByIDroomThunk, getRoomsThunk, getUsersByIDRoomThunk } from './room_action';
+import { clearChatsThunk, deleteRoomThunk, getChatsByIDroomThunk, getRoomsThunk } from './room_action';
 import { IUser } from 'src/types/user';
 
 const initialState: {
@@ -77,6 +77,46 @@ const roomSlice = createSlice({
     },
     toggleMenu: (state) => {
       state.isOpenMenu = !state.isOpenMenu;
+    },
+    addMembers: (state, action) => {
+      const { room, chats, limit, users } = action.payload;
+      const indexRoom = state.rooms.findIndex((r) => r.id_room === room?.id_room);
+      if (indexRoom == -1) {
+        state.rooms.unshift({ ...room, users });
+        state.chats[room?.id_room] = chats;
+      } else {
+        state.rooms[indexRoom].users.push(...users);
+        const lastDate = Object.keys(state.chats[room?.id_room][0])[0];
+        if (lastDate === Object.keys(chats[0])[0]) {
+          const chatDate = state.chats[room.id_room][0];
+          chatDate[lastDate].push(...chats[0][lastDate]);
+        } else {
+          state.chats[room?.id_room].push(...chats);
+        }
+      }
+    },
+    deleteMember: (state, action) => {
+      const { id_me, id_user, id_room, chat, date } = action.payload;
+      const indexRoom = state.rooms.findIndex((r) => r.id_room === id_room);
+      console.log('có xóa', { id_me, id_user });
+      if (id_me === id_user) {
+        console.log('xóa user in room', id_room);
+        state.rooms = state.rooms.filter((item) => item.id_room != id_room);
+        delete state.chats[id_room];
+      } else {
+        state.rooms[indexRoom].users = state.rooms[indexRoom].users.filter((item) => item.id_user != id_user);
+        const chatDates = state.chats[id_room];
+        if (chatDates) {
+          const index = chatDates.findIndex((dateItem) => Object.keys(dateItem)[0] === date);
+          if (index > -1) {
+            chatDates[index][date].push(chat);
+          } else {
+            chatDates.push({ [date]: [chat] });
+          }
+        } else {
+          state.chats[id_room] = [{ [date]: [chat] }];
+        }
+      }
     }
   },
   extraReducers: (builder) => {
@@ -92,13 +132,14 @@ const roomSlice = createSlice({
         }
       });
     });
-    builder.addCase(getUsersByIDRoomThunk.fulfilled, (state, action) => {
-      const { id_room, users } = action.payload;
-      const index = state.rooms.findIndex((item) => item.id_room === id_room);
-      if (index != -1) {
-        state.rooms[index].users = users;
-      }
-    });
+
+    // builder.addCase(getUsersByIDRoomThunk.fulfilled, (state, action) => {
+    //   const { id_room, users } = action.payload;
+    //   const index = state.rooms.findIndex((item) => item.id_room === id_room);
+    //   if (index != -1) {
+    //     state.rooms[index].users = users;
+    //   }
+    // });
     builder.addCase(getChatsByIDroomThunk.fulfilled, (state, action) => {
       const { id_room, chats } = action.payload;
       if (chats && chats[0]) {
@@ -130,6 +171,8 @@ export const {
   resetRoom,
   toggleMenu,
   setNewUserChat,
-  deleteNewUserChat
+  deleteNewUserChat,
+  addMembers,
+  deleteMember
 } = actions;
 export default reducer;

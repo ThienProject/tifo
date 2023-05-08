@@ -1,15 +1,14 @@
 import { Box, Avatar, Typography, Card, styled, Divider, useTheme } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
-import { format } from 'date-fns';
 import ScheduleTwoToneIcon from '@mui/icons-material/ScheduleTwoTone';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { Scrollbars } from 'react-custom-scrollbars-2';
-import { getSubTimeFromDayFNS } from 'src/functions';
+import { formattedDate, getSubTimeFromDayFNS } from 'src/functions';
 import { useTranslation } from 'react-i18next';
 
 import { CPath } from 'src/constants';
 import { Socket } from 'socket.io-client';
-import { createChat, createFirstChat, createRoom } from 'src/redux_store/room/room_slice';
+import { addMembers, createChat, createFirstChat, createRoom, deleteMember } from 'src/redux_store/room/room_slice';
 import { useParams } from 'react-router';
 import { IUser } from 'src/types/user';
 const DividerWrapper = styled(Divider)(
@@ -32,17 +31,6 @@ const CardWrapperPrimary = styled(Card)(
       border-top-right-radius: ${3};
       max-width: 80%;
        font-size: ${theme.typography.pxToRem(14)};
-      display: inline-flex;
-`
-);
-const CardWrapperRoof = styled(Card)(
-  ({ theme }) => `
-      color: #777;
-      padding: 12px;
-      border-radius: ${10};
-      border-top-right-radius: ${3};
-      max-width: 80%;
-      font-size: ${theme.typography.pxToRem(12)};
       display: inline-flex;
 `
 );
@@ -71,6 +59,7 @@ function ChatContent({ socket }: { socket: Socket }) {
   const chatDates = useAppSelector((state) => {
     if (id_room) return state.roomSlice.chats[id_room];
   });
+  console.log('chatDates', chatDates);
   useEffect(() => {
     socket.on('new-chat', ({ chat, id_room, id_user, date }: any) => {
       const action = createChat({ chat, id_room, id_user, date });
@@ -85,10 +74,23 @@ function ChatContent({ socket }: { socket: Socket }) {
       const action = createRoom({ chat, id_room, date, users, avatar, type, name });
       dispatch(action);
     });
+    socket.on('add_members', ({ room, message, chats, limit, users }: any) => {
+      console.log('add_members');
+      const action = addMembers({ room, message, chats, limit, users });
+      dispatch(action);
+    });
+    socket.on('delete_member', ({ id_room, id_user, message, chat, avatar, date }: any) => {
+      console.log('delete_member');
+      const action = deleteMember({ id_me, id_user, id_room, message, chat, avatar, date });
+      dispatch(action);
+    });
+
     return () => {
       socket.off('new-chat');
       socket.off('first-chat');
       socket.off('create-room');
+      socket.off('add_members');
+      socket.off('delete_member');
     };
   }, []);
   useEffect(() => {
@@ -107,12 +109,12 @@ function ChatContent({ socket }: { socket: Socket }) {
 
               return (
                 <Box key={date}>
-                  <DividerWrapper>{format(dateFormat, 'MMMM dd yyyy')}</DividerWrapper>
+                  {dateFormat && <DividerWrapper>{formattedDate(dateFormat, t('language'))}</DividerWrapper>}
                   {chats.map((chat, index) => {
                     return (
                       <Box key={chat.id_chat}>
                         {chat.type ? (
-                          <Box display='flex' justifyContent='center'>
+                          <Box my={2} display='flex' justifyContent='center'>
                             <Typography sx={{ color: '#777' }}>
                               {t('message.room_action.' + chat.type, {
                                 actor: chat.username,

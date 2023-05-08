@@ -55,7 +55,8 @@ export default {
   confirm: {
     cancelCreatePost: 'Do you want to cancel create post',
     deletePost: 'Do you want to delete this post',
-    deleteRoom: 'Do you want to delete this room'
+    deleteRoom: 'Do you want to delete this room',
+    deleteUser: 'Do you want to delete this user'
   },
   home: {
     suggestTab: 'Suggestion for you',
@@ -91,6 +92,7 @@ export default {
     dleRoom: 'Delete this room',
     invisible: 'Invisible',
     memberTitle: 'All members',
+
     leader: 'Leader',
     room_action: {
       create: '{{actor}} created this group!',
@@ -110,5 +112,8 @@ export default {
   },
   createRoom: {
     rulerUser: 'Must have at least two users'
+  },
+  rule: {
+    minUser: 'Must have at least one user'
   }
 };

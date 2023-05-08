@@ -117,7 +117,7 @@ function TopBarContent() {
   let avatar = room?.avatar ? CPath.host_user + room.avatar : images.roomDefault;
   let chatName = room?.name;
   let friend: IUser | null = null;
-  const isOwner = isChatGroup && room?.users.find((u) => u.role === 1 && u.id_user === me?.id_user);
+  const isOwner = isChatGroup && room?.users?.find((u) => u.role === 1 && u.id_user === me?.id_user);
   if ((isChatFriend || isChatbot) && room.users) {
     friend = room.users[0];
   }

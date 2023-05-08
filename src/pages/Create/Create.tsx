@@ -70,7 +70,7 @@ const Create = (props: { type: string }) => {
       .then(() => {
         reset();
         setSuggest([]);
-        toastMessage.success('createPost.toast.createSuccess');
+        toastMessage.success(t('createPost.toast.createSuccess') || '');
       });
   };
   const handleSuggest = async () => {

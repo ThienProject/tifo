@@ -146,6 +146,7 @@ const CreateRoom = ({ user }: { user: IUser }) => {
           <Box my={1}>
             <SearchBar
               placeholder={t('message.add_member') || 'Add member'}
+              param={{ id_user: me?.id_user }}
               actionThunk={getUsersThunk}
               setNote={setNote}
               setResult={setNewResult}

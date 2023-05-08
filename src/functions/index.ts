@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { formatDistance, subYears, subDays, subMonths, subHours, subMinutes } from 'date-fns';
+import { formatDistance, subYears, subDays, subMonths, subHours, subMinutes, format } from 'date-fns';
 import { enUS, vi } from 'date-fns/locale';
 
 import * as yup from 'yup';
@@ -36,6 +36,10 @@ export const schemaCreatePost = (target: string, description: string, medias: st
         });
       })
   });
+};
+export const formattedDate = (date: Date, language: string) => {
+  const locale = language === 'vi' ? vi : enUS;
+  return format(date, 'EEEE, dd MMMM yyyy', { locale });
 };
 export const getTimeFromDay = (date: Date) => {
   const now = moment(); // Lấy thời điểm hiện tại

@@ -11,7 +11,6 @@ import {
   Paper,
   IconButton,
   Divider,
-  Button,
   FormHelperText
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -20,11 +19,11 @@ import { Close } from '@mui/icons-material';
 import { CPath } from 'src/constants';
 import { Controller, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
-import { addMembersThunk, createRoomThunk } from 'src/redux_store/room/room_action';
+import { addMembersThunk } from 'src/redux_store/room/room_action';
 import { closeModal } from 'src/redux_store/common/modal/modal_slice';
 import { toastMessage } from 'src/utils/toast';
 import SearchBar from 'src/pages/components/SearchBar';
-import { getUsersThunk } from 'src/redux_store/user/user_action';
+import { getUsersNotInRoomThunk } from 'src/redux_store/user/user_action';
 import { LoadingButton } from '@mui/lab';
 import { useIsRequestPending } from 'src/hooks/use_status';
 const AddMember = ({ id_room }: { id_room: string }) => {
@@ -47,9 +46,9 @@ const AddMember = ({ id_room }: { id_room: string }) => {
     setResult(newArr);
   };
   const handleOnSubmit = (data: any) => {
-    const { users, name } = data;
+    const { users } = data;
     const id_me = me?.id_user;
-    if (users.length < 2) {
+    if (users.length < 1) {
       setError('users', { message: t('createRoom.rulerUser') || '' });
       return;
     }
@@ -57,8 +56,7 @@ const AddMember = ({ id_room }: { id_room: string }) => {
       const newUsers = users.map((user: IUser) => ({
         id_user: user.id_user
       }));
-      newUsers.push({ id_user: id_me, isOwner: true });
-      const payload = { users: newUsers, id_room };
+      const payload = { id_user: id_me, users: newUsers, id_room };
       const action = addMembersThunk(payload);
       dispatch(action)
         .unwrap()
@@ -72,7 +70,7 @@ const AddMember = ({ id_room }: { id_room: string }) => {
   };
   return (
     <ModalWrapper modalId={MODAL_IDS.addMember}>
-      <Box component={'form'} onSubmit={handleSubmit(handleOnSubmit)} minHeight={'50vh'} maxWidth={'34vw'} p={2}>
+      <Box component={'form'} onSubmit={handleSubmit(handleOnSubmit)} minHeight={450} width={'34vw'} p={2}>
         <Box>
           <Typography>{t('message.add_member')}</Typography>
           <Divider sx={{ my: 1 }} />
@@ -80,6 +78,7 @@ const AddMember = ({ id_room }: { id_room: string }) => {
             name='users'
             control={control}
             defaultValue={[]}
+            rules={{ required: { value: true, message: '' } }}
             render={({ field: { value, onChange }, fieldState: { error, invalid } }) => {
               return (
                 <Box>
@@ -121,8 +120,9 @@ const AddMember = ({ id_room }: { id_room: string }) => {
           <Box>
             <Box my={1}>
               <SearchBar
+                param={{ id_user: me?.id_me, id_room: id_room }}
                 placeholder={t('message.add_member') || 'Add member'}
-                actionThunk={getUsersThunk}
+                actionThunk={getUsersNotInRoomThunk}
                 setNote={setNote}
                 setResult={setNewResult}
                 sx={{ py: 0.5 }}

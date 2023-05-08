@@ -22,7 +22,10 @@ export const messageApi = {
     return client.post<any>(`/room/create`, payload);
   },
   deleteRoom: (payload: { id_room: string }) => {
-    return client.post<any>(`/room/delete`, payload);
+    return client.delete<any>(`/room/delete`, { data: payload });
+  },
+  deleteUser: (payload: { id_room: string; id_user: string }) => {
+    return client.delete<any>(`/room/user/delete`, { data: payload });
   },
   addMembers: (payload: IPayloadAddMember) => {
     return client.post<any>(`/room/addMembers`, payload);
@@ -32,6 +35,7 @@ export const messageApi = {
       params: params
     });
   },
+
   searchRoomOrUser: (params: IPayloadSearchRoom) => {
     return client.get<ISearchRoom>(`/room/search`, {
       params: params

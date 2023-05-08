@@ -12,8 +12,7 @@ import { clearPost } from 'src/redux_store/post/post_slice';
 const Home = () => {
   const dispatch = useAppDispatch();
   const { me } = useAppSelector((state) => state.userSlice);
-  const postList = useAppSelector((state) => state.postSlice.posts);
-  // const [postList, setPosts] = useState<IPost[]>([]);
+  const { posts } = useAppSelector((state) => state.postSlice);
   const [isLoadMore, setIsLoadMore] = useState(true);
   const fetchApi = (offset: number) => {
     const id_user = me?.id_user;
@@ -34,7 +33,7 @@ const Home = () => {
       });
   };
   useEffect(() => {
-    const offset = postList.length;
+    const offset = posts.length;
     fetchApi(offset);
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
@@ -50,13 +49,13 @@ const Home = () => {
         <Box mt={3} height={100} color={'common.black'}>
           <ListFriends />
           <Box mt={3}>
-            {postList.length > 0 && (
+            {posts.length > 0 && (
               <Box>
                 <InfiniteScroll
-                  dataLength={postList.length}
+                  dataLength={posts.length}
                   next={() => {
                     if (isLoadMore) {
-                      fetchApi(postList.length);
+                      fetchApi(posts.length);
                     }
                   }}
                   hasMore={true}
@@ -66,7 +65,7 @@ const Home = () => {
                     </p>
                   }
                 >
-                  {postList.map((post) => {
+                  {posts.map((post) => {
                     return <PostItem key={post.id_post} post={post} />;
                   })}
                 </InfiniteScroll>
