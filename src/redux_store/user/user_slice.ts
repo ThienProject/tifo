@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loginThunk, updateInvisible } from './user_action';
+import { loginThunk, updateImageThunk, updateInfoThunk, updateInvisible } from './user_action';
 import * as io from 'socket.io-client';
-
 const authLocalStorage: any = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || '') : null;
 
 const { me, socket, accessToken, refreshToken } = authLocalStorage || {
@@ -56,6 +55,24 @@ const userSlice = createSlice({
     builder.addCase(updateInvisible.fulfilled, (state, action) => {
       const { invisible } = action.payload;
       state.me.invisible = invisible;
+    });
+    builder.addCase(updateInfoThunk.fulfilled, (state, action) => {
+      const { user, accessToken, refreshToken } = action.payload;
+      if (user) {
+        state.me = user;
+        state.accessToken = accessToken;
+        state.refreshToken = refreshToken;
+        localStorage.setItem('auth', JSON.stringify({ me: user, accessToken, refreshToken }));
+      }
+    });
+    builder.addCase(updateImageThunk.fulfilled, (state, action) => {
+      const { user, accessToken, refreshToken } = action.payload;
+      if (user) {
+        state.me = user;
+        state.accessToken = accessToken;
+        state.refreshToken = refreshToken;
+        localStorage.setItem('auth', JSON.stringify({ me: user, accessToken, refreshToken }));
+      }
     });
   }
 });

@@ -12,10 +12,12 @@ import { useAppDispatch } from 'src/redux_store';
 import { loginThunk } from 'src/redux_store/user/user_action';
 import { toastMessage } from 'src/utils/toast';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useTranslation } from 'react-i18next';
 
 // const cx = classNames.bind(styles);
 const Login = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigation = useNavigate();
   const initLoginForm: IPayloadLogin = {
@@ -74,8 +76,8 @@ const Login = () => {
                     fontSize: 18
                   }
                 }}
-                label='Email'
-                placeholder='Email'
+                label={t('profile.email')!}
+                placeholder={t('profile.email')!}
                 name='email'
                 type='text'
                 required
@@ -92,20 +94,21 @@ const Login = () => {
                     fontSize: 18
                   }
                 }}
-                label='Password'
-                placeholder='Password'
+                label={t('profile.password')!}
+                placeholder={t('profile.password')!}
                 type='password'
                 name='password'
                 required
                 control={control}
               />
               <Button
+                type='submit'
                 onClick={handleSubmit(handleOnSubmit)}
                 fullWidth
                 sx={{ color: 'common.white' }}
                 variant='contained'
               >
-                Login
+                {t('sidebar.login')}
               </Button>
               <Typography sx={{ opacity: 0.6 }} fontWeight={100}>
                 Or
@@ -116,7 +119,7 @@ const Login = () => {
                 }}
                 sx={{ fontSize: 10 }}
               >
-                Forget password
+                {t('profile.forget')}
               </Button>
             </Box>
           </Box>
@@ -131,7 +134,7 @@ const Login = () => {
                 navigation('/auth/register');
               }}
             >
-              Sign up
+              {t('profile.signup')}
             </Button>
           </Typography>
         </Box>

@@ -4,13 +4,47 @@ import { userApi } from 'src/clients/http/user_api';
 import { IPayloadGetUser, IPayloadLogin, IPayloadRegister } from 'src/types/auth';
 import { IPayloadGetPost } from 'src/types/post';
 import { IPayloadSearchRoom } from 'src/types/room';
-import { IPayloadFollow, IPayloadGetUsers, IPayloadInvisible } from 'src/types/user';
+import { IPayloadFollow, IPayloadGetUsers, IPayloadInvisible, IPayloadPassword, IUser } from 'src/types/user';
 
 export const loginThunk = createAsyncThunk<any, IPayloadLogin>(
   'user/loginUser',
   async (payload, { rejectWithValue }) => {
     try {
       const { data } = await userApi.login(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const updateInfoThunk = createAsyncThunk<any, IUser>(
+  'user/updateInfoThunk',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.updateInfo(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const updateImageThunk = createAsyncThunk<any, FormData>(
+  'user/updateImageThunk',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.updateImage(payload);
+      return data
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const updatePasswordThunk = createAsyncThunk<any, IPayloadPassword>(
+  'user/updatePasswordThunk',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.updatePassword(payload);
       return data;
     } catch (error: any) {
       return rejectWithValue(error);

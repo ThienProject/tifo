@@ -1,6 +1,6 @@
 import { IPayloadGetUser, IPayloadLogin, IPayloadRegister } from 'src/types/auth';
 import { createClient } from './axios_client';
-import { IPayloadFollow, IPayloadGetUsers, IPayloadInvisible } from 'src/types/user';
+import { IPayloadFollow, IPayloadGetUsers, IPayloadInvisible, IUser } from 'src/types/user';
 import { IPayloadSearchRoom, ISearchRoom } from 'src/types/room';
 
 const client = createClient();
@@ -8,6 +8,12 @@ const client = createClient();
 export const userApi = {
   login: (payload: IPayloadLogin) => {
     return client.post('/auth/login', payload);
+  },
+  updateInfo: (payload: IUser) => {
+    return client.put('/auth/update', payload);
+  },
+  updatePassword: (payload: IUser) => {
+    return client.put('/auth/updatePassword', payload);
   },
   register: (payload: IPayloadRegister) => {
     return client.post<any>('/auth/register', payload);
@@ -47,5 +53,8 @@ export const userApi = {
     return client.get<ISearchRoom>(`/user/getUsersNotInRoom`, {
       params: params
     });
-  }
+  },
+  updateImage: (payload: FormData) => {
+    return client.post('/auth/updateImage', payload);
+  },
 };

@@ -3,10 +3,6 @@ import { styled, CSSObject, Theme } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import MenuSideBar from './SidebarMenu';
 import MuiDrawer from '@mui/material/Drawer';
-// import { useTheme } from '@emotion/react';
-// import styles from './SideBar.module.scss';
-// import classNames from 'classnames/bind';
-// const cx = classNames.bind(styles);
 import {
   HomeOutlined,
   HomeRounded,
@@ -36,8 +32,10 @@ import { useAppDispatch } from 'src/redux_store';
 import { logout } from 'src/redux_store/user/user_slice';
 import { toastMessage } from 'src/utils/toast';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 const SideBar = () => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
   };
@@ -228,8 +226,9 @@ const SideBar = () => {
           isAuth: true,
           action: () => {
             dispatch(logout());
+            navigate('/auth/login');
             toastMessage.success(t('logout'));
-            window.location.reload();
+            // window.location.reload();
           }
         }
       ],

@@ -8,9 +8,12 @@ import { CPath } from 'src/constants';
 import images from 'src/assets/images';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { useTranslation } from 'react-i18next';
-import { requestFollowThunk, unfollowThunk } from 'src/redux_store/user/user_action';
+import { requestFollowThunk, unfollowThunk, updateImageThunk } from 'src/redux_store/user/user_action';
 import { useEffect, useState } from 'react';
-import { HowToRegOutlined } from '@mui/icons-material';
+import { HowToRegOutlined, Settings } from '@mui/icons-material';
+import { useNavigate } from 'react-router';
+import { toastMessage } from 'src/utils/toast';
+import { use } from 'i18next';
 
 const Input = styled('input')({
   display: 'none'
@@ -76,39 +79,93 @@ const CardCoverAction = styled(Box)(
 
 const ProfileCover = ({ user }: { user: IUser }) => {
   const { me } = useAppSelector((state) => state.userSlice);
+  const navigation = useNavigate();
   const dispatch = useAppDispatch();
   const [follow, setFollow] = useState<any>(null);
+  const isMe = user.id_user === me.id_user;
+
   useEffect(() => {
     setFollow(user.follow);
   }, [user]);
   const { t } = useTranslation();
+  const handleChangeImage = (file: File, type: string) => {
+    const formData = new FormData();
+    formData.append('image_user', file);
+    formData.append('type', type);
+    formData.append('id_user', me.id_user);
+    const action = updateImageThunk(formData);
+    dispatch(action)
+      .unwrap()
+      .then(() => {
+        toastMessage.success(t('toast.update'));
+      });
+  };
   return (
     <>
       <CardCover>
-        <CardMedia image={user.cover ? CPath.host_user + user.cover : images.coverDefault} />
-        <CardCoverAction>
-          <Input accept='image/*' id='change-cover' multiple type='file' />
-          <label htmlFor='change-cover'>
-            <Button startIcon={<UploadTwoToneIcon />} variant='contained' component='span'>
-              Change cover
-            </Button>
-          </label>
-        </CardCoverAction>
+        <CardMedia
+          image={
+            isMe
+              ? me.cover
+                ? CPath.host_user + me.cover
+                : images.coverDefault
+              : user.cover
+              ? CPath.host_user + user.cover
+              : images.coverDefault
+          }
+        />
+        <ProtectBox id_owner={user.id_user}>
+          <CardCoverAction>
+            <Input
+              onChange={(e) => {
+                const file = e.target?.files && e.target?.files[0];
+                if (file) handleChangeImage(file, 'cover');
+              }}
+              accept='image/*'
+              id='change-cover'
+              type='file'
+            />
+            <label htmlFor='change-cover'>
+              <Button sx={{ color: '#ffff' }} startIcon={<UploadTwoToneIcon />} variant='contained' component='span'>
+                Change cover
+              </Button>
+            </label>
+          </CardCoverAction>
+        </ProtectBox>
       </CardCover>
       <AvatarWrapper>
         <Avatar
           variant='rounded'
           alt={user.username}
-          src={user.avatar ? CPath.host_user + user.avatar : images.avatar}
+          src={
+            isMe
+              ? me.avatar
+                ? CPath.host_user + me.avatar
+                : images.avatar
+              : user.avatar
+              ? CPath.host_user + user.avatar
+              : images.avatar
+          }
         />
-        <ButtonUploadWrapper>
-          <Input accept='image/*' id='icon-button-file' name='icon-button-file' type='file' />
-          <label htmlFor='icon-button-file'>
-            <IconButton component='span' color='primary'>
-              <UploadTwoToneIcon />
-            </IconButton>
-          </label>
-        </ButtonUploadWrapper>
+        <ProtectBox id_owner={user.id_user}>
+          <ButtonUploadWrapper>
+            <Input
+              onChange={(e) => {
+                const file = e.target?.files && e.target?.files[0];
+                if (file) handleChangeImage(file, 'avatar');
+              }}
+              accept='image/*'
+              id='icon-button-file'
+              name='icon-button-file'
+              type='file'
+            />
+            <label htmlFor='icon-button-file'>
+              <IconButton component='span' color='primary'>
+                <UploadTwoToneIcon />
+              </IconButton>
+            </label>
+          </ButtonUploadWrapper>
+        </ProtectBox>
       </AvatarWrapper>
       <Box py={2} pl={2}>
         <Typography gutterBottom variant='h4' fontSize={18} mb={0}>
@@ -189,11 +246,21 @@ const ProfileCover = ({ user }: { user: IUser }) => {
               <Button size='small' sx={{ textTransform: 'capitalize', mx: 1 }} variant='outlined'>
                 {t('button.chat')}
               </Button>
+              <IconButton color='primary' sx={{ p: 0.5 }}>
+                <MoreHorizTwoToneIcon />
+              </IconButton>
             </Box>
           )}
           <ProtectBox id_owner={user.id_user}>
-            <IconButton color='primary' sx={{ p: 0.5 }}>
-              <MoreHorizTwoToneIcon />
+            <IconButton
+              onClick={() => {
+                navigation('/setting');
+              }}
+              size='small'
+              sx={{ p: 0.5, color: '#777' }}
+            >
+              <Settings />
+              <Typography sx={{ ml: 1 }}>{t('sidebar.setting')}</Typography>
             </IconButton>
           </ProtectBox>
         </Box>

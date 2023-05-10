@@ -43,7 +43,8 @@ export default {
     addMedia: 'Add Media',
     seeMore: 'See more',
     seeLess: 'See less',
-    chat: 'Chat'
+    chat: 'Chat',
+    submit: 'Submit'
   },
   toast: {
     sometimeError: 'Sometime has error occurred !',
@@ -51,7 +52,8 @@ export default {
     netWorkSlow: 'Network is slow, please try again later!',
     requestLogin: 'Please login to use this function !',
     deleteSuccess: 'Delete {{object}} success!',
-    leaveGroup: 'Leaved group success!'
+    leaveGroup: 'Leaved group success!',
+    update: 'Update Success!'
   },
   confirm: {
     cancelCreatePost: 'Do you want to cancel create post',
@@ -94,7 +96,6 @@ export default {
     dleRoom: 'Delete this room',
     invisible: 'Invisible',
     memberTitle: 'All members',
-
     leader: 'Leader',
     room_action: {
       create: '{{actor}} created this group!',
@@ -111,12 +112,46 @@ export default {
     upload: 'Upload',
     toast: {
       createSuccess: 'Create post success !'
+    },
+    type: {
+      public: 'Public',
+      private: 'Private',
+      follower: 'Follower',
     }
   },
   createRoom: {
     rulerUser: 'Must have at least two users'
   },
   rule: {
-    minUser: 'Must have at least one user'
+    minUser: 'Must have at least one user',
+    required: 'Can not empty this field',
+    duplicate: '{{object}} already exists!',
+    invalid: '{{object}} invalid!'
+  },
+  setting: {
+    profile: 'Profile',
+    password: 'Password',
+  },
+  editProfile: {
+    gender: {
+      male: 'Male',
+      female: 'Female',
+      other: 'Other'
+    }
+  },
+  profile: {
+    fullname: 'Fullname',
+    username: 'Username',
+    description: 'Description',
+    gender: 'Gender',
+    birthday: 'Birthday',
+    email: 'Email',
+    phone: 'Phone',
+    password: 'Password',
+    currentPass: 'Current Password',
+    confirmPass: 'Confirm Password',
+    newPass: 'New Password',
+    signup: 'Sign Up',
+    forget: 'Forget Password',
   }
 };

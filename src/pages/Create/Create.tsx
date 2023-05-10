@@ -19,23 +19,14 @@ import { LoadingButton } from '@mui/lab';
 import Scrollbars from 'react-custom-scrollbars-2';
 import { useTranslation } from 'react-i18next';
 import PsychologyAltOutlinedIcon from '@mui/icons-material/PsychologyAltOutlined';
+import { t } from 'i18next';
 const initCreatePost: IPayloadCreatePost = {
   target: '',
   type: '',
   description: '',
   medias: []
 };
-const target = [
-  {
-    target: 'public'
-  },
-  {
-    target: 'private'
-  },
-  {
-    target: 'follower'
-  }
-];
+
 const schemaCreate = schemaCreatePost('target', 'description', 'medias');
 
 const Create = (props: { type: string }) => {
@@ -46,6 +37,20 @@ const Create = (props: { type: string }) => {
   const [suggest, setSuggest] = useState([]);
   const { me } = useAppSelector((state: any) => state.userSlice);
   const dispatch = useAppDispatch();
+  const target = [
+    {
+      target: 'public',
+      label: t('createPost.uploadTitle.type.public')
+    },
+    {
+      target: 'private',
+      label: t('createPost.uploadTitle.type.private')
+    },
+    {
+      target: 'follower',
+      label: t('createPost.uploadTitle.type.follower')
+    }
+  ];
   const { control, handleSubmit, reset, setValue, getValues } = useForm({
     defaultValues: initCreatePost,
     resolver: yupResolver(schemaCreate)
@@ -166,11 +171,10 @@ const Create = (props: { type: string }) => {
             <FormSelect
               control={control}
               name='target'
-              // label='public'
               placeholder='-- select --'
               options={target}
               keyOption='target'
-              labelOption='target'
+              labelOption='label'
             />
           </Box>
           <Button sx={{ color: 'common.white', mt: 2 }} variant='contained' type='submit'>

@@ -38,7 +38,8 @@ export default {
     netWorkSlow: 'Mạng yếu, vui lòng thử lại sau!',
     requestLogin: 'Vui lòng đăng nhập để sử dụng chức năng này !',
     deleteSuccess: 'Xóa {{object}} thành công!',
-    leaveGroup: 'Rời nhóm thành công!'
+    leaveGroup: 'Rời nhóm thành công!',
+    update: 'Cập nhật thành công'
   },
   confirm: {
     cancelCreatePost: 'Bạn muốn hủy bài đăng này ?',
@@ -58,7 +59,8 @@ export default {
     addMedia: 'Thêm phương tiện',
     seeMore: 'Xem thêm',
     seeLess: 'Ít hơn',
-    chat: 'Chat'
+    chat: 'Chat',
+    submit: 'Gửi'
   },
   home: {
     suggestTab: 'Đề xuất cho bạn',
@@ -110,12 +112,46 @@ export default {
     upload: 'Đăng bài',
     toast: {
       createSuccess: 'Đăng bài thành công !'
+    },
+    type: {
+      public: 'Công khai',
+      private: 'Riêng tư',
+      follower: 'Người theo dõi',
     }
   },
   createRoom: {
     rulerUser: 'Ít nhất phải có hai người dùng!'
   },
   rule: {
-    minUser: 'Ít nhất phải có một người dùng'
+    minUser: 'Ít nhất phải có một người dùng',
+    required: 'Không được bỏ trống trường này',
+    duplicate: '{{object}} đã tồn tại!',
+    invalid: '{{object}} không hợp lệ'
+  },
+  setting: {
+    profile: 'Thông tin cá nhân',
+    password: 'Mật khẩu',
+  },
+  editProfile: {
+    gender: {
+      male: 'Nam',
+      female: 'Nữ',
+      other: 'Khác'
+    }
+  },
+  profile: {
+    fullname: 'Họ và tên',
+    username: 'Tên người dùng',
+    description: 'Mô tả',
+    gender: 'Giới tính',
+    birthday: 'Ngày sinh',
+    password: 'Mật khẩu',
+    email: 'Email',
+    phone: 'Số điện thoại',
+    currentPass: 'Mật khẩu hiện tại',
+    confirmPass: 'Xác nhận mật khẩu',
+    newPass: 'Mật khẩu mới',
+    signup: 'Đăng ký',
+    forget: 'Quên mật khẩu',
   }
 };

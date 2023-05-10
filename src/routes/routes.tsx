@@ -19,8 +19,7 @@ import { ProtectedRoute } from './ProtectedRoute';
 // Dashboards
 import SuspenseLoader from 'src/components/admin/SuspenseLoader';
 import ChatBox from 'src/pages/Messages/component/ChatBox';
-import ChatGPT from 'src/pages/Messages/component/ChatGPT';
-
+import Setting from 'src/pages/Setting/Setting';
 const Loader = (Component: any) => (props: any) =>
   (
     <Suspense fallback={<SuspenseLoader />}>
@@ -65,6 +64,10 @@ const routes: IRoute = (login) => [
       {
         path: '/profile',
         element: <ProtectedRoute login={login} children={<Profile />} />
+      },
+      {
+        path: '/setting',
+        element: <ProtectedRoute login={login} children={<Setting />} />
       },
       {
         path: '/:id_user',

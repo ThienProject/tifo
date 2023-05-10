@@ -5,6 +5,7 @@ import { Radio, SxProps, FormHelperText, FormControl, FormControlLabel, RadioGro
 interface IProps {
   control: any;
   name: string;
+  row?: boolean;
   options: any[];
   keyOption: string;
   labelOption: string;
@@ -24,7 +25,7 @@ interface IProps {
   };
 }
 export default function FormRadio(props: IProps) {
-  const { control, name, size = 'small', margin = 'dense', options, keyOption, labelOption, sx } = props;
+  const { control, name, size = 'small', margin = 'dense', options, keyOption, labelOption, sx, row = false } = props;
 
   return (
     <Controller
@@ -33,6 +34,7 @@ export default function FormRadio(props: IProps) {
       render={({ field: { value, onChange }, fieldState: { error, invalid } }) => (
         <FormControl sx={sx} fullWidth margin={margin} size={size} error={invalid}>
           <RadioGroup
+            row={row}
             aria-labelledby='demo-error-radios'
             name='quiz'
             value={value}

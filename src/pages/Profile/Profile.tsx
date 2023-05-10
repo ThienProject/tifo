@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import Tab from 'src/components/Tab';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import TabElement from './components/tabElement';
-import TopProfile from './components/TopProfile';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IUser } from 'src/types/user';
 import { getUserThunk } from 'src/redux_store/user/user_action';
 import { IPayloadGetUser } from 'src/types/auth';
+import ProfileCover from './components/ProfileCover';
 
 const Profile = () => {
   const location = useLocation();
@@ -39,7 +39,6 @@ const Profile = () => {
       .catch(() => {
         navigate('/notfound', { replace: true });
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathName]);
 
   useEffect(() => {
@@ -60,7 +59,7 @@ const Profile = () => {
   }, [user]);
   return (
     <Box mt={2} sx={{}} color={'common.black'}>
-      {user && <TopProfile user={user} />}
+      {user && <ProfileCover user={user} />}
       {tabs.length > 0 && <Tab TabList={tabs} />}
     </Box>
   );

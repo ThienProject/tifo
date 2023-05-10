@@ -5,6 +5,7 @@ export interface IUser {
   id_user?: string;
   username?: string;
   fullname?: string;
+  birthday?: Date;
   age?: string;
   phone?: string;
   email?: string;
@@ -38,4 +39,10 @@ export interface IPayloadGetUsers {
   q?: string;
   limit?: number;
   offset?: number;
+}
+export interface IPayloadPassword {
+  id_user?: string;
+  currentPassword?: string;
+  confirm?: string;
+  password: string;
 }
