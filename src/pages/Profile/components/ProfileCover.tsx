@@ -21,8 +21,7 @@ const Input = styled('input')({
 
 const AvatarWrapper = styled(Card)(
   ({ theme }) => `
-
-    position: relative;
+    border-radius: 50%;
     overflow: visible;
     display: inline-block;
     margin-top: -${theme.spacing(9)};
@@ -62,7 +61,6 @@ const ButtonUploadWrapper = styled(Box)(
 const CardCover = styled(Card)(
   ({ theme }) => `
     position: relative;
-
     .MuiCardMedia-root {
       height: ${theme.spacing(26)};
     }
@@ -101,7 +99,7 @@ const ProfileCover = ({ user }: { user: IUser }) => {
       });
   };
   return (
-    <>
+    <Box sx={{ position: 'relative' }}>
       <CardCover>
         <CardMedia
           image={
@@ -134,19 +132,21 @@ const ProfileCover = ({ user }: { user: IUser }) => {
         </ProtectBox>
       </CardCover>
       <AvatarWrapper>
-        <Avatar
-          variant='rounded'
-          alt={user.username}
-          src={
-            isMe
-              ? me.avatar
-                ? CPath.host_user + me.avatar
+        <label htmlFor='icon-button-file'>
+          <Avatar
+            variant='circular'
+            alt={user.username}
+            src={
+              isMe
+                ? me.avatar
+                  ? CPath.host_user + me.avatar
+                  : images.avatar
+                : user.avatar
+                ? CPath.host_user + user.avatar
                 : images.avatar
-              : user.avatar
-              ? CPath.host_user + user.avatar
-              : images.avatar
-          }
-        />
+            }
+          />
+        </label>
         <ProtectBox id_owner={user.id_user}>
           <ButtonUploadWrapper>
             <Input
@@ -159,11 +159,6 @@ const ProfileCover = ({ user }: { user: IUser }) => {
               name='icon-button-file'
               type='file'
             />
-            <label htmlFor='icon-button-file'>
-              <IconButton component='span' color='primary'>
-                <UploadTwoToneIcon />
-              </IconButton>
-            </label>
           </ButtonUploadWrapper>
         </ProtectBox>
       </AvatarWrapper>
@@ -177,7 +172,7 @@ const ProfileCover = ({ user }: { user: IUser }) => {
         </Typography>
       </Box>
       <Box
-        sx={{ position: 'relative', height: 40, top: -100, left: 160, marginTop: -5 }}
+        sx={{ position: 'absolute', height: 40, top: 222, left: 160 }}
         display={{ xs: 'block', md: 'flex' }}
         alignItems='center'
         justifyContent='space-between'
@@ -265,7 +260,7 @@ const ProfileCover = ({ user }: { user: IUser }) => {
           </ProtectBox>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 };
 

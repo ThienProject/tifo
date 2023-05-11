@@ -66,7 +66,7 @@ const Create = (props: { type: string }) => {
       description,
       medias,
       id_user,
-      type: 'post' || 'reel'
+      type: type === 'reels' ? 'reel' : 'post'
     };
     const formData = objectToFormData(payload);
     const action = createPostThunk(formData);

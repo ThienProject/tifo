@@ -24,6 +24,7 @@ import SliderMedia from './SliderMedia';
 import CustomTypography from 'src/components/CustomTypography';
 
 const PostItem = ({ post }: { post: IPost }) => {
+  console.log(post);
   // Before the component definition:
   const myRef = useRef<HTMLElement>(null);
   const dispatch = useAppDispatch();
@@ -56,7 +57,11 @@ const PostItem = ({ post }: { post: IPost }) => {
               size='small'
               onClick={() => {
                 if (me?.id_user) {
-                  const action = updateLoveThunk({ id_user: me.id_user, isLove: !post.isLove, id_post: post.id_post });
+                  const action = updateLoveThunk({
+                    id_user: me.id_user,
+                    isLove: !post.isLove,
+                    id_post: post.id_post
+                  });
                   dispatch(action).unwrap();
                 }
               }}

@@ -1,56 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
-import { Box, CardActionArea } from '@mui/material';
+import { Box } from '@mui/material';
 import { IMedia } from 'src/types/post';
-import { CPath } from 'src/constants';
-import CardMedia from '@mui/material/CardMedia/CardMedia';
 import { SxProps } from '@mui/material/styles';
-function ItemMedia(props: { item: IMedia; sx: SxProps; isClose?: boolean }) {
-  const { item, sx, isClose = false } = props;
-  const videoRef = useRef<HTMLVideoElement>(null);
-  useEffect(() => {
-    const handleScroll = () => {
-      if (videoRef.current) {
-        const mediaCardRect = videoRef.current?.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
+import ItemMedia from 'src/pages/components/ItemMedia';
 
-        if (mediaCardRect.top < viewportHeight && mediaCardRect.bottom > (viewportHeight * 80) / 100) {
-          // videoRef.current.play();
-        } else {
-          if (videoRef.current.pause) videoRef.current.pause();
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-  useEffect(() => {
-    if (videoRef.current && isClose && videoRef.current.pause) {
-      videoRef.current.pause();
-    }
-  }, [isClose]);
-  return (
-    <Box sx={{ ...sx, p: 0 }} overflow={'hidden'} borderRadius={2}>
-      <CardActionArea>
-        <CardMedia
-          ref={videoRef}
-          sx={sx}
-          // loop={playing}
-          // muted={playing}
-          component={item.type === 'video' ? 'video' : 'img'}
-          alt='media'
-          src={CPath.host_public + item.media_link}
-          title={item.type}
-          controls
-        />
-      </CardActionArea>
-    </Box>
-  );
-}
 const SliderMedia = ({ medias, sx }: { medias?: IMedia[]; sx: SxProps }) => {
   const [isClose] = useState(false);
   return (
@@ -128,7 +82,7 @@ const SliderMedia = ({ medias, sx }: { medias?: IMedia[]; sx: SxProps }) => {
               // }}
             >
               {medias.map((item, i) => (
-                <ItemMedia isClose={isClose} sx={sx} key={i} item={item} />
+                <ItemMedia sx={sx} key={item.id_media} item={item} />
               ))}
             </Carousel>
           ) : (

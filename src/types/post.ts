@@ -11,7 +11,7 @@ export interface IPost extends IUser {
   id_post: string;
   medias?: IMedia[];
   target?: string;
-  type?: string;
+  type?: 'post' | 'reel';
   description?: string;
   date_time?: Date;
   is_banned?: boolean;
@@ -54,6 +54,7 @@ export interface IPayloadGetPost {
   id_user?: string;
   limit?: number;
   offset?: number;
+  type?: 'reel' | 'post'
 }
 
 export interface IPayloadCreateComment {
@@ -75,4 +76,5 @@ export interface IUpdateLove {
   id_post: string;
   id_user: string;
   isLove: boolean;
+  type?: 'reel' | 'post';
 }
