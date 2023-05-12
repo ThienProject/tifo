@@ -10,6 +10,7 @@ import { IUserChat } from 'src/types/user';
 import { searchRoomOrUserThunk } from 'src/redux_store/room/room_action';
 import { useTranslation } from 'react-i18next';
 import { updateInvisible } from 'src/redux_store/user/user_action';
+import { setNewUserChat } from 'src/redux_store/room/room_slice';
 
 const SidebarChat = ({ sx }: { sx?: SxProps }) => {
   const { me } = useAppSelector((state) => state.userSlice);
@@ -65,7 +66,17 @@ const SidebarChat = ({ sx }: { sx?: SxProps }) => {
                     }
                     return (
                       <MenuItem key={item.id_user} sx={{ my: 1, px: 0.5, mx: 0.5, borderRadius: 2 }}>
-                        <UserItem to={to} size='small' user={chatObject} />
+                        <UserItem
+                          callback={() => {
+                            if (!item?.id_room) {
+                              const actionSetNewChat = setNewUserChat({ user: item });
+                              dispatch(actionSetNewChat);
+                            }
+                          }}
+                          to={to}
+                          size='small'
+                          user={chatObject}
+                        />
                       </MenuItem>
                     );
                   })}

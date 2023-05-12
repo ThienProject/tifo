@@ -59,7 +59,6 @@ function ChatContent({ socket }: { socket: Socket }) {
   const chatDates = useAppSelector((state) => {
     if (id_room) return state.roomSlice.chats[id_room];
   });
-  console.log('chatDates', chatDates);
   useEffect(() => {
     socket.on('new-chat', ({ chat, id_room, id_user, date }: any) => {
       const action = createChat({ chat, id_room, id_user, date });

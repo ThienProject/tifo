@@ -26,7 +26,7 @@ const ChatBox = () => {
   const handleDrawerToggle = () => {
     dispatch(toggleMenu());
   };
-  const rooms = useAppSelector((state) => state.roomSlice.rooms);
+  // const rooms = useAppSelector((state) => state.roomSlice.rooms);
   const buttonToggle = (
     <IconButtonToggle
       sx={{
@@ -59,35 +59,43 @@ const ChatBox = () => {
 `
   );
   const { id_user } = useParams();
+  // useEffect(() => {
+  //   if (id_user) {
+  //     const roomIndex = rooms.findIndex(
+  //       (item) => item.users && item.users[0].id_user === id_user && item.type === 'friend'
+  //     );
+  //     if (roomIndex === -1) {
+  //       const action = getUserThunk({ id_user });
+  //       dispatch(action)
+  //         .unwrap()
+  //         .then((data) => {
+  //           const { user } = data;
+  //           if (user.id_user) {
+  //             const actionSetNewChat = setNewUserChat({ user });
+  //             dispatch(actionSetNewChat);
+  //           } else navigate('/notfound', { replace: true });
+  //         })
+  //         .catch(() => {
+  //           navigate('/notfound', { replace: true });
+  //         });
+  //     } else {
+  //       navigate('/message', { replace: true });
+  //     }
+  //     return () => {
+  //       const actionReset = deleteNewUserChat();
+  //       dispatch(actionReset);
+  //     };
+  //   }
+  // }, [id_user]);
+
   useEffect(() => {
     if (id_user) {
-      const roomIndex = rooms.findIndex(
-        (item) => item.users && item.users[0].id_user === id_user && item.type === 'friend'
-      );
-      if (roomIndex === -1) {
-        const action = getUserThunk({ id_user });
-        dispatch(action)
-          .unwrap()
-          .then((data) => {
-            const { user } = data;
-            if (user.id_user) {
-              const actionSetNewChat = setNewUserChat({ user });
-              dispatch(actionSetNewChat);
-            } else navigate('/notfound', { replace: true });
-          })
-          .catch(() => {
-            navigate('/notfound', { replace: true });
-          });
-      } else {
-        navigate('/message', { replace: true });
-      }
       return () => {
         const actionReset = deleteNewUserChat();
         dispatch(actionReset);
       };
     }
   }, [id_user]);
-
   return (
     <ChatWindow>
       <ChatTopBar

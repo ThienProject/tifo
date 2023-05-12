@@ -68,7 +68,6 @@ function BottomBarContent() {
             const action = createChat({ chat, id_room, id_user: idChatbot, date });
             dispatch(action);
           }
-
           if (isFirstChat && id_room) {
             navigation(`/message/${id_room}`);
           }

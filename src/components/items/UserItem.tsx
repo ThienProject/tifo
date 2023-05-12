@@ -9,13 +9,15 @@ const UserItem = ({
   size,
   sx,
   isFullname,
-  to
+  to,
+  callback
 }: {
   sx?: React.CSSProperties;
   user: IUser;
   size: string;
   isFullname?: boolean;
   to?: string;
+  callback?: () => void;
 }) => {
   let newSize: number;
   if (size === 'medium') {
@@ -32,6 +34,7 @@ const UserItem = ({
         <Box
           sx={{ ...sx, width: '100%' }}
           onClick={() => {
+            if (callback) callback();
             if (to) {
               navigate(to);
             }
