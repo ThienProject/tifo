@@ -4,7 +4,8 @@ import {
   IPayloadEditComment,
   IPayloadGetPost,
   IPost,
-  IUpdateLove
+  IUpdateLove,
+  IUpdateSave
 } from 'src/types/post';
 import { createClient } from './axios_client';
 
@@ -39,6 +40,9 @@ export const postApi = {
   },
   updateLove: (payload: IUpdateLove) => {
     return client.post('/post/updateLove', payload);
+  },
+  updateSave: (payload: IUpdateSave) => {
+    return client.post('/post/updateSave', payload);
   },
   deletePost: (payload: { id_post: string }) => {
     return client.delete('/post/delete', { data: payload });

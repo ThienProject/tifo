@@ -12,7 +12,14 @@ const SubSidebar = ({
   const CPN = item.childNode;
   return (
     <Paper>
-      <Box sx={{ width: '450px', height: '100vh' }}>{<CPN handleClose={handleClose} />}</Box>
+      <Box
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        sx={{ width: '450px', height: '100vh' }}
+      >
+        {<CPN handleClose={handleClose} />}
+      </Box>
     </Paper>
   );
 };

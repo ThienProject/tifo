@@ -6,7 +6,8 @@ import {
   deletePostThunk,
   getPostsThunk,
   sendCommentThunk,
-  updateLoveThunk
+  updateLoveThunk,
+  updateSaveThunk
 } from './post_action';
 import { logout } from '../user/user_slice';
 
@@ -37,8 +38,7 @@ const postSlice = createSlice({
       const { posts, type } = action.payload;
       if (type === 'reel') {
         state.reels.push(...posts);
-      } else
-        state.posts.push(...posts);
+      } else state.posts.push(...posts);
     });
     builder.addCase(deletePostThunk.fulfilled, (state, action) => {
       const { id_post, type } = action.payload;
@@ -49,14 +49,12 @@ const postSlice = createSlice({
         const index = state.posts.findIndex((post) => post.id_post == id_post);
         state.posts.splice(index, 1);
       }
-
     });
     builder.addCase(createPostThunk.fulfilled, (state, action) => {
       const { post, type } = action.payload;
       if (type === 'reel') {
         state.reels.push(post);
-      } else
-        state.posts.push(post);
+      } else state.posts.push(post);
     });
     builder.addCase(updateLoveThunk.fulfilled, (state, action) => {
       const { message, loves, id_post, isLove, type } = action.payload;
@@ -68,15 +66,31 @@ const postSlice = createSlice({
             state.reels[index].loves = loves;
             state.reels[index].isLove = isLove;
           }
-        }
-        else {
+        } else {
           const index = state.posts.findIndex((post) => post.id_post == id_post);
           if (index != -1) {
             state.posts[index].loves = loves;
             state.posts[index].isLove = isLove;
           }
         }
-
+      }
+    });
+    builder.addCase(updateSaveThunk.fulfilled, (state, action) => {
+      const { message, loves, id_post, isSave, type } = action.payload;
+      if (message) {
+        if (type === 'reel') {
+          const index = state.reels.findIndex((post) => post.id_post == id_post);
+          if (index != -1) {
+            state.reels[index].loves = loves;
+            state.reels[index].isSave = isSave;
+          }
+        } else {
+          const index = state.posts.findIndex((post) => post.id_post == id_post);
+          if (index != -1) {
+            state.posts[index].loves = loves;
+            state.posts[index].isSave = isSave;
+          }
+        }
       }
     });
     builder.addCase(deleteCommentThunk.fulfilled, (state, action) => {
@@ -93,7 +107,6 @@ const postSlice = createSlice({
             state.posts[index].commentLength = state.posts[index].commentLength - 1;
           }
         }
-
       }
     });
     builder.addCase(sendCommentThunk.fulfilled, (state, action) => {
@@ -105,13 +118,12 @@ const postSlice = createSlice({
             state.reels[index].commentLength++;
           }
         }
-      } else
-        if (newComment) {
-          const index = state.posts.findIndex((post) => post.id_post == newComment.id_post);
-          if (index != -1) {
-            state.posts[index].commentLength++;
-          }
+      } else if (newComment) {
+        const index = state.posts.findIndex((post) => post.id_post == newComment.id_post);
+        if (index != -1) {
+          state.posts[index].commentLength++;
         }
+      }
     });
     builder.addCase(logout, (state) => {
       state.posts = initialState.posts;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { Box } from '@mui/material';
 import { IMedia } from 'src/types/post';
@@ -6,7 +6,7 @@ import { SxProps } from '@mui/material/styles';
 import ItemMedia from 'src/pages/components/ItemMedia';
 
 const SliderMedia = ({ medias, sx }: { medias?: IMedia[]; sx: SxProps }) => {
-  const [isClose] = useState(false);
+  // const [isClose] = useState(false);
   return (
     <>
       {medias && (
@@ -81,7 +81,7 @@ const SliderMedia = ({ medias, sx }: { medias?: IMedia[]; sx: SxProps }) => {
               //   );
               // }}
             >
-              {medias.map((item, i) => (
+              {medias.map((item) => (
                 <ItemMedia sx={sx} key={item.id_media} item={item} />
               ))}
             </Carousel>

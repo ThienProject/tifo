@@ -36,6 +36,8 @@ export default {
     accept: 'Accept',
     follow: 'Follow',
     requested: 'Requested',
+    unfollow: 'Unfollow',
+    remove: 'Remove',
     edit: 'Edit',
     delete: 'Delete',
     room: 'Create Team',
@@ -56,11 +58,13 @@ export default {
     update: 'Update Success!'
   },
   confirm: {
-    cancelCreatePost: 'Do you want to cancel create post',
-    deletePost: 'Do you want to delete this post',
-    deleteRoom: 'Do you want to delete this room',
-    deleteUser: 'Do you want to delete this user',
-    leave: 'Do you want to leave this room?'
+    cancelCreatePost: 'Do you want to cancel create post?',
+    deletePost: 'Do you want to delete this post?',
+    deleteRoom: 'Do you want to delete this room?',
+    deleteUser: 'Do you want to delete this user?',
+    leave: 'Do you want to leave this room?',
+    unfollow: 'Do you want to unfollow this user?',
+    remove: 'Do you want to remove this follower?'
   },
   home: {
     suggestTab: 'Suggestion for you',
@@ -116,7 +120,7 @@ export default {
     type: {
       public: 'Public',
       private: 'Private',
-      follower: 'Follower',
+      follower: 'Follower'
     }
   },
   createRoom: {
@@ -130,7 +134,7 @@ export default {
   },
   setting: {
     profile: 'Profile',
-    password: 'Password',
+    password: 'Password'
   },
   editProfile: {
     gender: {
@@ -152,6 +156,10 @@ export default {
     confirmPass: 'Confirm Password',
     newPass: 'New Password',
     signup: 'Sign Up',
-    forget: 'Forget Password',
+    forget: 'Forget Password'
+  },
+  common: {
+    followings: 'followings',
+    followers: 'followers'
   }
 };

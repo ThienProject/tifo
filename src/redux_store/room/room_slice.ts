@@ -1,6 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IChatDates, IChatroom, IRoom } from 'src/types/room';
-import { clearChatsThunk, deleteRoomThunk, deleteUserThunk, getChatsByIDroomThunk, getRoomsThunk, getUsersByIDRoomThunk } from './room_action';
+import {
+  clearChatsThunk,
+  deleteRoomThunk,
+  deleteUserThunk,
+  getChatsByIDroomThunk,
+  getRoomsThunk,
+  getUsersByIDRoomThunk
+} from './room_action';
 import { IUser } from 'src/types/user';
 
 const initialState: {

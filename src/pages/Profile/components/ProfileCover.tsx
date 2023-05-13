@@ -1,4 +1,4 @@
-import { Box, Typography, Card, Avatar, CardMedia, Button, IconButton } from '@mui/material';
+import { Box, Typography, Card, Avatar, CardMedia, Button, IconButton, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ProtectBox from 'src/components/ProtectBox';
 import UploadTwoToneIcon from '@mui/icons-material/UploadTwoTone';
@@ -8,12 +8,20 @@ import { CPath } from 'src/constants';
 import images from 'src/assets/images';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { useTranslation } from 'react-i18next';
-import { requestFollowThunk, unfollowThunk, updateImageThunk } from 'src/redux_store/user/user_action';
+import {
+  getFollowersThunk,
+  getFollowingsThunk,
+  requestFollowThunk,
+  unfollowThunk,
+  updateImageThunk
+} from 'src/redux_store/user/user_action';
 import { useEffect, useState } from 'react';
 import { HowToRegOutlined, Settings } from '@mui/icons-material';
 import { useNavigate } from 'react-router';
 import { toastMessage } from 'src/utils/toast';
-import { use } from 'i18next';
+import { openModal } from 'src/redux_store/common/modal/modal_slice';
+import MODAL_IDS from 'src/constants/modal';
+import ModalFollower from 'src/pages/components/ModalFollower';
 
 const Input = styled('input')({
   display: 'none'
@@ -163,13 +171,72 @@ const ProfileCover = ({ user }: { user: IUser }) => {
         </ProtectBox>
       </AvatarWrapper>
       <Box py={2} pl={2}>
-        <Typography gutterBottom variant='h4' fontSize={18} mb={0}>
-          {user.fullname}
-        </Typography>
+        <Stack direction={'row'} alignItems={'center'}>
+          <Typography gutterBottom variant='h4' fontSize={18} mb={0}>
+            {user.fullname}
+          </Typography>
+          <ProtectBox id_owner={user.id_user}>
+            <IconButton
+              onClick={() => {
+                navigation('/setting');
+              }}
+              size='small'
+              sx={{ ml: 2, p: 0.5, color: '#777' }}
+            >
+              <Settings />
+              <Typography sx={{ ml: 1 }}>{t('sidebar.setting')}</Typography>
+            </IconButton>
+          </ProtectBox>
+        </Stack>
+
         <Typography variant='subtitle2'>{user.description}</Typography>
-        <Typography sx={{ pb: 2 }} variant='subtitle2' color='text.primary'>
-          {user.followings} followings | {user.followers} followers
-        </Typography>
+        <Stack direction={'row'} alignItems={'center'}>
+          <Button
+            onClick={() => {
+              const action = getFollowingsThunk({ id_user: user.id_user });
+              dispatch(action)
+                .unwrap()
+                .then((data) => {
+                  const { users } = data;
+                  dispatch(
+                    openModal({
+                      modalId: MODAL_IDS.followers,
+                      dialogComponent: (
+                        <ModalFollower id_owner={user.id_user!} title={t('common.followings')} users={users} />
+                      )
+                    })
+                  );
+                });
+            }}
+            sx={{ color: 'text.secondary', fontWeight: 600, textTransform: 'lowercase' }}
+            variant='text'
+          >
+            {user.followings || 0} {t('common.followings')}
+          </Button>
+          |
+          <Button
+            onClick={() => {
+              const action = getFollowersThunk({ id_user: user.id_user });
+              dispatch(action)
+                .unwrap()
+                .then((data) => {
+                  const { users } = data;
+                  dispatch(
+                    openModal({
+                      modalId: MODAL_IDS.followers,
+                      dialogComponent: (
+                        <ModalFollower id_owner={user.id_user!} title={t('common.followers')} users={users} />
+                      )
+                    })
+                  );
+                });
+            }}
+            sx={{ color: 'text.secondary', fontWeight: 600, textTransform: 'lowercase' }}
+            variant='text'
+          >
+            {user.followers || 0} {t('common.followers')}
+          </Button>
+        </Stack>
       </Box>
       <Box
         sx={{ position: 'absolute', height: 40, top: 222, left: 160 }}
@@ -246,18 +313,6 @@ const ProfileCover = ({ user }: { user: IUser }) => {
               </IconButton>
             </Box>
           )}
-          <ProtectBox id_owner={user.id_user}>
-            <IconButton
-              onClick={() => {
-                navigation('/setting');
-              }}
-              size='small'
-              sx={{ p: 0.5, color: '#777' }}
-            >
-              <Settings />
-              <Typography sx={{ ml: 1 }}>{t('sidebar.setting')}</Typography>
-            </IconButton>
-          </ProtectBox>
         </Box>
       </Box>
     </Box>

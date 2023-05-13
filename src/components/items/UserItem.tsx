@@ -55,7 +55,7 @@ const UserItem = ({
                 src={CPath.host_user + user?.avatar}
               />
             </Box>
-            <Box>
+            <Box textAlign={'left'}>
               <Typography
                 px={1}
                 fontWeight={700}

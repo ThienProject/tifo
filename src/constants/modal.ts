@@ -6,8 +6,11 @@ const MODAL_IDS = {
   confirmDeletePost: 'confirmDeletePost',
   confirmDeleteRoom: 'confirmDeleteRoom',
   confirmDeleteUser: 'confirmDeleteUser',
+  confirmUnfollow: 'confirmUnfollow',
+  confirmRemove: 'confirmRemove',
   createRoom: 'createRoom',
   memberManager: 'memberManager',
-  addMember: 'addMember'
+  addMember: 'addMember',
+  followers: 'followers'
 };
 export default MODAL_IDS;

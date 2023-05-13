@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControl, FormLabel, SxProps, TextField, useTheme } from '@mui/material';
+import { FormControl, SxProps, TextField } from '@mui/material';
 import { MobileDatePicker } from '@mui/x-date-pickers';
 import { Controller } from 'react-hook-form';
 import moment from 'moment';
@@ -36,7 +36,6 @@ export const FormDatePicker = (props: IProps) => {
     handleChange,
     disableFuture = true
   } = props;
-  const theme = useTheme();
   return (
     <Controller
       name={name}

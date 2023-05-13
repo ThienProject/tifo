@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { postApi } from 'src/clients/http/post_api';
-import { IPayloadCreateComment, IPayloadEditComment, IPayloadGetPost, IUpdateLove } from 'src/types/post';
+import { IPayloadCreateComment, IPayloadEditComment, IPayloadGetPost, IUpdateLove, IUpdateSave } from 'src/types/post';
 
 export const createPostThunk = createAsyncThunk<any, FormData>(
   'post/createPostThunk',
@@ -29,6 +29,17 @@ export const updateLoveThunk = createAsyncThunk<any, IUpdateLove>(
   async (payload, { rejectWithValue }) => {
     try {
       const { data } = await postApi.updateLove(payload);
+      return { ...data, ...payload };
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const updateSaveThunk = createAsyncThunk<any, IUpdateSave>(
+  'post/updateSaveThunk',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await postApi.updateSave(payload);
       return { ...data, ...payload };
     } catch (error: any) {
       return rejectWithValue(error);

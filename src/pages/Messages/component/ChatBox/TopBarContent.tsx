@@ -407,7 +407,7 @@ function TopBarContent() {
                                     });
                                     dispatch(action)
                                       .unwrap()
-                                      .then((data) => {
+                                      .then(() => {
                                         toastMessage.success(t('toast.leaveGroup'));
                                         dispatch(closeModal({ modalId: MODAL_IDS.confirmDeleteUser }));
                                         navigation('/message');

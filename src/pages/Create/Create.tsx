@@ -19,7 +19,6 @@ import { LoadingButton } from '@mui/lab';
 import Scrollbars from 'react-custom-scrollbars-2';
 import { useTranslation } from 'react-i18next';
 import PsychologyAltOutlinedIcon from '@mui/icons-material/PsychologyAltOutlined';
-import { t } from 'i18next';
 const initCreatePost: IPayloadCreatePost = {
   target: '',
   type: '',

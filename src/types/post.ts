@@ -54,7 +54,7 @@ export interface IPayloadGetPost {
   id_user?: string;
   limit?: number;
   offset?: number;
-  type?: 'reel' | 'post'
+  type?: 'reel' | 'post';
 }
 
 export interface IPayloadCreateComment {
@@ -76,5 +76,11 @@ export interface IUpdateLove {
   id_post: string;
   id_user: string;
   isLove: boolean;
+  type?: 'reel' | 'post';
+}
+export interface IUpdateSave {
+  id_post: string;
+  id_user: string;
+  isSave: boolean;
   type?: 'reel' | 'post';
 }

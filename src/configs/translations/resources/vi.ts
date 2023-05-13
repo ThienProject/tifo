@@ -46,9 +46,13 @@ export default {
     deletePost: 'Bạn muốn xóa bài đăng này ?',
     deleteRoom: 'Bạn muốn xóa phòng này ?',
     deleteUser: 'Bạn muốn xóa người dùng này?',
-    leave: 'Bạn muốn rời phòng này?'
+    leave: 'Bạn muốn rời phòng này?',
+    unfollow: 'Hủy theo dõi người này?',
+    remove: 'Xóa người follow này? '
   },
   button: {
+    unfollow: 'Hủy theo dõi',
+    remove: 'Xóa',
     accept: 'Chấp nhận',
     follow: 'Theo dõi',
     requested: 'Đã gửi yêu cầu',
@@ -116,7 +120,7 @@ export default {
     type: {
       public: 'Công khai',
       private: 'Riêng tư',
-      follower: 'Người theo dõi',
+      follower: 'Người theo dõi'
     }
   },
   createRoom: {
@@ -130,7 +134,7 @@ export default {
   },
   setting: {
     profile: 'Thông tin cá nhân',
-    password: 'Mật khẩu',
+    password: 'Mật khẩu'
   },
   editProfile: {
     gender: {
@@ -152,6 +156,10 @@ export default {
     confirmPass: 'Xác nhận mật khẩu',
     newPass: 'Mật khẩu mới',
     signup: 'Đăng ký',
-    forget: 'Quên mật khẩu',
+    forget: 'Quên mật khẩu'
+  },
+  common: {
+    followings: 'đang theo dõi',
+    followers: 'người theo dõi'
   }
 };

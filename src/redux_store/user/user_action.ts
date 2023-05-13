@@ -34,7 +34,7 @@ export const updateImageThunk = createAsyncThunk<any, FormData>(
   async (payload, { rejectWithValue }) => {
     try {
       const { data } = await userApi.updateImage(payload);
-      return data
+      return data;
     } catch (error: any) {
       return rejectWithValue(error);
     }
@@ -135,6 +135,28 @@ export const getUsersThunk = createAsyncThunk<any, IPayloadGetUsers>(
   async (payload: IPayloadGetUsers, { rejectWithValue }) => {
     try {
       const { data } = await userApi.getUsers(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const getFollowingsThunk = createAsyncThunk<any, IPayloadGetUsers>(
+  'user/getFollowingsThunk',
+  async (payload: IPayloadGetUsers, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.getFollowings(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const getFollowersThunk = createAsyncThunk<any, IPayloadGetUsers>(
+  'user/getFollowersThunk',
+  async (payload: IPayloadGetUsers, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.getFollowers(payload);
       return data;
     } catch (error: any) {
       return rejectWithValue(error);

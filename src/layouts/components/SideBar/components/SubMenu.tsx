@@ -31,6 +31,7 @@ const SubMenu = ({
             sx={{ minWidth: 200, py: 2, px: 3, display: 'flex', justifyContent: 'space-between' }}
             key={menuItem.key}
             onClick={(e) => {
+              e.stopPropagation();
               const action = menuItem.action;
               if (action) {
                 action();

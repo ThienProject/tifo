@@ -31,7 +31,7 @@ const EditProfile = () => {
     birthday: me?.birthday || '',
     gender: me?.gender || ''
   };
-  const { control, handleSubmit, reset, setError } = useForm({
+  const { control, handleSubmit, setError } = useForm({
     defaultValues: profileDefault,
     resolver: yupResolver(schema)
   });
@@ -42,7 +42,7 @@ const EditProfile = () => {
       dispatch(action)
         .unwrap()
         .then((data) => {
-          const { user, rules, message } = data;
+          const { rules, message } = data;
           if (message === 'duplicate') {
             for (let i = 0; i < rules.length; i++) {
               setError(rules[i], { message: t('rule.duplicate', { object: rules[i] })! });

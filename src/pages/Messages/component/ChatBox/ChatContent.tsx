@@ -96,7 +96,11 @@ function ChatContent({ socket }: { socket: Socket }) {
   }, [chatDates]);
   return (
     <Scrollbars ref={scrollbarsRef}>
-      <Box p={3} bgcolor={theme.palette.mode === 'dark' ? theme.palette.common.white : 'rgb(242, 245, 249)'}>
+      <Box
+        sx={{ userSelect: 'true' }}
+        p={3}
+        bgcolor={theme.palette.mode === 'dark' ? theme.palette.common.white : 'rgb(242, 245, 249)'}
+      >
         <Box>
           {chatDates &&
             chatDates.length > 0 &&

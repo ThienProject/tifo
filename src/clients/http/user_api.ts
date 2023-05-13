@@ -32,6 +32,16 @@ export const userApi = {
       params: payload
     });
   },
+  getFollowers: (payload: IPayloadGetUsers) => {
+    return client.get('/user/get/followers', {
+      params: payload
+    });
+  },
+  getFollowings: (payload: IPayloadGetUsers) => {
+    return client.get('/user/get/followings', {
+      params: payload
+    });
+  },
   getSuggests: (payload: IPayloadGetUsers) => {
     return client.get('/user/suggests/gets', {
       params: payload
@@ -56,5 +66,5 @@ export const userApi = {
   },
   updateImage: (payload: FormData) => {
     return client.post('/auth/updateImage', payload);
-  },
+  }
 };

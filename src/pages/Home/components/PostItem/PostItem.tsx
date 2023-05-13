@@ -17,7 +17,7 @@ import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
 import PostDetail from 'src/pages/PostDetail';
-import { updateLoveThunk } from 'src/redux_store/post/post_action';
+import { updateLoveThunk, updateSaveThunk } from 'src/redux_store/post/post_action';
 import { useTranslation } from 'react-i18next';
 import ProtectBox from 'src/components/ProtectBox/ProtectBox';
 import SliderMedia from './SliderMedia';
@@ -83,15 +83,25 @@ const PostItem = ({ post }: { post: IPost }) => {
             <ChatBubbleOutlineOutlined />
           </IconButton>
         </Stack>
-        <IconButton
-          size='small'
-          onClick={() => {
-            console.log(post.isSave);
-            // setIsMark((prev) => !prev);
-          }}
-        >
-          {post.isSave ? <BookmarkOutlined sx={{ color: 'common.black' }} /> : <BookmarkBorderOutlined />}
-        </IconButton>
+
+        <ProtectBox toLogin>
+          <IconButton
+            size='small'
+            onClick={() => {
+              if (me?.id_user) {
+                const action = updateSaveThunk({
+                  id_user: me.id_user,
+                  isSave: !post.isSave,
+                  id_post: post.id_post
+                });
+                dispatch(action).unwrap();
+              }
+              // setIsMark((prev) => !prev);
+            }}
+          >
+            {post.isSave ? <BookmarkOutlined sx={{ color: 'common.black' }} /> : <BookmarkBorderOutlined />}
+          </IconButton>
+        </ProtectBox>
       </Stack>
       <Typography color='common.black' fontSize={14} fontWeight={550}>
         {post.loves ? post.loves : 0} likes

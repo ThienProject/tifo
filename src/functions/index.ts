@@ -29,10 +29,10 @@ export const schemaCreatePost = (target: string, description: string, medias: st
         });
       })
       .test('max-size', 'File size must not exceed 5MB', (files: any) => {
-        return files.some((file: File) => {
-          const fileSizeLimit = 5 * 1024 * 1024; // 1MB in bytes
+        return !files.some((file: File) => {
+          const fileSizeLimit = 20 * 1024 * 1024; // 1MB in bytes
           const isWithinSizeLimit = file.size >= fileSizeLimit;
-          return !isWithinSizeLimit;
+          return isWithinSizeLimit;
         });
       })
   });

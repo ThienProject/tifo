@@ -12,13 +12,11 @@ import UserItem from 'src/components/items/UserItem';
 import { IPost } from 'src/types/post';
 
 import { IUser } from 'src/types/user';
-import moment from 'moment';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
 import PostDetail from 'src/pages/PostDetail';
-import { updateLoveThunk } from 'src/redux_store/post/post_action';
-import { useTranslation } from 'react-i18next';
+import { updateLoveThunk, updateSaveThunk } from 'src/redux_store/post/post_action';
 import ProtectBox from 'src/components/ProtectBox/ProtectBox';
 import CustomTypography from 'src/components/CustomTypography';
 import ItemMedia from '../components/ItemMedia';
@@ -26,7 +24,6 @@ import ItemMedia from '../components/ItemMedia';
 const ReelItem = ({ post }: { post: IPost }) => {
   const myRef = useRef<HTMLElement>(null);
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
   const { id_user, username, fullname, avatar } = post;
   const user: IUser = { id_user, username, fullname, avatar };
   const { me } = useAppSelector((state) => state.userSlice);
@@ -37,15 +34,23 @@ const ReelItem = ({ post }: { post: IPost }) => {
         {post?.medias && (
           <ItemMedia control={false} isReel autoPlay sx={{ height: 500 }} key={post.id_post} item={post?.medias[0]} />
         )}
-        <Stack sx={{ position: 'absolute', bottom: 0 }} mb={1.2} direction='row' justifyContent='space-between'>
-          <Box display='flex' flexDirection={'column'} alignItems='center'>
-            <UserItem size='small' to={`/${user.id_user}`} user={user} />
+        <Stack
+          alignItems={'center'}
+          sx={{ position: 'absolute', bottom: 0 }}
+          mb={1.2}
+          direction='column'
+          justifyContent='space-between'
+        >
+          <UserItem size='small' to={`/${user.id_user}`} user={user} />
+          {/* <Box display='flex' flexDirection={'column'} alignItems='center'>
             <Typography width={'100%'} sx={{ opacity: '0.6', ml: 10 }} fontSize={12}>
               {moment(post.date_time).format('DD-MM-YYYY')}
             </Typography>
-          </Box>
+          </Box> */}
           <CustomTypography
+            color={'#fff'}
             myRef={myRef}
+            ml={6}
             textAlign={'justify'}
             text={post.description!}
             fontSize={14}
@@ -94,15 +99,25 @@ const ReelItem = ({ post }: { post: IPost }) => {
             >
               <ChatBubbleOutlineOutlined />
             </IconButton>
-            <IconButton
-              size='small'
-              onClick={() => {
-                console.log(post.isSave);
-                // setIsMark((prev) => !prev);
-              }}
-            >
-              {post.isSave ? <BookmarkOutlined sx={{ color: 'common.black' }} /> : <BookmarkBorderOutlined />}
-            </IconButton>
+            <ProtectBox toLogin>
+              <IconButton
+                size='small'
+                onClick={() => {
+                  if (me?.id_user) {
+                    const action = updateSaveThunk({
+                      id_user: me.id_user,
+                      isSave: !post.isSave,
+                      id_post: post.id_post,
+                      type: 'reel'
+                    });
+                    dispatch(action).unwrap();
+                  }
+                  // setIsMark((prev) => !prev);
+                }}
+              >
+                {post.isSave ? <BookmarkOutlined sx={{ color: 'common.black' }} /> : <BookmarkBorderOutlined />}
+              </IconButton>
+            </ProtectBox>
             <IconButton size='small'>
               <MoreHoriz />
             </IconButton>
