@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
-import { Box, ListItemIcon, MenuItem, Popper, Typography } from '@mui/material';
+import { Box, ListItemIcon, MenuItem, Typography } from '@mui/material';
 import { ImenuItem } from 'src/types/common';
 import { useNavigate } from 'react-router-dom';
-import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-import MenuList from '@mui/material/MenuList';
-import SubSidebar from './SubSidebar';
 import SubMenu from './SubMenu';
+import DialogSidebar from '../../DialogSidebar';
 
 const SideBarItem = ({
   item,
@@ -22,14 +20,14 @@ const SideBarItem = ({
   };
 }) => {
   const navigator = useNavigate();
-  const anchorRef = React.useRef<HTMLButtonElement>();
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>();
-  useEffect(() => {
-    if (item.child || item.childNode) {
-      setAnchorEl(anchorRef.current);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // const anchorRef = React.useRef<HTMLButtonElement>();
+  // const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>();
+  // useEffect(() => {
+  //   if (item.child || item.childNode) {
+  //     setAnchorEl(anchorRef.current);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const handleClosePopper = () => {
     setMenus &&
@@ -79,7 +77,7 @@ const SideBarItem = ({
         }}
       >
         <ListItemIcon
-          ref={anchorRef}
+          // ref={anchorRef}
           sx={{
             color: 'text.primary',
             minWidth: 0,
@@ -94,39 +92,30 @@ const SideBarItem = ({
           {item.name}
         </Typography>
       </Box>
-      {(item.child || item.childNode) && anchorRef.current && (
-        <Popper
-          sx={{ zIndex: 9999 }}
-          open={item.active ? item.active : false}
-          anchorEl={anchorEl}
-          role={undefined}
-          placement={item.child ? 'top-end' : 'right'}
-          transition
-          disablePortal={false}
-        >
-          {({ TransitionProps }) => (
-            <Fade {...TransitionProps} timeout={350}>
-              <Paper>
-                <ClickAwayListener onClickAway={handleClosePopper}>
-                  <MenuList
-                    sx={{ p: 0, m: 0 }}
-                    autoFocusItem={item.active}
-                    id='composition-menu'
-                    aria-labelledby='composition-button'
-                    // onKeyDown={handleListKeyDown}
-                  >
-                    {item.child ? (
-                      <SubMenu subMenus={item.child} handleClose={handleClosePopper} />
-                    ) : (
-                      <SubSidebar handleClose={handleClosePopper} item={item} />
-                    )}
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Fade>
+
+      {item.child
+        ? item.active && (
+            <ClickAwayListener onClickAway={handleClosePopper}>
+              <Box
+                sx={{
+                  zIndex: 1201,
+                  transform: 'translate(60px)',
+                  position: 'fixed',
+                  bottom: 100
+                }}
+              >
+                <Paper>
+                  <SubMenu subMenus={item.child} handleClose={handleClosePopper} />
+                </Paper>
+              </Box>
+            </ClickAwayListener>
+          )
+        : item.childNode &&
+          item.active && (
+            <DialogSidebar handleClose={handleClosePopper}>
+              {<item.childNode handleClose={handleClosePopper} />}
+            </DialogSidebar>
           )}
-        </Popper>
-      )}
     </MenuItem>
   );
 };

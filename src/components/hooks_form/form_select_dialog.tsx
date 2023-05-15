@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   CircularProgress,
+  Divider,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -37,7 +38,7 @@ interface IProps {
   };
 }
 
-export const FormSelect = (props: IProps) => {
+export const FormSelectDialog = (props: IProps) => {
   const {
     control,
     name,
@@ -87,10 +88,10 @@ export const FormSelect = (props: IProps) => {
     }
 
     return options.map((option, index) => (
-      <MenuItem
-        key={index}
-        disabled={optionsDisabled.includes(option[keyOption]) && value !== option[keyOption]}
+      <option
         value={option[keyOption]}
+        disabled={optionsDisabled.includes(option[keyOption]) && value !== option[keyOption]}
+        key={index}
       >
         {deleteOption ? (
           <>
@@ -100,7 +101,7 @@ export const FormSelect = (props: IProps) => {
         ) : (
           option[labelOption]
         )}
-      </MenuItem>
+      </option>
     ));
   };
 
@@ -112,17 +113,18 @@ export const FormSelect = (props: IProps) => {
         <FormControl sx={sx} fullWidth margin={margin} size={size} error={invalid}>
           <FormLabel
             sx={{
+              fontSize: 13,
               fontWeight: '600',
-              color: 'common.black',
+              color: 'text.secondary',
               pb: label ? 0.5 : 0
             }}
           >
             {label}
           </FormLabel>
 
-          <Select
+          <select
             // label={label}
-            variant={variant}
+            style={{ padding: 10, outline: 'none' }}
             value={options.length ? value || '' : ''}
             onChange={(e) => {
               if (_.isEqual(value, e.target.value) || loading) return;
@@ -131,17 +133,10 @@ export const FormSelect = (props: IProps) => {
                 handleChange(name, e.target.value);
               }
             }}
-            onClick={(e) => e.stopPropagation()}
-            size={size}
-            disabled={disabled}
             // placeholder={placeholder}
-            displayEmpty
           >
-            <MenuItem onClick={(e) => e.stopPropagation()} disabled value=''>
-              <em>{placeholder}</em>
-            </MenuItem>
             {renderOptions(value)}
-          </Select>
+          </select>
           {invalid && <FormHelperText>{error?.message}</FormHelperText>}
         </FormControl>
       )}

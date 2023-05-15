@@ -29,8 +29,23 @@ export default {
       follow: ' wants to follow you',
       post_love: ' liked your post',
       post_comment: ' commented on your post',
-      reply: 'responds to your comment'
-    }
+      accept_follow: '  has accepted your follow request',
+      reply: ' responds to your comment'
+    },
+    filter: 'Filter',
+    category: 'Category',
+    follows: 'Follows',
+    comments: 'Comments',
+    sort: 'Sort',
+    desc: 'Newest',
+    asc: 'Oldest',
+    time: 'Time',
+    today: 'Today',
+    thisWeek: 'This Week',
+    thisMonth: 'This Month',
+    thisYear: 'This Year',
+    all: 'All',
+    empty: 'No announcements!'
   },
   button: {
     accept: 'Accept',
@@ -46,7 +61,8 @@ export default {
     seeMore: 'See more',
     seeLess: 'See less',
     chat: 'Chat',
-    submit: 'Submit'
+    submit: 'Submit',
+    apply: 'Apply'
   },
   toast: {
     sometimeError: 'Sometime has error occurred !',
@@ -69,7 +85,8 @@ export default {
   home: {
     suggestTab: 'Suggestion for you',
     view_comment: 'View all {{count}} comments',
-    translate: 'See Translation'
+    translate: 'See Translation',
+    empty: 'No more posts, come back later !'
   },
   postDetail: {
     reply: 'reply',

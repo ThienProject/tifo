@@ -29,6 +29,7 @@ export interface IPayloadFollow {
   id_noti?: string;
   id_follower?: string;
   id_user?: string;
+  id_follow?: string;
 }
 export interface IPayloadInvisible {
   id_user?: string;

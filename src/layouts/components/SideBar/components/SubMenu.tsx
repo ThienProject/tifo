@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItemIcon, MenuItem, Typography, Box } from '@mui/material';
+import { ListItemIcon, MenuItem, Typography, Box, MenuList } from '@mui/material';
 import { ImenuItem } from 'src/types/common';
 import { useNavigate } from 'react-router';
 import { useAppSelector } from 'src/redux_store';
@@ -17,7 +17,7 @@ const SubMenu = ({
   });
 
   return (
-    <Box>
+    <MenuList>
       {subMenus.map((menuItem) => {
         if (menuItem.isAuth) {
           if (!me?.id_user) {
@@ -55,7 +55,7 @@ const SubMenu = ({
           </MenuItem>
         );
       })}
-    </Box>
+    </MenuList>
   );
 };
 

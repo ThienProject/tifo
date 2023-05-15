@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import React, { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useAppSelector } from 'src/redux_store';
@@ -33,7 +33,7 @@ const ChatList = () => {
             dataLength={rooms.length}
             next={handleLoadMore}
             hasMore={true}
-            loader={<p>{rooms.length > 0 ? /* 'Loading...' */ '' : 'No any post !'}</p>}
+            loader={rooms.length > 0 ? <CircularProgress /> : 'No any room !'}
           >
             {rooms.map((room: IRoom) => {
               let chatDemo: string | undefined = 'say hello !';

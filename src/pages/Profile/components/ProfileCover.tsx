@@ -202,7 +202,12 @@ const ProfileCover = ({ user }: { user: IUser }) => {
                     openModal({
                       modalId: MODAL_IDS.followers,
                       dialogComponent: (
-                        <ModalFollower id_owner={user.id_user!} title={t('common.followings')} users={users} />
+                        <ModalFollower
+                          type='followings'
+                          id_owner={user.id_user!}
+                          title={t('common.followings')}
+                          users={users}
+                        />
                       )
                     })
                   );
@@ -225,7 +230,12 @@ const ProfileCover = ({ user }: { user: IUser }) => {
                     openModal({
                       modalId: MODAL_IDS.followers,
                       dialogComponent: (
-                        <ModalFollower id_owner={user.id_user!} title={t('common.followers')} users={users} />
+                        <ModalFollower
+                          type='followers'
+                          id_owner={user.id_user!}
+                          title={t('common.followers')}
+                          users={users}
+                        />
                       )
                     })
                   );

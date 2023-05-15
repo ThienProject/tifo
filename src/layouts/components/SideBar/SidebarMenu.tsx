@@ -33,6 +33,7 @@ const Menu = ({
     <MenuList
       component='nav'
       sx={{
+        backgroundColor: 'common.white',
         justifyContent: 'space-between',
         display: { xs: 'flex', sm: 'block' }
       }}

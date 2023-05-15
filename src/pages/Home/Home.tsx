@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material';
+import { Box, CircularProgress, Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ListFriends from './components/ListFriends/ListFriends';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -8,12 +8,14 @@ import Suggestions from './components/Suggestions';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { getPostsThunk } from 'src/redux_store/post/post_action';
 import { clearPost } from 'src/redux_store/post/post_slice';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
   const dispatch = useAppDispatch();
   const { me } = useAppSelector((state) => state.userSlice);
   const { posts } = useAppSelector((state) => state.postSlice);
   const [isLoadMore, setIsLoadMore] = useState(true);
+  const { t } = useTranslation();
   const fetchApi = (offset: number) => {
     const id_user = me?.id_user;
     const params: IPayloadGetPost = { id_user: id_user || '', limit: 10, offset: offset };
@@ -25,11 +27,6 @@ const Home = () => {
         if (!posts || posts.length === 0) {
           setIsLoadMore(false);
         }
-        // else {
-        //   if (offset == 0) {
-        //     setPosts(posts);
-        //   } else setPosts((prev) => [...prev, ...posts]);
-        // }
       });
   };
   useEffect(() => {
@@ -52,18 +49,18 @@ const Home = () => {
             {posts.length > 0 && (
               <Box>
                 <InfiniteScroll
+                  style={{ overflow: 'hidden' }}
                   dataLength={posts.length}
                   next={() => {
-                    if (isLoadMore) {
-                      fetchApi(posts.length);
-                    }
+                    fetchApi(posts.length);
                   }}
-                  hasMore={true}
+                  hasMore={isLoadMore}
                   loader={
-                    <p style={{ fontSize: '14px', color: 'rgb(124 108 108)' }}>
-                      {isLoadMore ? 'Loading...' : 'No more posts, come back later !'}
-                    </p>
+                    <Box textAlign={'center'}>
+                      <CircularProgress />
+                    </Box>
                   }
+                  endMessage={<p style={{ fontSize: '14px', color: 'rgb(124 108 108)' }}>{t('home.empty')}</p>}
                 >
                   {posts.map((post) => {
                     return <PostItem key={post.id_post} post={post} />;

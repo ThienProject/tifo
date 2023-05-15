@@ -44,7 +44,7 @@ const userSlice = createSlice({
       localStorage.setItem('auth', JSON.stringify({ me: user, accessToken, refreshToken }));
       if (state.socket) {
         state.socket.disconnect();
-        const socket = io.connect('ws://192.168.1.27:8000', {
+        const socket = io.connect('ws://localhost:8000', {
           query: {
             id_user: user?.id_user
           }

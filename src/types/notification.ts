@@ -9,4 +9,13 @@ export interface INotification {
   username?: string;
   is_seen?: boolean;
   content?: string;
+  id_follow?: string;
+}
+export interface IPayloadNoti {
+  id_user: string;
+  limit?: number;
+  offset?: number;
+  sort?: 'desc' | 'asc';
+  time?: string;
+  category?: string;
 }

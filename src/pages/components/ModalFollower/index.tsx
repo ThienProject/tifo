@@ -15,11 +15,13 @@ import { IUser } from 'src/types/user';
 const ModalFollower = ({
   users: currentUsers,
   title,
-  id_owner
+  id_owner,
+  type
 }: {
   users: IUser[];
   title: string;
   id_owner: string;
+  type: 'followers' | 'followings';
 }) => {
   const { t } = useTranslation();
   const { me } = useAppSelector((state) => state.userSlice);
@@ -103,6 +105,7 @@ const ModalFollower = ({
             {users.map((user) => (
               <MenuItem key={user.id_user} sx={{ mt: 1 }}>
                 <UserItem
+                  sx={{ flex: 0.7 }}
                   to={'/' + user.id_user}
                   callback={() => {
                     dispatch(
@@ -118,10 +121,17 @@ const ModalFollower = ({
                 {
                   <ProtectBox id_owner={id_owner}>
                     <>
-                      {title === 'followers' ? (
+                      {type === 'followers' ? (
                         <Button
                           size='small'
-                          sx={{ flex: 'flex-end', fontSize: 12, color: 'white', textTransform: 'capitalize' }}
+                          sx={{
+                            flex: 0.3,
+                            px: 1,
+                            flexBasis: 'flex-end',
+                            fontSize: 12,
+                            color: 'white',
+                            textTransform: 'capitalize'
+                          }}
                           onClick={(e) => {
                             e.stopPropagation();
                             handleRemoveFollow(user.id_user!);
@@ -134,7 +144,15 @@ const ModalFollower = ({
                       ) : (
                         <Button
                           size='small'
-                          sx={{ flex: 'flex-end', fontSize: 12, color: 'white', textTransform: 'capitalize' }}
+                          color='secondary'
+                          sx={{
+                            flex: 0.3,
+                            px: 1,
+                            flexBasis: 'flex-end',
+                            fontSize: 12,
+                            color: 'white',
+                            textTransform: 'capitalize'
+                          }}
                           onClick={(e) => {
                             e.stopPropagation();
                             handleUnfollow(user.id_user!);

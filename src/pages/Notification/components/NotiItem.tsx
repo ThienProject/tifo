@@ -34,8 +34,7 @@ const NotiItem = ({
         my: 2,
         mx: 1.5,
         borderRadius: 2,
-        // boxShadow: 'var(--mui-shadows-1)',
-        // border: '1px solid var(--mui-palette-divider)',
+        textAlign: 'left',
         bgcolor: '#fcfcfc'
       }}
       onClick={(e) => {

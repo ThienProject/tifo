@@ -26,11 +26,26 @@ export default {
   },
   notification: {
     content: {
-      follow: ' Muốn follow bạn',
-      post_love: 'đã thích bài đăng bạn',
+      follow: ' muốn follow bạn',
+      post_love: ' đã thích bài đăng bạn',
       post_comment: ' đã bình luận bài viết của bạn',
-      reply: 'đã phản hồi bình luận của bạn'
-    }
+      reply: 'đã phản hồi bình luận của bạn',
+      accept_follow: '  đã chấp nhận yêu cầu follow của bạn',
+    },
+    filter: 'Lọc',
+    category: 'Thể loại',
+    follows: 'Theo dõi',
+    comments: 'Bình luận',
+    sort: 'Sắp xếp',
+    desc: 'Mới nhất',
+    asc: 'Cũ nhất',
+    time: 'Thời gian',
+    today: 'Hôm nay',
+    thisWeek: 'Tuần này',
+    thisMonth: 'Tháng này',
+    thisYear: 'Năm này',
+    all: 'Tất cả',
+    empty: 'Không có thông báo nào!'
   },
   toast: {
     sometimeError: 'Thỉnh thoảng có lỗi xảy ra !',
@@ -64,12 +79,14 @@ export default {
     seeMore: 'Xem thêm',
     seeLess: 'Ít hơn',
     chat: 'Chat',
-    submit: 'Gửi'
+    submit: 'Gửi',
+    apply: 'Áp dụng'
   },
   home: {
     suggestTab: 'Đề xuất cho bạn',
     translate: 'Xem Bản Dịch',
-    view_comment: 'Xem tất cả {{count}} bình luận'
+    view_comment: 'Xem tất cả {{count}} bình luận',
+    empty: 'Không còn bài đăng nào, vui lòng trở lại sau!'
   },
   postDetail: {
     reply: 'Phản hồi',

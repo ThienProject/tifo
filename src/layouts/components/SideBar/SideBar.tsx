@@ -45,10 +45,14 @@ const SideBar = () => {
   const openedMixin = (theme: Theme): CSSObject => ({
     width: drawerWidth,
     boxShadow: theme.shadows[1],
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    }),
+    [theme.breakpoints.up('lg')]: {
+      '@keyframes openMixin': {
+        from: { width: `calc(${theme.spacing(7)} + 1px)` },
+        to: { width: drawerWidth }
+      },
+      animationName: 'openMixin',
+      animationDuration: '0.2s'
+    },
     overflowX: 'hidden'
   });
   const openedMixinPhone = (theme: Theme): CSSObject => ({
@@ -63,11 +67,14 @@ const SideBar = () => {
     overflowY: 'hidden'
   });
   const closedMixin = (theme: Theme): CSSObject => ({
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    overflowX: 'hidden',
+    [theme.breakpoints.up('lg')]: {
+      '@keyframes closeMixin': {
+        from: { width: drawerWidth },
+        to: { width: `calc(${theme.spacing(7)} + 1px)` }
+      },
+      animationName: 'closeMixin',
+      animationDuration: '0.2s'
+    },
     width: `calc(${theme.spacing(7)} + 1px)`,
     [theme.breakpoints.up('sm')]: {
       width: `calc(${theme.spacing(8)} + 1px)`
@@ -82,19 +89,17 @@ const SideBar = () => {
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
     ...(open && {
-      ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme)
     }),
     ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme)
+      '& .MuiDrawer-paper': {
+        ...closedMixin(theme)
+      }
     }),
     [theme.breakpoints.down('md')]: {
-      ...closedMixin(theme),
       '& .MuiDrawer-paper': closedMixin(theme)
     },
     [theme.breakpoints.down('sm')]: {
-      ...openedMixinPhone(theme),
       '& .MuiDrawer-paper': {
         ...openedMixinPhone(theme),
         position: 'absolute'

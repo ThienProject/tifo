@@ -17,7 +17,8 @@ const paletteDark: PaletteOptions = {
   },
 
   text: {
-    primary: '#7c7d7c'
+    primary: '#7c7d7c',
+    secondary: 'rgb(115,115,115)'
   },
   grey: {
     50: '#fafafa',
@@ -55,7 +56,8 @@ const paletteLight: PaletteOptions = {
     white: '#ffffff'
   },
   text: {
-    primary: 'rgb(38,38,38)'
+    primary: 'rgb(38,38,38)',
+    secondary: 'rgb(115,115,115)'
   },
   grey: {
     50: '#fafafa',
