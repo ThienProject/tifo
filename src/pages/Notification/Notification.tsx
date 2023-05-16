@@ -161,7 +161,13 @@ const Notification = ({ handleClose }: { handleClose: (event: Event | React.Synt
             dataLength={notifications.length}
             next={handleLoadMore}
             hasMore={isLoadMore}
-            endMessage={<p style={{ fontSize: '14px', color: 'rgb(124 108 108)' }}>{t('notification.empty')}</p>}
+            endMessage={
+              notifications?.length <= 0 ? (
+                <p style={{ fontSize: '14px', color: 'rgb(124 108 108)' }}>{t('notification.empty')}</p>
+              ) : (
+                ''
+              )
+            }
             loader={<CircularProgress sx={{ width: 10 }} />}
           >
             {notifications.length > 0 &&

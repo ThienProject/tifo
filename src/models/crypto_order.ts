@@ -1,4 +1,4 @@
-export type CryptoOrderStatus = 'completed' | 'pending' | 'failed';
+export type UserStatus = 'banned' | 'report' | null;
 
 export interface CryptoOrder {
   id: string;

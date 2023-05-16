@@ -14,7 +14,7 @@ export const ProtectedRoute = ({ login, children }: IParams) => {
 };
 
 export const ProtectedRouteAdmin = ({ login, children }: IParams) => {
-  if (!login || login.roleName === 'user') {
+  if (!login || login?.id_role !== 1) {
     return <Navigate to='/auth/login' replace />;
   }
 

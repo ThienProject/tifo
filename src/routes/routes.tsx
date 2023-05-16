@@ -14,7 +14,7 @@ import Reels from 'src/pages/Reels';
 import { Suspense, lazy } from 'react';
 import UpdatePost from 'src/pages/UpdatePost';
 import { ILogin } from 'src/types/auth';
-import { ProtectedRoute } from './ProtectedRoute';
+import { ProtectedRoute, ProtectedRouteAdmin } from './ProtectedRoute';
 
 // Dashboards
 import SuspenseLoader from 'src/components/admin/SuspenseLoader';
@@ -31,7 +31,9 @@ const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
 
 // Applications
 
-// const Transactions = Loader(lazy(() => import('src/content/applications/Transactions')));
+const Users = Loader(lazy(() => import('src/content/applications/Users')));
+const Posts = Loader(lazy(() => import('src/content/applications/Posts')));
+
 // const UserProfile = Loader(lazy(() => import('src/content/applications/Users/profile')));
 // const UserSettings = Loader(lazy(() => import('src/content/applications/Users/settings')));
 
@@ -118,7 +120,11 @@ const routes: IRoute = (login) => [
   },
   {
     path: '/admin',
-    element: <SidebarLayout />,
+    element: (
+      <ProtectedRouteAdmin login={login}>
+        <SidebarLayout />
+      </ProtectedRouteAdmin>
+    ),
     children: [
       {
         path: '',
@@ -136,6 +142,24 @@ const routes: IRoute = (login) => [
             element: <Crypto />
           }
         ]
+      },
+      {
+        path: 'users',
+        children: [
+          {
+            path: '',
+            element: <Users />
+          }
+        ]
+      },
+      {
+        path: 'posts',
+        children: [
+          {
+            path: '',
+            element: <Posts />
+          }
+        ]
       }
 
       // {
@@ -148,7 +172,7 @@ const routes: IRoute = (login) => [
       //   },
       //   {
       //     path: 'transactions',
-      //     element: <Transactions />
+      //     element: <Users />
       //   }
       // {
       //   path: 'profile',

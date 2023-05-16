@@ -11,6 +11,7 @@ const MODAL_IDS = {
   createRoom: 'createRoom',
   memberManager: 'memberManager',
   addMember: 'addMember',
-  followers: 'followers'
+  followers: 'followers',
+  viewDetailUser: 'viewDetailUser'
 };
 export default MODAL_IDS;

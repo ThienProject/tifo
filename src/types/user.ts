@@ -1,6 +1,6 @@
 export interface IUser {
   off_time?: Date;
-  status?: 'online' | 'offline' | 'banned';
+  status?: 'online' | 'offline' | 'banned' | 'reported';
   follow?: 'accept' | 'waiting' | null;
   id_user?: string;
   username?: string;
@@ -19,6 +19,11 @@ export interface IUser {
   description?: string;
   invisible?: boolean;
   role?: number;
+  datetime?: Date;
+}
+export interface IUserAdmin extends IUser {
+  post_quantity?: number;
+  post_reports?: number
 }
 export interface IUserChat extends IUser {
   id_room?: string;

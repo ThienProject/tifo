@@ -9,7 +9,7 @@ export interface IPayloadRegister extends IPayloadLogin {
 }
 
 export interface ILogin {
-  id_role?: string;
+  id_role?: number;
   roleName: string;
 }
 

@@ -1,6 +1,6 @@
 import { FC, ChangeEvent, useState } from 'react';
 import { format } from 'date-fns';
-import numeral from 'numeral';
+// import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import {
   Tooltip,
@@ -25,7 +25,6 @@ import {
   CardHeader
 } from '@mui/material';
 
-import Label from 'src/components/Label';
 import { CryptoOrder, CryptoOrderStatus } from 'src/models/crypto_order';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
@@ -106,7 +105,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
   ];
 
   const handleStatusChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    let value = null;
+    let value: any = null;
 
     if (e.target.value !== 'all') {
       value = e.target.value;
@@ -233,7 +232,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                       {cryptoOrder.cryptoCurrency}
                     </Typography>
                     <Typography variant='body2' color='text.secondary' noWrap>
-                      {numeral(cryptoOrder.amount).format(`${cryptoOrder.currency}0,0.00`)}
+                      {/* {numeral(cryptoOrder.amount).format(`${cryptoOrder.currency}0,0.00`)} */}
                     </Typography>
                   </TableCell>
                   <TableCell align='right'>{getStatusLabel(cryptoOrder.status)}</TableCell>
@@ -242,7 +241,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                       <IconButton
                         sx={{
                           '&:hover': {
-                            background: theme.colors.primary.lighter
+                            background: theme.palette.primary.lighter
                           },
                           color: theme.palette.primary.main
                         }}

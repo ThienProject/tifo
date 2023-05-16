@@ -3,6 +3,7 @@ import Button from '@mui/material/Button/Button';
 import MenuItem from '@mui/material/MenuItem/MenuItem';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
@@ -66,6 +67,9 @@ const NotiItem = ({
           <Typography sx={{ fontSize: 15, whiteSpace: 'pre-wrap' }}>
             {noti.username}
             {t(`notification.content.${noti.type}`)}
+          </Typography>
+          <Typography sx={{ opacity: '0.6', mt: 1 }} fontSize={12}>
+            {moment(noti.datetime).format('DD-MM-YYYY')}
           </Typography>
         </Box>
       </Stack>

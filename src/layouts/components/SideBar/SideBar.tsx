@@ -46,12 +46,12 @@ const SideBar = () => {
     width: drawerWidth,
     boxShadow: theme.shadows[1],
     [theme.breakpoints.up('lg')]: {
-      '@keyframes openMixin': {
-        from: { width: `calc(${theme.spacing(7)} + 1px)` },
-        to: { width: drawerWidth }
-      },
-      animationName: 'openMixin',
-      animationDuration: '0.2s'
+      // '@keyframes openMixin': {
+      //   from: { width: `calc(${theme.spacing(7)} + 1px)` },
+      //   to: { width: drawerWidth }
+      // },
+      // animationName: 'openMixin',
+      // animationDuration: '0.2s'
     },
     overflowX: 'hidden'
   });
@@ -68,12 +68,12 @@ const SideBar = () => {
   });
   const closedMixin = (theme: Theme): CSSObject => ({
     [theme.breakpoints.up('lg')]: {
-      '@keyframes closeMixin': {
-        from: { width: drawerWidth },
-        to: { width: `calc(${theme.spacing(7)} + 1px)` }
-      },
-      animationName: 'closeMixin',
-      animationDuration: '0.2s'
+      // '@keyframes closeMixin': {
+      //   from: { width: drawerWidth },
+      //   to: { width: `calc(${theme.spacing(7)} + 1px)` }
+      // },
+      // animationName: 'closeMixin',
+      // animationDuration: '0.2s'
     },
     width: `calc(${theme.spacing(7)} + 1px)`,
     [theme.breakpoints.up('sm')]: {

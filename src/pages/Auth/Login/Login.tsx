@@ -42,8 +42,13 @@ const Login = () => {
     )
       .unwrap()
       .then((data) => {
-        if (data) toastMessage.success(data?.message ? data.message : 'Login success!');
-        navigate('/');
+        if (data) {
+          const { user } = data;
+          toastMessage.success(data?.message ? data.message : 'Login success!');
+          if (user.id_role === 1) {
+            navigate('/admin');
+          } else navigate('/');
+        }
       });
   };
   return (
