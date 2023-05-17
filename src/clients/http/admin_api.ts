@@ -19,8 +19,14 @@ export const adminApi = {
   getUser: (payload: { id_user: string }) => {
     return client.post('admin/user/get', payload);
   },
-  getUsers: (payload: { id_role: number, limit: number, offset: number }) => {
+  getPost: (payload: { id_post: string }) => {
+    return client.post('admin/post/get', payload);
+  },
+  getUsers: (payload: { id_role: number; limit: number; offset: number }) => {
     return client.post('admin/user/gets', payload);
+  },
+  getPosts: (payload: { id_user: string; limit: number; offset: number }) => {
+    return client.post('admin/post/gets', payload);
   },
 
 };

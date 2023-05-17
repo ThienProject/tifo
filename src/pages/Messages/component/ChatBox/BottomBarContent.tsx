@@ -27,7 +27,7 @@ function BottomBarContent() {
   const dispatch = useAppDispatch();
   const { control, handleSubmit, reset } = useForm({ defaultValues: { message: '', image: '' } });
   const handleOnSubmit = (data: any) => {
-    const id_me = me.id_user;
+    const id_me = me?.id_user;
     const { image, message } = data;
 
     let base64String = '';

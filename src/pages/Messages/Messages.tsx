@@ -17,7 +17,7 @@ const Messages = () => {
   const { me } = useAppSelector((state) => state.userSlice);
   const { id_room } = useParams();
   useEffect(() => {
-    const id_user = me.id_user;
+    const id_user = me?.id_user;
     if (id_user) {
       const action = getRoomsThunk({ id_user, offset: 0, limit: 10 });
       dispatch(action);
@@ -27,7 +27,7 @@ const Messages = () => {
     };
   }, []);
   useEffect(() => {
-    const id_user = me.id_user;
+    const id_user = me?.id_user;
     const param: IPayloadChats = { offset: 0, limit: 10 };
     if (id_user) {
       param.id_user = id_user;

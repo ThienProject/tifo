@@ -29,9 +29,9 @@ const EditPassword = () => {
     resolver: yupResolver(schema)
   });
   const handleOnSubmit = (data: IPayloadPassword) => {
-    if (me.id_user) {
+    if (me?.id_user) {
       const password = data.password;
-      const payload: IPayloadPassword = { currentPassword: data.currentPassword, password, id_user: me.id_user };
+      const payload: IPayloadPassword = { currentPassword: data.currentPassword, password, id_user: me?.id_user };
       const action = updatePasswordThunk(payload);
       dispatch(action)
         .unwrap()

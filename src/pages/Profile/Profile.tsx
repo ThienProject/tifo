@@ -25,7 +25,7 @@ const Profile = () => {
     }
     const params: IPayloadGetUser = { id_user };
     if (me?.id_user) {
-      params.id_me = me.id_user;
+      params.id_me = me?.id_user;
     }
     const action = getUserThunk(params);
     dispatch(action)
@@ -50,7 +50,7 @@ const Profile = () => {
         },
         { tabName: 'reels', element: <TabElement.TabReel key={user.id_user} id_user={user.id_user} /> }
       ];
-      if (pathName === 'profile' || pathName === me.id_user) {
+      if (pathName === 'profile' || pathName === me?.id_user) {
         tabList.push({ tabName: 'saves', element: <TabElement.TabSave key={user.id_user} id_user={user.id_user} /> });
       }
       setTabs(tabList);

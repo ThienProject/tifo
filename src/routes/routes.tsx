@@ -1,5 +1,4 @@
 import { Navigate, RouteObject } from 'react-router';
-import Status404 from 'src/content/pages/Status/Status404';
 import SidebarLayout from 'src/layouts/admin/SidebarLayout';
 import Auth from 'src/layouts/Auth';
 import MainLayout from 'src/layouts/Main';
@@ -20,6 +19,7 @@ import { ProtectedRoute, ProtectedRouteAdmin } from './ProtectedRoute';
 import SuspenseLoader from 'src/components/admin/SuspenseLoader';
 import ChatBox from 'src/pages/Messages/component/ChatBox';
 import Setting from 'src/pages/Setting/Setting';
+import Status404 from 'src/pages/Status/Status404';
 const Loader = (Component: any) => (props: any) =>
   (
     <Suspense fallback={<SuspenseLoader />}>
@@ -27,12 +27,12 @@ const Loader = (Component: any) => (props: any) =>
     </Suspense>
   );
 
-const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
+const Crypto = Loader(lazy(() => import('src/pages/Admin/dashboards/Crypto')));
 
 // Applications
 
-const Users = Loader(lazy(() => import('src/content/applications/Users')));
-const Posts = Loader(lazy(() => import('src/content/applications/Posts')));
+const Users = Loader(lazy(() => import('src/pages/Admin/applications/Users')));
+const Posts = Loader(lazy(() => import('src/pages/Admin/applications/Posts')));
 
 // const UserProfile = Loader(lazy(() => import('src/content/applications/Users/profile')));
 // const UserSettings = Loader(lazy(() => import('src/content/applications/Users/settings')));
@@ -157,6 +157,10 @@ const routes: IRoute = (login) => [
         children: [
           {
             path: '',
+            element: <Posts />
+          },
+          {
+            path: ':id_user',
             element: <Posts />
           }
         ]

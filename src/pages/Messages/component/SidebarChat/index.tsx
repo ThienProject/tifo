@@ -22,11 +22,11 @@ const SidebarChat = ({ sx }: { sx?: SxProps }) => {
   return (
     <Box p={2} sx={sx} height='100%' borderRadius={2} border={'1px solid #e6dddd'}>
       <Box>
-        <UserItem to={`/${me.id_user}`} size='medium' user={me} isFullname />
+        <UserItem to={`/${me?.id_user}`} size='medium' user={me} isFullname />
         <Stack mt={0.3} ml={7} direction={'row'} alignItems={'center'}>
           <Switch
             onChange={(e) => {
-              const action = updateInvisible({ id_user: me.id_user, invisible: e.target.checked });
+              const action = updateInvisible({ id_user: me?.id_user, invisible: e.target.checked });
               dispatch(action);
             }}
             defaultChecked={!!me.invisible}
@@ -48,7 +48,7 @@ const SidebarChat = ({ sx }: { sx?: SxProps }) => {
             actionThunk={searchRoomOrUserThunk}
             setNote={setNote}
             setResult={setResult}
-            param={{ id_user: me.id_user }}
+            param={{ id_user: me?.id_user }}
           />
           <Box>
             {result && result.length > 0 && (

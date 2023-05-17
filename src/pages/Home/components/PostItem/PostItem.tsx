@@ -58,7 +58,7 @@ const PostItem = ({ post }: { post: IPost }) => {
               onClick={() => {
                 if (me?.id_user) {
                   const action = updateLoveThunk({
-                    id_user: me.id_user,
+                    id_user: me?.id_user,
                     isLove: !post.isLove,
                     id_post: post.id_post
                   });
@@ -90,7 +90,7 @@ const PostItem = ({ post }: { post: IPost }) => {
             onClick={() => {
               if (me?.id_user) {
                 const action = updateSaveThunk({
-                  id_user: me.id_user,
+                  id_user: me?.id_user,
                   isSave: !post.isSave,
                   id_post: post.id_post
                 });

@@ -6,7 +6,6 @@ $bg-color: rgb(242, 245, 249);
 html {
   font-family: 'roboto-regular', sans-serif;
   color: var(--text);
-  user-select: none;
 }
 body {
   background: $bg-color;

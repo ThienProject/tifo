@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Box, Stack, Avatar, Typography, Button, Badge } from '@mui/material';
 import { IRoom } from 'src/types/room';
 import { IUser } from 'src/types/user';
@@ -22,6 +22,7 @@ const ChatItem = ({ socket, room, chatDemo }: { socket: Socket; room: IRoom; cha
   const dispatch = useAppDispatch();
   const pathName = location.pathname.split('/').pop();
   const navigate = useNavigate();
+
   const isChatFriend = room.type === 'friend' || room.type === 'chatbot';
   let avatar = room.avatar ? CPath.host_user + room.avatar : images.roomDefault;
   let chatName = room.name;

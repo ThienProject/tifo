@@ -1,8 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { adminApi } from 'src/clients/http/admin_api';
-import { IPayloadGetPost } from 'src/types/post';
-import { IPayloadGetUsers } from 'src/types/user';
-
 
 export const getNotifications = createAsyncThunk<any, { id_user: string }>(
   'admin/getNotifications',
@@ -16,17 +13,17 @@ export const getNotifications = createAsyncThunk<any, { id_user: string }>(
   }
 );
 
-// export const getPostsThunk = createAsyncThunk<any, IPayloadGetPost>(
-//   'admin/getPostsThunk',
-//   async (payload: IPayloadGetPost, { rejectWithValue }) => {
-//     try {
-//       const { data } = await postApi.getPostsByIDUser(payload);
-//       return data;
-//     } catch (error: any) {
-//       return rejectWithValue(error);
-//     }
-//   }
-// );
+export const getPostsThunk = createAsyncThunk<any, { id_user: string, limit: number, offset: number }>(
+  'admin/getPostsThunk',
+  async (payload: { id_user: string, limit: number, offset: number }, { rejectWithValue }) => {
+    try {
+      const { data } = await adminApi.getPosts(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
 export const getUsersThunk = createAsyncThunk<any, { id_role: number, limit: number, offset: number }>(
   'admin/getUsersThunk',
@@ -44,6 +41,17 @@ export const getUserThunk = createAsyncThunk<any, { id_user: string }>(
   async (payload: { id_user: string }, { rejectWithValue }) => {
     try {
       const { data } = await adminApi.getUser(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const getPostThunk = createAsyncThunk<any, { id_post: string }>(
+  'admin/getPostThunk',
+  async (payload: { id_post: string }, { rejectWithValue }) => {
+    try {
+      const { data } = await adminApi.getPost(payload);
       return data;
     } catch (error: any) {
       return rejectWithValue(error);

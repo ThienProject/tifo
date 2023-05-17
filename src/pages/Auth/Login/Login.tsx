@@ -49,6 +49,9 @@ const Login = () => {
             navigate('/admin');
           } else navigate('/');
         }
+      })
+      .catch((error) => {
+        toastMessage.setErrors(error);
       });
   };
   return (

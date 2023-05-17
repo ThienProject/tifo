@@ -88,7 +88,7 @@ const ProfileCover = ({ user }: { user: IUser }) => {
   const navigation = useNavigate();
   const dispatch = useAppDispatch();
   const [follow, setFollow] = useState<any>(null);
-  const isMe = user.id_user === me.id_user;
+  const isMe = user?.id_user === me?.id_user;
 
   useEffect(() => {
     setFollow(user.follow);
@@ -98,7 +98,7 @@ const ProfileCover = ({ user }: { user: IUser }) => {
     const formData = new FormData();
     formData.append('image_user', file);
     formData.append('type', type);
-    formData.append('id_user', me.id_user);
+    formData.append('id_user', me?.id_user);
     const action = updateImageThunk(formData);
     dispatch(action)
       .unwrap()

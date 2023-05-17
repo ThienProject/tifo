@@ -15,7 +15,7 @@ const Suggestions = () => {
   const isLogin = me?.id_user;
   useEffect(() => {
     if (me?.id_user) {
-      const action = getUserSuggestsThunk({ id_user: me.id_user, limit: 10, offset: 0 });
+      const action = getUserSuggestsThunk({ id_user: me?.id_user, limit: 10, offset: 0 });
       dispatch(action)
         .unwrap()
         .then((data) => {

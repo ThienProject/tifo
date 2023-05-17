@@ -12,6 +12,9 @@ const MODAL_IDS = {
   memberManager: 'memberManager',
   addMember: 'addMember',
   followers: 'followers',
-  viewDetailUser: 'viewDetailUser'
+  viewDetailUser: 'viewDetailUser',
+  viewDetailPostAdmin: 'viewDetailPostAdmin',
+  lockPost: 'lockPost',
+  lockUser: 'lockUser'
 };
 export default MODAL_IDS;

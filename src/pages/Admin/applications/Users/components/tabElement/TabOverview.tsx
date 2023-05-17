@@ -2,12 +2,17 @@ import { Box, Button, Card, CardContent, Divider, Paper, Typography } from '@mui
 import { format } from 'date-fns';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+import MODAL_IDS from 'src/constants/modal';
 import { useAppDispatch } from 'src/redux_store';
 import { getUserThunk } from 'src/redux_store/admin/admin_action';
+import { closeModal } from 'src/redux_store/common/modal/modal_slice';
 import { IUserAdmin } from 'src/types/user';
 
 const Overview = ({ id_user }: { id_user: string }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const [user, setUser] = useState<IUserAdmin>();
   useEffect(() => {
     fetchApi(id_user);
@@ -44,7 +49,14 @@ const Overview = ({ id_user }: { id_user: string }) => {
             <Typography fontSize={13} variant='body1'>
               Total Posts:
             </Typography>
-            <Button sx={{ fontSize: 13, textTransform: 'capitalize' }} variant='text'>
+            <Button
+              onClick={() => {
+                dispatch(closeModal({ modalId: MODAL_IDS.viewDetailUser }));
+                navigate('/admin/posts/' + user?.id_user);
+              }}
+              sx={{ fontSize: 13, textTransform: 'capitalize' }}
+              variant='text'
+            >
               {user?.post_quantity || 0} items
             </Button>
           </Box>
@@ -52,7 +64,14 @@ const Overview = ({ id_user }: { id_user: string }) => {
             <Typography fontSize={13} variant='body1'>
               Total number of posts reported:
             </Typography>
-            <Button sx={{ fontSize: 13, textTransform: 'capitalize' }} variant='text'>
+            <Button
+              onClick={() => {
+                dispatch(closeModal({ modalId: MODAL_IDS.viewDetailUser }));
+                navigate('admin/posts/' + user?.id_user + '?filter=reported');
+              }}
+              sx={{ fontSize: 13, textTransform: 'capitalize' }}
+              variant='text'
+            >
               {user?.post_reports || 0} items
             </Button>
           </Box>

@@ -55,7 +55,7 @@ function ChatContent({ socket }: { socket: Socket }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const scrollbarsRef = useRef<any>();
-  const id_me = me.id_user;
+  const id_me = me?.id_user;
   const chatDates = useAppSelector((state) => {
     if (id_room) return state.roomSlice.chats[id_room];
   });

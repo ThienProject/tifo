@@ -21,7 +21,18 @@ export interface IPost extends IUser {
   isSave?: boolean;
   commentLength: number;
 }
-
+export interface IReport {
+  username?: string;
+  id_user?: string;
+  reason?: string;
+  avatar?: string;
+  datetime?: string;
+}
+export interface IPostAdmin extends IPost {
+  reports_quantity?: number;
+  reports?: IReport[];
+  status?: 'reported' | 'active' | 'banned';
+}
 export interface IComment extends IUser {
   id_comment?: string;
   id_post?: string;

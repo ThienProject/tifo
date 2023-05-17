@@ -56,6 +56,9 @@ const RegisterForm = () => {
       .then((data) => {
         toastMessage.success(data.message ? data.message : 'Register success!');
         navigate('/auth/login');
+      })
+      .catch((error) => {
+        toastMessage.setErrors(error);
       });
   };
   return (

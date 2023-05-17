@@ -73,6 +73,7 @@ const ModalWrapper = (props: IDialogWrapperProps) => {
     >
       <Box
         sx={sx}
+        height={'100%'}
         className={classNames}
         minWidth={minWidth}
         maxWidth={maxWidth}

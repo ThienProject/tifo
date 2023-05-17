@@ -92,24 +92,24 @@ const Comment = (props: { socket: any; id_post: string; sx?: SxProps }) => {
   useEffect(() => {
     socket.on('new-comment', ({ newComment }: any) => {
       const { id_user } = newComment;
-      if (me.id_user) {
-        if (id_user !== me.id_user) {
+      if (me?.id_user) {
+        if (id_user !== me?.id_user) {
           setListSend(newComment);
         }
       }
     });
     socket.on('edit-comment', ({ editComment }: any) => {
       const { id_user } = editComment;
-      if (me.id_user) {
-        if (id_user !== me.id_user) {
+      if (me?.id_user) {
+        if (id_user !== me?.id_user) {
           setListEdit(editComment);
         }
       }
     });
     socket.on('delete-comment', ({ deleteComment }: any) => {
       const { id_user } = deleteComment;
-      if (me.id_user) {
-        if (id_user !== me.id_user) {
+      if (me?.id_user) {
+        if (id_user !== me?.id_user) {
           setListDelete(deleteComment);
         }
       }
@@ -122,7 +122,7 @@ const Comment = (props: { socket: any; id_post: string; sx?: SxProps }) => {
   }, [setCommentList, socket, me?.id_user]);
   const handleSubmitCmt = (data: { comment: string; action: string }) => {
     const { comment, action } = data;
-    const id_user = me.id_user;
+    const id_user = me?.id_user;
     const { id_parent, id_reply, id_comment } = payload;
     const newComment = comment.replace(/@\S+\s/, '');
     const newPayload = { id_user, id_parent, id_reply, comment: newComment, id_post, id_comment };

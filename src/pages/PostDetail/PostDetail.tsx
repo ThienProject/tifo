@@ -4,7 +4,7 @@ import { Box, Divider, Stack } from '@mui/material';
 import ModalWrapper from 'src/components/model/ModelWrapper';
 import Grid from '@mui/material/Grid';
 import SliderImg from '../Home/components/PostItem/SliderMedia';
-import { IPost } from 'src/types/post';
+import { IPost, IPostAdmin } from 'src/types/post';
 import UserItem from 'src/components/items/UserItem';
 import { MoreHoriz } from '@mui/icons-material';
 import Comment from './components/Comment';
@@ -17,10 +17,11 @@ import { deletePostThunk } from 'src/redux_store/post/post_action';
 import { toastMessage } from 'src/utils/toast';
 import CustomTypography from 'src/components/CustomTypography';
 
-const PostDetail = (props: { post: IPost }) => {
+const PostDetail = (props: { post: IPost | IPostAdmin }) => {
   const navigate = useNavigate();
   const socket = useAppSelector((state) => state.userSlice.socket);
   const { post } = props;
+  console.log(post);
   const { medias, id_post, description, fullname, avatar, username, id_user } = post;
   const user = { id_user, fullname, avatar, username };
   const { me } = useAppSelector((state) => state.userSlice);

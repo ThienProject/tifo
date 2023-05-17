@@ -23,15 +23,15 @@ import {
   SelectChangeEvent
 } from '@mui/material';
 
-import { LockTwoTone, EditTwoTone, RemoveRedEyeTwoTone } from '@mui/icons-material';
+import { LockTwoTone, RemoveRedEyeTwoTone } from '@mui/icons-material';
 import BulkActions from './BulkActions';
-import { IUserAdmin } from 'src/types/user';
-import { openModal } from 'src/redux_store/common/modal/modal_slice';
-import MODAL_IDS from 'src/constants/modal';
-import DetailUserModal from './DetailUserModal';
 import { useAppDispatch } from 'src/redux_store';
+import { IPostAdmin } from 'src/types/post';
+import MODAL_IDS from 'src/constants/modal';
+import { openModal } from 'src/redux_store/common/modal/modal_slice';
+import DetailPostModal from './DetailPostModal';
 
-const getStatusLabel = (userStatus: 'banned' | 'reported' | 'online' | 'offline'): JSX.Element => {
+const getStatusLabel = (postStatus: 'banned' | 'reported' | 'active'): JSX.Element => {
   const map = {
     banned: {
       text: 'Banned',
@@ -41,17 +41,13 @@ const getStatusLabel = (userStatus: 'banned' | 'reported' | 'online' | 'offline'
       text: 'Reported',
       color: '#ff9100'
     },
-    online: {
-      text: 'Online',
-      color: ''
-    },
-    offline: {
-      text: 'Offline',
+    active: {
+      text: 'Active',
       color: ''
     }
   };
-  console.log({ userStatus });
-  const { text, color }: any = map[userStatus];
+  console.log({ postStatus });
+  const { text, color }: any = map[postStatus];
 
   return <Typography color={color}>{text}</Typography>;
 };
@@ -70,21 +66,22 @@ const statusOptions = [
   }
 ];
 
-const UsersTable = ({
-  users,
+const PostsTable = ({
+  posts,
   page,
   limit,
-  rowsPerPageOptions,
   handlePageChange,
   handleLimitChange,
-  setFilters
+  setFilters,
+  filters,
+  total
 }: {
-  users: IUserAdmin[];
+  posts: IPostAdmin[];
   page: number;
   limit: number;
   filters: any;
   setFilters: any;
-  rowsPerPageOptions: number[];
+  total: number;
   handlePageChange: (event: any, newPage: number) => void;
   handleLimitChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }) => {
@@ -101,19 +98,19 @@ const UsersTable = ({
   };
 
   const handleSelectAllUsers = (event: ChangeEvent<HTMLInputElement>): void => {
-    setSelectedUsers(event.target.checked ? users.map((user) => user.id_user!) : []);
+    setSelectedUsers(event.target.checked ? posts.map((post) => post.id_post!) : []);
   };
 
-  const handleSelectOneUser = (event: ChangeEvent<HTMLInputElement>, userId: string): void => {
-    if (!selectedUsers.includes(userId)) {
-      setSelectedUsers((prevSelected) => [...prevSelected, userId]);
+  const handleSelectOneUser = (event: ChangeEvent<HTMLInputElement>, postId: string): void => {
+    if (!selectedUsers.includes(postId)) {
+      setSelectedUsers((prevSelected) => [...prevSelected, postId]);
     } else {
-      setSelectedUsers((prevSelected) => prevSelected.filter((id) => id !== userId));
+      setSelectedUsers((prevSelected) => prevSelected.filter((id) => id !== postId));
     }
   };
 
-  const selectedSomeUsers = selectedUsers.length > 0 && selectedUsers.length < users.length;
-  const selectedAllUsers = selectedUsers.length === users.length;
+  const selectedSomeUsers = selectedUsers.length > 0 && selectedUsers.length < posts.length;
+  const selectedAllUsers = selectedUsers.length === posts.length;
   const theme = useTheme();
 
   return (
@@ -129,7 +126,7 @@ const UsersTable = ({
             <Box width={150}>
               <FormControl fullWidth variant='outlined'>
                 <InputLabel>Status</InputLabel>
-                <Select defaultValue={'all'} onChange={handleStatusChange} label='Status' autoWidth>
+                <Select defaultValue={filters[0] || 'all'} onChange={handleStatusChange} label='Status' autoWidth>
                   {statusOptions.map((statusOption) => (
                     <MenuItem key={statusOption.id} value={statusOption.id}>
                       {statusOption.name}
@@ -155,58 +152,57 @@ const UsersTable = ({
                   onChange={handleSelectAllUsers}
                 />
               </TableCell>
-              <TableCell>User Details</TableCell>
+              <TableCell>Post Details</TableCell>
               {/* <TableCell>User ID</TableCell> */}
-              <TableCell>Role</TableCell>
-              <TableCell align='right'>total posts</TableCell>
-              <TableCell align='right'>posts reported</TableCell>
+              <TableCell>Username</TableCell>
+              <TableCell align='right'>total loves</TableCell>
+              <TableCell align='right'>total reports</TableCell>
               <TableCell align='right'>Status</TableCell>
               <TableCell align='right'>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((user) => {
-              const isUserSelected = selectedUsers.includes(user.id_user!);
+            {posts.map((post) => {
+              const isUserSelected = selectedUsers.includes(post.id_post!);
               return (
-                <TableRow hover key={user.id_user} selected={isUserSelected}>
+                <TableRow hover key={post.id_post} selected={isUserSelected}>
                   <TableCell padding='checkbox'>
                     <Checkbox
                       color='primary'
                       checked={isUserSelected}
-                      onChange={(event: ChangeEvent<HTMLInputElement>) => handleSelectOneUser(event, user.id_user!)}
+                      onChange={(event: ChangeEvent<HTMLInputElement>) => handleSelectOneUser(event, post.id_post!)}
                       value={isUserSelected}
                     />
                   </TableCell>
                   <TableCell>
                     <Typography variant='body1' fontWeight='bold' color='text.primary' gutterBottom noWrap>
-                      {user?.username}
+                      {post?.id_post}
                     </Typography>
-                    <Typography variant='body2' color='text.secondary' noWrap>
-                      {user?.id_user}
-                      {/* {format(user?.datetime, 'MMMM dd yyyy')} */}
+                    <Typography variant='body2' color='text.secondary' width={200} noWrap>
+                      {post?.description}
                     </Typography>
                   </TableCell>
                   {/* <TableCell>
                     <Typography variant='body1' fontWeight='bold' color='text.primary' gutterBottom noWrap>
-                      {user?.id_user}
+                      {post?.id_post}
                     </Typography>
                   </TableCell> */}
                   <TableCell>
                     <Typography variant='body1' fontWeight='bold' color='text.primary' gutterBottom noWrap>
-                      {user?.role}
+                      {post?.username}
                     </Typography>
                   </TableCell>
                   <TableCell align='right'>
                     <Typography variant='body1' fontWeight='bold' color='text.primary' gutterBottom noWrap>
-                      {user?.post_quantity}
+                      {post?.loves || 0}
                     </Typography>
                   </TableCell>
                   <TableCell align='right'>
                     <Typography variant='body1' fontWeight='bold' color='text.primary' gutterBottom noWrap>
-                      {user?.post_reports || 0}
+                      {post?.reports_quantity || 0}
                     </Typography>
                   </TableCell>
-                  <TableCell align='right'>{user.status && getStatusLabel(user.status!)}</TableCell>
+                  <TableCell align='right'>{post.status && getStatusLabel(post.status!)}</TableCell>
                   <TableCell align='right'>
                     <Tooltip title='View' arrow>
                       <IconButton
@@ -220,8 +216,8 @@ const UsersTable = ({
                         size='small'
                         onClick={() => {
                           const action = openModal({
-                            modalId: MODAL_IDS.viewDetailUser,
-                            dialogComponent: <DetailUserModal user={user} />
+                            modalId: MODAL_IDS.viewDetailPostAdmin,
+                            dialogComponent: <DetailPostModal post={post} />
                           });
                           dispatch(action);
                         }}
@@ -229,7 +225,7 @@ const UsersTable = ({
                         <RemoveRedEyeTwoTone />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip title='Edit User' arrow>
+                    {/* <Tooltip title='Edit post' arrow>
                       <IconButton
                         sx={{
                           '&:hover': {
@@ -242,8 +238,8 @@ const UsersTable = ({
                       >
                         <EditTwoTone />
                       </IconButton>
-                    </Tooltip>
-                    <Tooltip title='Lock User' arrow>
+                    </Tooltip> */}
+                    <Tooltip title='Lock post' arrow>
                       <IconButton
                         sx={{
                           '&:hover': { background: theme.palette.error.light },
@@ -265,16 +261,16 @@ const UsersTable = ({
       <Box p={2}>
         <TablePagination
           component='div'
-          count={users.length}
+          count={total}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleLimitChange}
           page={page}
           rowsPerPage={limit}
-          rowsPerPageOptions={rowsPerPageOptions}
+          rowsPerPageOptions={[5, 10, 25, 30]}
         />
       </Box>
     </Card>
   );
 };
 
-export default UsersTable;
+export default PostsTable;

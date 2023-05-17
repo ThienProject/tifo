@@ -12,7 +12,7 @@ const ButtonError = styled(Button)(
      color: ${theme.palette.error.contrastText};
 
      &:hover {
-        background: ${theme.colors.error.dark};
+        background: ${theme.palette.error.dark};
      }
     `
 );

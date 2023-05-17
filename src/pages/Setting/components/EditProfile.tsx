@@ -36,8 +36,8 @@ const EditProfile = () => {
     resolver: yupResolver(schema)
   });
   const handleOnSubmit = (data: IUser) => {
-    if (me.id_user) {
-      const payload: IUser = { ...data, id_user: me.id_user };
+    if (me?.id_user) {
+      const payload: IUser = { ...data, id_user: me?.id_user };
       const action = updateInfoThunk(payload);
       dispatch(action)
         .unwrap()
