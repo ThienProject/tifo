@@ -13,6 +13,17 @@ export const createPostThunk = createAsyncThunk<any, FormData>(
     }
   }
 );
+export const getDescriptionAutoThunk = createAsyncThunk<any, { prompt: string }>(
+  'post/getDescriptionAutoThunk',
+  async (payload: { prompt: string }, { rejectWithValue }) => {
+    try {
+      const { data } = await postApi.getDescriptionAuto(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 export const updatePostThunk = createAsyncThunk<any, FormData>(
   'post/updatePostThunk',
   async (payload, { rejectWithValue }) => {

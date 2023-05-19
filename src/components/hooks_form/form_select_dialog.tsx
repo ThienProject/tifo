@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import {
   CircularProgress,
-  Divider,
   FormControl,
   FormHelperText,
   FormLabel,
   IconButton,
   ListItemText,
   MenuItem,
-  Select,
   SxProps
 } from '@mui/material';
 import { ClearOutlined } from '@mui/icons-material';
@@ -44,8 +42,8 @@ export const FormSelectDialog = (props: IProps) => {
     name,
     label,
     size = 'small',
-    disabled = false,
-    variant = 'outlined',
+    // disabled = false,
+    // variant = 'outlined',
     margin = 'dense',
     options,
     keyOption,
@@ -54,8 +52,7 @@ export const FormSelectDialog = (props: IProps) => {
     loading = false,
     deleteOption,
     handleChange,
-    sx,
-    placeholder
+    sx
   } = props;
 
   const [deletingId, setDeletingId] = useState(null);

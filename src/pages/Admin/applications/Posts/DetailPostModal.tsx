@@ -5,7 +5,6 @@ import ModalWrapper from 'src/components/model/ModelWrapper';
 import MODAL_IDS from 'src/constants/modal';
 import { IPostAdmin } from 'src/types/post';
 import Overview from './components/tabElement/TabOverview';
-import Scrollbars from 'react-custom-scrollbars-2';
 
 const DetailUserModal = ({ post }: { post: IPostAdmin }) => {
   const [tabs, setTabs] = useState<any[]>([]);

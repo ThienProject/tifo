@@ -30,6 +30,7 @@ import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
 import DetailUserModal from './DetailUserModal';
 import { useAppDispatch } from 'src/redux_store';
+import LockUserModal from '../../components/LockUserModal';
 
 const getStatusLabel = (userStatus: 'banned' | 'reported' | 'online' | 'offline'): JSX.Element => {
   const map = {
@@ -243,6 +244,13 @@ const UsersTable = ({
                     </Tooltip>
                     <Tooltip title='Lock User' arrow>
                       <IconButton
+                        onClick={() => {
+                          const action = openModal({
+                            modalId: MODAL_IDS.lockUser,
+                            dialogComponent: <LockUserModal user={user} />
+                          });
+                          dispatch(action);
+                        }}
                         sx={{
                           '&:hover': { background: theme.palette.error.light },
                           color: theme.palette.error.main

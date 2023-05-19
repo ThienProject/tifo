@@ -1,4 +1,4 @@
-import { useState, SyntheticEvent } from 'react';
+import { useState, SyntheticEvent, useEffect } from 'react';
 import {
   Box,
   IconButton,
@@ -44,6 +44,8 @@ import ConfirmationDialog from 'src/components/model/confirmation_dialog';
 import { deleteRoomThunk, deleteUserThunk } from 'src/redux_store/room/room_action';
 import { toastMessage } from 'src/utils/toast';
 import Member from '../Member';
+import useChatItem from 'src/hooks/use_chatItem';
+import { clearCurrentChat, deleteNewUserChat } from 'src/redux_store/room/room_slice';
 const RootWrapper = styled(Box)(
   ({ theme }) => `
         @media (min-width: ${theme.breakpoints.values.md}px) {
@@ -105,33 +107,65 @@ const AccordionSummaryWrapper = styled(AccordionSummary)(
 function TopBarContent() {
   const { t } = useTranslation();
   const [isOpenSetting, setIsOpenSetting] = useState(false);
-  const rooms: IRoom[] = useAppSelector((state) => state.roomSlice.rooms);
   const { me } = useAppSelector((state) => state.userSlice);
-  const newUserChat = useAppSelector((state) => state.roomSlice.newUserChat);
-  const { id_room } = useParams();
+  const { newUserChat, currentRoom, rooms } = useAppSelector((state) => state.roomSlice);
+  console.log(currentRoom);
+  const { id_room, id_user } = useParams();
   const navigation = useNavigate();
+  // const isChatFriend = room && room.type === 'friend';
+  // const isChatbot = room && room.type === 'chatbot';
+  // const isChatGroup = room && room.type === 'group';
+  // let avatar = room?.avatar ? CPath.host_user + room.avatar : images.roomDefault;
+  // let name = room?.name;
+  // let friend: IUser | null = null;
+
+  // const isOwner = isChatGroup && room?.users?.find((u) => u.role === 1 && u.id_user === me?.id_user);
+  // if ((isChatFriend || isChatbot) && room.users) {
+  //   friend = room.users[0];
+  // }
+  // if (newUserChat && Object.keys(newUserChat).length > 0) {
+  //   friend = newUserChat;
+  // }
+  // if (friend) {
+  //   avatar = CPath.host_user + friend.avatar;
+  //   name = friend.fullname;
+  // }
   const room = rooms.find((item: any) => item.id_room === id_room);
-  const isChatFriend = room && room.type === 'friend';
-  const isChatbot = room && room.type === 'chatbot';
-  const isChatGroup = room && room.type === 'group';
-  let avatar = room?.avatar ? CPath.host_user + room.avatar : images.roomDefault;
-  let chatName = room?.name;
-  let friend: IUser | null = null;
-  const isOwner = isChatGroup && room?.users?.find((u) => u.role === 1 && u.id_user === me?.id_user);
-  if ((isChatFriend || isChatbot) && room.users) {
-    friend = room.users[0];
-  }
-  if (newUserChat && Object.keys(newUserChat).length > 0) {
-    friend = newUserChat;
-  }
-  if (friend) {
-    avatar = CPath.host_user + friend.avatar;
-    chatName = friend.fullname;
-  }
+  const {
+    name,
+    avatar,
+    isOnline,
+    isOwner,
+    type,
+    off_time,
+    id_user: chat_id_user,
+    username,
+    id_room: chat_id_room
+  } = useChatItem(room || currentRoom || newUserChat);
+  // if (id_room) {
+  //
+  //   chatItem = useChatItem(room);
+  // }
+  // if (newUserChat && Object.keys(newUserChat).length > 0) {
+  //   useChatItem;
+  //   friend = newUserChat;
+  // }
+  // useEffect(() => {
+  //   const action = clearCurrentChat();
+  //   dispatch(action);
+  // }, []);
+  useEffect(() => {
+    // if (id_user) {
+    //   return () => {
+    //     const actionReset = deleteNewUserChat();
+    //     dispatch(actionReset);
+    //   };
+    // }
+  }, [id_user]);
   const theme = useTheme();
   const dispatch = useAppDispatch();
 
-  const [expanded, setExpanded] = useState<string | false>('section1');
+  const [expanded, setExpanded] = useState<string | false>('section2');
 
   const handleChange = (section: string) => (_event: SyntheticEvent, isExpanded: boolean) => {
     setExpanded(isExpanded ? section : false);
@@ -147,16 +181,16 @@ function TopBarContent() {
               width: 48,
               height: 48
             }}
-            alt={chatName}
+            alt={name}
             src={avatar}
           />
           <Box ml={1}>
             <Typography variant='h4' fontSize={16} fontWeight={'700'}>
-              {chatName}
+              {name}
             </Typography>
-            {friend?.status === 'offline' && (
+            {!isOnline && (
               <Typography fontSize={14} color={'text.secondary'} variant='subtitle1'>
-                {friend?.off_time && getSubTimeFromDayFNS(friend.off_time, t('language'))}
+                {off_time && getSubTimeFromDayFNS(off_time, t('language'))}
               </Typography>
             )}
           </Box>
@@ -222,12 +256,12 @@ function TopBarContent() {
               src={avatar}
             />
             <Typography fontWeight={700} fontSize={16} variant='h4'>
-              {chatName}
+              {name}
             </Typography>
 
-            {friend?.status === 'offline' && (
+            {!isOnline && (
               <Typography fontSize={14} color={'text.secondary'} variant='subtitle1'>
-                {friend?.off_time && getSubTimeFromDayFNS(friend.off_time, t('language'))}
+                {off_time && getSubTimeFromDayFNS(off_time, t('language'))}
               </Typography>
             )}
           </Box>
@@ -294,7 +328,7 @@ function TopBarContent() {
               }}
             >
               <List component='nav'>
-                {isChatFriend && friend && (
+                {type === 'friend' && (
                   <>
                     <ListItem button>
                       <ListItemIconWrapper>
@@ -306,7 +340,7 @@ function TopBarContent() {
                         onClick={() => {
                           const action = openModal({
                             modalId: MODAL_IDS.createRoom,
-                            dialogComponent: <CreateRoom user={friend!} />
+                            dialogComponent: <CreateRoom user={{ id_user: chat_id_user, username: username }} />
                           });
                           dispatch(action);
                         }}
@@ -326,14 +360,14 @@ function TopBarContent() {
                   </>
                 )}
 
-                {isChatGroup && (
+                {type === 'group' && (
                   <>
                     <ListItem
                       button
                       onClick={() => {
                         const action = openModal({
                           modalId: MODAL_IDS.memberManager,
-                          dialogComponent: <Member id_room={room.id_room!} />
+                          dialogComponent: <Member id_room={chat_id_room!} />
                         });
                         dispatch(action);
                       }}

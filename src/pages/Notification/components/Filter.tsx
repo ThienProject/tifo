@@ -22,12 +22,16 @@ const Filter = ({
   const { handleSubmit, control } = useForm({ defaultValues: defaultFilter });
   const optionCategories = [
     {
-      category: 'comments',
+      category: 'comment',
       label: t('notification.comments')
     },
     {
-      category: 'follows',
+      category: 'follow',
       label: t('notification.follows')
+    },
+    {
+      category: 'banned_post',
+      label: t('notification.banned')
     },
     {
       category: 'all',

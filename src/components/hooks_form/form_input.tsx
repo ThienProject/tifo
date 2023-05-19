@@ -24,6 +24,7 @@ interface IProps {
   handleChange?: (name: string, value: any) => void;
   multiline?: boolean;
   maxRows?: number;
+  minRows?: number;
   InputProps?:
     | React.ReactElement<any, any>
     | {
@@ -51,7 +52,8 @@ export const FormInput = (props: IProps) => {
     InputProps,
     placeholder,
     multiline = false,
-    maxRows = 0
+    maxRows = 0,
+    minRows = 0
   } = props;
 
   const [isShowPassword, setIsShowPassword] = React.useState<boolean>(false);
@@ -90,6 +92,7 @@ export const FormInput = (props: IProps) => {
             fullWidth
             multiline={multiline}
             maxRows={maxRows}
+            minRows={minRows}
             sx={{ border: inputBase ? 'none' : '' }}
             size={size}
             type={isShowPassword ? 'text' : type}

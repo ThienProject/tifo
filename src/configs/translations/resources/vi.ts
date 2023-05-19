@@ -31,6 +31,7 @@ export default {
       post_comment: ' đã bình luận bài viết của bạn',
       reply: 'đã phản hồi bình luận của bạn',
       accept_follow: '  đã chấp nhận yêu cầu follow của bạn',
+      banned_post: 'Bài viết của bạn đã bị khóa'
     },
     filter: 'Lọc',
     category: 'Thể loại',
@@ -45,7 +46,8 @@ export default {
     thisMonth: 'Tháng này',
     thisYear: 'Năm này',
     all: 'Tất cả',
-    empty: 'Không có thông báo nào!'
+    empty: 'Không có thông báo nào!',
+    banned: 'Hệ thống'
   },
   toast: {
     sometimeError: 'Thỉnh thoảng có lỗi xảy ra !',
@@ -54,7 +56,9 @@ export default {
     requestLogin: 'Vui lòng đăng nhập để sử dụng chức năng này !',
     deleteSuccess: 'Xóa {{object}} thành công!',
     leaveGroup: 'Rời nhóm thành công!',
-    update: 'Cập nhật thành công'
+    update: 'Cập nhật thành công',
+    lockSuccess: 'Khóa thành công',
+    submit: 'Gửi thành công'
   },
   confirm: {
     cancelCreatePost: 'Bạn muốn hủy bài đăng này ?',
@@ -66,6 +70,7 @@ export default {
     remove: 'Xóa người follow này? '
   },
   button: {
+    report: 'Báo cáo',
     unfollow: 'Hủy theo dõi',
     remove: 'Xóa',
     accept: 'Chấp nhận',
@@ -80,7 +85,8 @@ export default {
     seeLess: 'Ít hơn',
     chat: 'Chat',
     submit: 'Gửi',
-    apply: 'Áp dụng'
+    apply: 'Áp dụng',
+    viewDetail: 'Xem chi tiết'
   },
   home: {
     suggestTab: 'Đề xuất cho bạn',
@@ -90,7 +96,10 @@ export default {
   },
   postDetail: {
     reply: 'Phản hồi',
-    viewReply: 'Xem tất cả phản hồi'
+    viewReply: 'Xem tất cả phản hồi',
+    edit: 'Chỉnh sửa bài đăng',
+    delete: 'Xóa bài đăng',
+    report: 'Báo cáo bài đăng'
   },
   message: {
     customize: {
@@ -127,6 +136,7 @@ export default {
   },
   createPost: {
     uploadTitle: 'Tạo bài đăng',
+    updateTitle: 'Chỉnh sửa bài đăng',
     description: 'Mô tả',
     target: 'Ai có thể nhìn thấy bài đăng này? ',
     suggest: 'Gợi ý với AI',
@@ -178,5 +188,15 @@ export default {
   common: {
     followings: 'đang theo dõi',
     followers: 'người theo dõi'
+  },
+  admin: {
+    lock_user: 'Khóa người dùng',
+    lock_post: 'Khóa bài đăng'
+  },
+  user: {
+    invalid: 'User không tồn tại'
+  },
+  room: {
+    empty: 'Không còn phòng nào!'
   }
 };

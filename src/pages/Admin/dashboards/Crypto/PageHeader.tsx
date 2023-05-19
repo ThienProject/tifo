@@ -1,9 +1,11 @@
 import { Typography, Avatar, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { useAppSelector } from 'src/redux_store';
 
 function PageHeader() {
+  const { me } = useAppSelector((state) => state.userSlice);
   const user = {
-    name: 'Catherine Pike',
+    name: me?.username,
     avatar: '/static/images/avatars/1.jpg'
   };
   const theme = useTheme();
@@ -23,10 +25,9 @@ function PageHeader() {
         />
       </Grid>
       <Grid item>
-        <Typography variant='h3' component='h3' gutterBottom>
+        <Typography fontSize={23} variant='h3' component='h3' gutterBottom>
           Welcome, {user.name}!
         </Typography>
-        <Typography variant='subtitle2'>Today is a good day to start trading crypto assets!</Typography>
       </Grid>
     </Grid>
   );

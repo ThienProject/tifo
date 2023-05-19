@@ -23,7 +23,7 @@ export interface IUser {
 }
 export interface IUserAdmin extends IUser {
   post_quantity?: number;
-  post_reports?: number
+  post_reports?: number;
 }
 export interface IUserChat extends IUser {
   id_room?: string;

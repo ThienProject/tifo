@@ -3,7 +3,7 @@ import PageHeader from './PageHeader';
 import PageTitleWrapper from 'src/components/admin/PageTitleWrapper';
 import { Container, Grid } from '@mui/material';
 
-import AccountBalance from './AccountBalance';
+import AccountStatistics from './AccountStatistics';
 import Wallets from './Wallets';
 import AccountSecurity from './AccountSecurity';
 import WatchList from './WatchList';
@@ -11,16 +11,13 @@ import WatchList from './WatchList';
 function DashboardCrypto() {
   return (
     <>
-      {/* <Helmet>
-        <title>Crypto Dashboard</title>
-      </Helmet> */}
       <PageTitleWrapper>
         <PageHeader />
       </PageTitleWrapper>
       <Container maxWidth='lg'>
         <Grid container direction='row' justifyContent='center' alignItems='stretch' spacing={4}>
           <Grid item xs={12}>
-            <AccountBalance />
+            <AccountStatistics />
           </Grid>
           <Grid item lg={8} xs={12}>
             <Wallets />

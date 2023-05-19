@@ -7,9 +7,9 @@ const initialState = {
 const userSlice = createSlice({
   name: 'admin',
   initialState,
-  reducers: {},
+  reducers: {}
 });
 
-const { reducer, actions } = userSlice;
+const { reducer } = userSlice;
 // export const { } = actions;
 export default reducer;

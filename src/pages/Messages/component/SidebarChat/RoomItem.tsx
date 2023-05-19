@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { Box, Stack, Avatar, Typography, Button, Badge } from '@mui/material';
 import { IRoom } from 'src/types/room';
 import { IUser } from 'src/types/user';
@@ -28,15 +28,18 @@ const ChatItem = ({ socket, room, chatDemo }: { socket: Socket; room: IRoom; cha
   let chatName = room.name;
   let isOnline = false;
 
-  if (isChatFriend && room.users) {
-    const friend: IUser = room.users[0];
-    if (friend.avatar) {
-      avatar = CPath.host_user + friend.avatar;
+  if (isChatFriend) {
+    if (room.users && room.users.length > 0) {
+      const friend: IUser = room.users[0];
+      if (friend.avatar) {
+        avatar = CPath.host_user + friend.avatar;
+      }
+      chatName = friend.fullname;
+      isOnline = !me?.invisible && !friend?.invisible && friend?.status === 'online';
+    } else {
+      chatName = t('user.invalid')!;
+      avatar = images.account;
     }
-    chatName = friend.fullname;
-    isOnline = !me?.invisible && !friend?.invisible && friend?.status === 'online';
-
-    console.log(isOnline, 'isOnline');
   }
   useEffect(() => {
     if (isChatFriend) {
@@ -72,7 +75,7 @@ const ChatItem = ({ socket, room, chatDemo }: { socket: Socket; room: IRoom; cha
         py={2}
         px={1}
         onClick={() => {
-          navigate('/message/' + room.id_room);
+          navigate(room.id_room!);
         }}
       >
         <Badge

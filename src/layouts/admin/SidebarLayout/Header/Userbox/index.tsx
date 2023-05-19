@@ -22,6 +22,7 @@ import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
+import { useAppSelector } from 'src/redux_store';
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -59,8 +60,10 @@ const UserBoxDescription = styled(Typography)(
 );
 
 function HeaderUserbox() {
+  const { me } = useAppSelector((state) => state.userSlice);
+
   const user = {
-    name: 'Catherine Pike',
+    name: me?.username,
     avatar: '/static/images/avatars/1.jpg',
     jobtitle: 'Project Manager'
   };

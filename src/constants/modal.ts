@@ -15,6 +15,7 @@ const MODAL_IDS = {
   viewDetailUser: 'viewDetailUser',
   viewDetailPostAdmin: 'viewDetailPostAdmin',
   lockPost: 'lockPost',
-  lockUser: 'lockUser'
+  lockUser: 'lockUser',
+  reportPost: 'reportPost'
 };
 export default MODAL_IDS;

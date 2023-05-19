@@ -20,33 +20,39 @@ import { closeModal, openModal } from 'src/redux_store/common/modal/modal_slice'
 import MODAL_IDS from 'src/constants/modal';
 import { useLocation } from 'react-router';
 import ModalLoadingCreate from '../components/ModalLoadingCreate';
+import { useTranslation } from 'react-i18next';
 const initUpdatePostPost: IPayloadUpdatePost = {
   target_update: '',
   type: '',
   description_update: '',
   medias_update: []
 };
-const target = [
-  {
-    target: 'public'
-  },
-  {
-    target: 'private'
-  },
-  {
-    target: 'follower'
-  }
-];
+
 const schemaUpdatePost = schemaCreatePost('target_update', 'description_update', 'medias_update');
 
 const UpdatePost = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+
   const isLoading = useIsRequestPending('post', 'updatePostThunk');
   const [post, setPost] = useState<IPost>();
   const [mediasReplace, setMediaReplace] = useState<any[]>([]);
   const [mediasDelete, setMediaDelete] = useState<{ id_media: string; media_link: string }[]>([]);
-
+  const target = [
+    {
+      target: 'public',
+      label: t('createPost.type.public')
+    },
+    {
+      target: 'private',
+      label: t('createPost.type.private')
+    },
+    {
+      target: 'follower',
+      label: t('createPost.type.follower')
+    }
+  ];
   const { me } = useAppSelector((state: any) => state.userSlice);
   const handleReplaceMedia = (id_media: string, media_link: string, value: File) => {
     setMediaReplace((prev: any[]) => {
@@ -167,7 +173,7 @@ const UpdatePost = () => {
   return (
     <Box component='form' m={2} onSubmit={handleSubmit(handleOnSubmit)}>
       <Typography fontWeight={600} fontSize={20} variant='h2'>
-        UPDATE POST
+        {t('createPost.updateTitle')}
       </Typography>
       <Divider sx={{ p: 0, mt: 0.2, mb: 2 }} />
       <Grid container>

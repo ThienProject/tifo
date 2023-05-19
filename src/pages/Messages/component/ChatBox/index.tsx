@@ -8,7 +8,10 @@ import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 
 import { deleteNewUserChat, toggleMenu } from 'src/redux_store/room/room_slice';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
+import { IPayloadChats } from 'src/types/room';
+import { getChatsByIDroomThunk } from 'src/redux_store/room/room_action';
+import { toastMessage } from 'src/utils/toast';
 
 const IconButtonToggle = styled(IconButton)(
   ({ theme }) => `
@@ -20,11 +23,12 @@ const IconButtonToggle = styled(IconButton)(
 const ChatBox = () => {
   const theme = useTheme();
   const socket = useAppSelector((state) => state.userSlice.socket);
+  const { me } = useAppSelector((state) => state.userSlice);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const handleDrawerToggle = () => {
     dispatch(toggleMenu());
   };
-  // const rooms = useAppSelector((state) => state.roomSlice.rooms);
   const buttonToggle = (
     <IconButtonToggle
       sx={{
@@ -56,15 +60,31 @@ const ChatBox = () => {
         flex: 1;
 `
   );
-  const { id_user } = useParams();
+
+  const { id_room } = useParams();
   useEffect(() => {
+    const id_user = me?.id_user;
+    const param: IPayloadChats = { offset: 0, limit: 10 };
     if (id_user) {
-      return () => {
-        const actionReset = deleteNewUserChat();
-        dispatch(actionReset);
-      };
+      param.id_user = id_user;
+      if (id_room) {
+        param.id_room = id_room;
+      }
+      if (param.id_room) {
+        const action = getChatsByIDroomThunk(param);
+        dispatch(action)
+          .unwrap()
+          .then((data) => {
+            if (!data.user && !data.chats) {
+              toastMessage.error('Sometime is error !');
+            }
+          })
+          .catch(() => {
+            navigate('/notfound', { replace: true });
+          });
+      }
     }
-  }, [id_user]);
+  }, [id_room]);
   return (
     <ChatWindow>
       <ChatTopBar

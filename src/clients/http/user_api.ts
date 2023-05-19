@@ -66,5 +66,8 @@ export const userApi = {
   },
   updateImage: (payload: FormData) => {
     return client.post('/auth/updateImage', payload);
+  },
+  reportPost: (payload: { id_user: string; reason: string; id_post: string }) => {
+    return client.post<any>('/user/post/report', payload);
   }
 };

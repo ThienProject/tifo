@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { FormInput } from 'src/components/hooks_form/form_input';
 import { FormSelect } from 'src/components/hooks_form/form_select';
-import { createPostThunk } from 'src/redux_store/post/post_action';
+import { createPostThunk, getDescriptionAutoThunk } from 'src/redux_store/post/post_action';
 import { toastMessage } from 'src/utils/toast';
 import { objectToFormData, schemaCreatePost } from 'src/functions';
 import { useIsRequestPending } from 'src/hooks/use_status';
@@ -14,7 +14,6 @@ import { closeModal, openModal } from 'src/redux_store/common/modal/modal_slice'
 import MODAL_IDS from 'src/constants/modal';
 import Media from 'src/components/hooks_form/form_media';
 import ModalLoadingCreate from '../components/ModalLoadingCreate';
-import { sendMessage } from 'src/clients/http/chatGPT_api';
 import { LoadingButton } from '@mui/lab';
 import Scrollbars from 'react-custom-scrollbars-2';
 import { useTranslation } from 'react-i18next';
@@ -39,15 +38,15 @@ const Create = (props: { type: string }) => {
   const target = [
     {
       target: 'public',
-      label: t('createPost.uploadTitle.type.public')
+      label: t('createPost.type.public')
     },
     {
       target: 'private',
-      label: t('createPost.uploadTitle.type.private')
+      label: t('createPost.type.private')
     },
     {
       target: 'follower',
-      label: t('createPost.uploadTitle.type.follower')
+      label: t('createPost.type.follower')
     }
   ];
   const { control, handleSubmit, reset, setValue, getValues } = useForm({
@@ -79,16 +78,25 @@ const Create = (props: { type: string }) => {
   };
   const handleSuggest = async () => {
     setIsLoadingSuggest(true);
-    const status = await sendMessage(
-      `tạo 5 status 20 từ bằng tiếng việt, với từ khóa : ${getValues('description') || 'ngẫu nhiên'}`
-    );
 
-    const newArr = status
-      .replaceAll(/[0-9\n]/g, '')
-      .split(/[.;?]/)
-      .filter((item: any) => item && item.trim() !== '');
-    setSuggest(newArr);
-    setIsLoadingSuggest(false);
+    const status = `tạo 5 status độ dài 20 từ bằng tiếng việt, với từ khóa : ${
+      getValues('description') || 'ngẫu nhiên'
+    }`;
+    const action = getDescriptionAutoThunk({ prompt: status });
+    dispatch(action)
+      .unwrap()
+      .then((data) => {
+        const { description } = data;
+        const newArr = description
+          .replaceAll(/[0-9\n]/g, '')
+          .split(/[.;?]/)
+          .filter((item: any) => item && item.trim() !== '');
+        setSuggest(newArr);
+        setIsLoadingSuggest(false);
+      })
+      .catch(() => {
+        setIsLoadingSuggest(false);
+      });
   };
 
   useEffect(() => {
@@ -119,7 +127,7 @@ const Create = (props: { type: string }) => {
         </Grid>
         <Grid item lg={7}>
           <Box sx={{ mb: 3 }}>
-            <Typography> {t('createPost.description')} </Typography>
+            {/* <Typography> {t('createPost.description')} </Typography> */}
             <FormInput
               sx={{
                 fontSize: 2,
@@ -135,6 +143,7 @@ const Create = (props: { type: string }) => {
               required
               multiline
               maxRows={4}
+              minRows={4}
             />
           </Box>
           <Box width={'fitContent'} boxShadow={2} sx={{ mb: 3, p: 2 }}>

@@ -30,6 +30,7 @@ import { IPostAdmin } from 'src/types/post';
 import MODAL_IDS from 'src/constants/modal';
 import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import DetailPostModal from './DetailPostModal';
+import LockPostModal from '../../components/LockPostModal';
 
 const getStatusLabel = (postStatus: 'banned' | 'reported' | 'active'): JSX.Element => {
   const map = {
@@ -182,11 +183,7 @@ const PostsTable = ({
                       {post?.description}
                     </Typography>
                   </TableCell>
-                  {/* <TableCell>
-                    <Typography variant='body1' fontWeight='bold' color='text.primary' gutterBottom noWrap>
-                      {post?.id_post}
-                    </Typography>
-                  </TableCell> */}
+
                   <TableCell>
                     <Typography variant='body1' fontWeight='bold' color='text.primary' gutterBottom noWrap>
                       {post?.username}
@@ -225,22 +222,16 @@ const PostsTable = ({
                         <RemoveRedEyeTwoTone />
                       </IconButton>
                     </Tooltip>
-                    {/* <Tooltip title='Edit post' arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': {
-                            background: theme.palette.primary.light
-                          },
-                          color: theme.palette.primary.main
-                        }}
-                        color='inherit'
-                        size='small'
-                      >
-                        <EditTwoTone />
-                      </IconButton>
-                    </Tooltip> */}
+
                     <Tooltip title='Lock post' arrow>
                       <IconButton
+                        onClick={() => {
+                          const action = openModal({
+                            modalId: MODAL_IDS.lockPost,
+                            dialogComponent: <LockPostModal post={post} />
+                          });
+                          dispatch(action);
+                        }}
                         sx={{
                           '&:hover': { background: theme.palette.error.light },
                           color: theme.palette.error.main

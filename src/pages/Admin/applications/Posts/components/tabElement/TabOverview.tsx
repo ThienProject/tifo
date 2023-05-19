@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, Divider, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, Typography } from '@mui/material';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import CustomTypography from 'src/components/CustomTypography';
@@ -9,7 +9,6 @@ import { getPostThunk } from 'src/redux_store/admin/admin_action';
 import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import { IPostAdmin } from 'src/types/post';
 import ItemReported from '../ItemReported';
-import Scrollbars from 'react-custom-scrollbars-2';
 
 const Overview = ({ id_post }: { id_post: string }) => {
   const dispatch = useAppDispatch();

@@ -17,7 +17,17 @@ export const loginThunk = createAsyncThunk<any, IPayloadLogin>(
     }
   }
 );
-
+export const reportPostThunk = createAsyncThunk<any, { id_user: string; id_post: string; reason: string }>(
+  'user/reportPostThunk',
+  async (payload: { id_user: string; id_post: string; reason: string }, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.reportPost(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
 export const updateInfoThunk = createAsyncThunk<any, IUser>(
   'user/updateInfoThunk',
   async (payload, { rejectWithValue }) => {

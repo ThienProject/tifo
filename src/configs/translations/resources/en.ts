@@ -30,7 +30,8 @@ export default {
       post_love: ' liked your post',
       post_comment: ' commented on your post',
       accept_follow: '  has accepted your follow request',
-      reply: ' responds to your comment'
+      reply: ' responds to your comment',
+      banned_post: 'Your post has been locked'
     },
     filter: 'Filter',
     category: 'Category',
@@ -45,10 +46,12 @@ export default {
     thisMonth: 'This Month',
     thisYear: 'This Year',
     all: 'All',
-    empty: 'No announcements!'
+    empty: 'No announcements!',
+    banned: 'System'
   },
   button: {
     accept: 'Accept',
+    report: 'Report',
     follow: 'Follow',
     requested: 'Requested',
     unfollow: 'Unfollow',
@@ -62,7 +65,8 @@ export default {
     seeLess: 'See less',
     chat: 'Chat',
     submit: 'Submit',
-    apply: 'Apply'
+    apply: 'Apply',
+    viewDetail: 'View Detail'
   },
   toast: {
     sometimeError: 'Sometime has error occurred !',
@@ -71,7 +75,9 @@ export default {
     requestLogin: 'Please login to use this function !',
     deleteSuccess: 'Delete {{object}} success!',
     leaveGroup: 'Leaved group success!',
-    update: 'Update Success!'
+    update: 'Update Success!',
+    lockSuccess: 'Lock success!',
+    submit: 'Submit success!'
   },
   confirm: {
     cancelCreatePost: 'Do you want to cancel create post?',
@@ -89,8 +95,11 @@ export default {
     empty: 'No more posts, come back later !'
   },
   postDetail: {
+    edit: 'Edit Post',
+    delete: 'Delete Post',
     reply: 'reply',
-    viewReply: 'View Replies'
+    viewReply: 'View Replies',
+    report: 'Report post'
   },
   message: {
     customize: {
@@ -127,6 +136,7 @@ export default {
   },
   createPost: {
     uploadTitle: 'Upload post',
+    updateTitle: 'Update post',
     description: 'Description',
     target: 'Who can watch this post?',
     suggest: 'Suggest by AI',
@@ -178,5 +188,15 @@ export default {
   common: {
     followings: 'followings',
     followers: 'followers'
+  },
+  admin: {
+    lock_user: 'Lock User',
+    lock_post: ' Lock Post'
+  },
+  user: {
+    invalid: 'User does not exist'
+  },
+  room: {
+    empty: 'No more room!'
   }
 };

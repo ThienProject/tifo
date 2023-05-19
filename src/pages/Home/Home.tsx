@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { getPostsThunk } from 'src/redux_store/post/post_action';
 import { clearPost } from 'src/redux_store/post/post_slice';
 import { useTranslation } from 'react-i18next';
+import ProtectBox from 'src/components/ProtectBox/ProtectBox';
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -44,7 +45,9 @@ const Home = () => {
     <Grid container justifyContent={'center'} spacing={0}>
       <Grid item lg={6} justifyContent={'flex-end'}>
         <Box mt={3} height={100} color={'common.black'}>
-          <ListFriends />
+          <ProtectBox>
+            <ListFriends />
+          </ProtectBox>
           <Box mt={3}>
             {posts.length > 0 && (
               <Box>
@@ -73,7 +76,9 @@ const Home = () => {
       </Grid>
       <Grid item lg={5} display={{ xs: 'none', lg: 'block' }}>
         <Box mt={4} mx={10}>
-          <Suggestions />
+          <ProtectBox>
+            <Suggestions />
+          </ProtectBox>
         </Box>
       </Grid>
     </Grid>

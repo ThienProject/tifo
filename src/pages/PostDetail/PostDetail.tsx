@@ -16,29 +16,43 @@ import ConfirmationDialog from 'src/components/model/confirmation_dialog';
 import { deletePostThunk } from 'src/redux_store/post/post_action';
 import { toastMessage } from 'src/utils/toast';
 import CustomTypography from 'src/components/CustomTypography';
+import { useTranslation } from 'react-i18next';
+import ReportPostModal from '../components/ReportPostModal';
 
 const PostDetail = (props: { post: IPost | IPostAdmin }) => {
   const navigate = useNavigate();
   const socket = useAppSelector((state) => state.userSlice.socket);
   const { post } = props;
-  console.log(post);
+  const { t } = useTranslation();
   const { medias, id_post, description, fullname, avatar, username, id_user } = post;
   const user = { id_user, fullname, avatar, username };
   const { me } = useAppSelector((state) => state.userSlice);
   const dispatch = useAppDispatch();
-  let options: any[] = [];
+  let options: any[] = [
+    {
+      name: t('button.report'),
+      handleClick: () => {
+        const action: any = openModal({
+          modalId: MODAL_IDS.reportPost,
+          dialogComponent: <ReportPostModal post={post} />
+        });
+        dispatch(action);
+        // navigate(`update/${post?.id_post}`);
+      }
+    }
+  ];
   const optionOwner: any[] = [
     {
-      name: 'edit post',
+      name: t('postDetail.edit'),
       handleClick: () => {
         const action: any = closeModal({ modalId: MODAL_IDS.postDetail });
         dispatch(action);
-        navigate(`update/${id_post}`);
+        navigate(`update/${post?.id_post}`);
       },
-      element: <Box> Edit post</Box>
+      element: <Box>{t('postDetail.edit')}</Box>
     },
     {
-      name: 'delete post',
+      name: t('postDetail.delete'),
       handleClick: () => {
         const action = openModal({
           modalId: MODAL_IDS.confirmDeletePost,
@@ -67,7 +81,7 @@ const PostDetail = (props: { post: IPost | IPostAdmin }) => {
         });
         dispatch(action);
       },
-      element: <Box> Delete post </Box>
+      element: <Box>{t('postDetail.delete')} </Box>
     }
   ];
   if (me?.id_user === id_user) {

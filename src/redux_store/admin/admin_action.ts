@@ -12,10 +12,32 @@ export const getNotifications = createAsyncThunk<any, { id_user: string }>(
     }
   }
 );
+export const lockUserThunk = createAsyncThunk<any, { id_user: string; reason: string }>(
+  'admin/lockUserThunk',
+  async (payload: { id_user: string; reason: string }, { rejectWithValue }) => {
+    try {
+      const { data } = await adminApi.lockUser(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const lockPostThunk = createAsyncThunk<any, { id_user: string; id_post: string; reason: string }>(
+  'admin/lockPostThunk',
+  async (payload: { id_user: string; id_post: string; reason: string }, { rejectWithValue }) => {
+    try {
+      const { data } = await adminApi.lockPost(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
-export const getPostsThunk = createAsyncThunk<any, { id_user: string, limit: number, offset: number }>(
+export const getPostsThunk = createAsyncThunk<any, { id_user: string; limit: number; offset: number }>(
   'admin/getPostsThunk',
-  async (payload: { id_user: string, limit: number, offset: number }, { rejectWithValue }) => {
+  async (payload: { id_user: string; limit: number; offset: number }, { rejectWithValue }) => {
     try {
       const { data } = await adminApi.getPosts(payload);
       return data;
@@ -25,9 +47,9 @@ export const getPostsThunk = createAsyncThunk<any, { id_user: string, limit: num
   }
 );
 
-export const getUsersThunk = createAsyncThunk<any, { id_role: number, limit: number, offset: number }>(
+export const getUsersThunk = createAsyncThunk<any, { id_role: number; limit: number; offset: number }>(
   'admin/getUsersThunk',
-  async (payload: { id_role: number, limit: number, offset: number }, { rejectWithValue }) => {
+  async (payload: { id_role: number; limit: number; offset: number }, { rejectWithValue }) => {
     try {
       const { data } = await adminApi.getUsers(payload);
       return data;
@@ -52,6 +74,17 @@ export const getPostThunk = createAsyncThunk<any, { id_post: string }>(
   async (payload: { id_post: string }, { rejectWithValue }) => {
     try {
       const { data } = await adminApi.getPost(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const userStatisticsThunk = createAsyncThunk<any>(
+  'admin/userStatisticsThunk',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await adminApi.userStatistics();
       return data;
     } catch (error: any) {
       return rejectWithValue(error);

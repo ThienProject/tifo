@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   Box,
   Grid,
@@ -18,6 +17,9 @@ import TrendingUp from '@mui/icons-material/TrendingUp';
 
 import Chart from 'react-apexcharts';
 import type { ApexOptions } from 'apexcharts';
+import { useEffect, useState } from 'react';
+import { userStatisticsThunk } from 'src/redux_store/admin/admin_action';
+import { useAppDispatch } from 'src/redux_store';
 
 const AvatarSuccess = styled(Avatar)(
   ({ theme }) => `
@@ -51,9 +53,9 @@ const ListItemAvatarWrapper = styled(ListItemAvatar)(
 `
 );
 
-function AccountBalance() {
+function AccountStatistics() {
   const theme = useTheme();
-
+  const dispatch = useAppDispatch();
   const chartOptions: ApexOptions = {
     chart: {
       background: 'transparent',
@@ -122,11 +124,20 @@ function AccountBalance() {
   };
 
   const chartSeries = [10, 20, 25, 45];
-
+  const [userStatistics, setUserStatistics] = useState({});
+  useEffect(() => {
+    const action = userStatisticsThunk();
+    dispatch(action)
+      .unwrap()
+      .then((data) => {
+        const { total, increaseMonth } = data;
+        setUserStatistics({ total, increaseMonth });
+      });
+  }, []);
   return (
     <Card>
       <Grid spacing={0} container>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={4}>
           <Box p={4}>
             <Typography
               sx={{
@@ -136,14 +147,11 @@ function AccountBalance() {
               }}
               variant='h4'
             >
-              Account Balance
+              Account Statistics
             </Typography>
             <Box>
-              <Typography fontWeight={700} fontSize={32} variant='h1' gutterBottom>
-                $54,584.23
-              </Typography>
-              <Typography variant='h4' fontSize={18} fontWeight='normal' color='text.secondary'>
-                1.0045983485234 BTC
+              <Typography fontWeight={700} fontSize={20} variant='h1' gutterBottom>
+                Total users: {userStatistics.total}
               </Typography>
               <Box
                 display='flex'
@@ -161,25 +169,13 @@ function AccountBalance() {
                   <TrendingUp fontSize='large' />
                 </AvatarSuccess>
                 <Box>
-                  <Typography variant='h4'>+ $3,594.00</Typography>
+                  <Typography variant='h4'>+ {userStatistics.increaseMonth}</Typography>
                   <Typography variant='subtitle2' noWrap>
-                    this month
+                    This month
                   </Typography>
                 </Box>
               </Box>
             </Box>
-            <Grid container spacing={3}>
-              <Grid sm item>
-                <Button fullWidth variant='outlined'>
-                  Send
-                </Button>
-              </Grid>
-              <Grid sm item>
-                <Button fullWidth variant='contained'>
-                  Receive
-                </Button>
-              </Grid>
-            </Grid>
           </Box>
         </Grid>
         <Grid
@@ -190,7 +186,7 @@ function AccountBalance() {
           alignItems='center'
           item
           xs={12}
-          md={6}
+          md={8}
         >
           <Box
             component='span'
@@ -302,4 +298,4 @@ function AccountBalance() {
   );
 }
 
-export default AccountBalance;
+export default AccountStatistics;

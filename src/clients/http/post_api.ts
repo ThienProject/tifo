@@ -15,10 +15,14 @@ export const postApi = {
   create: (payload: FormData) => {
     return client.post('/post/create', payload);
   },
+
   getPosts: (params: IPayloadGetPost) => {
     return client.get<IPost>(`/post/getPosts`, {
       params: params
     });
+  },
+  getDescriptionAuto: (payload: { prompt: string }) => {
+    return client.post<any>(`/post/getDescriptionAuto`, payload);
   },
   getPostsByIDUser: (params: IPayloadGetPost) => {
     return client.get<IPost>(`/post/getPostsByIDUser`, {

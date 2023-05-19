@@ -4,7 +4,6 @@ import { IUser } from 'src/types/user';
 import { useAppDispatch } from 'src/redux_store';
 import UsersTable from './UsersTable';
 import { getUsersThunk } from 'src/redux_store/admin/admin_action';
-import { useLocation } from 'react-router';
 
 function RecentOrders() {
   const dispatch = useAppDispatch();

@@ -8,18 +8,17 @@ import {
   getRoomsThunk,
   getUsersByIDRoomThunk
 } from './room_action';
-import { IUser } from 'src/types/user';
 
 const initialState: {
   rooms: IRoom[];
   chats: IChatroom;
   isOpenMenu: boolean;
-  newUserChat: IUser;
+  currentRoom: IRoom;
 } = {
   rooms: [],
   chats: {},
   isOpenMenu: false,
-  newUserChat: {}
+  currentRoom: {}
 };
 const roomSlice = createSlice({
   name: 'rooms',
@@ -66,40 +65,45 @@ const roomSlice = createSlice({
       state.chats = initialState.chats;
       state.isOpenMenu = false;
     },
-    setNewUserChat: (state, option) => {
-      const { user } = option.payload;
-      console.log(user);
-      state.newUserChat = user;
+    clearCurrentChat: (state) => {
+      state.currentRoom = {};
+    },
+    setCurrentRoom: (state, option) => {
+      const { type, users } = option.payload;
+      state.currentRoom = { type, users };
     },
     setStatusRoom: (state, action) => {
       const { id_room, status, id_user } = action.payload;
       const index = state.rooms.findIndex((item) => item.id_room === id_room);
+
       if (index > -1) {
-        const user = state.rooms[index].users[0];
-        if (user && user.id_user === id_user) user.status = status;
+        const users = state.rooms[index].users;
+        if (users) {
+          const user = users[0];
+          if (user && user.id_user === id_user) user.status = status;
+        }
       }
-    },
-    deleteNewUserChat: (state) => {
-      state.newUserChat = {};
     },
     toggleMenu: (state) => {
       state.isOpenMenu = !state.isOpenMenu;
     },
     addMembers: (state, action) => {
       const { room, chats, limit, users } = action.payload;
-      console.log(limit);
       const indexRoom = state.rooms.findIndex((r) => r.id_room === room?.id_room);
       if (indexRoom == -1) {
         state.rooms.unshift({ ...room, users });
         state.chats[room?.id_room] = chats;
       } else {
-        state.rooms[indexRoom].users.push(...users);
-        const lastDate = Object.keys(state.chats[room?.id_room][0])[0];
-        if (lastDate === Object.keys(chats[0])[0]) {
-          const chatDate = state.chats[room.id_room][0];
-          chatDate[lastDate].push(...chats[0][lastDate]);
-        } else {
-          state.chats[room?.id_room].push(...chats);
+        const users = state.rooms[indexRoom].users;
+        if (users) {
+          users.push(...users);
+          const lastDate = Object.keys(state.chats[room?.id_room][0])[0];
+          if (lastDate === Object.keys(chats[0])[0]) {
+            const chatDate = state.chats[room.id_room][0];
+            chatDate[lastDate].push(...chats[0][lastDate]);
+          } else {
+            state.chats[room?.id_room].push(...chats);
+          }
         }
       }
     },
@@ -110,17 +114,20 @@ const roomSlice = createSlice({
         state.rooms = state.rooms.filter((item) => item.id_room != id_room);
         delete state.chats[id_room];
       } else {
-        state.rooms[indexRoom].users = state.rooms[indexRoom].users.filter((item) => item.id_user != id_user);
-        const chatDates = state.chats[id_room];
-        if (chatDates) {
-          const index = chatDates.findIndex((dateItem) => Object.keys(dateItem)[0] === date);
-          if (index > -1) {
-            chatDates[index][date].push(chat);
+        const users = state.rooms[indexRoom].users;
+        if (users) {
+          state.rooms[indexRoom].users = users.filter((item) => item.id_user != id_user);
+          const chatDates = state.chats[id_room];
+          if (chatDates) {
+            const index = chatDates.findIndex((dateItem) => Object.keys(dateItem)[0] === date);
+            if (index > -1) {
+              chatDates[index][date].push(chat);
+            } else {
+              chatDates.push({ [date]: [chat] });
+            }
           } else {
-            chatDates.push({ [date]: [chat] });
+            state.chats[id_room] = [{ [date]: [chat] }];
           }
-        } else {
-          state.chats[id_room] = [{ [date]: [chat] }];
         }
       }
     }
@@ -133,7 +140,9 @@ const roomSlice = createSlice({
         state.rooms.push(restroom);
         if (chats && chats[0]) {
           if (restroom.id_room) {
-            state.chats[restroom.id_room] = chats;
+            if (!state.chats[restroom.id_room]) {
+              state.chats[restroom.id_room] = chats;
+            }
           }
         }
       });
@@ -146,10 +155,11 @@ const roomSlice = createSlice({
       }
     });
     builder.addCase(getChatsByIDroomThunk.fulfilled, (state, action) => {
-      const { id_room, chats } = action.payload;
+      const { id_room, chats, room } = action.payload;
       if (chats && chats[0]) {
         state.chats[id_room] = chats;
       }
+      state.currentRoom = room;
     });
     builder.addCase(clearChatsThunk.fulfilled, (state, action) => {
       const { id_room } = action.payload;
@@ -182,9 +192,9 @@ export const {
   createFirstChat,
   resetRoom,
   toggleMenu,
-  setNewUserChat,
-  deleteNewUserChat,
+  setCurrentRoom,
   addMembers,
-  deleteMember
+  deleteMember,
+  clearCurrentChat
 } = actions;
 export default reducer;
