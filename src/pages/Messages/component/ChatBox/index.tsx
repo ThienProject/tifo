@@ -7,7 +7,7 @@ import TopBarContent from './TopBarContent';
 import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 
-import { deleteNewUserChat, toggleMenu } from 'src/redux_store/room/room_slice';
+import { toggleMenu } from 'src/redux_store/room/room_slice';
 import { useNavigate, useParams } from 'react-router';
 import { IPayloadChats } from 'src/types/room';
 import { getChatsByIDroomThunk } from 'src/redux_store/room/room_action';

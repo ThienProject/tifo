@@ -26,9 +26,9 @@ const useChatItem = (room: IRoom) => {
           chatItem.avatar = friend.avatar ? CPath.host_user + friend.avatar : images.account;
           chatItem.name = friend.fullname || '';
           chatItem.isOnline = !me?.invisible && !friend?.invisible && friend?.status === 'online';
-          chatItem.off_time = friend.off_time;
-          chatItem.username = friend.username;
-          chatItem.id_user = friend.id_user;
+          chatItem.off_time = friend.off_time!;
+          chatItem.username = friend.username!;
+          chatItem.id_user = friend.id_user!;
         }
       }
     } else {
@@ -39,12 +39,12 @@ const useChatItem = (room: IRoom) => {
   } else if (room?.type === 'group') {
     chatItem.avatar = room?.avatar ? CPath.host_user + room.avatar : images.roomDefault;
     chatItem.name = room?.name || '';
-    chatItem.isOwner = room?.users?.some((u) => u.role === 1 && u.id_user === me?.id_user);
-    chatItem.id_room = room.id_room;
+    chatItem.isOwner = !!room?.users?.some((u) => u.role === 1 && u.id_user === me?.id_user);
+    chatItem.id_room = room.id_room!;
   } else {
     if (room?.type === 'new-chat') {
-      chatItem.avatar = room.users[0].avatar;
-      chatItem.name = room.users[0].fullname;
+      chatItem.avatar = room.users ? room.users[0].avatar : '';
+      chatItem.name = room.users ? room.users[0].fullname : '';
     }
   }
   return chatItem;

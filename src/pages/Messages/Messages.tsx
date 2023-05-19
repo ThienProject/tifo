@@ -11,12 +11,15 @@ const Messages = () => {
   const theme = useTheme();
   const mobileOpen = useAppSelector((state) => state.roomSlice.isOpenMenu);
   const dispatch = useAppDispatch();
-  const { me } = useAppSelector((state) => state.userSlice);
 
   const handleDrawerToggle = () => {
     dispatch(toggleMenu());
   };
-
+  useEffect(() => {
+    return () => {
+      dispatch(resetRoom());
+    };
+  }, []);
   const RootWrapper = styled(Box)(
     () => `
        height: 100vh;

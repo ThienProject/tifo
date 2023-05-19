@@ -28,16 +28,14 @@ import BlockTwoToneIcon from '@mui/icons-material/BlockTwoTone';
 import WarningTwoToneIcon from '@mui/icons-material/WarningTwoTone';
 import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
 import { PeopleOutline, GroupAddOutlined, ExitToAppOutlined, RemoveCircleOutlineOutlined } from '@mui/icons-material';
-import images from 'src/assets/images';
+
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { closeModal, openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
 
-import { IUser } from 'src/types/user';
 import { useNavigate, useParams } from 'react-router';
-import { CPath } from 'src/constants';
-import { IRoom } from 'src/types/room';
+
 import CreateRoom from '../CreateRoom';
 import { getSubTimeFromDayFNS } from 'src/functions';
 import ConfirmationDialog from 'src/components/model/confirmation_dialog';
@@ -45,7 +43,7 @@ import { deleteRoomThunk, deleteUserThunk } from 'src/redux_store/room/room_acti
 import { toastMessage } from 'src/utils/toast';
 import Member from '../Member';
 import useChatItem from 'src/hooks/use_chatItem';
-import { clearCurrentChat, deleteNewUserChat } from 'src/redux_store/room/room_slice';
+import { clearCurrentChat } from 'src/redux_store/room/room_slice';
 const RootWrapper = styled(Box)(
   ({ theme }) => `
         @media (min-width: ${theme.breakpoints.values.md}px) {
@@ -108,7 +106,7 @@ function TopBarContent() {
   const { t } = useTranslation();
   const [isOpenSetting, setIsOpenSetting] = useState(false);
   const { me } = useAppSelector((state) => state.userSlice);
-  const { newUserChat, currentRoom, rooms } = useAppSelector((state) => state.roomSlice);
+  const { currentRoom, rooms } = useAppSelector((state) => state.roomSlice);
   console.log(currentRoom);
   const { id_room, id_user } = useParams();
   const navigation = useNavigate();
@@ -141,7 +139,7 @@ function TopBarContent() {
     id_user: chat_id_user,
     username,
     id_room: chat_id_room
-  } = useChatItem(room || currentRoom || newUserChat);
+  } = useChatItem(room || currentRoom);
   // if (id_room) {
   //
   //   chatItem = useChatItem(room);
