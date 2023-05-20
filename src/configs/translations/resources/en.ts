@@ -190,8 +190,58 @@ export default {
     followers: 'followers'
   },
   admin: {
+    overview: 'Overview',
     lock_user: 'Lock User',
-    lock_post: ' Lock Post'
+    lock_post: ' Lock Post',
+    age: '{{about}} Age',
+    accountStatistics: 'Account Statistics',
+    totalUsers: 'Total users',
+    thisMonth: 'This month',
+    total: 'Totals',
+    welcome: 'Welcome',
+    menu: {
+      dashboards: 'Dashboards',
+      management: 'Management',
+      statistical: 'Statistical',
+      posts: 'Posts',
+      users: 'Users'
+    },
+    manageUser: "Users Manager",
+    managePost: "Posts Manager",
+    users: {
+      detail: 'User Details',
+      role: 'Role',
+      totalPost: 'Total posts',
+      postReport: 'Posts reported',
+      status: 'Status',
+      actions: 'Actions',
+      filter: {
+        all: "ALl",
+        reported: "Reported",
+        banned: 'Banned'
+      },
+      participationDate: 'Participation date',
+      postInfo: 'Posts information',
+    },
+    posts: {
+      detail: 'Detail',
+      username: 'Username',
+      loves: 'Total loves',
+      reports: 'Total reports',
+      status: 'Status',
+      actions: 'Actions',
+      filter: {
+        all: "ALl",
+        reported: "Reported",
+        banned: 'Banned'
+      },
+
+      createDate: 'Create date',
+      viewDetail: 'View detail post',
+      description: 'Description',
+      report: 'Reports'
+
+    }
   },
   user: {
     invalid: 'User does not exist'

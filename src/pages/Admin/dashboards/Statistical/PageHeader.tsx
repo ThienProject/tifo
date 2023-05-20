@@ -1,5 +1,6 @@
 import { Typography, Avatar, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { t } from 'i18next';
 import { useAppSelector } from 'src/redux_store';
 
 function PageHeader() {
@@ -26,7 +27,7 @@ function PageHeader() {
       </Grid>
       <Grid item>
         <Typography fontSize={23} variant='h3' component='h3' gutterBottom>
-          Welcome, {user.name}!
+          {t('admin.welcome')}, {user.name}!
         </Typography>
       </Grid>
     </Grid>

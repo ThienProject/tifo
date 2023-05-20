@@ -2,8 +2,7 @@ import { MouseEvent, useState } from 'react';
 import { Button, Box, ToggleButton, ToggleButtonGroup, Card, Typography, styled } from '@mui/material';
 import ViewWeekTwoToneIcon from '@mui/icons-material/ViewWeekTwoTone';
 import TableRowsTwoToneIcon from '@mui/icons-material/TableRowsTwoTone';
-import WatchListColumn from './WatchListColumn';
-import WatchListRow from './WatchListRow';
+import PostListColumn from './PostListColumn';
 
 const EmptyResultsWrapper = styled('img')(
   ({ theme }) => `
@@ -30,20 +29,12 @@ function WatchList() {
           pb: 3
         }}
       >
-        <Typography variant='h3'>Watch List</Typography>
-        <ToggleButtonGroup value={tabs} exclusive onChange={handleViewOrientation}>
-          <ToggleButton disableRipple value='watch_list_columns'>
-            <ViewWeekTwoToneIcon />
-          </ToggleButton>
-          <ToggleButton disableRipple value='watch_list_rows'>
-            <TableRowsTwoToneIcon />
-          </ToggleButton>
-        </ToggleButtonGroup>
+        <Typography fontSize={28} variant='h3'>
+          Posts List
+        </Typography>
       </Box>
 
-      {tabs === 'watch_list_columns' && <WatchListColumn />}
-
-      {tabs === 'watch_list_rows' && <WatchListRow />}
+      {tabs === 'watch_list_columns' && <PostListColumn />}
 
       {!tabs && (
         <Card
@@ -52,8 +43,6 @@ function WatchList() {
             p: 3
           }}
         >
-          <EmptyResultsWrapper src='/static/images/placeholders/illustrations/1.svg' />
-
           <Typography
             align='center'
             variant='h2'

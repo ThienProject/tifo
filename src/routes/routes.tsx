@@ -27,7 +27,7 @@ const Loader = (Component: any) => (props: any) =>
     </Suspense>
   );
 
-const Crypto = Loader(lazy(() => import('src/pages/Admin/dashboards/Crypto')));
+const Crypto = Loader(lazy(() => import('src/pages/Admin/dashboards/Statistical')));
 
 // Applications
 

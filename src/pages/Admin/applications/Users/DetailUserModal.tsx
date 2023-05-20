@@ -6,6 +6,7 @@ import MODAL_IDS from 'src/constants/modal';
 import { IUserAdmin } from 'src/types/user';
 import Overview from './components/tabElement/TabOverview';
 import UserItem from 'src/components/items/UserItem';
+import { t } from 'i18next';
 
 const DetailUserModal = ({ user }: { user: IUserAdmin }) => {
   const [tabs, setTabs] = useState<any[]>([]);
@@ -13,7 +14,7 @@ const DetailUserModal = ({ user }: { user: IUserAdmin }) => {
     if (user && user.id_user) {
       const tabList = [
         {
-          tabName: 'Overview',
+          tabName: t('admin.overview'),
           element: <Overview id_user={user.id_user} />
         }
       ];

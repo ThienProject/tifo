@@ -10,6 +10,10 @@ const images = {
   logo: require('src/assets/images/icon.png').default,
   avatar: require('src/assets/images/avatar.jpg').default,
   roomDefault: require('src/assets/images/room_default.jpg').default,
-  coverDefault: require('src/assets/images/cover_default.jpg').default
+  coverDefault: require('src/assets/images/cover_default.jpg').default,
+  age13: require('src/assets/images/13-17.jpg').default,
+  age18: require('src/assets/images/18-24.jpg').default,
+  age25: require('src/assets/images/25-44.jpg').default,
+  age45: require('src/assets/images/45.jpg').default
 };
 export default images;

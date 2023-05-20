@@ -18,9 +18,17 @@ import TrendingUp from '@mui/icons-material/TrendingUp';
 import Chart from 'react-apexcharts';
 import type { ApexOptions } from 'apexcharts';
 import { useEffect, useState } from 'react';
-import { userStatisticsThunk } from 'src/redux_store/admin/admin_action';
+import { userStatisticsAgeThunk, userStatisticsThunk } from 'src/redux_store/admin/admin_action';
 import { useAppDispatch } from 'src/redux_store';
+import { useTranslation } from 'react-i18next';
+import images from 'src/assets/images';
 
+interface IUserStatisticsAge {
+  percentage_13_17: string;
+  percentage_18_24: string;
+  percentage_25_44: string;
+  percentage_45_above: string;
+}
 const AvatarSuccess = styled(Avatar)(
   ({ theme }) => `
       background-color: ${theme.palette.success.main};
@@ -54,6 +62,7 @@ const ListItemAvatarWrapper = styled(ListItemAvatar)(
 );
 
 function AccountStatistics() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const chartOptions: ApexOptions = {
@@ -108,7 +117,12 @@ function AccountStatistics() {
     fill: {
       opacity: 1
     },
-    labels: ['Bitcoin', 'Ripple', 'Cardano', 'Ethereum'],
+    labels: [
+      t('admin.age', { about: '13-17' }),
+      t('admin.age', { about: '18-24' }),
+      t('admin.age', { about: '25-44' }),
+      '>' + t('admin.age', { about: '45' })
+    ],
     legend: {
       labels: {
         colors: theme.palette.grey[100]
@@ -123,8 +137,10 @@ function AccountStatistics() {
     }
   };
 
-  const chartSeries = [10, 20, 25, 45];
-  const [userStatistics, setUserStatistics] = useState({});
+  const [chartSeries, setChartSeries] = useState<any[]>([]);
+  const [userStatistics, setUserStatistics] = useState<{ total: number; increaseMonth: number }>();
+  const [userStatisticsAge, setUserStatisticsAge] = useState<IUserStatisticsAge>();
+
   useEffect(() => {
     const action = userStatisticsThunk();
     dispatch(action)
@@ -133,7 +149,22 @@ function AccountStatistics() {
         const { total, increaseMonth } = data;
         setUserStatistics({ total, increaseMonth });
       });
+    const actionAge = userStatisticsAgeThunk();
+    dispatch(actionAge)
+      .unwrap()
+      .then((data) => {
+        const { statistics } = data;
+        setUserStatisticsAge(statistics);
+      });
   }, []);
+  useEffect(() => {
+    if (userStatisticsAge) {
+      console.log({ userStatisticsAge });
+      console.log('Object.values(userStatisticsAge)', Object.values(userStatisticsAge));
+
+      setChartSeries(Object.values(userStatisticsAge).map((item) => Number(item)));
+    }
+  }, [userStatisticsAge]);
   return (
     <Card>
       <Grid spacing={0} container>
@@ -147,12 +178,15 @@ function AccountStatistics() {
               }}
               variant='h4'
             >
-              Account Statistics
+              {t('admin.accountStatistics')}
             </Typography>
             <Box>
-              <Typography fontWeight={700} fontSize={20} variant='h1' gutterBottom>
-                Total users: {userStatistics.total}
-              </Typography>
+              {userStatistics && (
+                <Typography fontWeight={700} fontSize={20} variant='h1' gutterBottom>
+                  {t('admin.totalUsers')}: {userStatistics.total}
+                </Typography>
+              )}
+
               <Box
                 display='flex'
                 sx={{
@@ -169,9 +203,9 @@ function AccountStatistics() {
                   <TrendingUp fontSize='large' />
                 </AvatarSuccess>
                 <Box>
-                  <Typography variant='h4'>+ {userStatistics.increaseMonth}</Typography>
+                  {userStatistics && <Typography variant='h4'>+ {userStatistics.increaseMonth}</Typography>}
                   <Typography variant='subtitle2' noWrap>
-                    This month
+                    {t('admin.thisMonth')}
                   </Typography>
                 </Box>
               </Box>
@@ -210,12 +244,11 @@ function AccountStatistics() {
                 >
                   <ListItem disableGutters>
                     <ListItemAvatarWrapper>
-                      <img alt='BTC' src='/static/images/placeholders/logo/bitcoin.png' />
+                      <img alt='BTC' src={images.age13} />
                     </ListItemAvatarWrapper>
                     <ListItemText
-                      primary='BTC'
+                      primary={t('admin.age', { about: '13-17' })}
                       primaryTypographyProps={{ variant: 'h5', noWrap: true }}
-                      secondary='Bitcoin'
                       secondaryTypographyProps={{
                         variant: 'subtitle2',
                         noWrap: true
@@ -223,19 +256,17 @@ function AccountStatistics() {
                     />
                     <Box>
                       <Typography align='right' variant='h4' noWrap>
-                        20%
+                        {Number(userStatisticsAge?.percentage_13_17).toFixed(2) + '%'}
                       </Typography>
-                      <Typography color='success'>+2.54%</Typography>
                     </Box>
                   </ListItem>
                   <ListItem disableGutters>
                     <ListItemAvatarWrapper>
-                      <img alt='XRP' src='/static/images/placeholders/logo/ripple.png' />
+                      <img alt='XRP' src={images.age18} />
                     </ListItemAvatarWrapper>
                     <ListItemText
-                      primary='XRP'
+                      primary={t('admin.age', { about: '18-24' })}
                       primaryTypographyProps={{ variant: 'h5', noWrap: true }}
-                      secondary='Ripple'
                       secondaryTypographyProps={{
                         variant: 'subtitle2',
                         noWrap: true
@@ -243,19 +274,17 @@ function AccountStatistics() {
                     />
                     <Box>
                       <Typography align='right' variant='h4' noWrap>
-                        10%
+                        {Number(userStatisticsAge?.percentage_18_24)?.toFixed(2) + '%'}
                       </Typography>
-                      <Typography color='error'>-1.22%</Typography>
                     </Box>
                   </ListItem>
                   <ListItem disableGutters>
                     <ListItemAvatarWrapper>
-                      <img alt='ADA' src='/static/images/placeholders/logo/cardano.png' />
+                      <img alt='ADA' src={images.age25} />
                     </ListItemAvatarWrapper>
                     <ListItemText
-                      primary='ADA'
+                      primary={t('admin.age', { about: ' 25 - 44' })}
                       primaryTypographyProps={{ variant: 'h5', noWrap: true }}
-                      secondary='Cardano'
                       secondaryTypographyProps={{
                         variant: 'subtitle2',
                         noWrap: true
@@ -263,19 +292,17 @@ function AccountStatistics() {
                     />
                     <Box>
                       <Typography align='right' variant='h4' noWrap>
-                        40%
+                        {Number(userStatisticsAge?.percentage_25_44).toFixed(2) + '%'}
                       </Typography>
-                      <Typography color='success'>+10.50%</Typography>
                     </Box>
                   </ListItem>
                   <ListItem disableGutters>
                     <ListItemAvatarWrapper>
-                      <img alt='ETH' src='/static/images/placeholders/logo/ethereum.png' />
+                      <img alt='45' src={images.age45} />
                     </ListItemAvatarWrapper>
                     <ListItemText
-                      primary='ETH'
+                      primary={'>' + t('admin.age', { about: ' 45' })}
                       primaryTypographyProps={{ variant: 'h5', noWrap: true }}
-                      secondary='Ethereum'
                       secondaryTypographyProps={{
                         variant: 'subtitle2',
                         noWrap: true
@@ -283,9 +310,8 @@ function AccountStatistics() {
                     />
                     <Box>
                       <Typography align='right' variant='h4' noWrap>
-                        30%
+                        {Number(userStatisticsAge?.percentage_45_above).toFixed(2) + '%'}
                       </Typography>
-                      <Typography color='error'>-12.38%</Typography>
                     </Box>
                   </ListItem>
                 </List>

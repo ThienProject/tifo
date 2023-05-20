@@ -190,8 +190,57 @@ export default {
     followers: 'người theo dõi'
   },
   admin: {
+    overview: 'Tổng quan',
     lock_user: 'Khóa người dùng',
-    lock_post: 'Khóa bài đăng'
+    lock_post: 'Khóa bài đăng',
+    age: '{{about}} Tuổi',
+    accountStatistics: 'Thống kê tài khoản',
+    totalUsers: 'Tổng người dùng',
+    thisMonth: 'Tháng này',
+    total: 'Tổng',
+    welcome: 'Chào',
+    menu: {
+      dashboards: 'Bảng điều khiển',
+      management: 'Quản lý',
+      statistical: 'Thống kê',
+      posts: 'Bài đăng',
+      users: 'Người dùng'
+    },
+    manageUser: "Quản lý người dùng",
+    managePost: "Quản lý bài đăng",
+    users: {
+      detail: 'Chi tiết',
+      role: 'Quyền',
+      totalPost: 'Số bài viết',
+      postReport: 'Số bài viết bị báo cáo',
+      status: 'Trạng thái',
+      actions: 'Hành động',
+      filter: {
+        all: "Tất cả",
+        reported: "Bị báo cáo",
+        banned: 'Bị khóa'
+      },
+      participationDate: 'Ngày tham gia',
+      postInfo: 'Thông tin bài viết',
+
+    },
+    posts: {
+      detail: 'Chi tiết',
+      username: 'Người đăng',
+      loves: 'Lượt thích',
+      reports: 'Tổng báo cáo',
+      status: 'Trạng thái',
+      actions: 'Hành động',
+      filter: {
+        all: "Tất cả",
+        reported: "Bị báo cáo",
+        banned: 'Bị khóa'
+      },
+      createDate: 'Ngày tạo',
+      viewDetail: 'Xem chi tiết',
+      description: 'Mô tả',
+      report: 'Các báo cáo'
+    }
   },
   user: {
     invalid: 'User không tồn tại'

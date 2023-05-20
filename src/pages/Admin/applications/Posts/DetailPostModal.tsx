@@ -5,6 +5,7 @@ import ModalWrapper from 'src/components/model/ModelWrapper';
 import MODAL_IDS from 'src/constants/modal';
 import { IPostAdmin } from 'src/types/post';
 import Overview from './components/tabElement/TabOverview';
+import { t } from 'i18next';
 
 const DetailUserModal = ({ post }: { post: IPostAdmin }) => {
   const [tabs, setTabs] = useState<any[]>([]);
@@ -12,7 +13,7 @@ const DetailUserModal = ({ post }: { post: IPostAdmin }) => {
     if (post && post.id_post) {
       const tabList = [
         {
-          tabName: 'Overview',
+          tabName: t('admin.overview'),
           element: <Overview id_post={post.id_post} />
         }
       ];

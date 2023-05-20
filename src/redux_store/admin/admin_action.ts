@@ -91,3 +91,36 @@ export const userStatisticsThunk = createAsyncThunk<any>(
     }
   }
 );
+export const userStatisticsAgeThunk = createAsyncThunk<any>(
+  'admin/userStatisticsAgeThunk',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await adminApi.userStatisticsAge();
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const followStatisticsThunk = createAsyncThunk<any>(
+  'admin/followStatisticsThunk',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await adminApi.followStatistics();
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const postStatisticsThunk = createAsyncThunk<any>(
+  'admin/postStatisticsThunk',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await adminApi.postStatistics();
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);

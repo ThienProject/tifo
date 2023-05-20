@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 
 import SidebarChat from './component/SidebarChat';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
-import { getRoomsThunk } from 'src/redux_store/room/room_action';
 import { Outlet } from 'react-router';
 import { resetRoom, toggleMenu } from 'src/redux_store/room/room_slice';
 

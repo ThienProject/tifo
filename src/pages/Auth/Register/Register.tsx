@@ -10,12 +10,16 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch } from 'src/redux_store';
 import { registerThunk } from 'src/redux_store/user/user_action';
 import { toastMessage } from 'src/utils/toast';
+import { FormDatePicker } from 'src/components/hooks_form/form_datepicker';
+import { t } from 'i18next';
 
 const initRegisterForm: IPayloadRegister = {
   email: '',
   password: '',
+  confirmPassword: '',
   fullname: '',
-  username: ''
+  username: '',
+  birthday: new Date(new Date().setFullYear(new Date().getFullYear() - 13))
 };
 
 const schemaRegister = yup.object().shape({
@@ -23,6 +27,10 @@ const schemaRegister = yup.object().shape({
   password: yup.string().required('Please enter password.').min(8),
   fullname: yup.string().required('Please enter fullname'),
   username: yup.string().required('Please enter fullname'),
+  birthday: yup
+    .date()
+    .max(new Date(new Date().setFullYear(new Date().getFullYear() - 13)), 'Bạn phải đủ 13 tuổi trở lên')
+    .required('Vui lòng nhập ngày sinh'),
   confirmPassword: yup
     .string()
     .required('Password can not empty.')
@@ -42,14 +50,15 @@ const RegisterForm = () => {
     resolver: yupResolver(schemaRegister)
   });
   const handleOnSubmit = (data: IPayloadRegister) => {
-    const { email, password, fullname, username } = data;
+    const { email, password, fullname, username, birthday } = data;
 
     dispatch(
       registerThunk({
         email,
         password,
         fullname,
-        username
+        username,
+        birthday
       })
     )
       .unwrap()
@@ -124,6 +133,14 @@ const RegisterForm = () => {
                 name='fullname'
                 required
                 control={control}
+              />
+              <FormDatePicker
+                control={control}
+                label={t('profile.birthday')!}
+                name='birthday'
+                maxDate={new Date()}
+                disableFuture={false}
+                required
               />
               <FormInput
                 sx={{

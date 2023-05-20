@@ -38,9 +38,6 @@ const ChatList = () => {
     if (rooms.length <= 0) {
       handleLoadMore(0);
     }
-    return () => {
-      // dispatch(resetRoom());
-    };
   }, []);
   return (
     <Box>

@@ -31,15 +31,16 @@ import MODAL_IDS from 'src/constants/modal';
 import DetailUserModal from './DetailUserModal';
 import { useAppDispatch } from 'src/redux_store';
 import LockUserModal from '../../components/LockUserModal';
+import { t } from 'i18next';
 
 const getStatusLabel = (userStatus: 'banned' | 'reported' | 'online' | 'offline'): JSX.Element => {
   const map = {
     banned: {
-      text: 'Banned',
+      text: t('admin.users.filter.banned'),
       color: '#f50057'
     },
     reported: {
-      text: 'Reported',
+      text: t('admin.users.filter.reported'),
       color: '#ff9100'
     },
     online: {
@@ -59,15 +60,15 @@ const getStatusLabel = (userStatus: 'banned' | 'reported' | 'online' | 'offline'
 const statusOptions = [
   {
     id: 'banned',
-    name: 'Banned'
+    name: t('admin.users.filter.banned')
   },
   {
     id: 'reported',
-    name: 'Report'
+    name: t('admin.users.filter.reported')
   },
   {
     id: 'all',
-    name: 'All'
+    name: t('admin.users.filter.all')
   }
 ];
 
@@ -129,7 +130,7 @@ const UsersTable = ({
             <Box width={150}>
               <FormControl fullWidth variant='outlined'>
                 <InputLabel>Status</InputLabel>
-                <Select defaultValue={'all'} onChange={handleStatusChange} label='Status' autoWidth>
+                <Select defaultValue={'all'} onChange={handleStatusChange} label={t('admin.posts.status')} autoWidth>
                   {statusOptions.map((statusOption) => (
                     <MenuItem key={statusOption.id} value={statusOption.id}>
                       {statusOption.name}
@@ -139,7 +140,7 @@ const UsersTable = ({
               </FormControl>
             </Box>
           }
-          title='Users Manager'
+          title={t('admin.manageUser')}
         />
       )}
       <Divider />
@@ -155,13 +156,13 @@ const UsersTable = ({
                   onChange={handleSelectAllUsers}
                 />
               </TableCell>
-              <TableCell>User Details</TableCell>
+              <TableCell>{t('admin.users.detail')}</TableCell>
               {/* <TableCell>User ID</TableCell> */}
-              <TableCell>Role</TableCell>
-              <TableCell align='right'>total posts</TableCell>
-              <TableCell align='right'>posts reported</TableCell>
-              <TableCell align='right'>Status</TableCell>
-              <TableCell align='right'>Actions</TableCell>
+              <TableCell>{t('admin.users.role')}</TableCell>
+              <TableCell align='right'>{t('admin.users.totalPost')}</TableCell>
+              <TableCell align='right'>{t('admin.users.postReport')}</TableCell>
+              <TableCell align='right'>{t('admin.users.status')}</TableCell>
+              <TableCell align='right'>{t('admin.users.actions')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

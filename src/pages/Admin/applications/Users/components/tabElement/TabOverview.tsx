@@ -1,4 +1,5 @@
 import { Box, Button, Card, CardContent, Divider, Typography } from '@mui/material';
+import { t } from 'i18next';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
@@ -34,19 +35,19 @@ const Overview = ({ id_user }: { id_user: string }) => {
     <Box>
       <Box sx={{ mb: 1 }}>
         <Typography fontSize={14} variant='body1'>
-          Participation date
+          {t('admin.users.participationDate')}
         </Typography>
         <Typography fontSize={12} variant='body2'>
           {moment(user?.datetime).format('DD-MM-YYYY')}
         </Typography>
       </Box>
       <Card sx={{ p: 1, mb: 1 }}>
-        <Typography fontSize={15}>Posts information</Typography>
+        <Typography fontSize={15}>{t('admin.users.postInfo')}</Typography>
         <Divider />
         <CardContent sx={{ p: 0, ml: 1 }}>
           <Box mt={1} display={'flex'} alignItems={'center'}>
             <Typography fontSize={13} variant='body1'>
-              Total Posts:
+              {t('admin.users.totalPost')}
             </Typography>
             <Button
               onClick={() => {
@@ -61,7 +62,7 @@ const Overview = ({ id_user }: { id_user: string }) => {
           </Box>
           <Box mt={1} display={'flex'} alignItems={'center'}>
             <Typography fontSize={13} variant='body1'>
-              Total number of posts reported:
+              {t('admin.users.postReport')}
             </Typography>
             <Button
               onClick={() => {

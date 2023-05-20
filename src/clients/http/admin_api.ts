@@ -33,5 +33,14 @@ export const adminApi = {
   },
   userStatistics: () => {
     return client.post('admin/user/statistics');
+  },
+  userStatisticsAge: () => {
+    return client.post('admin/user/statistics/age');
+  },
+  followStatistics: () => {
+    return client.post('admin/follow/statistics');
+  },
+  postStatistics: () => {
+    return client.post('admin/post/statistics');
   }
 };

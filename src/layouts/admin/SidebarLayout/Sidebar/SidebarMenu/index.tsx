@@ -5,6 +5,7 @@ import { NavLink as RouterLink } from 'react-router-dom';
 import { SidebarContext } from 'src/contexts/SidebarContext';
 
 import { BrightnessLowTwoTone, AccountCircleTwoTone, DisplaySettingsTwoTone } from '@mui/icons-material';
+import { t } from 'i18next';
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -155,7 +156,7 @@ function SidebarMenu() {
           component='div'
           subheader={
             <ListSubheader component='div' disableSticky>
-              Dashboards
+              {t('admin.menu.dashboards')}
             </ListSubheader>
           }
         >
@@ -169,7 +170,7 @@ function SidebarMenu() {
                   to='dashboards/crypto'
                   startIcon={<BrightnessLowTwoTone />}
                 >
-                  Cryptocurrency
+                  {t('admin.menu.statistical')}
                 </Button>
               </ListItem>
             </List>
@@ -179,7 +180,7 @@ function SidebarMenu() {
           component='div'
           subheader={
             <ListSubheader component='div' disableSticky>
-              Management
+              {t('admin.menu.management')}
             </ListSubheader>
           }
         >
@@ -193,7 +194,7 @@ function SidebarMenu() {
                   to='users'
                   startIcon={<AccountCircleTwoTone />}
                 >
-                  Users
+                  {t('admin.menu.users')}
                 </Button>
               </ListItem>
             </List>
@@ -206,7 +207,7 @@ function SidebarMenu() {
                   to='posts'
                   startIcon={<DisplaySettingsTwoTone />}
                 >
-                  Posts
+                  {t('admin.menu.posts')}
                 </Button>
               </ListItem>
             </List>

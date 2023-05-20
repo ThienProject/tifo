@@ -6,6 +6,8 @@ export interface IPayloadLogin {
 export interface IPayloadRegister extends IPayloadLogin {
   fullname: string;
   username: string;
+  confirmPassword?: string;
+  birthday?: Date;
 }
 
 export interface ILogin {

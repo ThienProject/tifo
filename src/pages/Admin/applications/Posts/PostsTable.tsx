@@ -31,15 +31,16 @@ import MODAL_IDS from 'src/constants/modal';
 import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import DetailPostModal from './DetailPostModal';
 import LockPostModal from '../../components/LockPostModal';
+import { t } from 'i18next';
 
 const getStatusLabel = (postStatus: 'banned' | 'reported' | 'active'): JSX.Element => {
   const map = {
     banned: {
-      text: 'Banned',
+      text: t('admin.users.filter.banned'),
       color: '#f50057'
     },
     reported: {
-      text: 'Reported',
+      text: t('admin.users.filter.reported'),
       color: '#ff9100'
     },
     active: {
@@ -47,26 +48,25 @@ const getStatusLabel = (postStatus: 'banned' | 'reported' | 'active'): JSX.Eleme
       color: ''
     }
   };
-  console.log({ postStatus });
   const { text, color }: any = map[postStatus];
 
   return <Typography color={color}>{text}</Typography>;
 };
+
 const statusOptions = [
   {
     id: 'banned',
-    name: 'Banned'
+    name: t('admin.users.filter.banned')
   },
   {
     id: 'reported',
-    name: 'Report'
+    name: t('admin.users.filter.reported')
   },
   {
     id: 'all',
-    name: 'All'
+    name: t('admin.users.filter.all')
   }
 ];
-
 const PostsTable = ({
   posts,
   page,
@@ -127,7 +127,12 @@ const PostsTable = ({
             <Box width={150}>
               <FormControl fullWidth variant='outlined'>
                 <InputLabel>Status</InputLabel>
-                <Select defaultValue={filters[0] || 'all'} onChange={handleStatusChange} label='Status' autoWidth>
+                <Select
+                  defaultValue={filters[0] || 'all'}
+                  onChange={handleStatusChange}
+                  label={t('admin.posts.status')}
+                  autoWidth
+                >
                   {statusOptions.map((statusOption) => (
                     <MenuItem key={statusOption.id} value={statusOption.id}>
                       {statusOption.name}
@@ -137,7 +142,7 @@ const PostsTable = ({
               </FormControl>
             </Box>
           }
-          title='Users Manager'
+          title={t('admin.managePost')}
         />
       )}
       <Divider />
@@ -153,13 +158,13 @@ const PostsTable = ({
                   onChange={handleSelectAllUsers}
                 />
               </TableCell>
-              <TableCell>Post Details</TableCell>
+              <TableCell>{t('admin.posts.detail')}</TableCell>
               {/* <TableCell>User ID</TableCell> */}
-              <TableCell>Username</TableCell>
-              <TableCell align='right'>total loves</TableCell>
-              <TableCell align='right'>total reports</TableCell>
-              <TableCell align='right'>Status</TableCell>
-              <TableCell align='right'>Actions</TableCell>
+              <TableCell>{t('admin.posts.username')}</TableCell>
+              <TableCell align='right'>{t('admin.posts.loves')}</TableCell>
+              <TableCell align='right'>{t('admin.posts.loves')}</TableCell>
+              <TableCell align='right'>{t('admin.posts.status')}</TableCell>
+              <TableCell align='right'>{t('admin.posts.actions')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

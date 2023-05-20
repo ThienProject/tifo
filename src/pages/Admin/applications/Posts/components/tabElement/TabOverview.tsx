@@ -9,6 +9,7 @@ import { getPostThunk } from 'src/redux_store/admin/admin_action';
 import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import { IPostAdmin } from 'src/types/post';
 import ItemReported from '../ItemReported';
+import { t } from 'i18next';
 
 const Overview = ({ id_post }: { id_post: string }) => {
   const dispatch = useAppDispatch();
@@ -36,7 +37,7 @@ const Overview = ({ id_post }: { id_post: string }) => {
     <Box sx={{ overflowY: 'hidden', maxHeight: '100%' }}>
       <Box sx={{ mb: 1 }}>
         <Typography fontSize={14} variant='body1'>
-          Create date
+          {t('admin.posts.createDate')}
         </Typography>
         <Typography fontSize={12} variant='body2'>
           {moment(post?.datetime).format('DD-MM-YYYY')}
@@ -46,7 +47,7 @@ const Overview = ({ id_post }: { id_post: string }) => {
         <CardContent sx={{ p: 0, ml: 1 }}>
           <Box ref={myRef}>
             <Typography fontSize={13} variant='body1'>
-              Description:
+              {t('admin.posts.description')} :
             </Typography>
             {post?.description && (
               <CustomTypography
@@ -74,7 +75,7 @@ const Overview = ({ id_post }: { id_post: string }) => {
               sx={{ color: '#fff', fontSize: 13, textTransform: 'capitalize' }}
               variant='contained'
             >
-              view detail post
+              {t('admin.posts.viewDetail')}
             </Button>
           </Box>
         </CardContent>
@@ -83,7 +84,7 @@ const Overview = ({ id_post }: { id_post: string }) => {
       {post?.reports && (
         <Box>
           <Typography color={'red'} fontSize={15}>
-            Reports
+            {t('admin.posts.report')}
           </Typography>
           {post.reports.map((report) => (
             <ItemReported key={report.id_user} report={report} />

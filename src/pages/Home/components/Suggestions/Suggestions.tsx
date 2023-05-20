@@ -15,7 +15,7 @@ const Suggestions = () => {
   const isLogin = me?.id_user;
   useEffect(() => {
     if (me?.id_user) {
-      const action = getUserSuggestsThunk({ id_user: me?.id_user, limit: 10, offset: 0 });
+      const action = getUserSuggestsThunk({ id_user: me?.id_user, limit: 5, offset: 0 });
       dispatch(action)
         .unwrap()
         .then((data) => {
@@ -60,7 +60,6 @@ const Suggestions = () => {
           return (
             <Stack my={2} key={user.id_user} direction={'row'} justifyContent='space-between'>
               <UserItem to={`/${user.id_user}`} size='small' user={user} />
-              <Button sx={{ fontSize: 13, textTransform: 'lowercase' }}>follow</Button>
             </Stack>
           );
         })}
