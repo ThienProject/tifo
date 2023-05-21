@@ -19,7 +19,7 @@ import Scrollbars from 'react-custom-scrollbars-2';
 import { useTranslation } from 'react-i18next';
 import PsychologyAltOutlinedIcon from '@mui/icons-material/PsychologyAltOutlined';
 const initCreatePost: IPayloadCreatePost = {
-  target: '',
+  target: 'public',
   type: '',
   description: '',
   medias: []
@@ -127,7 +127,6 @@ const Create = (props: { type: string }) => {
         </Grid>
         <Grid item lg={7}>
           <Box sx={{ mb: 3 }}>
-            {/* <Typography> {t('createPost.description')} </Typography> */}
             <FormInput
               sx={{
                 fontSize: 2,
@@ -176,14 +175,7 @@ const Create = (props: { type: string }) => {
           </Box>
           <Box sx={{ mb: 3 }}>
             <Typography> {t('createPost.target')} </Typography>
-            <FormSelect
-              control={control}
-              name='target'
-              placeholder='-- select --'
-              options={target}
-              keyOption='target'
-              labelOption='label'
-            />
+            <FormSelect control={control} name='target' options={target} keyOption='target' labelOption='label' />
           </Box>
           <Button sx={{ color: 'common.white', mt: 2 }} variant='contained' type='submit'>
             {t('createPost.upload')}

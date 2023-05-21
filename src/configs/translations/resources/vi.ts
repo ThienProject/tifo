@@ -71,6 +71,7 @@ export default {
   },
   button: {
     report: 'Báo cáo',
+    update: 'Cập nhật',
     unfollow: 'Hủy theo dõi',
     remove: 'Xóa',
     accept: 'Chấp nhận',
@@ -149,6 +150,12 @@ export default {
       public: 'Công khai',
       private: 'Riêng tư',
       follower: 'Người theo dõi'
+    },
+    button: {
+      add: 'Thêm ảnh/video',
+      clearAll: 'Xóa tất cả',
+      change: 'Thay đổi',
+      delete: 'Xóa'
     }
   },
   createRoom: {
@@ -188,7 +195,9 @@ export default {
   },
   common: {
     followings: 'đang theo dõi',
-    followers: 'người theo dõi'
+    followers: 'người theo dõi',
+    post: 'Bài viết',
+    reel: 'Video ngắn'
   },
   admin: {
     overview: 'Tổng quan',

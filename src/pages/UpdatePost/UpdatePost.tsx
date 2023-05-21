@@ -22,7 +22,7 @@ import { useLocation } from 'react-router';
 import ModalLoadingCreate from '../components/ModalLoadingCreate';
 import { useTranslation } from 'react-i18next';
 const initUpdatePostPost: IPayloadUpdatePost = {
-  target_update: '',
+  target_update: 'public',
   type: '',
   description_update: '',
   medias_update: []
@@ -194,7 +194,6 @@ const UpdatePost = () => {
         </Grid>
         <Grid item lg={7}>
           <Box sx={{ mb: 3 }}>
-            <Typography>Description </Typography>
             <FormInput
               sx={{
                 fontSize: 2,
@@ -203,27 +202,28 @@ const UpdatePost = () => {
                   fontSize: 14
                 }
               }}
-              placeholder='Description'
+              placeholder={t('createPost.description') || ''}
               name='description_update'
               control={control}
               type='text'
               required
+              multiline
+              maxRows={4}
+              minRows={4}
             />
           </Box>
           <Box sx={{ mb: 3 }}>
-            <Typography>Who can watch this video </Typography>
+            <Typography> {t('createPost.target')} </Typography>
             <FormSelect
               control={control}
               name='target_update'
-              // label='public'
-              placeholder='-- select --'
               options={target}
               keyOption='target'
-              labelOption='target'
+              labelOption='label'
             />
           </Box>
           <Button sx={{ color: 'common.white', mt: 2 }} variant='contained' type='submit'>
-            Update
+            {t('button.update')}
           </Button>
         </Grid>
       </Grid>

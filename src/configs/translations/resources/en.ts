@@ -51,6 +51,7 @@ export default {
   },
   button: {
     accept: 'Accept',
+    update: 'Update',
     report: 'Report',
     follow: 'Follow',
     requested: 'Requested',
@@ -149,6 +150,12 @@ export default {
       public: 'Public',
       private: 'Private',
       follower: 'Follower'
+    },
+    button: {
+      add: 'Add media',
+      clearAll: 'Clear all',
+      change: 'Change media',
+      delete: 'Delete'
     }
   },
   createRoom: {
@@ -188,7 +195,9 @@ export default {
   },
   common: {
     followings: 'followings',
-    followers: 'followers'
+    followers: 'followers',
+    post: 'Post',
+    reel: 'reel'
   },
   admin: {
     overview: 'Overview',

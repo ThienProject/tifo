@@ -22,7 +22,9 @@ import {
   MenuOpenRounded,
   Forum,
   ForumOutlined,
-  TranslateOutlined
+  TranslateOutlined,
+  PostAdd,
+  MissedVideoCallOutlined
 } from '@mui/icons-material';
 import ModeSwitcher from 'src/theme/ModeSwitcher';
 import { ImenuItem } from 'src/types/common';
@@ -68,6 +70,8 @@ const SideBar = () => {
   });
   const closedMixin = (theme: Theme): CSSObject => ({
     [theme.breakpoints.up('lg')]: {
+      overflowX: 'hidden'
+
       // '@keyframes closeMixin': {
       //   from: { width: drawerWidth },
       //   to: { width: `calc(${theme.spacing(7)} + 1px)` }
@@ -157,14 +161,14 @@ const SideBar = () => {
       child: [
         {
           key: 'Reels',
-          name: 'Reels',
-          icon: <SettingsSuggestOutlined />,
+          name: t('common.reel'),
+          icon: <MissedVideoCallOutlined />,
           to: '/create/reels'
         },
         {
           key: 'Post',
-          name: 'Post',
-          icon: <SettingsSuggestOutlined />,
+          name: t('common.post'),
+          icon: <PostAdd />,
           to: '/create/post'
         }
       ],

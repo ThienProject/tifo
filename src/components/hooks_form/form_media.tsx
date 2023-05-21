@@ -25,6 +25,7 @@ import MenuOption from 'src/components/MenuOption';
 import { IMedia } from 'src/types/post';
 import { CPath } from 'src/constants';
 import { toastMessage } from 'src/utils/toast';
+import { useTranslation } from 'react-i18next';
 interface IProp {
   control: any;
   sx?: SxProps;
@@ -52,6 +53,7 @@ const Media = (prop: IProp) => {
     sx,
     maxFiles = 5
   } = prop;
+  const { t } = useTranslation();
   return (
     <Controller
       name={name}
@@ -109,7 +111,7 @@ const Media = (prop: IProp) => {
                         fontWeight={100}
                         color='text.secondary'
                       >
-                        Add media
+                        {t('createPost.button.add')}
                       </Typography>
                     </Button>
                   </label>
@@ -137,7 +139,7 @@ const Media = (prop: IProp) => {
                 >
                   <DeleteSweepRounded fontSize='medium' />
                   <Typography textTransform={'capitalize'} pl={2} fontSize={13} fontWeight={100} color='text.secondary'>
-                    Clear all
+                    {t('createPost.button.clearAll')}
                   </Typography>
                 </Button>
               )}
@@ -198,10 +200,10 @@ const Media = (prop: IProp) => {
                               key={1}
                               htmlFor={'file-change' + (itemValue.name || itemValue.id_media)}
                             >
-                              <Button sx={{ p: 0 }} variant='text' component='span'>
+                              <Button sx={{ p: 0, textTransform: 'capitalize' }} variant='text' component='span'>
                                 <ChangeCircleOutlined fontSize='medium' />
                                 <Typography pl={2} fontSize={13} fontWeight={100} color='text.secondary'>
-                                  Change Media
+                                  {t('createPost.button.change')}
                                 </Typography>
                               </Button>
                             </label>
@@ -211,14 +213,14 @@ const Media = (prop: IProp) => {
                           element: (
                             <Button
                               key={2}
-                              sx={{ p: 0, justifyContent: 'flex-start' }}
+                              sx={{ p: 0, justifyContent: 'flex-start', textTransform: 'capitalize' }}
                               color='error'
                               variant='text'
                               fullWidth
                             >
                               <DeleteForeverOutlined fontSize='medium' />
                               <Typography pl={2} fontSize={13} fontWeight={100} color='text.secondary'>
-                                Delete
+                                {t('createPost.button.delete')}
                               </Typography>
                             </Button>
                           ),
