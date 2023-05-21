@@ -10,9 +10,9 @@ import {
   ISearchRoom
 } from 'src/types/room';
 
-export const createChatThunk = createAsyncThunk<any, IPayloadCreateChat>(
+export const createChatThunk = createAsyncThunk<any, FormData>(
   'rooms/createChatThunk',
-  async (payload: IPayloadCreateChat, { rejectWithValue }) => {
+  async (payload: FormData, { rejectWithValue }) => {
     try {
       const { data } = await messageApi.createChat(payload);
       return data;

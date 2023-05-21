@@ -115,7 +115,7 @@ function ChatContent({ socket }: { socket: Socket }) {
                   {chats.map((chat, index) => {
                     return (
                       <Box key={chat.id_chat}>
-                        {chat.type ? (
+                        {chat.type && chat.type !== 'image' ? (
                           <Box my={2} display='flex' justifyContent='center'>
                             <Typography sx={{ color: '#777' }}>
                               {t('message.room_action.' + chat.type, {
@@ -137,9 +137,19 @@ function ChatContent({ socket }: { socket: Socket }) {
                                   width={'100%'}
                                 >
                                   <CardWrapperPrimary>
-                                    <Typography sx={{ overflowWrap: 'break-word', width: '100%' }}>
-                                      {chat.message}
-                                    </Typography>
+                                    {chat.type === 'image' ? (
+                                      <Box>
+                                        <img
+                                          style={{ width: '100%' }}
+                                          alt='mess'
+                                          src={CPath.host_messages + chat?.image}
+                                        />
+                                      </Box>
+                                    ) : (
+                                      <Typography sx={{ overflowWrap: 'break-word', width: '100%' }}>
+                                        {chat.message}
+                                      </Typography>
+                                    )}
                                   </CardWrapperPrimary>
                                   {index === chats.length - 1 && (
                                     <Typography
@@ -198,9 +208,19 @@ function ChatContent({ socket }: { socket: Socket }) {
                                   width={'100%'}
                                 >
                                   <CardWrapperSecondary>
-                                    <Typography sx={{ overflowWrap: 'break-word', width: '100%' }}>
-                                      {chat.message}
-                                    </Typography>
+                                    {chat.type === 'image' ? (
+                                      <Box>
+                                        <img
+                                          style={{ width: '100%' }}
+                                          alt='mess'
+                                          src={CPath.host_messages + chat?.image}
+                                        />
+                                      </Box>
+                                    ) : (
+                                      <Typography sx={{ overflowWrap: 'break-word', width: '100%' }}>
+                                        {chat.message}
+                                      </Typography>
+                                    )}
                                   </CardWrapperSecondary>
                                   {index === chats.length - 1 && (
                                     <Typography

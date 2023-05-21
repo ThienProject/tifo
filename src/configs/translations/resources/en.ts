@@ -131,7 +131,8 @@ export default {
       create: '{{actor}} created this group!',
       remove: '{{actor}} removed {{affected_username}} from the group!',
       add: '{{actor}} added {{affected_username}} to the group!',
-      leave: '{{actor}} leaved this group!'
+      leave: '{{actor}} leaved this group!',
+      image: '{{actor}} sent a photo!',
     }
   },
   createPost: {

@@ -44,7 +44,7 @@ const ChatItem = ({ socket, room, chatDemo }: { socket: Socket; room: IRoom; cha
   useEffect(() => {
     if (isChatFriend) {
       socket.on('status', ({ id_user, status }: any) => {
-        if (isChatFriend && room.users && room.users[0].id_user === id_user) {
+        if (isChatFriend && room.users && room.users[0]?.id_user === id_user) {
           const action = setStatusRoom({ id_room: room.id_room, id_user, status });
           dispatch(action);
         }

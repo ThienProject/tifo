@@ -11,6 +11,7 @@ export interface IChat extends IUser {
   datetime: Date;
   affected_username?: string;
   type?: string;
+  image?: string;
 }
 
 export interface IRoom {
@@ -63,7 +64,8 @@ export interface IPayloadCreateChat {
   id_room?: string;
   id_user?: string;
   id_friend?: string;
-  image?: string;
   message?: string;
   isChatbot?: boolean;
+  type?: string;
+  image?: File | string;
 }

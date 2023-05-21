@@ -1,7 +1,7 @@
 import { Avatar, Tooltip, IconButton, Box, Button, styled, useTheme, FormLabel } from '@mui/material';
 import AttachFileTwoToneIcon from '@mui/icons-material/AttachFileTwoTone';
 import SendTwoToneIcon from '@mui/icons-material/SendTwoTone';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { IChat, IPayloadCreateChat } from 'src/types/room';
 import { createChatThunk, createFirstChatThunk } from 'src/redux_store/room/room_action';
@@ -10,11 +10,28 @@ import { FormInput } from 'src/components/hooks_form/form_input';
 import { CPath } from 'src/constants';
 import { createChat } from 'src/redux_store/room/room_slice';
 import moment from 'moment';
+import { useEffect, useState } from 'react';
+import { objectToFormData } from 'src/functions';
 
 const Input = styled('input')({
   display: 'none'
 });
+// function convertImageToString(imageFile: File) {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader();
 
+//     reader.onloadend = () => {
+//       const imageString = reader.result;
+//       resolve(imageString);
+//     };
+
+//     reader.onerror = () => {
+//       reject(reader.error);
+//     };
+
+//     reader.readAsDataURL(imageFile);
+//   });
+// }
 function BottomBarContent() {
   const theme = useTheme();
   const { me } = useAppSelector((state) => state.userSlice);
@@ -26,56 +43,66 @@ function BottomBarContent() {
   const navigation = useNavigate();
   const dispatch = useAppDispatch();
   const { control, handleSubmit, reset } = useForm({ defaultValues: { message: '', image: '' } });
-  const handleOnSubmit = (data: any) => {
+  const [payload, setPayload] = useState<IPayloadCreateChat>({});
+  useEffect(() => {
     const id_me = me?.id_user;
-    const { image, message } = data;
-
-    let base64String = '';
-    if (id_me) {
-      if (image) {
-        const fileReader = new FileReader();
-        fileReader.onload = function (event: Event) {
-          const target = event.target as EventTarget;
-          let contents = '';
-          if (Object.prototype.hasOwnProperty.call(target, 'result')) {
-            contents = (target as any).result;
-          }
-          base64String = contents.split(',')[1];
-        };
-        fileReader.readAsText(image);
-      }
-    }
-
-    const payload: IPayloadCreateChat = { message, id_user: id_me, id_room };
-    if (id_user) {
-      payload.id_friend = id_user;
-    }
+    const payload: IPayloadCreateChat = { id_user: id_me, id_room };
     if (chatbot && isChatbot) {
       payload.isChatbot = true;
     }
-    if (base64String && base64String !== '') payload.image = base64String;
-    if (message !== '' || image !== '') {
-      if (isChatbot) {
-        handSendMessageWithChatbot(message, id_me, id_room);
+    if (id_user) {
+      payload.id_friend = id_user;
+    }
+    setPayload(payload);
+  }, []);
+  useEffect(() => {
+    if (payload?.message || payload?.image) {
+      if (payload?.isChatbot) {
+        handSendMessageWithChatbot(payload);
         reset();
+      } else {
+        const formData = objectToFormData(payload);
+        const action: any = isFirstChat ? createFirstChatThunk(payload) : createChatThunk(formData);
+        dispatch(action)
+          .unwrap()
+          .then((data: any) => {
+            const { id_room, chat, id_user: idChatbot, date } = data;
+            if (isChatbot) {
+              const action = createChat({ chat, id_room, id_user: idChatbot, date });
+              dispatch(action);
+            }
+            if (isFirstChat && id_room) {
+              navigation(`/message/${id_room}`);
+            }
+            reset();
+            setPayload((prev) => ({
+              ...prev,
+              message: '',
+              image: ''
+            }));
+          });
       }
-      const action = isFirstChat ? createFirstChatThunk(payload) : createChatThunk(payload);
-      dispatch(action)
-        .unwrap()
-        .then((data) => {
-          const { id_room, chat, id_user: idChatbot, date } = data;
-          if (isChatbot) {
-            const action = createChat({ chat, id_room, id_user: idChatbot, date });
-            dispatch(action);
-          }
-          if (isFirstChat && id_room) {
-            navigation(`/message/${id_room}`);
-          }
-          reset();
-        });
+    }
+  }, [payload]);
+  const handleSendImage = (image: File) => {
+    console.log(image);
+    if (image) {
+      setPayload((prev) => ({
+        ...prev,
+        image,
+        type: 'image'
+      }));
+    }
+    // if (base64String && base64String !== '') payload.image = base64String;
+  };
+
+  const handleOnSubmit = (data: any) => {
+    const { message } = data;
+    if (message !== '') {
+      setPayload((prev) => ({ ...prev, message }));
     }
   };
-  const handSendMessageWithChatbot = (message: string, id_user: string, id_room: string) => {
+  const handSendMessageWithChatbot = ({ message, id_user, id_room }: IPayloadCreateChat) => {
     const today = moment().format('YYYY-MM-DD');
     const currentDate = new Date();
     const datetime = currentDate.toISOString();
@@ -116,24 +143,16 @@ function BottomBarContent() {
             😀
           </IconButton>
         </Tooltip> */}
-        <Controller
-          control={control}
-          name='image'
-          render={({ field: { onChange } }) => {
-            return (
-              <Input
-                onChange={(e) => {
-                  const files = e.target.files;
-                  if (files) {
-                    onChange(files[0]);
-                  }
-                }}
-                accept='image/*'
-                id='messenger-upload-file'
-                type='file'
-              />
-            );
+        <Input
+          onChange={(e) => {
+            const files = e.target.files;
+            if (files) {
+              handleSendImage(files[0]);
+            }
           }}
+          accept='image/*'
+          id='messenger-upload-file'
+          type='file'
         />
 
         <Tooltip arrow placement='top' title='Attach a file'>

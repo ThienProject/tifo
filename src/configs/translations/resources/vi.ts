@@ -131,7 +131,8 @@ export default {
       create: '{{actor}} đã tạo nhóm!',
       remove: '{{actor}} đã xóa {{affected_username}} khỏi nhóm!',
       add: '{{actor}} đã thêm {{affected_username}} vào nhóm!',
-      leave: '{{actor}} đã rời nhóm!'
+      leave: '{{actor}} đã rời nhóm!',
+      image: '{{actor}} Đã gửi một ảnh!',
     }
   },
   createPost: {

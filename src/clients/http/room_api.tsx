@@ -54,7 +54,7 @@ export const messageApi = {
   deleteChats: (payload: IPayloadDleChats) => {
     return client.post<any>(`/chat/deletes`, payload);
   },
-  createChat: (payload: IPayloadCreateChat) => {
+  createChat: (payload: FormData) => {
     return client.post<any>(`/chat/create`, payload);
   },
   createFirstChat: (payload: IPayloadCreateChat) => {
