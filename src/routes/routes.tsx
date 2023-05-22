@@ -64,23 +64,23 @@ const routes: IRoute = (login) => [
         ]
       },
       {
-        path: '/profile',
+        path: 'profile',
         element: <ProtectedRoute login={login} children={<Profile />} />
       },
       {
-        path: '/setting',
+        path: 'setting',
         element: <ProtectedRoute login={login} children={<Setting />} />
       },
       {
-        path: '/:id_user',
+        path: ':id_user',
         element: <Profile />
       },
       {
-        path: '/reels',
+        path: 'reels',
         element: <Reels />
       },
       {
-        path: '/create',
+        path: 'create',
         children: [
           {
             index: true,
@@ -94,13 +94,13 @@ const routes: IRoute = (login) => [
         ]
       },
       {
-        path: '/update/:id_post',
+        path: 'update/:id_post',
         element: <UpdatePost />
       }
     ]
   },
   {
-    path: '/auth',
+    path: 'auth',
     element: <Auth />,
     children: [
       {
@@ -119,7 +119,7 @@ const routes: IRoute = (login) => [
     ]
   },
   {
-    path: '/admin',
+    path: 'admin',
     element: (
       <ProtectedRouteAdmin login={login}>
         <SidebarLayout />

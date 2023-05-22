@@ -15,7 +15,7 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import * as io from 'socket.io-client';
 import { setSocket } from './redux_store/user/user_slice';
 const { me } = store.getState().userSlice;
-const socket = io.connect('ws://localhost:8000', {
+const socket = io.connect('ws://192.168.31.63:8000', {
   query: {
     id_user: me?.id_user
   }

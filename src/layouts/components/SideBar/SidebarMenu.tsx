@@ -12,17 +12,12 @@ const cx = classNames.bind(styles);
 
 const Menu = ({
   menus,
-  setMenus,
-  action,
-  openDrawer
+  toggleDrawer,
+  isOpenDrawer
 }: {
   menus: ImenuItem[];
-  setMenus: React.Dispatch<React.SetStateAction<ImenuItem[]>>;
-  action: {
-    handleDrawerOpen: () => void;
-    handleDrawerClose: () => void;
-  };
-  openDrawer: boolean;
+  toggleDrawer: () => void;
+  isOpenDrawer: boolean;
 }) => {
   const theme = useTheme();
   const { me } = useAppSelector((state) => {
@@ -31,18 +26,18 @@ const Menu = ({
   const isLogin: boolean = me?.id_user;
   return (
     <MenuList
-      component='nav'
       sx={{
         backgroundColor: 'common.white',
         justifyContent: 'space-between',
+        height: { lg: '100%', md: '100%' },
         display: { xs: 'flex', sm: 'block' }
       }}
     >
       <MenuItem
-        onKeyDown={(e) => e.stopPropagation()}
+        // onKeyDown={(e) => e.stopPropagation()}
         sx={{ color: 'text.primary', ml: { xs: -1, md: 0 }, display: { xs: 'none', sm: 'block' } }}
       >
-        {openDrawer ? (
+        {isOpenDrawer ? (
           <img
             className={cx('logo')}
             alt='home-icon'
@@ -55,13 +50,15 @@ const Menu = ({
       {menus.map((menuItem) => {
         if (menuItem.isAuth) {
           if (isLogin) {
-            return <SideBarItem action={action} setMenus={setMenus} key={menuItem.key} item={menuItem} />;
+            return (
+              <SideBarItem isOpenDrawer={isOpenDrawer} key={menuItem.key} toggleDrawer={toggleDrawer} item={menuItem} />
+            );
           }
         } else {
           if (isLogin) {
             if (menuItem.key === 'Login') return;
           }
-          return <SideBarItem action={action} setMenus={setMenus} key={menuItem.key} item={menuItem} />;
+          return <SideBarItem isOpenDrawer toggleDrawer={toggleDrawer} key={menuItem.key} item={menuItem} />;
         }
       })}
     </MenuList>

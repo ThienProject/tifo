@@ -43,7 +43,6 @@ import { deleteRoomThunk, deleteUserThunk } from 'src/redux_store/room/room_acti
 import { toastMessage } from 'src/utils/toast';
 import Member from '../Member';
 import useChatItem from 'src/hooks/use_chatItem';
-import { clearCurrentChat } from 'src/redux_store/room/room_slice';
 const RootWrapper = styled(Box)(
   ({ theme }) => `
         @media (min-width: ${theme.breakpoints.values.md}px) {
@@ -107,27 +106,8 @@ function TopBarContent() {
   const [isOpenSetting, setIsOpenSetting] = useState(false);
   const { me } = useAppSelector((state) => state.userSlice);
   const { currentRoom, rooms } = useAppSelector((state) => state.roomSlice);
-  console.log(currentRoom);
   const { id_room, id_user } = useParams();
   const navigation = useNavigate();
-  // const isChatFriend = room && room.type === 'friend';
-  // const isChatbot = room && room.type === 'chatbot';
-  // const isChatGroup = room && room.type === 'group';
-  // let avatar = room?.avatar ? CPath.host_user + room.avatar : images.roomDefault;
-  // let name = room?.name;
-  // let friend: IUser | null = null;
-
-  // const isOwner = isChatGroup && room?.users?.find((u) => u.role === 1 && u.id_user === me?.id_user);
-  // if ((isChatFriend || isChatbot) && room.users) {
-  //   friend = room.users[0];
-  // }
-  // if (newUserChat && Object.keys(newUserChat).length > 0) {
-  //   friend = newUserChat;
-  // }
-  // if (friend) {
-  //   avatar = CPath.host_user + friend.avatar;
-  //   name = friend.fullname;
-  // }
   const room = rooms.find((item: any) => item.id_room === id_room);
   const {
     name,
@@ -186,7 +166,7 @@ function TopBarContent() {
             <Typography variant='h4' fontSize={16} fontWeight={'700'}>
               {name}
             </Typography>
-            {!isOnline && (
+            {type === 'friend' && !isOnline && (
               <Typography fontSize={14} color={'text.secondary'} variant='subtitle1'>
                 {off_time && getSubTimeFromDayFNS(off_time, t('language'))}
               </Typography>
@@ -257,7 +237,7 @@ function TopBarContent() {
               {name}
             </Typography>
 
-            {!isOnline && (
+            {type === 'friend' && !isOnline && (
               <Typography fontSize={14} color={'text.secondary'} variant='subtitle1'>
                 {off_time && getSubTimeFromDayFNS(off_time, t('language'))}
               </Typography>

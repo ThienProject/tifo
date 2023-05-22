@@ -12,6 +12,8 @@ import { createChat } from 'src/redux_store/room/room_slice';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { objectToFormData } from 'src/functions';
+import { t } from 'i18next';
+import useChatItem from 'src/hooks/use_chatItem';
 
 const Input = styled('input')({
   display: 'none'
@@ -35,11 +37,13 @@ const Input = styled('input')({
 function BottomBarContent() {
   const theme = useTheme();
   const { me } = useAppSelector((state) => state.userSlice);
-  const rooms = useAppSelector((state) => state.roomSlice.rooms);
+  const { rooms, currentRoom } = useAppSelector((state) => state.roomSlice);
   const { id_room, id_user } = useParams();
   const isFirstChat = !!id_user;
-  const chatbot = rooms.find((item: any) => item.type === 'chatbot');
-  const isChatbot = id_room && chatbot?.id_room === id_room;
+  const room = rooms.find((item: any) => item.id_room === id_room);
+  const { type } = useChatItem(room || currentRoom);
+  const isChatbot = id_room && type === 'chatbot';
+
   const navigation = useNavigate();
   const dispatch = useAppDispatch();
   const { control, handleSubmit, reset } = useForm({ defaultValues: { message: '', image: '' } });
@@ -47,7 +51,7 @@ function BottomBarContent() {
   useEffect(() => {
     const id_me = me?.id_user;
     const payload: IPayloadCreateChat = { id_user: id_me, id_room };
-    if (chatbot && isChatbot) {
+    if (isChatbot) {
       payload.isChatbot = true;
     }
     if (id_user) {
@@ -78,7 +82,8 @@ function BottomBarContent() {
             setPayload((prev) => ({
               ...prev,
               message: '',
-              image: ''
+              image: '',
+              type: ''
             }));
           });
       }
@@ -93,7 +98,6 @@ function BottomBarContent() {
         type: 'image'
       }));
     }
-    // if (base64String && base64String !== '') payload.image = base64String;
   };
 
   const handleOnSubmit = (data: any) => {
@@ -128,6 +132,7 @@ function BottomBarContent() {
           src={CPath.host_user + me.avatar}
         />
         <FormInput
+          disabled={type ? false : true}
           type='text'
           variant='standard'
           placeholder='Write your message here...'
@@ -144,6 +149,7 @@ function BottomBarContent() {
           </IconButton>
         </Tooltip> */}
         <Input
+          disabled={type ? false : true}
           onChange={(e) => {
             const files = e.target.files;
             if (files) {
@@ -157,13 +163,19 @@ function BottomBarContent() {
 
         <Tooltip arrow placement='top' title='Attach a file'>
           <FormLabel htmlFor='messenger-upload-file'>
-            <IconButton sx={{ mx: 1 }} color='primary' component='span'>
+            <IconButton disabled={type ? false : true} sx={{ mx: 1 }} color='primary' component='span'>
               <AttachFileTwoToneIcon fontSize='small' />
             </IconButton>
           </FormLabel>
         </Tooltip>
-        <Button type='submit' sx={{ color: '#fff' }} startIcon={<SendTwoToneIcon />} variant='contained'>
-          Send
+        <Button
+          disabled={type ? false : true}
+          type='submit'
+          sx={{ color: '#fff' }}
+          startIcon={<SendTwoToneIcon />}
+          variant='contained'
+        >
+          {t('button.submit')}
         </Button>
       </Box>
     </Box>

@@ -17,11 +17,11 @@ const DialogSidebar = (props: IProp) => {
         width: '450px',
         '@keyframes example': {
           from: { zIndex: -1, transform: 'translateX(-9999px)', opacity: 0 },
-          to: { zIndex: -1, transform: 'translateX(62px)', opacity: 1 }
+          to: { zIndex: -1, transform: 'translateX(0)', opacity: 1 }
         },
         animationName: 'example',
         animationDuration: '0.5s',
-        transform: 'translateX(65px)'
+        transform: 'translateX(0)'
       }}
     >
       <ClickAwayListener onClickAway={handleClose}>
