@@ -48,7 +48,7 @@ const CreateRoom = ({ user }: { user: IUser }) => {
   const handleOnSubmit = (data: any) => {
     const { users, name } = data;
     const id_me = me?.id_user;
-    if (users.length < 2) {
+    if (users.length <= 2) {
       setError('users', { message: t('createRoom.rulerUser') || '' });
       return;
     }
