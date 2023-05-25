@@ -62,6 +62,11 @@ export const postApi = {
       params: params
     });
   },
+  getBannedByIDPostThunk: (params: { id_post: string }) => {
+    return client.get<IPost>(`/post/getBannedByIDPostThunk`, {
+      params: params
+    });
+  },
   sendComment: (payload: IPayloadCreateComment) => {
     return client.post('/comment/create', payload);
   },

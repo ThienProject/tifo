@@ -14,9 +14,10 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 import * as io from 'socket.io-client';
 import { setSocket } from './redux_store/user/user_slice';
+import { CPath } from './constants';
 const { me } = store.getState().userSlice;
 // 'ws://localhost:8000'
-const socket = io.connect('ws://tifo.onrender.com', {
+const socket = io.connect(CPath.HOST_SOCKET!, {
   query: {
     id_user: me?.id_user
   }

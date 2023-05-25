@@ -114,6 +114,17 @@ export const getPostByIDThunk = createAsyncThunk<any, { id_post: string }>(
     }
   }
 );
+export const getBannedByIDPostThunk = createAsyncThunk<any, { id_post: string }>(
+  'post/getBannedByIDPostThunk',
+  async (payload: { id_post: string }, { rejectWithValue }) => {
+    try {
+      const { data } = await postApi.getBannedByIDPostThunk(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
 export const sendCommentThunk = createAsyncThunk<any, IPayloadCreateComment>(
   'post/sendCommentThunk',
   async (payload, { rejectWithValue }) => {

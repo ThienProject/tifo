@@ -10,10 +10,11 @@ import { useNavigate } from 'react-router';
 import { CPath } from 'src/constants';
 import MODAL_IDS from 'src/constants/modal';
 import PostDetail from 'src/pages/PostDetail';
-import { useAppDispatch } from 'src/redux_store';
+import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { openModal } from 'src/redux_store/common/modal/modal_slice';
-import { getPostByIDThunk } from 'src/redux_store/post/post_action';
+import { getBannedByIDPostThunk, getPostByIDThunk } from 'src/redux_store/post/post_action';
 import { INotification } from 'src/types/notification';
+import ModalViewLockPost from './ModalViewLockPost';
 
 const NotiItem = ({
   noti,
@@ -41,6 +42,23 @@ const NotiItem = ({
       onClick={(e) => {
         if (noti.type === 'follow') {
           navigate('/' + noti.id_actor);
+        }
+        if (noti.type === 'banned_post') {
+          if (noti.id_post) {
+            const actionGetPost = getBannedByIDPostThunk({ id_post: noti.id_post });
+            dispatch(actionGetPost)
+              .unwrap()
+              .then((data) => {
+                const post = data.post;
+                if (post) {
+                  const action = openModal({
+                    modalId: MODAL_IDS.viewLockNoti,
+                    dialogComponent: <ModalViewLockPost post={post} />
+                  });
+                  dispatch(action);
+                }
+              });
+          }
         } else {
           if (noti.id_post) {
             const actionGetPost = getPostByIDThunk({ id_post: noti.id_post });

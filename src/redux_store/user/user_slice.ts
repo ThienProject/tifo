@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loginThunk, updateImageThunk, updateInfoThunk, updateInvisible } from './user_action';
 import * as io from 'socket.io-client';
+import { CPath } from 'src/constants';
 const authLocalStorage: any = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || '') : null;
 
 const { me, socket, accessToken, refreshToken } = authLocalStorage || {
@@ -45,7 +46,7 @@ const userSlice = createSlice({
       if (state.socket) {
         state.socket.disconnect();
         // 'ws://localhost:8000'
-        const socket = io.connect('ws://tifo.onrender.com', {
+        const socket = io.connect(CPath.HOST_SOCKET!, {
           query: {
             id_user: user?.id_user
           }

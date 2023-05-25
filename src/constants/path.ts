@@ -7,6 +7,6 @@ export const CPath = {
   host_public: process.env.HOST + '/medias/',
   host_user: process.env.HOST + '/users/',
   host_messages: process.env.HOST + '/messages/',
-
+  HOST_SOCKET: process.env.HOST_WS,
   baseURL: process.env.HOST + '/api/v1'
 };

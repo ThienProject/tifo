@@ -36,7 +36,7 @@ const CustomTypography = ({
             }}
             onClick={() => {
               setShowMore(!showMore);
-              if (myRef.current && showMore) myRef.current.scrollIntoView({ behavior: 'smooth' });
+              if (myRef?.current && showMore) myRef?.current.scrollIntoView({ behavior: 'smooth' });
             }}
           >
             {showMore ? t('button.seeLess') : t('button.seeMore')}
