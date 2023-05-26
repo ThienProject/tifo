@@ -39,8 +39,8 @@ export const createClient = () => {
         config.headers['RefreshToken'] = 'Bearer ' + auth.refreshToken;
       }
       // Tắt Same-Origin Policy cho interceptor
-      config.withCredentials = true;
-      config.crossDomain = true;
+      // config.withCredentials = true;
+      // config.crossDomain = true;
       return config;
     },
     (error) => {
