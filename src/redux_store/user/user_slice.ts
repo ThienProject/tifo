@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loginThunk, updateImageThunk, updateInfoThunk, updateInvisible } from './user_action';
+import { loginGoogleThunk, loginThunk, updateImageThunk, updateInfoThunk, updateInvisible } from './user_action';
 import * as io from 'socket.io-client';
 import { CPath } from 'src/constants';
 const authLocalStorage: any = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || '') : null;
@@ -45,7 +45,24 @@ const userSlice = createSlice({
       localStorage.setItem('auth', JSON.stringify({ me: user, accessToken, refreshToken }));
       if (state.socket) {
         state.socket.disconnect();
-        // 'ws://localhost:8000'
+        // 'ws://192.168.31.64:8000'
+        const socket = io.connect(CPath.HOST_SOCKET!, {
+          query: {
+            id_user: user?.id_user
+          }
+        });
+        state.socket = socket;
+      }
+    });
+    builder.addCase(loginGoogleThunk.fulfilled, (state, action) => {
+      const { user, accessToken, refreshToken } = action.payload;
+      state.me = user;
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
+      localStorage.setItem('auth', JSON.stringify({ me: user, accessToken, refreshToken }));
+      if (state.socket) {
+        state.socket.disconnect();
+        // 'ws://192.168.31.64:8000'
         const socket = io.connect(CPath.HOST_SOCKET!, {
           query: {
             id_user: user?.id_user

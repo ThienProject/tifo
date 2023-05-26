@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { postApi } from 'src/clients/http/post_api';
 import { userApi } from 'src/clients/http/user_api';
-import { IPayloadGetUser, IPayloadLogin, IPayloadRegister } from 'src/types/auth';
+import { IPayloadGetUser, IPayloadLogin, IPayloadLoginGoogle, IPayloadRegister } from 'src/types/auth';
 import { IPayloadGetPost } from 'src/types/post';
 import { IPayloadSearchRoom } from 'src/types/room';
 import { IPayloadFollow, IPayloadGetUsers, IPayloadInvisible, IPayloadPassword, IUser } from 'src/types/user';
@@ -11,6 +11,17 @@ export const loginThunk = createAsyncThunk<any, IPayloadLogin>(
   async (payload, { rejectWithValue }) => {
     try {
       const { data } = await userApi.login(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const loginGoogleThunk = createAsyncThunk<any, IPayloadLoginGoogle>(
+  'user/loginGoogleThunk',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await userApi.loginGoogle(payload);
       return data;
     } catch (error: any) {
       return rejectWithValue(error);

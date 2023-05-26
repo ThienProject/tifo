@@ -12,15 +12,7 @@ import { registerThunk } from 'src/redux_store/user/user_action';
 import { toastMessage } from 'src/utils/toast';
 import { FormDatePicker } from 'src/components/hooks_form/form_datepicker';
 import { t } from 'i18next';
-
-const initRegisterForm: IPayloadRegister = {
-  email: '',
-  password: '',
-  confirmPassword: '',
-  fullname: '',
-  username: '',
-  birthday: new Date(new Date().setFullYear(new Date().getFullYear() - 13))
-};
+import { useLocation } from 'react-router-dom';
 
 const schemaRegister = yup.object().shape({
   email: yup.string().email('Email is not invalid').required("Email can't not empty."),
@@ -43,6 +35,17 @@ const schemaRegister = yup.object().shape({
 });
 
 const RegisterForm = () => {
+  const location = useLocation();
+  const { email = '', fullname = '' } = location.state || {};
+  const initRegisterForm: IPayloadRegister = {
+    email: email || '',
+    password: '',
+    confirmPassword: '',
+    fullname: fullname || '',
+    username: '',
+    birthday: new Date(new Date().setFullYear(new Date().getFullYear() - 13))
+  };
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { control, handleSubmit } = useForm({
@@ -90,6 +93,7 @@ const RegisterForm = () => {
             >
               <img style={{ width: '240px' }} alt='tifo logo' src={images.full_Logo_white} />
               <FormInput
+                disabled={!!email}
                 label='Email'
                 sx={{
                   fontSize: 2,

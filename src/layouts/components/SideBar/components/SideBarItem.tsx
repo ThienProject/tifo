@@ -27,7 +27,6 @@ const SideBarItem = ({
       setPosition({ top });
     }
   }, [itemRef?.current]);
-  console.log('item.childNode', item.childNode);
   return (
     <MenuItem onKeyDown={(e) => e.stopPropagation()} sx={{ m: 0, p: 0, position: 'relative' }}>
       <Box

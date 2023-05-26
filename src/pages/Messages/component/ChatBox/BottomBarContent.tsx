@@ -42,7 +42,6 @@ function BottomBarContent() {
   const isFirstChat = !!id_user;
   const room = rooms.find((item: any) => item.id_room === id_room);
   const { type } = useChatItem(room || currentRoom);
-  const isChatbot = id_room && type === 'chatbot';
 
   const navigation = useNavigate();
   const dispatch = useAppDispatch();
@@ -50,6 +49,7 @@ function BottomBarContent() {
   const [payload, setPayload] = useState<IPayloadCreateChat>({});
   useEffect(() => {
     const id_me = me?.id_user;
+    const isChatbot = id_room && type === 'chatbot';
     const payload: IPayloadCreateChat = { id_user: id_me, id_room };
     if (isChatbot) {
       payload.isChatbot = true;
@@ -57,36 +57,36 @@ function BottomBarContent() {
     if (id_user) {
       payload.id_friend = id_user;
     }
+    console.log({ payload });
     setPayload(payload);
-  }, []);
+  }, [type]);
   useEffect(() => {
     if (payload?.message || payload?.image) {
       if (payload?.isChatbot) {
         handSendMessageWithChatbot(payload);
         reset();
-      } else {
-        const formData = objectToFormData(payload);
-        const action: any = isFirstChat ? createFirstChatThunk(payload) : createChatThunk(formData);
-        dispatch(action)
-          .unwrap()
-          .then((data: any) => {
-            const { id_room, chat, id_user: idChatbot, date } = data;
-            if (isChatbot) {
-              const action = createChat({ chat, id_room, id_user: idChatbot, date });
-              dispatch(action);
-            }
-            if (isFirstChat && id_room) {
-              navigation(`/message/${id_room}`);
-            }
-            reset();
-            setPayload((prev) => ({
-              ...prev,
-              message: '',
-              image: '',
-              type: ''
-            }));
-          });
       }
+      const formData = objectToFormData(payload);
+      const action: any = isFirstChat ? createFirstChatThunk(payload) : createChatThunk(formData);
+      dispatch(action)
+        .unwrap()
+        .then((data: any) => {
+          const { id_room, chat, id_user: idChatbot, date } = data;
+          if (type === 'chatbot') {
+            const action = createChat({ chat, id_room, id_user: idChatbot, date });
+            dispatch(action);
+          }
+          if (isFirstChat && id_room) {
+            navigation(`/message/${id_room}`);
+          }
+          reset();
+          setPayload((prev) => ({
+            ...prev,
+            message: '',
+            image: '',
+            type: ''
+          }));
+        });
     }
   }, [payload]);
   const handleSendImage = (image: File) => {
@@ -111,7 +111,7 @@ function BottomBarContent() {
     const currentDate = new Date();
     const datetime = currentDate.toISOString();
     const chat: IChat = { message, datetime, ...me, id_chat: datetime };
-    const action = createChat({ chat, id_room, id_user, date: today });
+    const action = createChat({ chat, id_room, id_user, date: today, isChatbot: true });
     dispatch(action);
   };
   return (

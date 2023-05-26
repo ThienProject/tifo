@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router';
 import { CPath } from 'src/constants';
 import MODAL_IDS from 'src/constants/modal';
 import PostDetail from 'src/pages/PostDetail';
-import { useAppDispatch, useAppSelector } from 'src/redux_store';
+import { useAppDispatch } from 'src/redux_store';
 import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import { getBannedByIDPostThunk, getPostByIDThunk } from 'src/redux_store/post/post_action';
 import { INotification } from 'src/types/notification';

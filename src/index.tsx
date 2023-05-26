@@ -16,7 +16,8 @@ import * as io from 'socket.io-client';
 import { setSocket } from './redux_store/user/user_slice';
 import { CPath } from './constants';
 const { me } = store.getState().userSlice;
-// 'ws://localhost:8000'
+import { GoogleOAuthProvider } from '@react-oauth/google';
+// 'ws://192.168.31.64:8000'
 const socket = io.connect(CPath.HOST_SOCKET!, {
   query: {
     id_user: me?.id_user
@@ -30,7 +31,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <BrowserRouter>
         <Toaster position='top-center' />
         <LocalizationProvider dateAdapter={AdapterMoment}>
-          <App />
+          <GoogleOAuthProvider clientId='1073373246482-obp81hsebjfhe7bivlh8b08l1dqcicig.apps.googleusercontent.com'>
+            <App />
+          </GoogleOAuthProvider>
         </LocalizationProvider>
         <ModalController />
       </BrowserRouter>

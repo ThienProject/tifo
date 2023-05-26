@@ -13,6 +13,7 @@ import { loginThunk } from 'src/redux_store/user/user_action';
 import { toastMessage } from 'src/utils/toast';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
+import LoginGoogle from '../LoginGoogle/LoginGoogle';
 
 // const cx = classNames.bind(styles);
 const Login = () => {
@@ -145,6 +146,7 @@ const Login = () => {
               {t('profile.signup')}
             </Button>
           </Typography>
+          <LoginGoogle />
         </Box>
       </Paper>
     </Box>

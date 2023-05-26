@@ -100,7 +100,7 @@ const Member = ({ id_room }: { id_room: string }) => {
                                 e.stopPropagation();
                                 const id_user = me?.id_user;
                                 const action =
-                                  users.length > 2
+                                  users.length > 3
                                     ? openModal({
                                         modalId: MODAL_IDS.confirmDeleteUser,
                                         dialogComponent: (
