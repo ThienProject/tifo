@@ -134,7 +134,8 @@ export default {
       add: '{{actor}} đã thêm {{affected_username}} vào nhóm!',
       leave: '{{actor}} đã rời nhóm!',
       image: '{{actor}} Đã gửi một ảnh!',
-    }
+    },
+    chatting: 'Đang soạn tin nhắn'
   },
   createPost: {
     uploadTitle: 'Tạo bài đăng',

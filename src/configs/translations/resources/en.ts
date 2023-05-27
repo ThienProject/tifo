@@ -116,7 +116,7 @@ export default {
       ignore: 'Ignore all messages',
       leave: 'Leave the group',
       remove: 'Delete group',
-      report: "Something's Wrong"
+      report: 'Something is Wrong'
     },
     share_file: {
       title: 'Shared Files'
@@ -133,8 +133,9 @@ export default {
       remove: '{{actor}} removed {{affected_username}} from the group!',
       add: '{{actor}} added {{affected_username}} to the group!',
       leave: '{{actor}} leaved this group!',
-      image: '{{actor}} sent a photo!',
-    }
+      image: '{{actor}} sent a photo!'
+    },
+    chatting: 'Composing message'
   },
   createPost: {
     uploadTitle: 'Upload post',
@@ -216,8 +217,8 @@ export default {
       posts: 'Posts',
       users: 'Users'
     },
-    manageUser: "Users Manager",
-    managePost: "Posts Manager",
+    manageUser: 'Users Manager',
+    managePost: 'Posts Manager',
     users: {
       detail: 'User Details',
       role: 'Role',
@@ -226,12 +227,12 @@ export default {
       status: 'Status',
       actions: 'Actions',
       filter: {
-        all: "ALl",
-        reported: "Reported",
+        all: 'ALl',
+        reported: 'Reported',
         banned: 'Banned'
       },
       participationDate: 'Participation date',
-      postInfo: 'Posts information',
+      postInfo: 'Posts information'
     },
     posts: {
       detail: 'Detail',
@@ -241,16 +242,14 @@ export default {
       status: 'Status',
       actions: 'Actions',
       filter: {
-        all: "ALl",
-        reported: "Reported",
+        all: 'ALl',
+        reported: 'Reported',
         banned: 'Banned'
       },
-
       createDate: 'Create date',
       viewDetail: 'View detail post',
       description: 'Description',
       report: 'Reports'
-
     }
   },
   user: {

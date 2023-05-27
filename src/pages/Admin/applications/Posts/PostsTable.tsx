@@ -32,6 +32,7 @@ import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import DetailPostModal from './DetailPostModal';
 import LockPostModal from '../../components/LockPostModal';
 import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const getStatusLabel = (postStatus: 'banned' | 'reported' | 'active'): JSX.Element => {
   const map = {
@@ -86,6 +87,7 @@ const PostsTable = ({
   handlePageChange: (event: any, newPage: number) => void;
   handleLimitChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }) => {
+  const { t } = useTranslation();
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const selectedBulkActions = selectedUsers.length > 0;
   const dispatch = useAppDispatch();

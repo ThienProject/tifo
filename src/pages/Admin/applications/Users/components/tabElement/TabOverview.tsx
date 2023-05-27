@@ -1,7 +1,7 @@
 import { Box, Button, Card, CardContent, Divider, Typography } from '@mui/material';
-import { t } from 'i18next';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import MODAL_IDS from 'src/constants/modal';
 import { useAppDispatch } from 'src/redux_store';
@@ -12,7 +12,7 @@ import { IUserAdmin } from 'src/types/user';
 const Overview = ({ id_user }: { id_user: string }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const [user, setUser] = useState<IUserAdmin>();
   useEffect(() => {
     fetchApi(id_user);

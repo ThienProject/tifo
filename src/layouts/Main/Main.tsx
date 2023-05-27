@@ -25,7 +25,6 @@ import {
   PostAdd,
   MissedVideoCallOutlined
 } from '@mui/icons-material';
-import { t } from 'i18next';
 import Search from 'src/pages/Search';
 import Notification from 'src/pages/Notification';
 import { logout } from 'src/redux_store/user/user_slice';

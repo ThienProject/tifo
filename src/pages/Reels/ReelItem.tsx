@@ -27,6 +27,7 @@ const ReelItem = ({ post }: { post: IPost }) => {
   const { id_user, username, fullname, avatar } = post;
   const user: IUser = { id_user, username, fullname, avatar };
   const { me } = useAppSelector((state) => state.userSlice);
+
   return (
     <Grid sx={{ my: 2 }} container>
       <Grid item lg={8} sx={{ position: 'relative' }}>
@@ -42,11 +43,6 @@ const ReelItem = ({ post }: { post: IPost }) => {
           justifyContent='space-between'
         >
           <UserItem size='small' to={`/${user.id_user}`} user={user} />
-          {/* <Box display='flex' flexDirection={'column'} alignItems='center'>
-            <Typography width={'100%'} sx={{ opacity: '0.6', ml: 10 }} fontSize={12}>
-              {moment(post.date_time).format('DD-MM-YYYY')}
-            </Typography>
-          </Box> */}
           <CustomTypography
             color={'#fff'}
             myRef={myRef}

@@ -5,9 +5,10 @@ import ModalWrapper from 'src/components/model/ModelWrapper';
 import MODAL_IDS from 'src/constants/modal';
 import { IPostAdmin } from 'src/types/post';
 import Overview from './components/tabElement/TabOverview';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const DetailUserModal = ({ post }: { post: IPostAdmin }) => {
+  const { t } = useTranslation();
   const [tabs, setTabs] = useState<any[]>([]);
   useEffect(() => {
     if (post && post.id_post) {

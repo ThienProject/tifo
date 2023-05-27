@@ -5,7 +5,7 @@ import { NavLink as RouterLink } from 'react-router-dom';
 import { SidebarContext } from 'src/contexts/SidebarContext';
 
 import { BrightnessLowTwoTone, AccountCircleTwoTone, DisplaySettingsTwoTone } from '@mui/icons-material';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -148,6 +148,7 @@ const SubMenuWrapper = styled(Box)(
 
 function SidebarMenu() {
   const { closeSidebar } = useContext(SidebarContext);
+  const { t } = useTranslation();
 
   return (
     <>

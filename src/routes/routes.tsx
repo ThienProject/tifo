@@ -13,7 +13,7 @@ import Reels from 'src/pages/Reels';
 import { Suspense, lazy } from 'react';
 import UpdatePost from 'src/pages/UpdatePost';
 import { ILogin } from 'src/types/auth';
-import { ProtectedRoute, ProtectedRouteAdmin } from './ProtectedRoute';
+import { ProtectedRoute, ProtectedRouteAdmin, ProtectedRouteAuth, ProtectedRouteUser } from './ProtectedRoute';
 
 // Dashboards
 import SuspenseLoader from 'src/components/admin/SuspenseLoader';
@@ -43,7 +43,11 @@ interface IRoute {
 const routes: IRoute = (login) => [
   {
     path: '/',
-    element: <MainLayout />,
+    element: (
+      <ProtectedRouteUser login={login}>
+        <MainLayout />
+      </ProtectedRouteUser>
+    ),
     children: [
       {
         index: true,
@@ -101,7 +105,11 @@ const routes: IRoute = (login) => [
   },
   {
     path: 'auth',
-    element: <Auth />,
+    element: (
+      <ProtectedRouteAuth login={login}>
+        <Auth />
+      </ProtectedRouteAuth>
+    ),
     children: [
       {
         index: true,

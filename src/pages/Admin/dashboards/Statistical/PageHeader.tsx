@@ -1,13 +1,14 @@
 import { Typography, Avatar, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { t } from 'i18next';
+import { CPath } from 'src/constants';
 import { useAppSelector } from 'src/redux_store';
 
 function PageHeader() {
   const { me } = useAppSelector((state) => state.userSlice);
   const user = {
     name: me?.username,
-    avatar: '/static/images/avatars/1.jpg'
+    avatar: CPath.host_user + me?.avatar
   };
   const theme = useTheme();
 

@@ -1,28 +1,16 @@
 import { useRef, useState } from 'react';
+import { Avatar, Box, Button, Divider, Hidden, List, ListItem, ListItemText, Popover, Typography } from '@mui/material';
 
-import { NavLink } from 'react-router-dom';
-
-import {
-  Avatar,
-  Box,
-  Button,
-  Divider,
-  Hidden,
-  lighten,
-  List,
-  ListItem,
-  ListItemText,
-  Popover,
-  Typography
-} from '@mui/material';
-
-import InboxTwoToneIcon from '@mui/icons-material/InboxTwoTone';
 import { styled } from '@mui/material/styles';
 import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
-import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
+import TranslateOutlined from '@mui/icons-material/AccountBoxTwoTone';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
-import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
-import { useAppSelector } from 'src/redux_store';
+import { useAppDispatch, useAppSelector } from 'src/redux_store';
+import { useTranslation } from 'react-i18next';
+import { changeLanguage } from 'i18next';
+import { toastMessage } from 'src/utils/toast';
+import { CPath } from 'src/constants';
+import { logout } from 'src/redux_store/user/user_slice';
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -53,19 +41,13 @@ const UserBoxLabel = styled(Typography)(
 `
 );
 
-const UserBoxDescription = styled(Typography)(
-  ({ theme }) => `
-        color: ${lighten(theme.palette.secondary.main, 0.5)}
-`
-);
-
-function HeaderUserbox() {
+function UserBox() {
   const { me } = useAppSelector((state) => state.userSlice);
-
+  const { t, i18n } = useTranslation();
+  const dispatch = useAppDispatch();
   const user = {
     name: me?.username,
-    avatar: '/static/images/avatars/1.jpg',
-    jobtitle: 'Project Manager'
+    avatar: CPath.host_user + me?.avatar
   };
 
   const ref = useRef<any>(null);
@@ -86,7 +68,6 @@ function HeaderUserbox() {
         <Hidden mdDown>
           <UserBoxText>
             <UserBoxLabel variant='body1'>{user.name}</UserBoxLabel>
-            <UserBoxDescription variant='body2'>{user.jobtitle}</UserBoxDescription>
           </UserBoxText>
         </Hidden>
         <Hidden smDown>
@@ -110,29 +91,34 @@ function HeaderUserbox() {
           <Avatar variant='rounded' alt={user.name} src={user.avatar} />
           <UserBoxText>
             <UserBoxLabel variant='body1'>{user.name}</UserBoxLabel>
-            <UserBoxDescription variant='body2'>{user.jobtitle}</UserBoxDescription>
           </UserBoxText>
         </MenuUserBox>
         <Divider sx={{ mb: 0 }} />
         <List sx={{ p: 1 }} component='nav'>
-          <ListItem button to='/management/profile/details' component={NavLink}>
-            <AccountBoxTwoToneIcon fontSize='small' />
-            <ListItemText primary='My Profile' />
-          </ListItem>
-          <ListItem button to='/dashboards/messenger' component={NavLink}>
-            <InboxTwoToneIcon fontSize='small' />
-            <ListItemText primary='Messenger' />
-          </ListItem>
-          <ListItem button to='/management/profile/settings' component={NavLink}>
-            <AccountTreeTwoToneIcon fontSize='small' />
-            <ListItemText primary='Account Settings' />
+          <ListItem
+            button
+            onClick={() => {
+              const newLang = i18n.language === 'en' ? 'vi' : 'en';
+              changeLanguage(newLang);
+              localStorage.setItem('i18nLanguage', newLang);
+              toastMessage.success(t('sidebar.toast.switchLanguage'));
+            }}
+          >
+            <TranslateOutlined fontSize='small' />
+            <ListItemText primary={t('sidebar.switchLanguage')} />
           </ListItem>
         </List>
         <Divider />
         <Box sx={{ m: 1 }}>
-          <Button color='primary' fullWidth>
+          <Button
+            onClick={() => {
+              dispatch(logout());
+            }}
+            color='primary'
+            fullWidth
+          >
             <LockOpenTwoToneIcon sx={{ mr: 1 }} />
-            Sign out
+            {t('sidebar.logout')}
           </Button>
         </Box>
       </Popover>
@@ -140,4 +126,4 @@ function HeaderUserbox() {
   );
 }
 
-export default HeaderUserbox;
+export default UserBox;

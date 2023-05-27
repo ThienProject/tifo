@@ -120,26 +120,6 @@ function TopBarContent() {
     username,
     id_room: chat_id_room
   } = useChatItem(room || currentRoom);
-  // if (id_room) {
-  //
-  //   chatItem = useChatItem(room);
-  // }
-  // if (newUserChat && Object.keys(newUserChat).length > 0) {
-  //   useChatItem;
-  //   friend = newUserChat;
-  // }
-  // useEffect(() => {
-  //   const action = clearCurrentChat();
-  //   dispatch(action);
-  // }, []);
-  useEffect(() => {
-    // if (id_user) {
-    //   return () => {
-    //     const actionReset = deleteNewUserChat();
-    //     dispatch(actionReset);
-    //   };
-    // }
-  }, [id_user]);
   const theme = useTheme();
   const dispatch = useAppDispatch();
 

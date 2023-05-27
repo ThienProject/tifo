@@ -30,7 +30,7 @@ function LoginGoogle() {
   useEffect(() => {
     if (loginInfo) {
       axios
-        .get(`https://www.googleapis.com/oauth2/v2/userinfo?access_token=${loginInfo.access_token}`, {
+        .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${loginInfo.access_token}`, {
           headers: {
             Authorization: `Bearer ${loginInfo.access_token}`,
             Accept: 'application/json'
@@ -73,22 +73,6 @@ function LoginGoogle() {
     setProfile(null);
   };
 
-  return (
-    <Box>
-      {profile ? (
-        <div>
-          <img src={profile?.picture} alt='user' />
-          <h3>User Logged in</h3>
-          <p>Name: {profile.name}</p>
-          <p>Email Address: {profile.email}</p>
-          <br />
-          <br />
-          <button onClick={logOut}>Log out</button>
-        </div>
-      ) : (
-        <Button onClick={() => login()}>Sign in with Google 🚀 </Button>
-      )}
-    </Box>
-  );
+  return <Box>{!profile && <Button onClick={() => login()}>Sign in with Google 🚀 </Button>}</Box>;
 }
 export default LoginGoogle;

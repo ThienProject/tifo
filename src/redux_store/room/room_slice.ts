@@ -26,6 +26,7 @@ const roomSlice = createSlice({
   reducers: {
     createChat: (state, action) => {
       const { id_room, chat, date } = action.payload;
+      console.log({ chat })
       if (date && chat && id_room) {
         const chatDates: IChatDates[] = state.chats[id_room];
         if (chatDates) {

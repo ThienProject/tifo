@@ -19,13 +19,14 @@ const Reels = () => {
     const action = getPostsThunk(params);
     dispatch(action)
       .unwrap()
-      .then((data: { message: string; reels: IPost[] }) => {
-        const { reels } = data;
-        if (!reels || reels.length === 0) {
+      .then((data: { message: string; posts: IPost[] }) => {
+        const { posts } = data;
+        if (!posts || posts.length === 0) {
           setIsLoadMore(false);
         }
       });
   };
+
   useEffect(() => {
     const offset = reels.length;
     fetchApi(offset);
@@ -34,7 +35,6 @@ const Reels = () => {
       dispatch(action);
     };
   }, []);
-
   return (
     <Grid container justifyContent={'center'} spacing={0}>
       <Grid item lg={5} justifyContent={'flex-end'}>

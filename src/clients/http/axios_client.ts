@@ -9,7 +9,7 @@ export const createClient = () => {
   const t = i18n.t;
   const instance = axios.create({
     baseURL,
-    timeout: 20000,
+    timeout: 20000
     // headers: { 'Content-Type': 'application/json' }
   });
 
@@ -38,9 +38,6 @@ export const createClient = () => {
         config.headers['Authorization'] = 'Bearer ' + auth.accessToken;
         config.headers['RefreshToken'] = 'Bearer ' + auth.refreshToken;
       }
-      // Tắt Same-Origin Policy cho interceptor
-      // config.withCredentials = true;
-      // config.crossDomain = true;
       return config;
     },
     (error) => {

@@ -11,8 +11,8 @@ import { useAppDispatch } from 'src/redux_store';
 import { registerThunk } from 'src/redux_store/user/user_action';
 import { toastMessage } from 'src/utils/toast';
 import { FormDatePicker } from 'src/components/hooks_form/form_datepicker';
-import { t } from 'i18next';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const schemaRegister = yup.object().shape({
   email: yup.string().email('Email is not invalid').required("Email can't not empty."),
@@ -35,6 +35,7 @@ const schemaRegister = yup.object().shape({
 });
 
 const RegisterForm = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const { email = '', fullname = '' } = location.state || {};
   const initRegisterForm: IPayloadRegister = {

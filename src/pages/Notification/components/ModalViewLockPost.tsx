@@ -4,14 +4,15 @@ import TabCNP from 'src/components/Tab/Tab';
 import ModalWrapper from 'src/components/model/ModelWrapper';
 import MODAL_IDS from 'src/constants/modal';
 import { IPostAdmin } from 'src/types/post';
-import { t } from 'i18next';
 import CustomTypography from 'src/components/CustomTypography';
 import PostDetail from 'src/pages/PostDetail/PostDetail';
 import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import { useAppDispatch } from 'src/redux_store';
+import { useTranslation } from 'react-i18next';
 
 const ModalViewLockPost = ({ post }: { post: IPostAdmin }) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   return (
     <ModalWrapper maxWidth={500} minWidth={500} modalId={MODAL_IDS.viewLockNoti}>
       <Box padding={1} sx={{ overflowY: 'scroll', maxHeight: 500, minHeight: 400 }}>

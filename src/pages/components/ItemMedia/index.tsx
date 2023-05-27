@@ -16,6 +16,7 @@ function ItemMedia(props: {
   const { item, sx, isClose = false, control = true, isReel, autoPlay = false } = props;
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlayAuto, setIsPlayAuto] = useState(false);
+  console.log('render...', item.media_link);
   useEffect(() => {
     if (item.type === 'video') {
       const handleScroll = () => {
@@ -24,10 +25,10 @@ function ItemMedia(props: {
           const viewportHeight = window.innerHeight;
 
           if (mediaCardRect.top > 0 && mediaCardRect.bottom < viewportHeight) {
-            console.log(item.media_link, 'mediaCardRect.top ', mediaCardRect.top);
+            // console.log(item.media_link, 'mediaCardRect.top ', mediaCardRect.top);
             isReel && setIsPlayAuto(true);
           } else {
-            console.log('stop', item.media_link, mediaCardRect.top);
+            // console.log('stop', item.media_link, mediaCardRect.top);
             setIsPlayAuto(false);
           }
         }
