@@ -27,7 +27,6 @@ const ReelItem = ({ post }: { post: IPost }) => {
   const { id_user, username, fullname, avatar } = post;
   const user: IUser = { id_user, username, fullname, avatar };
   const { me } = useAppSelector((state) => state.userSlice);
-
   return (
     <Grid sx={{ my: 2 }} container>
       <Grid item lg={8} sx={{ position: 'relative' }}>

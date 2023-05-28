@@ -6,25 +6,24 @@ export const useStyles = makeStyles(() => ({
     position: 'relative',
     paddingTop: 20,
     minWidth: 340,
-    maxWidth: 475
+    maxWidth: 475,
+    marginTop: 2
   },
   icon: {
     position: 'absolute',
-    width: 65,
-    height: 65,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '50%',
     left: '50%',
     transform: 'translateX(-50%)',
-    top: -30,
-    boxShadow: '-1px -11px 4px #00000040',
-    zIndex: 9,
-    background: 'white'
+    top: 0,
+    boxShadow: '1px 2px 13px #00000040',
+    zIndex: 9
   },
   dialogTitle: {
     '& h2': {
+      marginTop: '30px',
       fontSize: 20
     }
   },

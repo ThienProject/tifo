@@ -15,7 +15,7 @@ function ItemMedia(props: {
 }) {
   const { item, sx, isClose = false, control = true, isReel, autoPlay = false } = props;
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlayAuto, setIsPlayAuto] = useState(false);
+  const [isPlayAuto, setIsPlayAuto] = useState(autoPlay);
   console.log('render...', item.media_link);
   useEffect(() => {
     if (item.type === 'video') {
@@ -25,10 +25,8 @@ function ItemMedia(props: {
           const viewportHeight = window.innerHeight;
 
           if (mediaCardRect.top > 0 && mediaCardRect.bottom < viewportHeight) {
-            // console.log(item.media_link, 'mediaCardRect.top ', mediaCardRect.top);
             isReel && setIsPlayAuto(true);
           } else {
-            // console.log('stop', item.media_link, mediaCardRect.top);
             setIsPlayAuto(false);
           }
         }
@@ -41,31 +39,41 @@ function ItemMedia(props: {
     }
   }, []);
 
-  useEffect(() => {
-    if (videoRef.current && isClose && videoRef.current.pause) {
-      videoRef.current.pause();
-    }
-  }, [isClose]);
+  // useEffect(() => {
+  //   if (videoRef.current && isClose && videoRef.current.pause) {
+  //     videoRef.current.pause();
+  //   }
+  // }, [isClose]);
 
-  useEffect(() => {
-    if (autoPlay && videoRef.current) {
-      const mediaCardRect = videoRef.current?.getBoundingClientRect();
-      if (mediaCardRect) {
-        const viewportHeight = window.innerHeight;
-        if (mediaCardRect.top > 0 && mediaCardRect.bottom < viewportHeight) setIsPlayAuto(true);
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (autoPlay && videoRef.current) {
+  //     const mediaCardRect = videoRef.current?.getBoundingClientRect();
+  //     if (mediaCardRect) {
+  //       const viewportHeight = window.innerHeight;
+  //       if (mediaCardRect.top > 0 && mediaCardRect.bottom < viewportHeight) setIsPlayAuto(true);
+  //     }
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (videoRef.current) {
       if (isPlayAuto) {
-        console.log('play', item.media_link);
-        if (videoRef.current.play)
-          videoRef.current.play().catch((error) => {
-            // Autoplay was prevented, handle the error
-            console.log('Autoplay prevented:', error);
-          });
+        const mediaCardRect = videoRef.current?.getBoundingClientRect();
+        if (mediaCardRect) {
+          const viewportHeight = window.innerHeight;
+          if (mediaCardRect.top > 0 && mediaCardRect.bottom < viewportHeight)
+            if (videoRef.current.play)
+              videoRef.current.play().catch((error) => {
+                // Autoplay was prevented, handle the error
+                console.log('Autoplay prevented:', error);
+              });
+        }
+        // console.log('play', item.media_link);
+        // if (videoRef.current.play)
+        //   videoRef.current.play().catch((error) => {
+        //     // Autoplay was prevented, handle the error
+        //     console.log('Autoplay prevented:', error);
+        //   });
       } else {
         console.log('pause');
         if (videoRef.current.pause) videoRef.current.pause();
@@ -83,7 +91,7 @@ function ItemMedia(props: {
         <CardMedia
           ref={videoRef}
           sx={sx}
-          autoPlay={isPlayAuto}
+          // autoPlay={isPlayAuto}
           loop={true}
           // muted={playing}
           component={item.type === 'video' ? 'video' : 'img'}

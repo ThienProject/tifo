@@ -67,7 +67,9 @@ export default {
     chat: 'Chat',
     submit: 'Submit',
     apply: 'Apply',
-    viewDetail: 'View Detail'
+    viewDetail: 'View Detail',
+    cancel: 'Cancel',
+    confirm: 'Confirm'
   },
   toast: {
     sometimeError: 'Sometime has error occurred !',

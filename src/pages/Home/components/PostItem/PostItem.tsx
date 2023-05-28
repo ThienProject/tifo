@@ -77,7 +77,7 @@ const PostItem = ({ post }: { post: IPost }) => {
           dialogComponent: (
             <ConfirmationDialog
               modalId={MODAL_IDS.confirmDeletePost}
-              describe={'Are you sure delete this post ?'}
+              describe={t('confirm.deletePost')}
               sliceName={'DELETE POST'}
               functionName={'deleting'}
               callback={function () {
@@ -85,8 +85,8 @@ const PostItem = ({ post }: { post: IPost }) => {
                   const action = deletePostThunk({ id_post: post.id_post });
                   dispatch(action)
                     .unwrap()
-                    .then((data) => {
-                      toastMessage.success(data.message || 'Delete post success!');
+                    .then(() => {
+                      toastMessage.success(t('toast.deleteSuccess', { object: 'Post' }));
                       const action = closeModal({ modalId: MODAL_IDS.postDetail });
                       dispatch(action);
                       const action2 = closeModal({ modalId: MODAL_IDS.confirmDeletePost });

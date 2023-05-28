@@ -28,9 +28,9 @@ export const schemaCreatePost = (target: string, description: string, medias: st
           return file.type.startsWith('image') || file.type.startsWith('video');
         });
       })
-      .test('max-size', 'File size must not exceed 5MB', (files: any) => {
+      .test('max-size', 'File size must not exceed 30MB', (files: any) => {
         return !files.some((file: File) => {
-          const fileSizeLimit = 20 * 1024 * 1024; // 1MB in bytes
+          const fileSizeLimit = 30 * 1024 * 1024; // 1MB in bytes
           const isWithinSizeLimit = file.size >= fileSizeLimit;
           return isWithinSizeLimit;
         });

@@ -87,7 +87,9 @@ export default {
     chat: 'Chat',
     submit: 'Gửi',
     apply: 'Áp dụng',
-    viewDetail: 'Xem chi tiết'
+    viewDetail: 'Xem chi tiết',
+    cancel: 'Hủy',
+    confirm: 'Xác nhận'
   },
   home: {
     suggestTab: 'Đề xuất cho bạn',

@@ -134,7 +134,7 @@ const UpdatePost = () => {
           target_update: post?.target,
           type: post?.type
         });
-        toastMessage.success('update post success !');
+        toastMessage.success(t('toast.update'));
       });
   };
   const handleOnSubmit = async (data: IPayloadUpdatePost) => {
