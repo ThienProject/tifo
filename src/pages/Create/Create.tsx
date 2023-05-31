@@ -86,7 +86,7 @@ const Create = (props: { type: string }) => {
         .then((data) => {
           const { description } = data;
           if (description) {
-            setSuggest(description);
+            setSuggest(description.replace(/\n/g, ''));
           } else {
             toastMessage.error('Hệ thống gợi ý với AI đang bận!');
           }
