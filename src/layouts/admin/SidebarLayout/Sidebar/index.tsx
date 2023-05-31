@@ -36,35 +36,27 @@ function Sidebar() {
           position: 'fixed',
           left: 0,
           top: 0,
-          background: theme.palette.mode === 'dark' ? alpha(lighten('rgb(17, 25, 42)', 0.1), 0.5) : 'rgb(17, 25, 42)',
-          boxShadow: theme.palette.mode === 'dark' ? theme.shadows[16] : 'none'
+          background: theme.palette.mode === 'dark' ? alpha(lighten('rgb(17, 25, 42)', 0.1), 0.5) : 'rgb(17, 25, 42)'
         }}
       >
-        <Scrollbars>
-          <Box mt={3}>
-            <Box
-              mx={2}
-              sx={{
-                width: 52
-              }}
-            >
-              <Logo />
-            </Box>
-          </Box>
-          <Divider
+        <Box mt={3}>
+          <Box
+            mx={2}
             sx={{
-              mt: theme.spacing(3),
-              mx: theme.spacing(2),
-              background: theme.palette.grey[50]
+              width: 52
             }}
-          />
-          <SidebarMenu />
-        </Scrollbars>
+          >
+            <Logo />
+          </Box>
+        </Box>
         <Divider
           sx={{
-            background: 'rgba(255, 255, 255, 0.1)'
+            mt: theme.spacing(3),
+            mx: theme.spacing(2),
+            background: theme.palette.grey[50]
           }}
         />
+        <SidebarMenu />
       </SidebarWrapper>
       <Drawer
         sx={{
@@ -74,7 +66,6 @@ function Sidebar() {
         open={sidebarToggle}
         onClose={closeSidebar}
         variant='temporary'
-        elevation={9}
       >
         <SidebarWrapper
           sx={{
@@ -93,13 +84,6 @@ function Sidebar() {
                 <Logo />
               </Box>
             </Box>
-            <Divider
-              sx={{
-                mt: theme.spacing(3),
-                mx: theme.spacing(2),
-                background: 'rgba(255, 255, 255, 0.1)'
-              }}
-            />
             <SidebarMenu />
           </Scrollbars>
         </SidebarWrapper>

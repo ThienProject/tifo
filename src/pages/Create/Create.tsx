@@ -78,25 +78,27 @@ const Create = (props: { type: string }) => {
   };
   const handleSuggest = async () => {
     setIsLoadingSuggest(true);
-
-    const status = `tạo 5 status độ dài 20 từ bằng tiếng việt, với từ khóa : ${
-      getValues('description') || 'ngẫu nhiên'
-    }`;
-    const action = getDescriptionAutoThunk({ prompt: status });
-    dispatch(action)
-      .unwrap()
-      .then((data) => {
-        const { description } = data;
-        const newArr = description
-          .replaceAll(/[0-9\n]/g, '')
-          .split(/[.;?]/)
-          .filter((item: any) => item && item.trim() !== '');
-        setSuggest(newArr);
-        setIsLoadingSuggest(false);
-      })
-      .catch(() => {
-        setIsLoadingSuggest(false);
-      });
+    const value = getValues('description');
+    if (value) {
+      const status = `tạo 5 status độ dài 20 từ với từ khóa : ${value}`;
+      const action = getDescriptionAutoThunk({ prompt: status });
+      dispatch(action)
+        .unwrap()
+        .then((data) => {
+          const { description } = data;
+          const newArr = description
+            .replaceAll(/[0-9\n]/g, '')
+            .split(/[.;?]/)
+            .filter((item: any) => item && item.trim() !== '');
+          setSuggest(newArr);
+          setIsLoadingSuggest(false);
+        })
+        .catch(() => {
+          setIsLoadingSuggest(false);
+        });
+    } else {
+      toastMessage.error('Vui lòng nhập mô tả trước');
+    }
   };
 
   useEffect(() => {

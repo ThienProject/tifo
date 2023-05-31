@@ -18,7 +18,6 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
         sx={{
           flex: 1,
           height: '100%',
-
           '.MuiPageTitle-wrapper': {
             background: theme.palette.mode === 'dark' ? theme.palette.grey[50] : 'rgb(242, 245, 249);',
             marginBottom: `${theme.spacing(4)}`,

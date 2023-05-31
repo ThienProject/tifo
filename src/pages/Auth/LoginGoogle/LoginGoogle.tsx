@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { Box, Button } from '@mui/material';
 import { loginGoogleThunk } from 'src/redux_store/user/user_action';
 import { useAppDispatch } from 'src/redux_store';
 import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 interface ILoginInfo {
   access_token: string;
 }
@@ -18,6 +19,7 @@ interface IGoogleUser {
 function LoginGoogle() {
   const [loginInfo, setLoginInfo] = useState<ILoginInfo>();
   const [profile, setProfile] = useState<IGoogleUser | null>();
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const login = useGoogleLogin({
@@ -68,11 +70,11 @@ function LoginGoogle() {
   }, [loginInfo]);
 
   // log out function to log the user out of google and set the profile array to null
-  const logOut = () => {
-    googleLogout();
-    setProfile(null);
-  };
+  // const logOut = () => {
+  //   googleLogout();
+  //   setProfile(null);
+  // };
 
-  return <Box>{!profile && <Button onClick={() => login()}>Sign in with Google 🚀 </Button>}</Box>;
+  return <Box>{!profile && <Button onClick={() => login()}>{t('auth.loginGoogle')} 🚀 </Button>}</Box>;
 }
 export default LoginGoogle;

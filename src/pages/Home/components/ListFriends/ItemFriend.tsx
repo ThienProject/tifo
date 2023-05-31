@@ -1,6 +1,8 @@
-import { Box, Typography } from '@mui/material';
+import { Avatar, Box, Typography } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import images from 'src/assets/images';
+import { CPath } from 'src/constants';
 import { IUser } from 'src/types/user';
 
 const ItemFriend = ({ itemFriend }: { itemFriend: IUser }) => {
@@ -8,7 +10,7 @@ const ItemFriend = ({ itemFriend }: { itemFriend: IUser }) => {
     <Link to={`/${itemFriend?.id_user}`} style={{ textDecoration: 'none' }}>
       <Box pl={2} display='flex' flexDirection='column'>
         <Box width={50} height={50}>
-          <img
+          <Avatar
             style={{
               boxShadow: '1px 2px 1px #888',
               border: '1px solid var(--mui-palette-Slider-errorTrack)',
@@ -17,8 +19,8 @@ const ItemFriend = ({ itemFriend }: { itemFriend: IUser }) => {
               height: '100%',
               borderRadius: '50%'
             }}
-            alt='avatar'
-            src={itemFriend.avatar}
+            alt={itemFriend.username}
+            src={itemFriend.avatar ? CPath.host_user + itemFriend.avatar : images.account}
           />
         </Box>
         <Typography
@@ -30,7 +32,7 @@ const ItemFriend = ({ itemFriend }: { itemFriend: IUser }) => {
           textOverflow={'ellipsis'}
           fontSize={10}
         >
-          {itemFriend.fullname}
+          {itemFriend.username}
         </Typography>
       </Box>
     </Link>

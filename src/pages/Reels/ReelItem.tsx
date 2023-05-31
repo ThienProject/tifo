@@ -32,7 +32,14 @@ const ReelItem = ({ post }: { post: IPost }) => {
       <Grid item lg={8} sx={{ position: 'relative' }}>
         <Box ref={myRef}></Box>
         {post?.medias && (
-          <ItemMedia control={false} isReel autoPlay sx={{ height: 500 }} key={post.id_post} item={post?.medias[0]} />
+          <ItemMedia
+            control={false}
+            isReel
+            autoPlay
+            sx={{ height: 500, maxWidth: 300 }}
+            key={post.id_post}
+            item={post?.medias[0]}
+          />
         )}
         <Stack
           alignItems={'center'}
@@ -107,7 +114,6 @@ const ReelItem = ({ post }: { post: IPost }) => {
                     });
                     dispatch(action).unwrap();
                   }
-                  // setIsMark((prev) => !prev);
                 }}
               >
                 {post.isSave ? <BookmarkOutlined sx={{ color: 'common.black' }} /> : <BookmarkBorderOutlined />}

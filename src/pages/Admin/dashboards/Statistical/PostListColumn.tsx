@@ -1,4 +1,4 @@
-import { Card, Box, Typography, Avatar, Grid, alpha, useTheme, styled } from '@mui/material';
+import { Card, Box, Typography, Grid, useTheme } from '@mui/material';
 import Chart from 'react-apexcharts';
 import type { ApexOptions } from 'apexcharts';
 import { useEffect, useState } from 'react';

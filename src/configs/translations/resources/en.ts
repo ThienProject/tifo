@@ -194,6 +194,7 @@ export default {
     confirmPass: 'Confirm Password',
     newPass: 'New Password',
     signup: 'Sign Up',
+    login: 'Login',
     forget: 'Forget Password'
   },
   common: {
@@ -259,5 +260,10 @@ export default {
   },
   room: {
     empty: 'No more room!'
+  },
+  auth: {
+    loginGoogle: 'SIGN IN WITH GOOGLE',
+    noAccount: "Don't have an account?",
+    hasAccount: 'Do you have an account?'
   }
 };

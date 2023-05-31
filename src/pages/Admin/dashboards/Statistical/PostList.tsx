@@ -1,23 +1,10 @@
-import { MouseEvent, useState } from 'react';
-import { Button, Box, ToggleButton, ToggleButtonGroup, Card, Typography, styled } from '@mui/material';
-import ViewWeekTwoToneIcon from '@mui/icons-material/ViewWeekTwoTone';
-import TableRowsTwoToneIcon from '@mui/icons-material/TableRowsTwoTone';
+import { useState } from 'react';
+import { Button, Box, Card, Typography } from '@mui/material';
+
 import PostListColumn from './PostListColumn';
 
-const EmptyResultsWrapper = styled('img')(
-  ({ theme }) => `
-      max-width: 100%;
-      width: ${theme.spacing(66)};
-      height: ${theme.spacing(34)};
-`
-);
-
-function WatchList() {
-  const [tabs, setTab] = useState<string | null>('watch_list_columns');
-
-  const handleViewOrientation = (_event: MouseEvent<HTMLElement>, newValue: string | null) => {
-    setTab(newValue);
-  };
+function PostList() {
+  const [tabs] = useState<string | null>('watch_list_columns');
 
   return (
     <>
@@ -70,4 +57,4 @@ function WatchList() {
   );
 }
 
-export default WatchList;
+export default PostList;

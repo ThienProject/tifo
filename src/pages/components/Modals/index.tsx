@@ -1,4 +1,3 @@
-import { Helmet } from 'react-helmet-async';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
@@ -80,9 +79,6 @@ function Modals() {
 
   return (
     <>
-      <Helmet>
-        <title>Modals - Components</title>
-      </Helmet>
       <PageTitleWrapper>
         <PageTitle
           heading='Modals'

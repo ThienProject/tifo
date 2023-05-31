@@ -26,7 +26,7 @@ const roomSlice = createSlice({
   reducers: {
     createChat: (state, action) => {
       const { id_room, chat, date } = action.payload;
-      console.log({ chat })
+      console.log({ chat });
       if (date && chat && id_room) {
         const chatDates: IChatDates[] = state.chats[id_room];
         if (chatDates) {
@@ -89,7 +89,7 @@ const roomSlice = createSlice({
       state.isOpenMenu = !state.isOpenMenu;
     },
     addMembers: (state, action) => {
-      const { room, chats, limit, users } = action.payload;
+      const { room, chats, users } = action.payload;
       const indexRoom = state.rooms.findIndex((r) => r.id_room === room?.id_room);
       if (indexRoom == -1) {
         state.rooms.unshift({ ...room, users });

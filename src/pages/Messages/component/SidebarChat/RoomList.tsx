@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import RoomItem from './RoomItem';
 import { IChat, IRoom } from 'src/types/room';
 import { useTranslation } from 'react-i18next';
-import { resetRoom } from 'src/redux_store/room/room_slice';
 import { getRoomsThunk } from 'src/redux_store/room/room_action';
 
 const ChatList = () => {

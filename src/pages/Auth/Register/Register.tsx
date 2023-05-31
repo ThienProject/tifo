@@ -111,8 +111,8 @@ const RegisterForm = () => {
               />
               <FormInput
                 control={control}
-                label='Username'
-                placeholder='Username'
+                label={t('profile.username')!}
+                placeholder={t('profile.username')!}
                 sx={{
                   fontSize: 2,
                   color: 'red',
@@ -132,8 +132,8 @@ const RegisterForm = () => {
                     fontSize: 14
                   }
                 }}
-                label='Fullname'
-                placeholder='Fullname'
+                label={t('profile.fullname')!}
+                placeholder={t('profile.fullname')!}
                 type='text'
                 name='fullname'
                 required
@@ -158,8 +158,8 @@ const RegisterForm = () => {
                     fontSize: 18
                   }
                 }}
-                label='Password'
-                placeholder='Password'
+                label={t('profile.password')!}
+                placeholder={t('profile.password')!}
                 type='password'
                 name='password'
                 required
@@ -176,8 +176,8 @@ const RegisterForm = () => {
                     fontSize: 18
                   }
                 }}
-                label='Confirm Password'
-                placeholder='Confirm Password'
+                label={t('profile.confirmPass')!}
+                placeholder={t('profile.confirmPass')!}
                 type='password'
                 name='confirmPassword'
                 required
@@ -189,7 +189,7 @@ const RegisterForm = () => {
                 sx={{ color: 'common.white' }}
                 variant='contained'
               >
-                Sign up
+                {t('profile.signup')!}
               </Button>
             </Box>
           </Box>
@@ -198,13 +198,13 @@ const RegisterForm = () => {
       <Paper sx={{ mt: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 1 }}>
           <Typography fontWeight={100} fontSize={13}>
-            {'Do you have an account?'}{' '}
+            {t('auth.hasAccount')}
             <Button
               onClick={() => {
                 navigate('/auth/login');
               }}
             >
-              Login
+              {t('profile.login')}
             </Button>
           </Typography>
         </Box>

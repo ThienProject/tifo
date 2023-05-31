@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { styled, CSSObject, Theme, useTheme } from '@mui/material/styles';
-import { Box, Drawer } from '@mui/material';
+import React, { useState } from 'react';
+import { CSSObject, Theme, useTheme } from '@mui/material/styles';
+import { Drawer } from '@mui/material';
 import MenuSideBar from './SidebarMenu';
-import MuiDrawer from '@mui/material/Drawer';
 
 import { ImenuItem } from 'src/types/common';
 
@@ -14,36 +13,25 @@ const SideBar = ({ menus }: { menus: ImenuItem[] }) => {
   const openedMixin = (theme: Theme): CSSObject => ({
     boxShadow: theme.shadows[1],
     [theme.breakpoints.up('lg')]: {
-      // '@keyframes openMixin': {
-      //   from: { width: `calc(${theme.spacing(7)} + 1px)` },
-      //   to: { width: drawerWidth }
-      // },
-      // animationName: 'openMixin',
-      // animationDuration: '0.2s'
+      '@keyframes openMixin': {
+        from: { width: `calc(${theme.spacing(7)} + 1px)` },
+        to: { width: drawerWidth }
+      },
+      animationName: 'openMixin',
+      animationDuration: '0.2s'
     },
     overflowX: 'hidden'
-  });
-  const openedMixinPhone = (theme: Theme): CSSObject => ({
-    width: '100%',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    }),
-    position: 'fixed',
-    bottom: 0,
-    height: 50,
-    overflowY: 'hidden'
   });
   const closedMixin = (theme: Theme): CSSObject => ({
     [theme.breakpoints.up('lg')]: {
       overflowX: 'hidden',
-      height: '100%'
-      // '@keyframes closeMixin': {
-      //   from: { width: drawerWidth },
-      //   to: { width: `calc(${theme.spacing(7)} + 1px)` }
-      // },
-      // animationName: 'closeMixin',
-      // animationDuration: '0.2s'
+      height: '100%',
+      '@keyframes closeMixin': {
+        from: { width: drawerWidth },
+        to: { width: `calc(${theme.spacing(7)} + 1px)` }
+      },
+      animationName: 'closeMixin',
+      animationDuration: '0.2s'
     },
     width: `calc(${theme.spacing(7)} + 1px)`,
     [theme.breakpoints.up('sm')]: {
@@ -56,13 +44,17 @@ const SideBar = ({ menus }: { menus: ImenuItem[] }) => {
   return (
     <Drawer
       variant='permanent'
-      // open={isOpen}
       sx={{
         '& .MuiDrawer-paper': {
           overflowX: 'hidden',
-          width: isOpen ? drawerWidth : `calc(${theme.spacing(7)} + 1px)`,
-          ...(!isOpen && closedMixin(theme)),
-          ...(isOpen && openedMixin(theme))
+          [theme.breakpoints.up('lg')]: {
+            width: isOpen ? drawerWidth : `calc(${theme.spacing(7)} + 1px)`,
+            ...(!isOpen && closedMixin(theme)),
+            ...(isOpen && openedMixin(theme))
+          },
+          [theme.breakpoints.up('sm')]: {
+            width: `calc(${theme.spacing(8)} + 1px)`
+          }
         }
       }}
       anchor={'left'}

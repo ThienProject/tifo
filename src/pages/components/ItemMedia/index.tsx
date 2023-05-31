@@ -13,7 +13,7 @@ function ItemMedia(props: {
   isReel?: boolean;
   autoPlay?: boolean;
 }) {
-  const { item, sx, isClose = false, control = true, isReel, autoPlay = false } = props;
+  const { item, sx, control = true, isReel, autoPlay = false } = props;
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlayAuto, setIsPlayAuto] = useState(autoPlay);
   console.log('render...', item.media_link);
@@ -39,22 +39,6 @@ function ItemMedia(props: {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (videoRef.current && isClose && videoRef.current.pause) {
-  //     videoRef.current.pause();
-  //   }
-  // }, [isClose]);
-
-  // useEffect(() => {
-  //   if (autoPlay && videoRef.current) {
-  //     const mediaCardRect = videoRef.current?.getBoundingClientRect();
-  //     if (mediaCardRect) {
-  //       const viewportHeight = window.innerHeight;
-  //       if (mediaCardRect.top > 0 && mediaCardRect.bottom < viewportHeight) setIsPlayAuto(true);
-  //     }
-  //   }
-  // }, []);
-
   useEffect(() => {
     if (videoRef.current) {
       if (isPlayAuto) {
@@ -68,12 +52,6 @@ function ItemMedia(props: {
                 console.log('Autoplay prevented:', error);
               });
         }
-        // console.log('play', item.media_link);
-        // if (videoRef.current.play)
-        //   videoRef.current.play().catch((error) => {
-        //     // Autoplay was prevented, handle the error
-        //     console.log('Autoplay prevented:', error);
-        //   });
       } else {
         console.log('pause');
         if (videoRef.current.pause) videoRef.current.pause();

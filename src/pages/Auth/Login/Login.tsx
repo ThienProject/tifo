@@ -137,7 +137,7 @@ const Login = () => {
       <Paper sx={{ mt: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 1 }}>
           <Typography fontWeight={100} fontSize={13}>
-            {"Don't have an account?"}
+            {t('auth.noAccount')}
             <Button
               onClick={() => {
                 navigation('/auth/register');

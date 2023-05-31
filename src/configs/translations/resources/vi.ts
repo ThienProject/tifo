@@ -135,7 +135,7 @@ export default {
       remove: '{{actor}} đã xóa {{affected_username}} khỏi nhóm!',
       add: '{{actor}} đã thêm {{affected_username}} vào nhóm!',
       leave: '{{actor}} đã rời nhóm!',
-      image: '{{actor}} Đã gửi một ảnh!',
+      image: '{{actor}} Đã gửi một ảnh!'
     },
     chatting: 'Đang soạn tin nhắn'
   },
@@ -194,6 +194,7 @@ export default {
     confirmPass: 'Xác nhận mật khẩu',
     newPass: 'Mật khẩu mới',
     signup: 'Đăng ký',
+    login: 'Đăng nhập',
     forget: 'Quên mật khẩu'
   },
   common: {
@@ -219,8 +220,8 @@ export default {
       posts: 'Bài đăng',
       users: 'Người dùng'
     },
-    manageUser: "Quản lý người dùng",
-    managePost: "Quản lý bài đăng",
+    manageUser: 'Quản lý người dùng',
+    managePost: 'Quản lý bài đăng',
     users: {
       detail: 'Chi tiết',
       role: 'Quyền',
@@ -229,13 +230,12 @@ export default {
       status: 'Trạng thái',
       actions: 'Hành động',
       filter: {
-        all: "Tất cả",
-        reported: "Bị báo cáo",
+        all: 'Tất cả',
+        reported: 'Bị báo cáo',
         banned: 'Bị khóa'
       },
       participationDate: 'Ngày tham gia',
-      postInfo: 'Thông tin bài viết',
-
+      postInfo: 'Thông tin bài viết'
     },
     posts: {
       detail: 'Chi tiết',
@@ -245,8 +245,8 @@ export default {
       status: 'Trạng thái',
       actions: 'Hành động',
       filter: {
-        all: "Tất cả",
-        reported: "Bị báo cáo",
+        all: 'Tất cả',
+        reported: 'Bị báo cáo',
         banned: 'Bị khóa'
       },
       createDate: 'Ngày tạo',
@@ -260,5 +260,10 @@ export default {
   },
   room: {
     empty: 'Không còn phòng nào!'
+  },
+  auth: {
+    loginGoogle: 'Đăng nhập với Google',
+    noAccount: 'Chưa có tài khoản?',
+    hasAccount: 'Bạn đã có tài khoản?'
   }
 };

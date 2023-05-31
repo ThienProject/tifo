@@ -1,6 +1,5 @@
 import { Box, Button, Card, CardContent, Divider, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import TabCNP from 'src/components/Tab/Tab';
+import React from 'react';
 import ModalWrapper from 'src/components/model/ModelWrapper';
 import MODAL_IDS from 'src/constants/modal';
 import { IPostAdmin } from 'src/types/post';

@@ -1,4 +1,4 @@
-import { useState, SyntheticEvent, useEffect } from 'react';
+import { useState, SyntheticEvent } from 'react';
 import {
   Box,
   IconButton,
@@ -106,7 +106,7 @@ function TopBarContent() {
   const [isOpenSetting, setIsOpenSetting] = useState(false);
   const { me } = useAppSelector((state) => state.userSlice);
   const { currentRoom, rooms } = useAppSelector((state) => state.roomSlice);
-  const { id_room, id_user } = useParams();
+  const { id_room } = useParams();
   const navigation = useNavigate();
   const room = rooms.find((item: any) => item.id_room === id_room);
   const {
