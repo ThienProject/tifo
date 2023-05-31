@@ -100,6 +100,7 @@ export default {
   postDetail: {
     reply: 'Phản hồi',
     viewReply: 'Xem tất cả phản hồi',
+    hiddenReply: 'Ẩn tất cả phản hồi',
     edit: 'Chỉnh sửa bài đăng',
     delete: 'Xóa bài đăng',
     report: 'Báo cáo bài đăng'
@@ -137,7 +138,8 @@ export default {
       leave: '{{actor}} đã rời nhóm!',
       image: '{{actor}} Đã gửi một ảnh!'
     },
-    chatting: 'Đang soạn tin nhắn'
+    chatting: 'Đang soạn tin nhắn',
+    chatBottomInput: 'Nhập tin nhắn của bạn ở đây...'
   },
   createPost: {
     uploadTitle: 'Tạo bài đăng',

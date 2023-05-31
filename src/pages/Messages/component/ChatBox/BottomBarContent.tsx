@@ -23,30 +23,16 @@ import { createChat } from 'src/redux_store/room/room_slice';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { objectToFormData } from 'src/functions';
-import { t } from 'i18next';
 import useChatItem from 'src/hooks/use_chatItem';
 import { useIsRequestPending } from 'src/hooks/use_status';
+import { useTranslation } from 'react-i18next';
 
 const Input = styled('input')({
   display: 'none'
 });
-// function convertImageToString(imageFile: File) {
-//   return new Promise((resolve, reject) => {
-//     const reader = new FileReader();
 
-//     reader.onloadend = () => {
-//       const imageString = reader.result;
-//       resolve(imageString);
-//     };
-
-//     reader.onerror = () => {
-//       reject(reader.error);
-//     };
-
-//     reader.readAsDataURL(imageFile);
-//   });
-// }
 function BottomBarContent() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const { me } = useAppSelector((state) => state.userSlice);
   const { rooms, currentRoom } = useAppSelector((state) => state.roomSlice);
@@ -202,7 +188,7 @@ function BottomBarContent() {
             disabled={type ? false : true}
             type='text'
             variant='standard'
-            placeholder='Write your message here...'
+            placeholder={t('message.chatBottomInput')!}
             name='message'
             control={control}
             inputBase

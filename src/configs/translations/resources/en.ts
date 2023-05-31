@@ -102,6 +102,7 @@ export default {
     delete: 'Delete Post',
     reply: 'reply',
     viewReply: 'View Replies',
+    hiddenReply: 'Hide replies',
     report: 'Report post'
   },
   message: {
@@ -137,7 +138,8 @@ export default {
       leave: '{{actor}} leaved this group!',
       image: '{{actor}} sent a photo!'
     },
-    chatting: 'Composing message'
+    chatting: 'Composing message',
+    chatBottomInput: 'Write your message here...'
   },
   createPost: {
     uploadTitle: 'Upload post',

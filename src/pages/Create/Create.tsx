@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Grid, Paper, Typography, Divider, MenuItem, MenuList } from '@mui/material';
+import { Box, Button, Grid, Paper, Typography, Divider } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { IPayloadCreatePost } from 'src/types/post';
 import { useForm } from 'react-hook-form';
@@ -15,7 +15,6 @@ import MODAL_IDS from 'src/constants/modal';
 import Media from 'src/components/hooks_form/form_media';
 import ModalLoadingCreate from '../components/ModalLoadingCreate';
 import { LoadingButton } from '@mui/lab';
-import Scrollbars from 'react-custom-scrollbars-2';
 import { useTranslation } from 'react-i18next';
 import PsychologyAltOutlinedIcon from '@mui/icons-material/PsychologyAltOutlined';
 const initCreatePost: IPayloadCreatePost = {
@@ -32,7 +31,7 @@ const Create = (props: { type: string }) => {
   const { t } = useTranslation();
   const [isLoadingSuggest, setIsLoadingSuggest] = useState(false);
   const { type } = props;
-  const [suggest, setSuggest] = useState([]);
+  const [suggest, setSuggest] = useState('');
   const { me } = useAppSelector((state: any) => state.userSlice);
   const dispatch = useAppDispatch();
   const target = [
@@ -72,25 +71,25 @@ const Create = (props: { type: string }) => {
       .unwrap()
       .then(() => {
         reset();
-        setSuggest([]);
+        setSuggest('');
         toastMessage.success(t('createPost.toast.createSuccess') || '');
       });
   };
   const handleSuggest = async () => {
-    setIsLoadingSuggest(true);
     const value = getValues('description');
     if (value) {
-      const status = `tạo 5 status độ dài 20 từ với từ khóa : ${value}`;
+      setIsLoadingSuggest(true);
+      const status = `tạo 1 status độ dài 30 từ với từ khóa : ${value}`;
       const action = getDescriptionAutoThunk({ prompt: status });
       dispatch(action)
         .unwrap()
         .then((data) => {
           const { description } = data;
-          const newArr = description
-            .replaceAll(/[0-9\n]/g, '')
-            .split(/[.;?]/)
-            .filter((item: any) => item && item.trim() !== '');
-          setSuggest(newArr);
+          if (description) {
+            setSuggest(description);
+          } else {
+            toastMessage.error('Hệ thống gợi ý với AI đang bận!');
+          }
           setIsLoadingSuggest(false);
         })
         .catch(() => {
@@ -152,26 +151,16 @@ const Create = (props: { type: string }) => {
               <PsychologyAltOutlinedIcon />
               {t('createPost.suggest')}
             </LoadingButton>
-            {suggest.length > 0 && (
-              <Box height={200}>
-                <Scrollbars>
-                  <MenuList>
-                    {suggest.map((item, index) => {
-                      if (index < suggest.length - 1)
-                        return (
-                          <MenuItem
-                            sx={{ m: 2, p: 1.5 }}
-                            onClick={() => {
-                              setValue('description', item);
-                            }}
-                            key={index}
-                          >
-                            <Box>{item}</Box>
-                          </MenuItem>
-                        );
-                    })}
-                  </MenuList>
-                </Scrollbars>
+            {suggest && (
+              <Box mt={1} height={55}>
+                <Typography
+                  sx={{ cursor: 'pointer', '&:hover': { opacity: 0.8 } }}
+                  onClick={() => {
+                    setValue('description', suggest);
+                  }}
+                >
+                  {suggest}
+                </Typography>
               </Box>
             )}
           </Box>

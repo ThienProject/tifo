@@ -10,6 +10,7 @@ import ProtectBox from 'src/components/ProtectBox';
 import { useAppDispatch } from 'src/redux_store';
 import { closeModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
+import { useTranslation } from 'react-i18next';
 
 const ItemComment = (props: {
   setCommentList?: React.Dispatch<SetStateAction<IComment[]>>;
@@ -26,6 +27,7 @@ const ItemComment = (props: {
   const user = { fullname, username, id_user, avatar };
   const [isLove, setIsLove] = useState(false);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   return (
     <Box
       sx={{
@@ -80,13 +82,13 @@ const ItemComment = (props: {
                 icon={<MoreHoriz />}
                 options={[
                   {
-                    name: 'Edit',
+                    name: t('button.edit')!,
                     handleClick: () => {
                       updateComment && updateComment(comment.comment);
                     }
                   },
                   {
-                    name: 'Delete',
+                    name: t('button.delete')!,
                     handleClick: () => {
                       deleteComment && deleteComment();
                     }
@@ -117,7 +119,7 @@ const ItemComment = (props: {
                 });
             }}
           >
-            {!comment.collapsed ? 'View replies' : 'Hide replies'}
+            {!comment.collapsed ? t('postDetail.viewReply')! : t('postDetail.hiddenReply')}
           </Button>
         )}
         <ProtectBox>
@@ -127,7 +129,7 @@ const ItemComment = (props: {
               setPayload && setPayload();
             }}
           >
-            Reply
+            {t('postDetail.reply')}
           </Button>
         </ProtectBox>
         <IconButton

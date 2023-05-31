@@ -183,7 +183,6 @@ const PostItem = ({ post }: { post: IPost }) => {
         fontWeight={550}
         max={100}
       />
-      <Button sx={{ p: 0, fontWeight: '600', fontSize: 10, color: 'text.secondary' }}>{t('home.translate')}</Button>
       {post.commentLength ? (
         <Button
           fullWidth
