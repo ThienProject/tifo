@@ -45,7 +45,7 @@ const userSlice = createSlice({
       localStorage.setItem('auth', JSON.stringify({ me: user, accessToken, refreshToken }));
       if (state.socket) {
         state.socket.disconnect();
-        // 'ws://192.168.1.29:8000'
+        // 'ws://localhost:8000'
         const socket = io.connect(CPath.HOST_SOCKET!, {
           query: {
             id_user: user?.id_user
@@ -62,7 +62,7 @@ const userSlice = createSlice({
       localStorage.setItem('auth', JSON.stringify({ me: user, accessToken, refreshToken }));
       if (state.socket) {
         state.socket.disconnect();
-        // 'ws://192.168.1.29:8000'
+        // 'ws://localhost:8000'
         const socket = io.connect(CPath.HOST_SOCKET!, {
           query: {
             id_user: user?.id_user

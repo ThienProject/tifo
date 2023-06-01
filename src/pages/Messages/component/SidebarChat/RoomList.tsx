@@ -7,7 +7,8 @@ import { IChat, IRoom } from 'src/types/room';
 import { useTranslation } from 'react-i18next';
 import { getRoomsThunk } from 'src/redux_store/room/room_action';
 
-const ChatList = () => {
+// eslint-disable-next-line react/display-name
+const RoomList = () => {
   const rooms = useAppSelector((state) => state.roomSlice.rooms);
   const chats = useAppSelector((state) => state.roomSlice.chats);
   const { me, socket } = useAppSelector((state) => state.userSlice);
@@ -15,6 +16,7 @@ const ChatList = () => {
   const [isLoadMore, setIsLoadMore] = useState(true);
   const { t } = useTranslation();
   const handleLoadMore = (offset: number) => {
+    console.log('có load');
     const id_user = me?.id_user;
     const params = { id_user, limit: 10, offset: offset };
     if (id_user) {
@@ -82,4 +84,4 @@ const ChatList = () => {
     </Box>
   );
 };
-export default ChatList;
+export default RoomList;

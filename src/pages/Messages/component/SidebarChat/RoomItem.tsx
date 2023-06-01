@@ -4,7 +4,7 @@ import { IRoom } from 'src/types/room';
 import { IUser } from 'src/types/user';
 import images from 'src/assets/images';
 import { CPath } from 'src/constants';
-import { useNavigate, useLocation } from 'react-router';
+import { useNavigate, useLocation } from 'react-router-dom';
 import MenuOption from 'src/components/MenuOption';
 import { MoreHoriz } from '@mui/icons-material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -42,7 +42,7 @@ const ChatItem = ({ socket, room, chatDemo }: { socket: Socket; room: IRoom; cha
     }
   }
   useEffect(() => {
-    if (isChatFriend) {
+    if (isChatFriend && socket) {
       socket.on('status', ({ id_user, status }: any) => {
         if (isChatFriend && room.users && room.users[0]?.id_user === id_user) {
           const action = setStatusRoom({ id_room: room.id_room, id_user, status });
@@ -75,7 +75,7 @@ const ChatItem = ({ socket, room, chatDemo }: { socket: Socket; room: IRoom; cha
         py={2}
         px={1}
         onClick={() => {
-          navigate(room.id_room!);
+          if (pathName !== room.id_room) navigate(room.id_room!);
         }}
       >
         <Badge

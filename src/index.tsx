@@ -17,7 +17,7 @@ import { setSocket } from './redux_store/user/user_slice';
 import { CPath } from './constants';
 const { me } = store.getState().userSlice;
 import { GoogleOAuthProvider } from '@react-oauth/google';
-// 'ws://192.168.1.29:8000'
+// 'ws://localhost:8000'
 const socket = io.connect(CPath.HOST_SOCKET!, {
   query: {
     id_user: me?.id_user

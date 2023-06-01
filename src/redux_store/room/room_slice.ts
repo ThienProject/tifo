@@ -136,17 +136,19 @@ const roomSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getRoomsThunk.fulfilled, (state, action) => {
       const { rooms } = action.payload;
-      rooms.forEach((room: any) => {
-        const { chats, ...restroom } = room;
-        state.rooms.push(restroom);
-        if (chats && chats[0]) {
-          if (restroom.id_room) {
-            if (!state.chats[restroom.id_room]) {
-              state.chats[restroom.id_room] = chats;
+      if (rooms) {
+        rooms.forEach((room: any) => {
+          const { chats, ...restroom } = room;
+          state.rooms.push(restroom);
+          if (chats && chats[0]) {
+            if (restroom.id_room) {
+              if (!state.chats[restroom.id_room]) {
+                state.chats[restroom.id_room] = chats;
+              }
             }
           }
-        }
-      });
+        });
+      }
     });
     builder.addCase(getUsersByIDRoomThunk.fulfilled, (state, action) => {
       const { id_room, users } = action.payload;
@@ -160,7 +162,9 @@ const roomSlice = createSlice({
       if (chats && chats[0]) {
         state.chats[id_room] = chats;
       }
-      state.currentRoom = room;
+      if (room) {
+        state.currentRoom = room;
+      }
     });
     builder.addCase(clearChatsThunk.fulfilled, (state, action) => {
       const { id_room } = action.payload;
