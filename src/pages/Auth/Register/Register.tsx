@@ -13,6 +13,7 @@ import { toastMessage } from 'src/utils/toast';
 import { FormDatePicker } from 'src/components/hooks_form/form_datepicker';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
 const schemaRegister = yup.object().shape({
   email: yup.string().email('Email is not invalid').required("Email can't not empty."),
@@ -62,7 +63,7 @@ const RegisterForm = () => {
         password,
         fullname,
         username,
-        birthday
+        birthday: moment(birthday).format('YYYY-MM-DD HH:mm:ss')
       })
     )
       .unwrap()

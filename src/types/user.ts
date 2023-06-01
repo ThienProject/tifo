@@ -5,7 +5,7 @@ export interface IUser {
   id_user?: string;
   username?: string;
   fullname?: string;
-  birthday?: Date;
+  birthday?: Date | string;
   age?: string;
   phone?: string;
   email?: string;

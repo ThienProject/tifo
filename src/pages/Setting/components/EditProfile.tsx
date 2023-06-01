@@ -11,6 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { updateInfoThunk } from 'src/redux_store/user/user_action';
 import { toastMessage } from 'src/utils/toast';
+import moment from 'moment';
 
 const EditProfile = () => {
   const { t } = useTranslation();
@@ -37,7 +38,13 @@ const EditProfile = () => {
   });
   const handleOnSubmit = (data: IUser) => {
     if (me?.id_user) {
-      const payload: IUser = { ...data, id_user: me?.id_user };
+      const payload: IUser = {
+        ...data,
+        id_user: me?.id_user
+      };
+      if (payload.birthday) {
+        payload.birthday = moment(data.birthday).format('YYYY-MM-DD HH:mm:ss');
+      }
       const action = updateInfoThunk(payload);
       dispatch(action)
         .unwrap()

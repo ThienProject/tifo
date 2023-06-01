@@ -9,7 +9,7 @@ export interface IPayloadRegister extends IPayloadLogin {
   fullname: string;
   username: string;
   confirmPassword?: string;
-  birthday?: Date;
+  birthday?: Date | string;
 }
 
 export interface ILogin {
