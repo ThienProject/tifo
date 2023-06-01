@@ -54,6 +54,14 @@ const SideBar = ({ menus }: { menus: ImenuItem[] }) => {
           },
           [theme.breakpoints.up('sm')]: {
             width: `calc(${theme.spacing(8)} + 1px)`
+          },
+          [theme.breakpoints.down('sm')]: {
+            position: 'fixed',
+            width: `100%`,
+            height: 50,
+            bottom: 0,
+            top: 'unset',
+            overflowY: 'hidden'
           }
         }
       }}
