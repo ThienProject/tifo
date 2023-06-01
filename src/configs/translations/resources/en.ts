@@ -80,7 +80,9 @@ export default {
     leaveGroup: 'Leaved group success!',
     update: 'Update Success!',
     lockSuccess: 'Lock success!',
-    submit: 'Submit success!'
+    submit: 'Submit success!',
+    changeRoleUserSuccess: 'Change Role Success',
+    unlockSuccess: 'Unlock Success'
   },
   confirm: {
     cancelCreatePost: 'Do you want to cancel create post?',
@@ -227,6 +229,8 @@ export default {
     users: {
       detail: 'User Details',
       role: 'Role',
+      changeRole: 'Change permissions',
+      unLockUser: 'Unlock User',
       totalPost: 'Total posts',
       postReport: 'Posts reported',
       status: 'Status',

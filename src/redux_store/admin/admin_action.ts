@@ -23,6 +23,28 @@ export const lockUserThunk = createAsyncThunk<any, { id_user: string; reason: st
     }
   }
 );
+export const unLockUserThunk = createAsyncThunk<any, { id_user: string }>(
+  'admin/unLockUserThunk',
+  async (payload: { id_user: string }, { rejectWithValue }) => {
+    try {
+      const { data } = await adminApi.unLockUser(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const changeRoleUserThunk = createAsyncThunk<any, { id_user: string; id_role: number }>(
+  'admin/changeRoleUserThunk',
+  async (payload: { id_user: string; id_role: number }, { rejectWithValue }) => {
+    try {
+      const { data } = await adminApi.changeRoleUser(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
 export const lockPostThunk = createAsyncThunk<any, { id_user: string; id_post: string; reason: string }>(
   'admin/lockPostThunk',
   async (payload: { id_user: string; id_post: string; reason: string }, { rejectWithValue }) => {

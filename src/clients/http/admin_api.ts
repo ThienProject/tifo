@@ -22,6 +22,12 @@ export const adminApi = {
   lockUser: (payload: { id_user: string; reason: string }) => {
     return client.post<any>('/admin/user/lock', payload);
   },
+  changeRoleUser: (payload: { id_user: string; id_role: number }) => {
+    return client.post<any>('/admin/user/changeRole', payload);
+  },
+  unLockUser: (payload: { id_user: string }) => {
+    return client.post<any>('/admin/user/unlock', payload);
+  },
   lockPost: (payload: { id_user: string; reason: string; id_post: string }) => {
     return client.post<any>('/admin/post/lock', payload);
   },

@@ -32,6 +32,8 @@ import DetailUserModal from './DetailUserModal';
 import { useAppDispatch } from 'src/redux_store';
 import LockUserModal from '../../components/LockUserModal';
 import { t } from 'i18next';
+import UnClockUserModal from '../../components/UnClockUserModal';
+import ChangeRuleModal from '../../components/ChangeRuleModal';
 
 const getStatusLabel = (userStatus: 'banned' | 'reported' | 'online' | 'offline'): JSX.Element => {
   const map = {
@@ -231,6 +233,13 @@ const UsersTable = ({
                     </Tooltip>
                     <Tooltip title='Edit User' arrow>
                       <IconButton
+                        onClick={() => {
+                          const action = openModal({
+                            modalId: MODAL_IDS.changeRuleUser,
+                            dialogComponent: <ChangeRuleModal user={user} />
+                          });
+                          dispatch(action);
+                        }}
                         sx={{
                           '&:hover': {
                             background: theme.palette.primary.light
@@ -246,11 +255,19 @@ const UsersTable = ({
                     <Tooltip title='Lock User' arrow>
                       <IconButton
                         onClick={() => {
-                          const action = openModal({
-                            modalId: MODAL_IDS.lockUser,
-                            dialogComponent: <LockUserModal user={user} />
-                          });
-                          dispatch(action);
+                          if (user.status !== 'banned') {
+                            const action = openModal({
+                              modalId: MODAL_IDS.lockUser,
+                              dialogComponent: <LockUserModal user={user} />
+                            });
+                            dispatch(action);
+                          } else {
+                            const action = openModal({
+                              modalId: MODAL_IDS.unLockUser,
+                              dialogComponent: <UnClockUserModal user={user} />
+                            });
+                            dispatch(action);
+                          }
                         }}
                         sx={{
                           '&:hover': { background: theme.palette.error.light },

@@ -22,6 +22,7 @@ export interface IUser {
   datetime?: Date;
 }
 export interface IUserAdmin extends IUser {
+  id_role?: number;
   post_quantity?: number;
   post_reports?: number;
 }

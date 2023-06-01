@@ -58,7 +58,9 @@ export default {
     leaveGroup: 'Rời nhóm thành công!',
     update: 'Cập nhật thành công',
     lockSuccess: 'Khóa thành công',
-    submit: 'Gửi thành công'
+    submit: 'Gửi thành công',
+    changeRoleUserSuccess: 'Thay đổi quyền thành công',
+    unlockSuccess: 'Mở khóa thành công'
   },
   confirm: {
     cancelCreatePost: 'Bạn muốn hủy bài đăng này ?',
@@ -226,6 +228,8 @@ export default {
     managePost: 'Quản lý bài đăng',
     users: {
       detail: 'Chi tiết',
+      changeRole: 'Thay đổi quyền',
+      unLockUser: 'Mở khóa người dùng',
       role: 'Quyền',
       totalPost: 'Số bài viết',
       postReport: 'Số bài viết bị báo cáo',
