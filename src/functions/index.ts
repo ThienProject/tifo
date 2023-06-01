@@ -24,8 +24,8 @@ export const schemaCreatePost = (target: string, description: string, medias: st
     [medias]: yup
       .mixed()
       .test('has-image-or-video', 'At least one image or video is required', (files: any) => {
-        return files.some((file: File) => {
-          return file.type.startsWith('image') || file.type.startsWith('video');
+        return !files.some((file: File) => {
+          return !(file.type.startsWith('image') || file.type.startsWith('video'));
         });
       })
       .test('max-size', 'File size must not exceed 30MB', (files: any) => {

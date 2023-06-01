@@ -28,8 +28,6 @@ const initUpdatePostPost: IPayloadUpdatePost = {
   medias_update: []
 };
 
-const schemaUpdatePost = schemaCreatePost('target_update', 'description_update', 'medias_update');
-
 const UpdatePost = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
@@ -64,6 +62,8 @@ const UpdatePost = () => {
       return [...prev, ...deletes];
     });
   };
+  const schemaUpdatePost = schemaCreatePost('target_update', 'description_update', 'medias_update');
+
   const { control, handleSubmit, reset } = useForm({
     defaultValues: initUpdatePostPost,
     resolver: yupResolver(schemaUpdatePost)

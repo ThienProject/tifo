@@ -24,8 +24,6 @@ const initCreatePost: IPayloadCreatePost = {
   medias: []
 };
 
-const schemaCreate = schemaCreatePost('target', 'description', 'medias');
-
 const Create = (props: { type: string }) => {
   const isLoading = useIsRequestPending('post', 'createPostThunk');
   const { t } = useTranslation();
@@ -48,6 +46,8 @@ const Create = (props: { type: string }) => {
       label: t('createPost.type.follower')
     }
   ];
+  const schemaCreate = schemaCreatePost('target', 'description', 'medias');
+
   const { control, handleSubmit, reset, setValue, getValues } = useForm({
     defaultValues: initCreatePost,
     resolver: yupResolver(schemaCreate)
