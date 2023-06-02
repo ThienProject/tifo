@@ -106,7 +106,7 @@ const PostItem = ({ post }: { post: IPost }) => {
     options = options.concat(optionOwner);
   }
   return (
-    <Box ref={myRef}>
+    <Box ref={myRef} sx={{ minWidth: { sm: 509 }, maxWidth: { xs: 338, sm: 509 } }}>
       <Stack mb={1.2} direction='row' justifyContent='space-between'>
         <Box display='flex' alignItems='center'>
           <UserItem size='small' to={`/${user.id_user}`} user={user} />
@@ -117,7 +117,7 @@ const PostItem = ({ post }: { post: IPost }) => {
         <MenuOption icon={<MoreHoriz />} options={options} />
       </Stack>
       {/* media */}
-      <SliderMedia sx={{ height: 300 }} medias={post?.medias} />{' '}
+      <SliderMedia sx={{ height: 300 }} medias={post?.medias} />
       <Stack mt={0.7} justifyContent={'space-between'} direction={'row'}>
         <Stack direction={'row'}>
           <ProtectBox toLogin>

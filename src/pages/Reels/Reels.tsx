@@ -38,7 +38,7 @@ const Reels = () => {
   return (
     <Grid container justifyContent={'center'} spacing={0}>
       <Grid item lg={5} justifyContent={'flex-end'}>
-        <Box mt={3}>
+        <Box>
           {reels.length > 0 && (
             <Box>
               <InfiniteScroll

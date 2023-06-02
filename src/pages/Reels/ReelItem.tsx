@@ -28,15 +28,24 @@ const ReelItem = ({ post }: { post: IPost }) => {
   const user: IUser = { id_user, username, fullname, avatar };
   const { me } = useAppSelector((state) => state.userSlice);
   return (
-    <Grid sx={{ my: 2 }} container>
-      <Grid item lg={8} sx={{ position: 'relative' }}>
+    <Stack
+      direction={'row'}
+      sx={{
+        my: 2,
+        height: { xs: 'calc(100vh - 100px)', sm: 'calc(100vh - 50px)' },
+        width: { xs: 338 },
+        justifyContent: 'center',
+        position: 'relative'
+      }}
+    >
+      <Box height={'100%'} width={'100%'}>
         <Box ref={myRef}></Box>
         {post?.medias && (
           <ItemMedia
             control={false}
             isReel
             autoPlay
-            sx={{ height: 500, maxWidth: 300 }}
+            sx={{ height: '100%', width: '100%', objectFit: 'cover' }}
             key={post.id_post}
             item={post?.medias[0]}
           />
@@ -60,8 +69,8 @@ const ReelItem = ({ post }: { post: IPost }) => {
             max={100}
           />
         </Stack>
-      </Grid>
-      <Grid item lg={3}>
+      </Box>
+      <Box sx={{ position: 'absolute', bottom: 0, right: 10 }}>
         <Stack height={'100%'} justifyContent={'flex-end'}>
           <Stack justifyContent={'flex-end'} gap={2} alignItems={'center'}>
             <ProtectBox toLogin>
@@ -124,8 +133,8 @@ const ReelItem = ({ post }: { post: IPost }) => {
             </IconButton>
           </Stack>
         </Stack>
-      </Grid>
-    </Grid>
+      </Box>
+    </Stack>
   );
 };
 

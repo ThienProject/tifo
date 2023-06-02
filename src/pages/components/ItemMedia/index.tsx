@@ -62,6 +62,7 @@ function ItemMedia(props: {
   return (
     <Box sx={{ ...sx, p: 0, position: 'relative' }} overflow={'hidden'} borderRadius={2}>
       <CardActionArea
+        sx={{ ...sx }}
         onClick={() => {
           item.type === 'video' && !control && setIsPlayAuto((prev) => !prev);
         }}
