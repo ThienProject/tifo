@@ -34,6 +34,17 @@ export const unLockUserThunk = createAsyncThunk<any, { id_user: string }>(
     }
   }
 );
+export const unLockPostThunk = createAsyncThunk<any, { id_post: string }>(
+  'admin/unLockPostThunk',
+  async (payload: { id_post: string }, { rejectWithValue }) => {
+    try {
+      const { data } = await adminApi.unLockPost(payload);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
 export const changeRoleUserThunk = createAsyncThunk<any, { id_user: string; id_role: number }>(
   'admin/changeRoleUserThunk',
   async (payload: { id_user: string; id_role: number }, { rejectWithValue }) => {

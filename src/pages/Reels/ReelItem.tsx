@@ -1,13 +1,6 @@
-import { Box, IconButton, Typography, Stack, Grid } from '@mui/material';
+import { Box, IconButton, Typography, Stack } from '@mui/material';
 import React, { useRef } from 'react';
-import {
-  MoreHoriz,
-  FavoriteBorder,
-  Favorite,
-  ChatBubbleOutlineOutlined,
-  BookmarkBorderOutlined,
-  BookmarkOutlined
-} from '@mui/icons-material';
+import { MoreHoriz, Favorite, ChatBubble } from '@mui/icons-material';
 import UserItem from 'src/components/items/UserItem';
 import { IPost } from 'src/types/post';
 
@@ -16,7 +9,7 @@ import { useAppDispatch, useAppSelector } from 'src/redux_store';
 import { openModal } from 'src/redux_store/common/modal/modal_slice';
 import MODAL_IDS from 'src/constants/modal';
 import PostDetail from 'src/pages/PostDetail';
-import { updateLoveThunk, updateSaveThunk } from 'src/redux_store/post/post_action';
+import { updateLoveThunk } from 'src/redux_store/post/post_action';
 import ProtectBox from 'src/components/ProtectBox/ProtectBox';
 import CustomTypography from 'src/components/CustomTypography';
 import ItemMedia from '../components/ItemMedia';
@@ -57,7 +50,7 @@ const ReelItem = ({ post }: { post: IPost }) => {
           direction='column'
           justifyContent='space-between'
         >
-          <UserItem size='small' to={`/${user.id_user}`} user={user} />
+          <UserItem textColor='#fff' size='small' to={`/${user.id_user}`} user={user} />
           <CustomTypography
             color={'#fff'}
             myRef={myRef}
@@ -70,7 +63,7 @@ const ReelItem = ({ post }: { post: IPost }) => {
           />
         </Stack>
       </Box>
-      <Box sx={{ position: 'absolute', bottom: 0, right: 10 }}>
+      <Box sx={{ position: 'absolute', bottom: '20%', right: 10 }}>
         <Stack height={'100%'} justifyContent={'flex-end'}>
           <Stack justifyContent={'flex-end'} gap={2} alignItems={'center'}>
             <ProtectBox toLogin>
@@ -90,9 +83,9 @@ const ReelItem = ({ post }: { post: IPost }) => {
                     }
                   }}
                 >
-                  {!post.isLove ? <FavoriteBorder /> : <Favorite color='error' />}
+                  {!post.isLove ? <Favorite sx={{ color: '#fff' }} /> : <Favorite color='error' />}
                 </IconButton>
-                <Typography color='common.black' fontSize={12} fontWeight={550}>
+                <Typography color='#fff' fontSize={12} fontWeight={550}>
                   {post.loves ? post.loves : 0}
                 </Typography>
               </Box>
@@ -108,27 +101,9 @@ const ReelItem = ({ post }: { post: IPost }) => {
                 dispatch(action);
               }}
             >
-              <ChatBubbleOutlineOutlined />
+              <ChatBubble sx={{ color: '#fff' }} />
             </IconButton>
-            <ProtectBox toLogin>
-              <IconButton
-                size='small'
-                onClick={() => {
-                  if (me?.id_user) {
-                    const action = updateSaveThunk({
-                      id_user: me?.id_user,
-                      isSave: !post.isSave,
-                      id_post: post.id_post,
-                      type: 'reel'
-                    });
-                    dispatch(action).unwrap();
-                  }
-                }}
-              >
-                {post.isSave ? <BookmarkOutlined sx={{ color: 'common.black' }} /> : <BookmarkBorderOutlined />}
-              </IconButton>
-            </ProtectBox>
-            <IconButton size='small'>
+            <IconButton sx={{ color: '#fff', boxShadow: 1 }} size='small'>
               <MoreHoriz />
             </IconButton>
           </Stack>

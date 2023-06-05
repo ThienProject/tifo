@@ -26,6 +26,7 @@ import { objectToFormData } from 'src/functions';
 import useChatItem from 'src/hooks/use_chatItem';
 import { useIsRequestPending } from 'src/hooks/use_status';
 import { useTranslation } from 'react-i18next';
+import { toastMessage } from 'src/utils/toast';
 
 const Input = styled('input')({
   display: 'none'
@@ -85,6 +86,9 @@ function BottomBarContent() {
             image: '',
             type: ''
           }));
+        })
+        .catch(() => {
+          toastMessage.error('Tifo chatbot đang bận, vui lòng thử lại sau!');
         });
     }
   }, [payload]);

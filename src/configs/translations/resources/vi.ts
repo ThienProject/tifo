@@ -230,6 +230,7 @@ export default {
       detail: 'Chi tiết',
       changeRole: 'Thay đổi quyền',
       unLockUser: 'Mở khóa người dùng',
+      unLockPost: 'Mở khóa bài đăng',
       role: 'Quyền',
       totalPost: 'Số bài viết',
       postReport: 'Số bài viết bị báo cáo',

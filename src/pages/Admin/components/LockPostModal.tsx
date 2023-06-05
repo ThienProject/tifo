@@ -9,6 +9,7 @@ import { IPostAdmin } from 'src/types/post';
 import { useAppDispatch } from 'src/redux_store';
 import { lockPostThunk } from 'src/redux_store/admin/admin_action';
 import { toastMessage } from 'src/utils/toast';
+import { closeModal } from 'src/redux_store/common/modal/modal_slice';
 const LockPostModal = ({ post }: { post: IPostAdmin }) => {
   const { t } = useTranslation();
   const { control, handleSubmit } = useForm({ defaultValues: { reason: '' } });
@@ -18,6 +19,7 @@ const LockPostModal = ({ post }: { post: IPostAdmin }) => {
     dispatch(action)
       .unwrap()
       .then(() => {
+        dispatch(closeModal({ modalId: MODAL_IDS.lockPost }));
         toastMessage.success(t('toast.lockSuccess'));
       });
   };

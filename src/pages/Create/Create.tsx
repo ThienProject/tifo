@@ -79,7 +79,7 @@ const Create = (props: { type: string }) => {
     const value = getValues('description');
     if (value) {
       setIsLoadingSuggest(true);
-      const status = `tạo 1 status độ dài 30 từ với từ khóa : ${value}`;
+      const status = `tạo 1 status độ dài tối đa 100 ký tự với từ khóa : ${value}`;
       const action = getDescriptionAutoThunk({ prompt: status });
       dispatch(action)
         .unwrap()
@@ -152,11 +152,12 @@ const Create = (props: { type: string }) => {
               {t('createPost.suggest')}
             </LoadingButton>
             {suggest && (
-              <Box mt={1} height={55}>
+              <Box mt={1} height={100} overflow={'scroll'}>
                 <Typography
                   sx={{ cursor: 'pointer', '&:hover': { opacity: 0.8 } }}
                   onClick={() => {
                     setValue('description', suggest);
+                    setSuggest('');
                   }}
                 >
                   {suggest}

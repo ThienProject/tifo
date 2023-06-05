@@ -231,6 +231,7 @@ export default {
       role: 'Role',
       changeRole: 'Change permissions',
       unLockUser: 'Unlock User',
+      unLockPost: 'unLock Post',
       totalPost: 'Total posts',
       postReport: 'Posts reported',
       status: 'Status',

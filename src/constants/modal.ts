@@ -17,6 +17,7 @@ const MODAL_IDS = {
   lockPost: 'lockPost',
   lockUser: 'lockUser',
   unLockUser: 'unLockUser',
+  unLockPost: 'unLockPost',
   changeRuleUser: 'changeRuleUser',
   reportPost: 'reportPost',
   viewLockNoti: 'viewLockNoti'

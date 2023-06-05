@@ -28,6 +28,9 @@ export const adminApi = {
   unLockUser: (payload: { id_user: string }) => {
     return client.post<any>('/admin/user/unlock', payload);
   },
+  unLockPost: (payload: { id_post: string }) => {
+    return client.post<any>('/admin/post/unlock', payload);
+  },
   lockPost: (payload: { id_user: string; reason: string; id_post: string }) => {
     return client.post<any>('/admin/post/lock', payload);
   },

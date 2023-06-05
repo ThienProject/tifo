@@ -9,6 +9,7 @@ import { IUserAdmin } from 'src/types/user';
 import { lockUserThunk } from 'src/redux_store/admin/admin_action';
 import { useAppDispatch } from 'src/redux_store';
 import { toastMessage } from 'src/utils/toast';
+import { closeModal } from 'src/redux_store/common/modal/modal_slice';
 const LockUserModal = ({ user }: { user: IUserAdmin }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -17,9 +18,9 @@ const LockUserModal = ({ user }: { user: IUserAdmin }) => {
     const action = lockUserThunk({ id_user: user.id_user!, reason: data.reason });
     dispatch(action)
       .unwrap()
-      .then((data) => {
+      .then(() => {
+        dispatch(closeModal({ modalId: MODAL_IDS.lockUser }));
         toastMessage.success(t('toast.lockSuccess'));
-        console.log(data);
       });
     console.log(data);
   };

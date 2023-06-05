@@ -10,6 +10,7 @@ const UserItem = ({
   sx,
   isFullname,
   to,
+  textColor,
   callback
 }: {
   sx?: React.CSSProperties;
@@ -17,6 +18,7 @@ const UserItem = ({
   size: string;
   isFullname?: boolean;
   to?: string;
+  textColor?: string;
   callback?: () => void;
 }) => {
   let newSize: number;
@@ -64,7 +66,7 @@ const UserItem = ({
                 whiteSpace={'nowrap'}
                 textOverflow={'ellipsis'}
                 fontSize={14}
-                color={'common.black'}
+                color={textColor ? textColor : 'common.black'}
               >
                 {user.username}
               </Typography>

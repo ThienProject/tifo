@@ -33,6 +33,7 @@ import DetailPostModal from './DetailPostModal';
 import LockPostModal from '../../components/LockPostModal';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
+import UnlockPostModal from '../../components/UnClockPostModal';
 
 const getStatusLabel = (postStatus: 'banned' | 'reported' | 'active'): JSX.Element => {
   const map = {
@@ -233,11 +234,19 @@ const PostsTable = ({
                     <Tooltip title='Lock post' arrow>
                       <IconButton
                         onClick={() => {
-                          const action = openModal({
-                            modalId: MODAL_IDS.lockPost,
-                            dialogComponent: <LockPostModal post={post} />
-                          });
-                          dispatch(action);
+                          if (post.status !== 'banned') {
+                            const action = openModal({
+                              modalId: MODAL_IDS.lockPost,
+                              dialogComponent: <LockPostModal post={post} />
+                            });
+                            dispatch(action);
+                          } else {
+                            const action = openModal({
+                              modalId: MODAL_IDS.unLockPost,
+                              dialogComponent: <UnlockPostModal post={post} />
+                            });
+                            dispatch(action);
+                          }
                         }}
                         sx={{
                           '&:hover': { background: theme.palette.error.light },
