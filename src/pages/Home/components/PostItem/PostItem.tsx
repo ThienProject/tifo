@@ -39,16 +39,6 @@ const PostItem = ({ post }: { post: IPost }) => {
   const { me } = useAppSelector((state) => state.userSlice);
   let options: any[] = [
     {
-      name: t('button.report'),
-      handleClick: () => {
-        const action: any = openModal({
-          modalId: MODAL_IDS.reportPost,
-          dialogComponent: <ReportPostModal post={post} />
-        });
-        dispatch(action);
-      }
-    },
-    {
       name: t('button.viewDetail'),
       handleClick: () => {
         const action: any = openModal({
@@ -104,6 +94,17 @@ const PostItem = ({ post }: { post: IPost }) => {
   ];
   if (me?.id_user === id_user) {
     options = options.concat(optionOwner);
+  } else {
+    options.push({
+      name: t('button.report'),
+      handleClick: () => {
+        const action: any = openModal({
+          modalId: MODAL_IDS.reportPost,
+          dialogComponent: <ReportPostModal post={post} />
+        });
+        dispatch(action);
+      }
+    });
   }
   return (
     <Box ref={myRef} sx={{ minWidth: { sm: 509 }, maxWidth: { xs: 338, sm: 509 } }}>

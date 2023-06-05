@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MODAL_IDS from 'src/constants/modal';
 import { Box, Divider, Stack } from '@mui/material';
 import ModalWrapper from 'src/components/model/ModelWrapper';
@@ -28,19 +28,6 @@ const PostDetail = (props: { post: IPost | IPostAdmin }) => {
   const user = { id_user, fullname, avatar, username };
   const { me } = useAppSelector((state) => state.userSlice);
   const dispatch = useAppDispatch();
-  let options: any[] = [
-    {
-      name: t('button.report'),
-      handleClick: () => {
-        const action: any = openModal({
-          modalId: MODAL_IDS.reportPost,
-          dialogComponent: <ReportPostModal post={post} />
-        });
-        dispatch(action);
-        // navigate(`update/${post?.id_post}`);
-      }
-    }
-  ];
   const optionOwner: any[] = [
     {
       name: t('postDetail.edit'),
@@ -84,9 +71,29 @@ const PostDetail = (props: { post: IPost | IPostAdmin }) => {
       element: <Box>{t('postDetail.delete')} </Box>
     }
   ];
-  if (me?.id_user === id_user) {
-    options = options.concat(optionOwner);
-  }
+
+  const [options, setOptions] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (me?.id_user === id_user) {
+      setOptions(optionOwner);
+    } else {
+      setOptions([
+        {
+          name: t('button.report'),
+          handleClick: () => {
+            const action: any = openModal({
+              modalId: MODAL_IDS.reportPost,
+              dialogComponent: <ReportPostModal post={post} />
+            });
+            dispatch(action);
+            // navigate(`update/${post?.id_post}`);
+          }
+        }
+      ]);
+    }
+  }, [id_user]);
+
   return (
     <ModalWrapper
       isNotAutoClose={false}
