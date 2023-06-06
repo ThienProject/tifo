@@ -1,7 +1,7 @@
 # Đặc tả yêu cầu nghiệp vụ
 1. Khách vãng lai
 -	Tìm kiếm người dùng.
--	Xem bài đăng.
+-	Xem bài đăng, video ngắn công khai.
 +	Khách vãng lai được xem cái bài đăng công khai.
 -	Đăng ký tài khoản người dùng.
 -	Tùy chỉnh giao diện, ngôn ngữ.
