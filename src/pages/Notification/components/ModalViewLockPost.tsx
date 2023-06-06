@@ -13,8 +13,8 @@ const ModalViewLockPost = ({ post }: { post: IPostAdmin }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   return (
-    <ModalWrapper maxWidth={500} minWidth={500} modalId={MODAL_IDS.viewLockNoti}>
-      <Box padding={1} sx={{ overflowY: 'scroll', maxHeight: 500, minHeight: 400 }}>
+    <ModalWrapper maxWidth={450} minWidth={450} modalId={MODAL_IDS.viewLockNoti}>
+      <Box padding={1} sx={{ overflowY: 'scroll', maxHeight: 250, minHeight: 250 }}>
         <Box ml={0.5}>
           {/* <UserItem size='small' isFullname post={post} /> */}
           <CustomTypography max={100} text={post.description!} />
