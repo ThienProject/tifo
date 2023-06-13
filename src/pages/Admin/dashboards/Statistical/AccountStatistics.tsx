@@ -84,7 +84,7 @@ function AccountStatistics() {
     dataLabels: {
       enabled: true,
       formatter: function (val) {
-        return val + '%';
+        return Number(val).toFixed(2) + '%';
       },
       style: {
         colors: [theme.palette.grey[100]]
